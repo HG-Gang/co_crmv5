@@ -295,6 +295,7 @@ class ProfileController extends FrontBaseController
             'bank_no' => 'required|string|max:50',
             'bank_addr' => 'required|string|max:500',
             'bank_card_img' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'bank_card_back_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
         ]);
 
         if ($validator->fails()) {
@@ -307,13 +308,17 @@ class ProfileController extends FrontBaseController
         }
 
         $path = $this->storeProfileFile($request, 'bank_card_img', 'auth/' . $userInfo->user_id . '/bank');
+        $backPath = $request->hasFile('bank_card_back_img')
+            ? $this->storeProfileFile($request, 'bank_card_back_img', 'auth/' . $userInfo->user_id . '/bank')
+            : '';
+
         UserAuth::updateOrCreate(
             ['user_id' => $userInfo->user_id],
             [
                 'bank_name' => trim((string) $request->input('bank_name')),
                 'bank_no' => trim((string) $request->input('bank_no')),
                 'bank_addr' => trim((string) $request->input('bank_addr')),
-                'bank_card_img' => $path,
+                'bank_card_img' => $backPath ? $path . '|' . $backPath : $path,
                 'bank_status' => 1,
                 'bank_remarks' => '',
             ]
@@ -331,6 +336,7 @@ class ProfileController extends FrontBaseController
             'bank_no' => 'required|string|max:50',
             'bank_addr' => 'required|string|max:500',
             'bank_card_img' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'bank_card_back_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
         ]);
 
         if ($validator->fails()) {
@@ -343,13 +349,17 @@ class ProfileController extends FrontBaseController
         }
 
         $path = $this->storeProfileFile($request, 'bank_card_img', 'auth/' . $userInfo->user_id . '/bank-change');
+        $backPath = $request->hasFile('bank_card_back_img')
+            ? $this->storeProfileFile($request, 'bank_card_back_img', 'auth/' . $userInfo->user_id . '/bank-change')
+            : '';
+
         UserAuth::updateOrCreate(
             ['user_id' => $userInfo->user_id],
             [
                 'bank_name_tmp' => trim((string) $request->input('bank_name')),
                 'bank_no_tmp' => trim((string) $request->input('bank_no')),
                 'bank_addr_tmp' => trim((string) $request->input('bank_addr')),
-                'bank_card_img_tmp' => $path,
+                'bank_card_img_tmp' => $backPath ? $path . '|' . $backPath : $path,
                 'bank_status' => 3,
                 'bank_remarks' => '',
             ]
@@ -416,7 +426,9 @@ class ProfileController extends FrontBaseController
             return '';
         }
 
-        return $this->resolveAvatarUrl($path);
+        $firstPath = explode('|', (string) $path)[0] ?? '';
+
+        return $this->resolveAvatarUrl($firstPath);
     }
 
     private function storeProfileFile(Request $request, string $field, string $directory): string

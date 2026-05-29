@@ -210,15 +210,29 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         $chain.hide().empty();
     }
 
-    function showChainLevel() {
+    function showChainLevel(targetUserId) {
         var $chain = $('#moduleChain');
+        var matchedDepth = 0;
+        var maxDepth;
+        var html;
+        var node;
+        var i;
+
         if (!$chain.length || !chainData.length) return;
 
-        chainVisibleDepth++;
-        var maxDepth = Math.min(chainVisibleDepth, chainData.length);
-        var html = '<span class="module-chain-title">' + escapeHtml(t('front.current_chain')) + '</span>';
-        for (var i = 0; i < maxDepth; i++) {
-            var node = chainData[i] || {};
+        for (i = 0; i < chainData.length; i++) {
+            node = chainData[i] || {};
+            if (String(node.user_id || '') === String(targetUserId || '')) {
+                matchedDepth = i + 1;
+                break;
+            }
+        }
+
+        chainVisibleDepth = matchedDepth || Math.min(chainVisibleDepth + 1, chainData.length);
+        maxDepth = Math.min(chainVisibleDepth, chainData.length);
+        html = '<span class="module-chain-title">' + escapeHtml(t('front.current_chain')) + '</span>';
+        for (i = 0; i < maxDepth; i++) {
+            node = chainData[i] || {};
             if (i > 0) html += '<span class="module-chain-arrow">&gt;</span>';
             html += '<span class="module-chain-node">' + escapeHtml(node.user_id || '-') + '</span>';
         }
@@ -975,7 +989,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
 
         if (column.action === 'showUserInfo') {
             // Req 12: clicking user ID shows chain level
-            showChainLevel();
+            showChainLevel(getValue(row, column.idField || column.key));
             var detailRow = getValue(row, 'user_info') || row;
             if (column.api) {
                 CrmAjax.request({
@@ -1058,6 +1072,21 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
             loadData();
         }
     }
+
+
+    $(document).on('change', '.J_moduleUploadInput', function () {
+        var files = this.files || [];
+        var names = [];
+
+        for (var i = 0; i < files.length; i++) {
+            names.push(files[i].name);
+        }
+
+        $(this).closest('.J_moduleUploadCard').toggleClass('is-ready', !!files.length)
+            .find('.module-upload-name')
+            .text(names.length ? names.join(', ') : t('profile.no_file_selected'))
+            .removeAttr('data-translate');
+    });
 
     form.on('submit(moduleSearchSubmit)', function () {
         var filters = collectFilters();
@@ -1142,13 +1171,26 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
             {key: 'user_id', label: 'front.user_id'}, {key: 'user_name', label: 'front.user_name'},
             {key: 'email', label: 'front.email'}, {key: 'phone', label: 'front.phone'},
             {key: 'total_funds', label: 'front.total_funds', format: 'money'}, {key: 'equity', label: 'front.equity', format: 'money'},
-            {key: 'total_deposit', label: 'front.total_deposit', format: 'money'}, {key: 'total_withdraw', label: 'front.total_withdraw', format: 'money'},
-            {key: 'commission_total', label: 'front.total_commission', format: 'money'}, {key: 'commission_rate', label: 'front.commission_rate'},
-            {key: 'open_orders', label: 'front.open_orders'}, {key: 'closed_orders', label: 'front.closed_orders'}
+            {key: 'total_deposit', fallback: ['total_yuerj', 'deposit_amount'], label: 'front.total_deposit', format: 'money'},
+            {key: 'total_withdraw', fallback: ['total_yuecj', 'withdraw_amount'], label: 'front.total_withdraw', format: 'money'},
+            {key: 'commission_total', fallback: ['total_comm', 'fy_money'], label: 'front.total_commission', format: 'money'},
+            {key: 'commission_rate', fallback: ['commprop', 'rebate_ratio'], label: 'front.commission_rate'},
+            {key: 'open_orders', fallback: ['open_count', 'monthly_open_orders'], label: 'front.open_orders'},
+            {key: 'closed_orders', fallback: ['closed_count', 'monthly_closed_orders'], label: 'front.closed_orders'},
+            {key: 'pnl_7d', label: 'front.pnl_7d', format: 'money'},
+            {key: 'pnl_15d', label: 'front.pnl_15d', format: 'money'},
+            {key: 'pnl_30d', label: 'front.pnl_30d', format: 'money'}
         ];
         for (var i = 0; i < fields.length; i++) {
             var fld = fields[i];
-            var v = formatValue(getValue(info, fld.key));
+            var raw = getValue(info, fld.key);
+            if ((raw === null || typeof raw === 'undefined' || raw === '') && fld.fallback) {
+                for (var fb = 0; fb < fld.fallback.length; fb++) {
+                    raw = getValue(info, fld.fallback[fb]);
+                    if (raw !== null && typeof raw !== 'undefined' && raw !== '') break;
+                }
+            }
+            var v = formatValue(raw);
             html += '<div class="crm-detail-field"><dt>' + escapeHtml(t(fld.label)) + '</dt><dd>' + escapeHtml(v) + '</dd></div>';
         }
         html += '</div>';

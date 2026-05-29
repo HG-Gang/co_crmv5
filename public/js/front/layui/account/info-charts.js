@@ -33,6 +33,18 @@ layui.use(['jquery'], function () {
         var chart = initChart('acctDepositChart');
         if (!chart) return;
         chartConfigs.acctDepositChart = type;
+        if (type === 'pie') {
+            chart.setOption({
+                color: ['#18a058', '#d03050'],
+                tooltip: { trigger: 'item' },
+                legend: { bottom: 0 },
+                series: [{ type: 'pie', radius: ['34%', '64%'], center: ['50%', '42%'], data: [
+                    { name: t('front.deposit'), value: mockDeposit.reduce(function (a, b) { return a + b; }, 0) },
+                    { name: t('front.withdraw'), value: mockWithdraw.reduce(function (a, b) { return a + b; }, 0) }
+                ] }]
+            }, true);
+            return;
+        }
         chart.setOption({
             color: ['#18a058', '#d03050'],
             tooltip: { trigger: 'axis' },
@@ -52,6 +64,18 @@ layui.use(['jquery'], function () {
         var chart = initChart('acctCommChart');
         if (!chart) return;
         chartConfigs.acctCommChart = type;
+        if (type === 'pie') {
+            chart.setOption({
+                color: ['#2080f0', '#f0a020'],
+                tooltip: { trigger: 'item' },
+                legend: { bottom: 0 },
+                series: [{ type: 'pie', radius: ['34%', '64%'], center: ['50%', '42%'], data: [
+                    { name: t('front.commission'), value: mockComm.reduce(function (a, b) { return a + b; }, 0) },
+                    { name: t('front.commission_rate'), value: mockCommRate.reduce(function (a, b) { return a + b; }, 0) }
+                ] }]
+            }, true);
+            return;
+        }
         chart.setOption({
             color: ['#2080f0', '#f0a020'],
             tooltip: { trigger: 'axis' },

@@ -21,7 +21,6 @@
     'columns' => [
         ['key' => 'mt4_login', 'label' => 'front.user_id', 'action' => 'showUserInfo', 'api' => '/api/front/userDetail', 'idField' => 'user_id', 'linkClass' => 'module-link-user'],
         ['key' => 'user_name', 'label' => 'front.user_name'],
-        ['key' => 'login_history_label', 'label' => 'front.login_history', 'action' => 'showLoginHistory', 'idField' => 'user_id', 'linkClass' => 'module-link-detail'],
         ['key' => 'mt4_balance', 'label' => 'front.balance', 'format' => 'money'],
         ['key' => 'cust_eqy', 'label' => 'front.equity', 'format' => 'money'],
         ['key' => 'total_yuerj', 'label' => 'front.total_deposit', 'format' => 'money'],
@@ -46,5 +45,6 @@
 @endsection
 
 @section('scripts')
+<script src="{{ asset('/js/common/echarts.common.min.js') }}"></script>
 <script src="{{ asset('/js/front/layui/module-page.js') }}?v=2026052907"></script>
 @endsection

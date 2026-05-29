@@ -22,8 +22,9 @@
     <div class="layui-card">
         <div class="layui-card-header" data-translate="front.deposit_withdraw_chart">出入金趋势
             <div class="account-chart-toolbar">
-                <button type="button" class="chart-type-btn active" data-chart="acctDepositChart" data-type="bar">Bar</button>
-                <button type="button" class="chart-type-btn" data-chart="acctDepositChart" data-type="line">Line</button>
+                <button type="button" class="chart-type-btn active" data-chart="acctDepositChart" data-type="bar" data-translate="front.chart_bar">{{ __('front.chart_bar') }}</button>
+                <button type="button" class="chart-type-btn" data-chart="acctDepositChart" data-type="line" data-translate="front.chart_line">{{ __('front.chart_line') }}</button>
+                <button type="button" class="chart-type-btn" data-chart="acctDepositChart" data-type="pie" data-translate="front.chart_pie">{{ __('front.chart_pie') }}</button>
             </div>
         </div>
         <div class="layui-card-body"><div id="acctDepositChart" class="account-chart"></div></div>
@@ -31,8 +32,9 @@
     <div class="layui-card">
         <div class="layui-card-header" data-translate="front.commission_chart">返佣概览
             <div class="account-chart-toolbar">
-                <button type="button" class="chart-type-btn active" data-chart="acctCommChart" data-type="line">Line</button>
-                <button type="button" class="chart-type-btn" data-chart="acctCommChart" data-type="bar">Bar</button>
+                <button type="button" class="chart-type-btn active" data-chart="acctCommChart" data-type="line" data-translate="front.chart_line">{{ __('front.chart_line') }}</button>
+                <button type="button" class="chart-type-btn" data-chart="acctCommChart" data-type="bar" data-translate="front.chart_bar">{{ __('front.chart_bar') }}</button>
+                <button type="button" class="chart-type-btn" data-chart="acctCommChart" data-type="pie" data-translate="front.chart_pie">{{ __('front.chart_pie') }}</button>
             </div>
         </div>
         <div class="layui-card-body"><div id="acctCommChart" class="account-chart"></div></div>
@@ -40,8 +42,9 @@
     <div class="layui-card">
         <div class="layui-card-header" data-translate="front.order_chart">订单概览
             <div class="account-chart-toolbar">
-                <button type="button" class="chart-type-btn active" data-chart="acctOrderChart" data-type="bar">Bar</button>
-                <button type="button" class="chart-type-btn" data-chart="acctOrderChart" data-type="pie">Pie</button>
+                <button type="button" class="chart-type-btn active" data-chart="acctOrderChart" data-type="bar" data-translate="front.chart_bar">{{ __('front.chart_bar') }}</button>
+                <button type="button" class="chart-type-btn" data-chart="acctOrderChart" data-type="line" data-translate="front.chart_line">{{ __('front.chart_line') }}</button>
+                <button type="button" class="chart-type-btn" data-chart="acctOrderChart" data-type="pie" data-translate="front.chart_pie">{{ __('front.chart_pie') }}</button>
             </div>
         </div>
         <div class="layui-card-body"><div id="acctOrderChart" class="account-chart"></div></div>

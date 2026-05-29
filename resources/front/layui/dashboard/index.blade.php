@@ -110,8 +110,8 @@
             {{-- Req 2: KYC identity verification guide button --}}
             <div class="dashboard-kyc-bar layui-hide" id="kycGuideBar">
                 <i class="layui-icon layui-icon-about"></i>
-                <span data-translate="front.kyc_not_verified">{{ __('front.kyc_not_verified', '您尚未完成实名认证，部分功能受限') }}</span>
-                <a href="{{ url('/front/profile') }}" class="layui-btn layui-bg-orange J_frameLink" data-title="{{ __('front.profile') }}" data-breadcrumb="{{ __('breadcrumb.front_profile') }}" data-translate="front.go_verify">{{ __('front.go_verify', '立即认证') }}</a>
+                <span data-translate="front.kyc_not_verified">{{ __('front.kyc_not_verified') }}</span>
+                <a href="{{ url('/front/profile') }}" class="layui-btn layui-bg-orange J_frameLink" data-title="{{ __('front.profile') }}" data-breadcrumb="{{ __('breadcrumb.front_profile') }}" data-translate="front.go_verify">{{ __('front.go_verify') }}</a>
             </div>
         </div>
         <div class="dashboard-control-panel">

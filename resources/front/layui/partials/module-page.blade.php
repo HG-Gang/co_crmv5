@@ -37,6 +37,14 @@
     .front-module-page .layui-card-header { font-weight: 600; }
     .front-module-page .module-table-wrap { width: 100%; overflow-x: auto; }
     .front-module-page .module-table-wrap table { min-width: 980px; }
+    .module-upload-card { display: flex; align-items: center; gap: 10px; min-height: 74px; padding: 12px; border: 2px dashed var(--front-line, #dce3ec); border-radius: 8px; background: var(--front-table-head, #f8fafc); cursor: pointer; transition: border-color .2s, box-shadow .2s; }
+    .module-upload-card:hover { border-color: var(--front-blue, #2080f0); box-shadow: 0 0 0 3px rgba(32,128,240,.1); }
+    .module-upload-card.is-ready { border-style: solid; border-color: var(--front-accent, #18a058); }
+    .module-upload-card .layui-icon { color: var(--front-blue, #2080f0); font-size: 28px; }
+    .module-upload-main { min-width: 0; }
+    .module-upload-title { color: var(--front-strong); font-size: 13px; font-weight: 700; }
+    .module-upload-name { margin-top: 4px; color: var(--front-muted); font-size: 12px; word-break: break-all; }
+    .module-upload-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 </style>
 
 <div
@@ -128,6 +136,22 @@
                                                 data-translate-title="{{ $field['title'] ?? $field['label'] }}"
                                                 title="{{ __($field['title'] ?? $field['label']) }}"
                                             >
+                                        @elseif(($field['type'] ?? 'text') === 'file')
+                                            <label class="module-upload-card J_moduleUploadCard">
+                                                <i class="layui-icon layui-icon-upload-drag"></i>
+                                                <span class="module-upload-main">
+                                                    <span class="module-upload-title" data-translate="{{ $field['label'] }}">{{ __($field['label']) }}</span>
+                                                    <span class="module-upload-name" data-translate="profile.no_file_selected">{{ __('profile.no_file_selected') }}</span>
+                                                </span>
+                                                <input
+                                                    type="file"
+                                                    name="{{ $field['name'] }}"
+                                                    class="module-upload-input J_moduleUploadInput"
+                                                    @if(!empty($field['accept'])) accept="{{ $field['accept'] }}" @endif
+                                                    @if(!empty($field['multiple'])) multiple @endif
+                                                    @if(!empty($field['verify'])) lay-verify="{{ $field['verify'] }}" @endif
+                                                >
+                                            </label>
                                         @else
                                             <input
                                                 type="{{ $field['type'] ?? 'text' }}"
@@ -162,7 +186,7 @@
             @if(!empty($showChartCollapse))
             <div class="module-chart-collapse">
                 <button type="button" class="module-chart-toggle" id="moduleChartToggle">
-                    <span class="toggle-arrow">»</span> <span data-translate="front.chart_view">{{ __('front.chart_view', '图表查看') }}</span>
+                    <span class="toggle-arrow">»</span> <span data-translate="front.chart_view">{{ __('front.chart_view') }}</span>
                 </button>
                 <div class="module-chart-body" id="moduleChartBody">
                     <div id="moduleStatsChart" style="width:100%;height:240px;"></div>

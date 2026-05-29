@@ -85,7 +85,7 @@
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:;" title="{{ __('front.skin_mode', '皮肤') }}"><i class="layui-icon layui-icon-theme"></i><span id="frontThemeBadge" class="front-theme-badge"></span></a>
+                <a href="javascript:;" title="{{ __('front.skin_mode') }}"><i class="layui-icon layui-icon-theme"></i><span id="frontThemeBadge" class="front-theme-badge"></span></a>
                 <dl class="layui-nav-child">
                     <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="light" data-skin="light">☀ 浅色</a></dd>
                     <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="dark" data-skin="dark">☾ 深色</a></dd>

@@ -80,7 +80,7 @@
                                 <option value="62">+62</option>
                             </select>
                             {{-- Req 4: phone input must fully show >= 11 digits --}}
-                            <input type="text" name="phone_number" required lay-verify="required|phoneNumber" class="layui-input" style="min-width:180px; flex:1;" maxlength="20" placeholder="{{ __('front.phone_placeholder', '请输入手机号') }}">
+                            <input type="text" name="phone_number" required lay-verify="required|phoneNumber" class="layui-input" style="min-width:240px; flex:1;" maxlength="32" placeholder="{{ __('front.phone_placeholder') }}">
                         </div>
                     </div>
                 </div>

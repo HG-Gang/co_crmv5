@@ -127,6 +127,51 @@ layui.use(['jquery', 'form', 'table', 'element', 'layer'], function () {
         formFor(type).find('.J_withdrawSource').toggle(show);
     }
 
+    // Req 10: mock test data for each flow tab
+    function mockFlowRows(type, count) {
+        count = count || 12;
+        var rows = [];
+        var now = new Date();
+        for (var i = 0; i < count; i++) {
+            var d = new Date(now - (i + 1) * 86400000);
+            var dateStr = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0') + ' 10:' + String(30 + (i % 30)).padStart(2, '0') + ':00';
+            var base = {
+                order_no: 'FL' + (type === 'deposit' ? 'D' : 'W') + (200000 + i),
+                userId: 1000 + (i % 20),
+                userName: 'user_' + (1000 + (i % 20)),
+                modify_time: dateStr,
+                rec_crt_date: dateStr,
+                withdrawalDate: dateStr,
+                directModifyTime: dateStr,
+                directdrawalModifyTime: dateStr
+            };
+            if (type === 'deposit' || type === 'direct_deposit' || type === 'direct_agents_deposit') {
+                base.depositType = ['Bank', 'USDT', 'Wire'][i % 3];
+                base.depositComment = 'Demo deposit #' + (i + 1);
+                base.depositActProfit = Math.round((800 + i * 123.5) * 100) / 100;
+                base.directType = base.depositType;
+                base.directProfit = base.depositActProfit;
+                base.directComment = 'Agent deposit #' + (i + 1);
+            } else {
+                base.withdrawalType = ['Bank', 'USDT', 'Wire'][i % 3];
+                base.withdrawalType2 = ['Manual', 'Auto'][i % 2];
+                base.withdrawalActProfit = Math.round((500 + i * 87.2) * 100) / 100;
+                base.directdrawalComment = 'Withdrawal #' + (i + 1);
+                base.directdrawalActProfit = base.withdrawalActProfit;
+                base.applyamount = Math.round((600 + i * 92) * 100) / 100;
+                base.actdraw = Math.round(base.applyamount * 0.98 * 100) / 100;
+                base.drawpoundage = Math.round(base.applyamount * 0.02 * 100) / 100;
+                base.drawrate = '1.0000';
+                base.drawbankno = '622588****' + String(1000 + i);
+                base.drawbankclass = ['ICBC', 'BOC', 'CCB'][i % 3];
+                base.applystatus = ['Approved', 'Pending', 'Rejected'][i % 3];
+                base.applyremark = i % 3 === 2 ? 'Insufficient balance' : '';
+            }
+            rows.push(base);
+        }
+        return rows;
+    }
+
     function renderTable(type) {
         syncWithdrawSource(type);
         if (rendered[type]) {
@@ -139,7 +184,8 @@ layui.use(['jquery', 'form', 'table', 'element', 'layer'], function () {
             url: '/api/front/accountFlow',
             where: collect(type),
             cols: [columns[type] || columns.deposit],
-            summaryElem: '#flowSummary_' + type
+            summaryElem: '#flowSummary_' + type,
+            data: mockFlowRows(type)
         }));
         rendered[type] = true;
     }

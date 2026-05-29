@@ -124,6 +124,9 @@ var CrmLang = (function () {
                 fullPhonePlaceholder: '留空则不修改手机号',
                 fullIdCardPlaceholder: '留空则不修改身份证号',
                 saveSuccess: '保存成功',
+                uploadRequired: '请先选择对应正反面图片',
+                no_file_selected: '未选择文件',
+                uploadReady: '已选择文件',
                 passwordChanged: '密码修改成功',
                 emailChanged: '邮箱修改成功'
             },
@@ -391,6 +394,8 @@ var CrmLang = (function () {
                 network_chart: '团队结构',
                 order_chart: '订单统计',
                 commission_chart: '返佣趋势',
+                deposit_withdraw_chart: '出入金趋势',
+                agent_customer_chart: '代理客户画像',
                 skin_mode: '皮肤',
                 theme_light: '浅色',
                 theme_dark: '深色',
@@ -540,6 +545,9 @@ var CrmLang = (function () {
                 fullPhonePlaceholder: 'Leave blank to keep the current phone',
                 fullIdCardPlaceholder: 'Leave blank to keep the current ID card number',
                 saveSuccess: 'Saved successfully',
+                uploadRequired: 'Please select the required front/back image first',
+                no_file_selected: 'No file selected',
+                uploadReady: 'File selected',
                 passwordChanged: 'Password changed',
                 emailChanged: 'Email changed'
             },
@@ -780,6 +788,8 @@ var CrmLang = (function () {
                 network_chart: 'Network Structure',
                 order_chart: 'Order Statistics',
                 commission_chart: 'Commission Trend',
+                deposit_withdraw_chart: 'Deposit / Withdraw Trend',
+                agent_customer_chart: 'Agent / Customer Portrait',
                 skin_mode: 'Theme',
                 theme_light: 'Light',
                 theme_dark: 'Dark',
@@ -861,7 +871,17 @@ var CrmLang = (function () {
         total: '总计',
         type: '类型',
         agent_id: '代理ID',
-        name: '名称'
+        name: '名称',
+        kyc_not_verified: '您尚未完成实名认证，部分功能受限',
+        go_verify: '立即认证',
+        chart_view: '图表查看',
+        day_label: '天',
+        pnl: '盈亏',
+        pnl_7d: '近7天盈亏',
+        pnl_15d: '近15天盈亏',
+        pnl_30d: '近30天盈亏',
+        deposit_withdraw_chart: '出入金趋势',
+        agent_customer_chart: '代理客户画像'
     });
     $.extend(true, fallbackTranslations.en.front, {
         profit_gain: 'Profit',
@@ -918,7 +938,17 @@ var CrmLang = (function () {
         total: 'Total',
         type: 'Type',
         agent_id: 'Agent ID',
-        name: 'Name'
+        name: 'Name',
+        kyc_not_verified: 'Identity not verified, some features are restricted',
+        go_verify: 'Verify Now',
+        chart_view: 'Chart View',
+        day_label: 'Day',
+        pnl: 'P&L',
+        pnl_7d: '7-Day P&L',
+        pnl_15d: '15-Day P&L',
+        pnl_30d: '30-Day P&L',
+        deposit_withdraw_chart: 'Deposit / Withdraw Trend',
+        agent_customer_chart: 'Agent / Customer Portrait'
     });
 
     var localeAliases = {

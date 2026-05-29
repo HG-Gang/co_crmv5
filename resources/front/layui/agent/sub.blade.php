@@ -20,8 +20,7 @@
     ],
     'columns' => [
         ['key' => 'user_id', 'label' => 'front.user_id', 'action' => 'showUserInfo', 'api' => '/api/front/userDetail', 'idField' => 'user_id', 'linkClass' => 'module-link-user'],
-        ['key' => 'user_name', 'label' => 'front.user_name'],
-        ['key' => 'login_history_label', 'label' => 'front.login_history', 'action' => 'showLoginHistory', 'idField' => 'user_id', 'linkClass' => 'module-link-detail'],
+        ['key' => 'user_name', 'label' => 'front.user_name', 'action' => 'showUserDetail', 'idField' => 'user_id', 'linkClass' => 'module-link-user'],
         ['key' => 'agentsTotal', 'label' => 'front.agent_count'],
         ['key' => 'accountTotal', 'label' => 'front.customer_count'],
         ['key' => 'user_money', 'label' => 'front.balance', 'format' => 'money'],
@@ -37,5 +36,6 @@
 @endsection
 
 @section('scripts')
+<script src="{{ asset('/js/common/echarts.common.min.js') }}"></script>
 <script src="{{ asset('/js/front/layui/module-page.js') }}?v=2026052907"></script>
 @endsection

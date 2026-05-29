@@ -63,7 +63,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label" data-translate="phone">{{ __('front.phone') }}</label>
                         <div class="layui-input-block register-phone-row">
-                            <select name="phone_code" lay-verify="required">
+                            <select name="phone_code" lay-verify="required" style="flex:0 0 90px;">
                                 <option value="86">+86</option>
                                 <option value="852">+852</option>
                                 <option value="853">+853</option>
@@ -79,7 +79,8 @@
                                 <option value="63">+63</option>
                                 <option value="62">+62</option>
                             </select>
-                            <input type="text" name="phone_number" required lay-verify="required|phoneNumber" class="layui-input">
+                            {{-- Req 4: phone input must fully show >= 11 digits --}}
+                            <input type="text" name="phone_number" required lay-verify="required|phoneNumber" class="layui-input" style="min-width:240px; flex:1;" maxlength="32" placeholder="{{ __('front.phone_placeholder') }}">
                         </div>
                     </div>
                 </div>

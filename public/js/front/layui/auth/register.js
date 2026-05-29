@@ -74,7 +74,7 @@ layui.config({
             if (value !== pwd) return CRM.t('password_confirm');
         },
         phoneNumber: function(value) {
-            if (!/^[0-9]{5,20}$/.test(value)) return CRM.t('phone_invalid');
+            if (!/^[0-9]{12,20}$/.test(value)) return CRM.t('phone_invalid');
         },
         idCardNo: function(value) {
             if ($.trim(value).length < 4) return CRM.t('id_card_required');

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Models\CommissionRecord;
+use App\Models\DepositRecord;
 use App\Models\UserInfo;
+use App\Models\UserTrade;
+use App\Models\WithdrawRecord;
 use App\Models\VoucherInfo;
 use App\Constants\ResponseCode;
 use App\Support\FrontLegacyData;
@@ -64,6 +68,17 @@ class AccountController extends FrontBaseController
 
     private function accountOverviewData(UserInfo $userInfo): array
     {
+        $userId = (int) $userInfo->user_id;
+        $closedTrades = UserTrade::where('user_id', $userId)->where('close_time', '>', '1971-01-01 00:00:00');
+        $openTrades = UserTrade::where('user_id', $userId)->where('close_time', '<=', '1971-01-01 00:00:00');
+        $relationIds = UserInfo::where('parent_id', $userId)->pluck('user_id')->toArray();
+        $directAgents = UserInfo::where('parent_id', $userId)->where('account_type', 1)->count();
+        $directCustomers = UserInfo::where('parent_id', $userId)->where('account_type', 2)->count();
+        $indirectCustomers = UserInfo::where('family_tree', 'like', '%,' . $userId . ',%')
+            ->where('parent_id', '<>', $userId)
+            ->where('account_type', 2)
+            ->count();
+
         return [
             'user_id' => $userInfo->user_id,
             'user_name' => $userInfo->user_name,
@@ -83,6 +98,18 @@ class AccountController extends FrontBaseController
             'leverage' => $userInfo->leverage,
             'group_id' => $userInfo->group_id,
             'auth_status' => $userInfo->auth_status,
+            'total_deposit' => DepositRecord::where('user_id', $userId)->sum('amount'),
+            'total_withdraw' => WithdrawRecord::where('user_id', $userId)->sum('apply_amount'),
+            'total_rebate' => CommissionRecord::where('agent_id', $userId)->sum('commission_amount'),
+            'open_order_count' => (clone $openTrades)->count(),
+            'closed_order_count' => (clone $closedTrades)->count(),
+            'profit_7d' => (clone $closedTrades)->where('close_time', '>=', now()->subDays(7))->sum('profit'),
+            'profit_15d' => (clone $closedTrades)->where('close_time', '>=', now()->subDays(15))->sum('profit'),
+            'profit_30d' => (clone $closedTrades)->where('close_time', '>=', now()->subDays(30))->sum('profit'),
+            'direct_agents' => $directAgents,
+            'direct_customers' => $directCustomers,
+            'indirect_customers' => $indirectCustomers,
+            'relation_amount' => $relationIds ? DepositRecord::whereIn('user_id', $relationIds)->sum('amount') : 0,
         ];
     }
 

@@ -41,7 +41,6 @@ class CommissionController extends FrontBaseController
         $userLogin = $request->user('user');
         $agentId = $userLogin->user_id;
 
-        $comm = $this->commissionService->calculateRealTimeCommission($agentId);
         $descendantIds = FrontLegacyData::userScopeIds((int) $agentId, false);
         $query = \App\Models\UserTrade::whereIn('user_id', $descendantIds)
             ->with(['user.login', 'user.level'])
@@ -55,11 +54,13 @@ class CommissionController extends FrontBaseController
             $query->where('ticket', $request->input('orderId'));
         }
 
-        $totalRow = FrontLegacyData::rebateTotalRow($query);
+        $totalQuery = clone $query;
+        $totalRow = FrontLegacyData::rebateTotalRow($totalQuery);
 
+        $commissionDetails = (bool) $request->boolean('detail_commission', false);
         $list = $query->orderBy('open_time', 'desc')
             ->paginate(FrontLegacyData::perPage($request))
-            ->through(function ($trade) use ($agentId) {
+            ->through(function ($trade) use ($agentId, $commissionDetails) {
                 $row = FrontLegacyData::tradeAliasRow($trade);
                 $row['modify_time'] = $row['modify_time'] ?: $row['open_time'];
                 $profit = (float) ($row['profit'] ?? 0);
@@ -67,7 +68,7 @@ class CommissionController extends FrontBaseController
                 $row['profit_loss'] = FrontLegacyData::money(abs(min($profit, 0)));
                 $row['profit_net'] = FrontLegacyData::money($row['profit_gain'] - $row['profit_loss']);
                 $row['user_info'] = $this->userDetail($trade->user);
-                $row['commission_details'] = $this->commissionService->orderCommissionDetails($trade, (int) $agentId);
+                $row['commission_details'] = $commissionDetails ? $this->commissionService->orderCommissionDetails($trade, (int) $agentId) : [];
 
                 return $row;
             });
@@ -77,7 +78,10 @@ class CommissionController extends FrontBaseController
         $profitLoss = FrontLegacyData::money($rows->sum('profit_loss'));
         $profitNet = FrontLegacyData::money($profitGain - $profitLoss);
 
-        $comm['total_commission'] = $comm['total'] ?? 0;
+        $comm = [
+            'total' => $totalRow['total_commission'] ?? 0,
+        ];
+        $comm['total_commission'] = $totalRow['total_commission'] ?? 0;
         $comm['total_volume'] = $rows->sum('volume_lots');
         $comm['profit_gain'] = $profitGain;
         $comm['profit_loss'] = $profitLoss;

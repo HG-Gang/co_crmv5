@@ -26,10 +26,15 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
     var listKey = $page.attr('data-list-key') || '';
     var columns = readJson($page.attr('data-columns'), []);
     var summaryFields = readJson($page.attr('data-summary-fields'), []);
+    var chartGroups = readJson($page.attr('data-chart-groups'), []);
     var rowActions = readJson($page.attr('data-row-actions'), []);
     var defaultFilters = readJson($page.attr('data-default-filters'), {});
     var currentRows = [];
     var currentMeta = {};
+    var moduleCharts = {};
+    var moduleChartTypes = {};
+    var clickedChain = [];
+    var summaryCollapsed = $page.hasClass('commission-realtime-module');
     var pageState = {
         page: 1,
         perPage: parseInt($page.attr('data-per-page') || '15', 10),
@@ -162,6 +167,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         var i;
         var field;
         var value;
+        var toggle = '';
 
         if (!$summary.length || !summaryFields.length) {
             return;
@@ -178,7 +184,116 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
             html += '</div>';
         }
 
-        $summary.html(html);
+        if ($page.hasClass('commission-realtime-module')) {
+            toggle = '<button type="button" class="module-summary-toggle" id="moduleSummaryToggle"><span>' + (summaryCollapsed ? '&gt;' : '&or;') + '</span>' + escapeHtml(t('front.summary')) + '</button>';
+        }
+
+        $summary.html(toggle + '<div class="module-summary-items' + (summaryCollapsed ? ' is-collapsed' : '') + '">' + html + '</div>');
+    }
+
+    function numeric(value) {
+        var numberValue = Number(String(value || 0).replace(/,/g, ''));
+        return isNaN(numberValue) ? 0 : numberValue;
+    }
+
+    function renderChartSelectors() {
+        var options = [
+            ['bar', t('front.chart_bar')],
+            ['line', t('front.chart_line')],
+            ['area', t('front.chart_area')],
+            ['pie', t('front.chart_pie')],
+            ['radar', t('front.chart_radar')]
+        ];
+
+        $('.J_moduleChartType').each(function () {
+            var $select = $(this);
+            var target = $select.attr('data-chart-target');
+            var current = moduleChartTypes[target] || $select.val() || 'bar';
+            var html = '';
+
+            $.each(options, function (_, item) {
+                html += '<option value="' + item[0] + '"' + (item[0] === current ? ' selected' : '') + '>' + escapeHtml(item[1]) + '</option>';
+            });
+            $select.html(html);
+        });
+    }
+
+    function chartOption(title, values, type) {
+        var option = {
+            color: ['#2080f0', '#18a058', '#d97706', '#7c3aed', '#ef4444', '#0e7a83'],
+            tooltip: {trigger: 'item'}
+        };
+        var maxValue = Math.max.apply(null, values.map(function (item) { return numeric(item.value); }).concat([10]));
+
+        if (type === 'pie') {
+            option.legend = {bottom: 0};
+            option.series = [{
+                name: title,
+                type: 'pie',
+                radius: ['30%', '64%'],
+                center: ['50%', '48%'],
+                data: values
+            }];
+            return option;
+        }
+
+        if (type === 'radar') {
+            option.radar = {
+                indicator: values.map(function (item) {
+                    return {name: item.name, max: Math.max(maxValue, numeric(item.value) * 1.2, 10)};
+                })
+            };
+            option.series = [{name: title, type: 'radar', data: [{value: values.map(function (item) { return item.value; }), name: title}]}];
+            return option;
+        }
+
+        option.tooltip = {trigger: 'axis', axisPointer: {type: type === 'bar' ? 'shadow' : 'line'}};
+        option.grid = {left: 54, right: 18, top: 24, bottom: 38};
+        option.xAxis = {type: 'category', data: values.map(function (item) { return item.name; })};
+        option.yAxis = {type: 'value'};
+        option.series = [{
+            name: title,
+            type: type === 'area' ? 'line' : type,
+            smooth: type !== 'bar',
+            areaStyle: type === 'area' ? {opacity: 0.18} : null,
+            barWidth: type === 'bar' ? 18 : null,
+            data: values.map(function (item) { return item.value; })
+        }];
+
+        return option;
+    }
+
+    function renderCharts(summary) {
+        var i;
+        var chart;
+        var el;
+        var values;
+        var type;
+        var title;
+
+        summary = summary || {};
+        if (!chartGroups.length || typeof echarts === 'undefined') {
+            return;
+        }
+        renderChartSelectors();
+        for (i = 0; i < chartGroups.length; i++) {
+            chart = chartGroups[i] || {};
+            el = document.getElementById(chart.target);
+            if (!el) {
+                continue;
+            }
+            type = moduleChartTypes[chart.target] || chart.defaultType || 'bar';
+            moduleChartTypes[chart.target] = type;
+            title = t(chart.title || 'front.account_chart_title');
+            values = (chart.fields || []).map(function (field) {
+                return {name: t(field.label || field.key), value: numeric(getValue(summary, field.key))};
+            });
+            if (!moduleCharts[chart.target]) {
+                moduleCharts[chart.target] = echarts.init(el);
+            }
+            moduleCharts[chart.target].setOption(chartOption(title, values, type), true);
+            moduleCharts[chart.target].resize();
+        }
     }
 
     function levelClass(value) {
@@ -196,33 +311,23 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
 
     function renderChain(chain) {
         var $chain = $('#moduleChain');
-        var list = numericObjectToArray(chain) || [];
         var html = '';
         var i;
-        var node;
-        var label;
 
         if (!$chain.length) {
             return;
         }
-        if (!$.isArray(list) || !list.length) {
+        if (!clickedChain.length) {
             $chain.hide().empty();
             return;
         }
 
         html += '<span class="module-chain-title">' + escapeHtml(t('front.current_chain')) + '</span>';
-        for (i = 0; i < list.length; i++) {
-            node = list[i] || {};
-            label = (node.user_id || '-') + (node.user_name ? ' / ' + node.user_name : '');
+        for (i = 0; i < clickedChain.length; i++) {
             if (i > 0) {
                 html += '<span class="module-chain-arrow">&gt;</span>';
             }
-            html += '<span class="module-chain-node module-agent-level ' + levelClass(node.agent_level_rank) + '">';
-            html += escapeHtml(label);
-            if (node.agent_level_name) {
-                html += '<span>(' + escapeHtml(node.agent_level_name) + ')</span>';
-            }
-            html += '</span>';
+            html += '<span class="module-chain-node">' + escapeHtml(clickedChain[i]) + '</span>';
         }
 
         $chain.html(html).show();
@@ -505,7 +610,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
                     currentMeta.totalRow = payload.serverTotalRow;
                 }
                 renderSummary(payload.summary && !payload.serverTotalRow ? payload.summary : (payload.serverTotalRow || payload.summary));
-                renderChain(currentMeta.chain || payload.summary.chain || []);
+                renderCharts(payload.summary && !payload.serverTotalRow ? payload.summary : (payload.serverTotalRow || payload.summary));
+                renderChain([]);
                 renderTable(payload.rows);
                 renderPager(payload.pager);
             },
@@ -728,6 +834,15 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
             {key: 'group_name', label: 'front.group_name'},
             {key: 'group_id', label: 'front.group_id'},
             {key: 'parent_id', label: 'front.parent_agent'},
+            {key: 'total_deposit', label: 'front.total_deposit', format: 'money'},
+            {key: 'total_withdraw', label: 'front.total_withdraw', format: 'money'},
+            {key: 'total_rebate', label: 'front.total_rebate', format: 'money'},
+            {key: 'commprop', label: 'front.commission_rate'},
+            {key: 'open_order_count', label: 'front.open_order_count'},
+            {key: 'closed_order_count', label: 'front.closed_order_count'},
+            {key: 'profit_7d', label: 'front.profit_7d', format: 'money'},
+            {key: 'profit_15d', label: 'front.profit_15d', format: 'money'},
+            {key: 'profit_30d', label: 'front.profit_30d', format: 'money'},
             {key: 'last_login_ip', label: 'front.last_login_ip'},
             {key: 'last_login_at', label: 'front.last_login_at'},
             {key: 'created_at', label: 'common.created_at'}
@@ -932,8 +1047,9 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
             }
             html += '</dl></section>';
         }
-        html += '</div>';
+        html += renderUserDetailCharts(row);
         html += renderCommissionDetails(row);
+        html += '</div>';
 
         layer.open({
             type: 1,
@@ -943,6 +1059,44 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
             shade: 0.25,
             content: '<div style="padding:16px;">' + html + '</div>'
         });
+    }
+
+    function renderUserDetailCharts(row) {
+        var values = [
+            {label: 'front.total_deposit', value: getValue(row, 'total_deposit')},
+            {label: 'front.total_withdraw', value: getValue(row, 'total_withdraw')},
+            {label: 'front.total_rebate', value: getValue(row, 'total_rebate')},
+            {label: 'front.profit_7d', value: getValue(row, 'profit_7d')},
+            {label: 'front.profit_15d', value: getValue(row, 'profit_15d')},
+            {label: 'front.profit_30d', value: getValue(row, 'profit_30d')}
+        ];
+        var hasValue = values.some(function (item) {
+            return numeric(item.value) !== 0;
+        });
+        var html = '';
+
+        if (!hasValue) {
+            return '';
+        }
+
+        html += '<section class="crm-detail-section">';
+        html += '<h3>' + escapeHtml(t('front.account_chart_title')) + '</h3>';
+        html += '<div class="crm-detail-bars">';
+        var maxAbs = Math.max.apply(null, values.map(function (entry) { return Math.abs(numeric(entry.value)); }).concat([1]));
+
+        values.forEach(function (item) {
+            var value = numeric(item.value);
+            var width = Math.max(6, Math.min(100, Math.abs(value) / maxAbs * 100));
+
+            html += '<div class="crm-detail-bar">';
+            html += '<span>' + escapeHtml(t(item.label)) + '</span>';
+            html += '<strong>' + escapeHtml(value.toFixed(2)) + '</strong>';
+            html += '<i style="width:' + width + '%"></i>';
+            html += '</div>';
+        });
+        html += '</div></section>';
+
+        return html;
     }
 
     function clearNamedFilters(names) {
@@ -962,6 +1116,10 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         if (column.action === 'positionSummaryDrill') {
             if (!idValue) {
                 return;
+            }
+            if (column.chainAction) {
+                clickedChain.push(String(idValue));
+                renderChain([]);
             }
             pageState.page = 1;
             pageState.filters = $.extend({}, pageState.filters, {
@@ -1062,6 +1220,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         $('.J_moduleRecordId').val('');
         pageState.page = 1;
         pageState.filters = {};
+        clickedChain = [];
+        renderChain([]);
         form.render();
         loadData();
     });
@@ -1099,6 +1259,18 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         runColumnAction(column, row);
     });
 
+    $('#moduleSummary').on('click', '#moduleSummaryToggle', function () {
+        summaryCollapsed = !summaryCollapsed;
+        renderSummary(currentMeta.totalRow || currentMeta);
+    });
+
+    $('.J_moduleChartType').on('change', function () {
+        var target = $(this).attr('data-chart-target');
+
+        moduleChartTypes[target] = $(this).val() || 'bar';
+        renderCharts(currentMeta.totalRow || currentMeta);
+    });
+
     form.on('submit(moduleFormSubmit)', function (data) {
         var $form = $(data.form);
 
@@ -1122,6 +1294,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         if (typeof CrmDateRange !== 'undefined') {
             CrmDateRange.init($page);
         }
+        renderChartSelectors();
         form.render();
         loadData();
     }

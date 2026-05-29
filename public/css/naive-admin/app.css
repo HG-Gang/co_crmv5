@@ -1,62 +1,62 @@
 :root {
-    --crm-bg: #f4f6f8;
+    --crm-bg: #f6f9fc;
     --crm-panel: #ffffff;
-    --crm-line: #dde3ea;
+    --crm-line: #e4ebf3;
     --crm-text: #1f2328;
     --crm-muted: #667085;
     --crm-strong: #0f1720;
-    --crm-side: #151a20;
-    --crm-side-2: #202832;
-    --crm-accent: #18a058;
-    --crm-blue: #2080f0;
+    --crm-side: #0f172a;
+    --crm-side-2: #1e293b;
+    --crm-accent: #10b981;
+    --crm-blue: #3b82f6;
     --crm-warn: #f0a020;
     --crm-danger: #d03050;
-    --crm-cyan: #0e7a83;
+    --crm-cyan: #06b6d4;
 }
 
 .crm-root {
-    --crm-bg: #f4f6f8;
+    --crm-bg: #f6f9fc;
     --crm-panel: #ffffff;
-    --crm-line: #dde3ea;
+    --crm-line: #e4ebf3;
     --crm-text: #1f2328;
     --crm-muted: #667085;
     --crm-strong: #0f1720;
-    --crm-side: #151a20;
-    --crm-side-2: #202832;
-    --crm-accent: #18a058;
-    --crm-blue: #2080f0;
+    --crm-side: #0f172a;
+    --crm-side-2: #1e293b;
+    --crm-accent: #10b981;
+    --crm-blue: #3b82f6;
     --crm-warn: #f0a020;
     --crm-danger: #d03050;
-    --crm-cyan: #0e7a83;
+    --crm-cyan: #06b6d4;
 }
 
 .crm-skin-light,
 .crm-skin-emerald {
-    --crm-bg: #f4f6f8;
+    --crm-bg: #f6f9fc;
     --crm-panel: #ffffff;
-    --crm-line: #dde3ea;
+    --crm-line: #e4ebf3;
     --crm-text: #1f2328;
     --crm-muted: #667085;
     --crm-strong: #0f1720;
-    --crm-side: #151a20;
-    --crm-side-2: #202832;
-    --crm-accent: #18a058;
-    --crm-blue: #2080f0;
+    --crm-side: #0f172a;
+    --crm-side-2: #1e293b;
+    --crm-accent: #10b981;
+    --crm-blue: #3b82f6;
     --crm-warn: #f0a020;
     --crm-danger: #d03050;
-    --crm-cyan: #0e7a83;
+    --crm-cyan: #06b6d4;
 }
 
 .crm-skin-dark {
-    --crm-bg: #111827;
-    --crm-panel: #182230;
-    --crm-line: #2b3647;
-    --crm-text: #e5e7eb;
+    --crm-bg: #0b1120;
+    --crm-panel: #111827;
+    --crm-line: #273549;
+    --crm-text: #dbeafe;
     --crm-muted: #a3abb8;
     --crm-strong: #f8fafc;
-    --crm-side: #080c12;
-    --crm-side-2: #121a26;
-    --crm-accent: #22c55e;
+    --crm-side: #020617;
+    --crm-side-2: #0f172a;
+    --crm-accent: #2dd4bf;
     --crm-blue: #60a5fa;
     --crm-warn: #f59e0b;
     --crm-danger: #fb7185;
@@ -65,15 +65,15 @@
 
 .crm-skin-sea,
 .crm-skin-blue {
-    --crm-bg: #eef7fb;
+    --crm-bg: #eef9ff;
     --crm-panel: #ffffff;
-    --crm-line: #bfd8e6;
+    --crm-line: #cbe4f2;
     --crm-text: #153443;
     --crm-muted: #55707d;
     --crm-strong: #082f49;
-    --crm-side: #073447;
-    --crm-side-2: #0d4f68;
-    --crm-accent: #0891b2;
+    --crm-side: #082f49;
+    --crm-side-2: #0c4a6e;
+    --crm-accent: #06b6d4;
     --crm-blue: #2563eb;
     --crm-cyan: #0f766e;
     --crm-warn: #b45309;
@@ -82,15 +82,15 @@
 
 .crm-skin-warm,
 .crm-skin-amber {
-    --crm-bg: #f8f3ed;
-    --crm-panel: #fffdf9;
-    --crm-line: #e4d5c4;
+    --crm-bg: #fff7ed;
+    --crm-panel: #fffcf7;
+    --crm-line: #f0dcc3;
     --crm-text: #34261d;
     --crm-muted: #7a685a;
     --crm-strong: #24170f;
-    --crm-side: #30251e;
-    --crm-side-2: #44342a;
-    --crm-accent: #b45309;
+    --crm-side: #292524;
+    --crm-side-2: #44403c;
+    --crm-accent: #f97316;
     --crm-blue: #1d4ed8;
     --crm-cyan: #0f766e;
     --crm-warn: #d97706;
@@ -555,8 +555,11 @@ select {
     height: 32px;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 0 9px;
+    justify-content: center;
+    gap: 0;
+    position: relative;
+    width: 34px;
+    padding: 0;
     border: 1px solid color-mix(in srgb, var(--crm-accent) 58%, var(--crm-line));
     border-radius: 8px;
     color: var(--crm-strong);
@@ -600,12 +603,15 @@ select {
 }
 
 .crm-skin-select select {
+    position: absolute;
+    inset: 0;
     height: 24px;
     border: 0;
     color: var(--crm-strong);
     background: transparent;
     font-weight: 700;
     cursor: pointer;
+    opacity: 0;
 }
 
 .crm-plain-field {
@@ -1137,8 +1143,8 @@ select {
 
 .crm-chart-card {
     min-width: 0;
-    min-height: 242px;
-    padding: 14px;
+    min-height: 218px;
+    padding: 12px;
     border: 1px solid #dfe6ee;
     border-radius: 8px;
     background: #ffffff;
@@ -1174,7 +1180,7 @@ select {
 
 .crm-chart-canvas {
     width: 100%;
-    height: 172px;
+    height: 148px;
 }
 
 .crm-chart-type {
@@ -1249,6 +1255,29 @@ select {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+}
+
+.crm-table-summary.is-collapsed {
+    display: none;
+}
+
+.crm-summary-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 30px;
+    margin: 12px 16px 0;
+    padding: 0 12px;
+    color: var(--crm-text);
+    background: var(--crm-panel);
+    border: 1px solid var(--crm-line);
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.crm-summary-toggle span {
+    color: var(--crm-primary);
+    font-weight: 800;
 }
 
 .crm-table-summary span,

@@ -26,6 +26,24 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
         return isNaN(numberValue) ? '0.00' : numberValue.toFixed(2);
     }
 
+    function renderMockSummary() {
+        var html = '';
+        var items = [
+            {label: t('front.today_withdraw'), value: 6200.00},
+            {label: t('front.pending_count'), value: 4, text: true},
+            {label: t('front.week_withdraw'), value: 41580.25},
+            {label: t('front.average_amount'), value: 2450.50}
+        ];
+
+        items.forEach(function (item, index) {
+            html += '<div class="crm-table-summary-item summary-color-' + (index % 8) + '">';
+            html += '<span>' + item.label + '</span>';
+            html += '<strong>' + (item.text ? item.value : money(item.value)) + '</strong>';
+            html += '</div>';
+        });
+        $('#withdrawMockSummary').html(html);
+    }
+
     function bankNo(value) {
         value = String(value || '');
         return value.length > 4 ? value.replace(/.(?=.{4})/g, '*') : value;
@@ -256,6 +274,7 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
     $('#withdrawSearchReset').on('click', function () {
         $('#withdrawSearchForm')[0].reset();
         form.render();
+        renderMockSummary();
         renderHistoryTable();
     });
 
@@ -267,6 +286,7 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
             CrmDateRange.init($('.withdraw-page'));
         }
         form.render();
+        renderMockSummary();
         loadPageConfig();
         renderHistoryTable();
     }

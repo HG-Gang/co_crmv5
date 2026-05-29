@@ -7,7 +7,7 @@ var LANG_DATA = {
     'confirm_password': 'Confirm Password',
     'username': 'Username',
     'phone': 'Phone Number',
-    'phone_invalid': 'Invalid phone number',
+    'phone_invalid': 'Phone number must be 12-20 digits',
     'id_card_no': 'ID Card No.',
     'id_card_required': 'Please enter ID card number',
     'email_code': 'Email Code',

@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'dashboard' => '控制台',
+    'users' => '用户管理',
+    'user_detail' => '用户详情',
+    'agents' => '代理管理',
+    'customers' => '客户管理',
+    'deposit' => '入金管理',
+    'withdraw' => '出金管理',
+    'commission' => '返佣管理',
+    'system' => '系统管理',
+    'roles' => '角色管理',
+    'permissions' => '权限管理',
+    'menus' => '菜单管理',
+    'settings' => '系统设置',
+    'logs' => '日志管理',
+    'news' => '新闻管理',
+    'payment_channels' => '支付通道',
+    'big_agents' => '大股东管理',
+    'risk_control' => '风控管理',
+    'groups' => '分组管理',
+    'levels' => '等级管理',
+    'blacklist' => '黑名单',
+    'role' => '角色',
+    'member_since' => '注册时间 ...',
+];

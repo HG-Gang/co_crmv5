@@ -1,0 +1,182 @@
+旧项目地址：D:\Php-project\Php\new_co_gmtk_crmV3
+新项目地址：D:\Software\PhpProject\Demo\co_crmv5
+新项目的所有功能逻辑必须全部且完整正确的替代旧项目所有前后端逻辑包括数据库的重构
+新框架laravel v8.83.2,php>=7.4,mysql8.0
+1. 我现在有个laravel5.1项目，使用的layui和H-ui，mysql8.0
+2. 现在我需要完全重构该项目,使用laravel8.x,php7.4该项目
+3. resources 目录分别建立admin和front目录分别为后台和前端
+4. web端我需要参考url：https://github.com/jekip/naive-ui-admin,使用laravel的blade 来写,现有项目new_co_gmtk_crmv3使用了layui，要求数据表格table增加一套使用该组件.用于动态灵活切换风格。且使用layui最新版本
+5. 数据表方面，用户这块分为user_login，user_info,user_login_log这几个表进行auth及记录用户信息
+5. user 分为代理商和普通客户，代理商的user_id 非自增是从某一个字段数字开始增的例如1001
+6. 普通用户则从指定数字自增即可
+7. 代理商和普通用户之间的关系需要记录（这是非常核心的逻辑），就是记录当前用户的所有上级的链路
+8. 代理商也分上下级关系，层级不固定，假如1001->1002->1003->1004->1005->1006,关系字段使用逗号间隔
+9. 加入普通客户是600001，他的上级是1006，那么他的关系字段则是1001->1002->1003->1004->1005->1006->600001，详细查看旧项目DB hank_zl_data.user,和agents 的 family_tree字段的值
+10.新的项目名称为并在目录D:\Software\PhpProject\Demo\co_crmv5
+11. 要求当前项目先完整的构建出整个前台用户和后台管理登录认证，前后台布局，注册，登录，修改密码，修改用户信息，用户信息必须有上传逻辑模块
+上传到本地storage\app\public 目录下，并创建软连接
+12. 还需要新增一个独立数据表，用于记录任意一代理商id 所有直接和间接用户代理及直接和间接普通客户
+13. 详细理解现有项目的代码逻辑，新的重构项目还必须支持多语言。这是非常核心且不可缺少的逻辑
+14. 以下是给出现有数据表表结构，要求重新创建新的数据库，建立新的相关数据表，以现有的表结构重构
+15 .旧的表结构如下
+16. 仔细阅读并理解gmtk_crmv3 user 的 注册逻辑，这里的注册逻辑非常复杂，不是简简单单的注册，具体逻辑阅读App\Http\Middleware\RegisterEnMiddleware 文件及user.register.register_en前端页面逻辑和配套的jS逻辑
+js/formevent/formevent2.js，js/plugins/layui/layadmin/modul/login/register_gmtk.js，js/formevent/form.core.js
+17. 要求 user_login，user_info,user_login_log，及新增记录关系的表的所有相关逻辑必须
+完全符合且正确的拆分了现在的表admin,user表所有业务逻辑
+18. 本地新增创建数据库 co_crmv5，本地使用phpstudy_pro，数据库，root,用户root,密码123456，端口3307
+19. 要求的是前台front和后台admin 分别写两套风格不同的 ui 代码，
+分别参考layui.dev 最新版2.13.5及github的 naiveuiadmin https://github.com/jekip/naive-ui-admin,或者是gitee 的 
+https://gitee.com/Ahjung/naive-ui-admin
+20. 在resources 目录建立admin和front 及分别在这两个目录新增naui和layui目录用于存放各种的两套代码逻辑
+21. 原系统new_co_gmtk_crmV3 最核心的逻辑分别是
+	21.1前端用户注册，涉及到用户层级，代理商和用户返佣比例，相关文件
+	User\RegisterController@registerinto
+	中间件：RegisterEnMiddleware，RegisterGmtkCnEnMiddleware，RegisterMiddleware
+	21.2 实时返佣
+	User\PositionSummaryController@realTimerealTimeV2
+	21.3 仓位总结
+	User\PositionSummaryController@positionSummarySearch
+	User\PositionSummaryController@subPositionSummarySearch
+	User\PositionSummaryController@positionSummaryClickSearch
+	21.4 代理直属客户，代理商相关统计
+22. 后台同理,就是各种数据统计汇总，代理商和普通用户信息的审核更新变更及注销，及返佣比例，出入金审核，组别配置，仓位总结，支付通道管理，大代理管理，风险管控，用户权益配置
+角色管理，管理员登录及日志记录，产品消息，开和关仓单的数据展示，和管理员及相关权限配置，以及其他配置和辅助管理模块
+23. 本新系统要求权限配置到具体按钮上，务必涉及好权限系统
+24. 还有本系统前端所有验证提示语必须支持多语言，动态配置和切换，相关文件比如js都必须归类管理好，通用文件和具体页面独立js文件的写法，最好是参考layui的 layui.use 思想
+25. 新项目co_crmv5必须要完全且完整的正确实现旧系统new_co_gmtk_crmV3前后台所有功能模块，不得有任何遗漏
+26. 最后所有更改的记录必须写在一个ymdhis_chang.md 的文件中
+27. 最核心的是前后台不管是普通用户代理商还是后台管理员，都必须是单点登录模式。
+28. 前端也有必要的需要支持多语言文件，不能把所有多语言都写在后台，必然前端必要的验证提示和各种提示框
+29. 前后台的响应为json 格式，且标准如下：
+{
+	"code":1000,// 改字段返回php各种错误代号
+	"message":"",//对应代号提示语，必须支持多语言
+	"data":{}, 统一为对象
+}
+30. 路由文件分为 admin.php 和 front.php 文件在 routes目录下。
+31. 前后台验证要求使用JWT验证，而非session,且必须支持单点登录
+32. 后台权限必须分为 admin 和front 的权限，分别控制到菜单页面的具体按钮上
+33. 数据表必须有这样配套所有相关表结构和php相关完整且正确带详细注释的代码逻辑。
+34. 前后台UI必须实现两套navi-ui-admin
+=============以下是在现有co_crmv5中必须改进和========================
+1. resources目录下，admin和front所有blade.php页面用到的JS 必须规范到相应的独立JS 文件中去,blade.php页面仅负责构建页面和布局
+2. 所有模型文件必须继承一个独立共用的基础模型文件，该文件中 protected $guarded = []; protected $hidden = ['deleted_at'];protected $primaryKey = 'id';SoftDeletes 软删除，
+3. 所有数据表都必须包含created_at,updated_at,deleted_at ，且字段类型是10位时间戳类型
+4. 前台front核心注册逻辑参考 new_co_gmtk_crmV3\resources\views\user\register\register_gmtk_v2.blade.php 及相关register_gmtk.js JS文件，中间件文件参考RegisterEnMiddleware，RegisterGmtkCnEnMiddleware逻辑
+5. 所有页面的代码必须有详细的注释，且解释每行每个参数每个方法的使用和功能作用，注释必须详细，不得省略和遗漏
+6. 路由文件，admin.php和front.php 文件内部的路由书写规则是Route::post('字符串url','字符串action')->name(''),例如
+	Route::post('/register', 'AuthController@register')->name('front_api_register');
+7. 所有路由的定义基本是get和post，除以下特殊接口需要使用{}这种方式传参外，其他一律使用post接口请求，任何接口的请求都必须检查当前用户是否具有改接口的调用权限
+8. 接口的所有code都必须提前预定号，使用const 常量标注
+9. 前后台登录成功后，所有菜单及权限都必须从数据表动态读取，菜单支持无限子菜单
+10. 所有接口的定义必须遵从驼峰命名，要求见名之意的接口地址
+11. 前后台jwt的生成我还将增加一个自定义盐值字符串，增加破解难道,这个不知是否可行。
+
+重要提醒：不需要生成可执行SQL文件了，变更日志也不再记录
+===================以下是优先最新要求，先完成新系统前后台基础布局和权限及用户信息更新逻辑，把基础框架布局先搭好，并继续 现在让我读取关键的核心文件来了解当前实现状态。=============================
+1.先把前后台使用layui和navi-ui-admin 两种风格的登录成功后页面布局框架搭好
+2.优先先把前端登录，注册，及用户信息修改包括改密码，改邮箱，手机号，上传头像和各种文件逻辑
+3.再把后台登录后的整体布局和dashboard页面各种统计数据逻辑写好，还有修改用户各种信息的和前端一样
+4.前端核心注册逻辑register_gmtk.js，form.core.js,register_gmtk.blade.php,messagesjs,(User\RegisterController@registerinto)user/register/registerinto
+5.前后端所有blade.php 页面的JS 全部写入独立的JS 文件中去,js目录下的文件包括公共js及不同页面独立js文件，layui和navi两套页面js独立开写
+6.全面生成所有新项目全新数据表结构，写入一个sql可执行文件中,并详细注释清楚字段逻辑注释
+7.不再生成变更日志记录。 
+8.全面实现前后台菜单权限也表结构逻辑配套的，菜单无限级别支持，权限支持控制到具体按钮上。
+========================第四次新的需求======================
+特别重要提醒：mysql 127.0.0.1 ，root, 3307 db:co_crmv5
+A:完成后不需要进行进度总结说明。
+B:暂停前端所有admin和front的naui开发,找一个替代的，能使用laravel的blade模版渲染的前端ui-admin,
+C:当前开发者前端会使用的技术栈：php，laravel,blade,js,html,不是很擅长vue一类的框架,是一个人开发团队.
+D:希望替代的前端框架文档和例子齐全,能快速上手改进。
+E:替代的前端框架必须完美自适应PC和各种移动端，比如phone，ipad,等等。
+F:要求前端不需要编译的
+1. routes目录下，admin,web,front 路由 增加多层命名空间，namespace，具体路由仅定义路由和处理的控制器名@方法名
+2. 在当前根目录执行命令将表结构写入cro_crmv5,填充前后台登录，菜单数据用于测试
+3. layui 使用v2.13.5
+4. 项目已部署，test.cocrmv5.com:86，测试前后台登录，后查看前后台基本布局dashboard页面
+5. 所有控制器全部 use ApiResponse，这不是很好，要求前后台各新增一个基类Controller，使用 ApiResponse，然后各控制器继承即可
+6. 前台所有不需要登录验证的文件都需要多语言支持，并且在切换语言时，动态使用js切换,参考旧项目使用 data-translate 自定义属性
+7. window.i18n 多语言，不希望挂在window对象下，改为定义一个全局变量进行挂载获使用其他更好的方法
+8. 所有blade.php使用的第三方js都必须下载到本地进行引用
+9. 新的前台代理和普通用户注册逻辑感觉没完全替换旧new_co_gmtk_crmv3前台RegisterController@registerinto,RegisterGmtkCnEnMiddleware,，js/formevent/form.core.js，translations.js，messages.js，register_gmtk.js
+10. 参考旧Mt4ManagerApi文件，重新写信的Mt4ManagerApi 门面所有相关逻辑
+11. 旧项目路径：D:\Software\PhpProject\Demo\new_co_gmtk_crmv3
+========================第五次新的需求======================
+1. 先根据旧项目 D:\Software\PhpProject\Demo\new_co_gmtk_crmv3  本地数据库 DB:hank_zl_data,root 123456,3307
+2. 先填充前后台所有菜单数据到本地新DB co_crmv5 相关表中，完善所有相关多语言的key的和所有相关普通用户和代理商和后台动态权限分配问题
+3. 先分析旧项目D:\Php-project\Php\new_co_gmtk_crmV3\app\Http\Controllers\User 普通用户的所有功能模块并一一完成
+4. 完成前台front所有用户相关模块的功能逻辑
+5. 前后台所有不需要登录验证的页面的多语言切换功能全部使用JS 动态实现切换，不要走路由
+========================第六次新的需求======================
+1. 测试发现，前后台无法成功登录
+2. 前台普通用户和代理商登录需支持使用email和userId两种登录方式
+3. 前后台不要登录验证的页面在切换多语言时，好像依然重新刷新了JS 加载，这不是我想要的，我希望JS 不要再次重新加载
+4. 删除前后台所有naui相关的文件和文件夹和相关文件的逻辑
+5. 规范public/js/common 目录下所有文件的归档
+6. 继续优先完成前台所有未完成的逻辑
+========================第六次新的需求======================
+1. 继续分析问题，执行未完成的逻辑
+2. 优先完美复刻旧项目前端代理商和普通用户的所有逻辑
+3. 继续优先完善 前台代理商和普通用户及后台admin的所有权限逻辑
+4. 旧项目地址：D:\Software\PhpProject\Demo\new_co_gmtk_crmv3
+========================第七次新的需求======================
+接下来需要继续 完善 前台 其他所有功能，
+1. 要求把参考的旧项目前台所有的功能模块全部在新的co_crmv5 这里全部一比一的完整且正确是实现，要求是需要详细的代码逻辑注释
+2. 前后台所有不需要登录验证的逻辑的页面 的多语言设置，再切换多语言时，不能走 路由切换，必须由相关js 实现切换多语言逻辑。
+4. 前后台所有blade 的页面的JS 必须 由 layui 或者 JQuery  语法实现，不能 有类似这种 document.的写法
+5. 所有PHP 语法必须完全兼容 php7.4 的写法，不能有这种 $userInfo?写法
+6. 前台后台所有blade 页面的 文字必须 是通过 多语言或者php laravel 的trans 或者 __（）方法实现的，在模版页面blade，不能出现中文或者其他语言固定写死的
+7. 检查数据库，所有相关表结构，是否合理，并 参考 就的数据库 hank_zl_data 完善新的数据库相关表结构字段。
+========================第八次新的需求======================
+1. 前台登录成功后，菜单没有对应的文字，目前依然显示的key
+2. 前台所有功能都没有实现
+3. front,admin 路由 的别名 ->name(),全部使用 下划线，front_api_submitVoucher，不能使用 front.api.uploadFile，
+4. 前台 DashboardController 首页 需要重新 获取 以下这些客户或者代理商对应的
+	【尊贵的客户：网址分享,返佣比例,总返佣金额,设备下载PC和移动端,下属（直接间接）代理，客户,近1个月充值/出金,近1个月已平未平,近1个月返佣金额】数据。这些参考旧项目前端的首页并进行完整的补充
+========================第九次新的需求======================
+1. 测试发现前台所有相关功能并未实现旧项目的所有功能，要求是必须完完全全且无误并且有详细的代码逻辑注释
+2. 前台blade模版页面所有按钮操作的请求接口都未能实现
+3. 前后台所有table列表逻辑参考旧项目common.js, tableCommon.js 文件，将所有共有的相同逻辑及基础配置写成独立js,depositPageCore,payChannelManager 同理
+4. 前台 DashboardController 首页 需要重新 获取 以下这些客户或者代理商对应的
+	【尊贵的客户：网址分享,返佣比例,总返佣金额,设备下载PC和移动端,下属（直接间接）代理，客户,近1个月充值/出金,近1个月已平未平,近1个月返佣金额】数据。这些参考旧项目前端的首页并进行完整的补充
+5.前后台所有blade页面引用的JS 必须使用 这种 <script src="{{ asset('/js/front/layui/auth/login.js') }}"></script> 格式写法。
+========================第十次新的需求======================
+1. 前台每一个blade的table所有显示字段和请求接口数据逻辑都不一样，当前都显示一样，是错误的
+必须 详细查看旧项目 D:\Software\PhpProject\Demo\new_co_gmtk_crmv3\resources\views\user\ 目录下所有 _v2.blade.php 页面
+并在新的项目前台对应的模块完成旧项目每一个模块相关的逻辑
+2. 前台首页同理
+3. 新项目的入金必须完整的实现旧项目前台入金页面 user.user_deposit.user_deposit_browse_v8，的逻辑，这里需要仔细阅读旧项目这个页面的逻辑
+4. 前台所有blade.php 页面的输入框给出合理的宽度，不要满屏
+========================第十一次新的需求======================
+新项目：D:\Software\PhpProject\Demo\co_crmv5
+旧项目：D:\Software\PhpProject\Demo\new_co_gmtk_crmv3
+数据库DB co_crmv5，hank_zl_data， root, 123456,3307,mysql81. 每个blade 页面 不需要这个 blockquote 元素
+2. 在每一个blade 都必须指明当前 页面菜单路径，比如  个人中心->个人资料
+3. 当前登录成功后，点击每一个菜单，貌似整个页面都在刷新一遍，这是不对的，页面的布局 上 左 右 结构， 点击 坐标菜单，仅 右边 页面 变化，就是使用iframe 框架模式
+4. 我需要模拟数据，数据从 旧项目数据表 参考生成
+5. 前端每一个菜单的图标都是一样的，这是不对的。
+6. 前端所有blade 排版都不是很好，希望能优化，并且是每一个页面都必须优化改进。
+7. 前端 还是有很多blade 页面 的table 都没有完全按照  旧项目的 对应页面进行改进过来，这点必须要实现，在新的项目上
+========================第十二次新的需求======================
+新项目：D:\Software\PhpProject\Demo\co_crmv5
+旧项目：D:\Software\PhpProject\Demo\new_co_gmtk_crmv3
+数据库DB co_crmv5，hank_zl_data， root, 123456,3307,mysql81. 每个blade 页面 不需要这个 blockquote 元素
+1. 前台登录成功login_sucess,不是对应语言的提示语，检查所有 key ，是否都匹配了 中英对应的值
+2. 所有 blade 页面不需要 front-frame-topbar div
+3. 个人中心 四个菜单合并为一个，用户信息，直接更改保存，并且保存都报错，包括上传头像
+4. 个人中心增加身份证号，并且 手机号，身份证号，邮箱 进行脱敏
+5. 更改邮箱必须先输入完整手机号和完整邮箱地址，验证通过则继续修改，反之提示
+6. 账户综合菜单重复，要求合并为一个菜单
+7. 出入金，交易记录，代理管理,返佣管理所有table都必须有汇总，参考旧项目对应模块逻辑
+8. 持仓订单用户ID 和订单ID 分别使用不同的着色，点开的弹框宽高都必须自适应多端
+9. 当前整个系统也必须自适应多端CSS，这是硬性条件！
+10.全面查看旧项目数据库DBhank_zl_data，模拟数据到当前新系统。
+========================第十二次新的需求======================
+root,3307,123456
+新项目：D:\Software\PhpProject\Demo\co_crmv5  DB: co_crmv5
+旧项目：D:\Software\PhpProject\Demo\new_co_gmtk_crmv3 DB:hank_zl_data
+1. 仔细且非常详细的阅读旧项目前台 user 目录下所有.blade.php 页面的逻辑
+然后详细的完善新项目的前端front所有模块的页面逻辑
+2. 详细读取新旧DB所有相关数据，完善新项目DB缺失或不正确的数据
+3. 优先先参考旧项目的所有前端逻辑并详细补齐新项目front所有模块的逻辑，并且所有页面的字段都必须完善多语言动态支持
+========================第十三次新的需求======================

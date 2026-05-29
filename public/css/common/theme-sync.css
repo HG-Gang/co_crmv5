@@ -1,0 +1,182 @@
+:root {
+    --crm-theme-bg: #f4f6f8;
+    --crm-theme-panel: #ffffff;
+    --crm-theme-line: #dde4ec;
+    --crm-theme-text: #1f2933;
+    --crm-theme-muted: #667085;
+    --crm-theme-strong: #111827;
+    --crm-theme-side: #151b23;
+    --crm-theme-side-soft: #202a35;
+    --crm-theme-accent: #18a058;
+    --crm-theme-blue: #2080f0;
+    --crm-theme-hover: #f8fbff;
+    --crm-theme-input: #ffffff;
+}
+
+html[data-front-theme="dark"] {
+    --crm-theme-bg: #101418;
+    --crm-theme-panel: #181f26;
+    --crm-theme-line: #2b3742;
+    --crm-theme-text: #d7dee8;
+    --crm-theme-muted: #94a3b8;
+    --crm-theme-strong: #f8fafc;
+    --crm-theme-side: #0b1015;
+    --crm-theme-side-soft: #151d26;
+    --crm-theme-accent: #2dd4bf;
+    --crm-theme-blue: #60a5fa;
+    --crm-theme-hover: #202b36;
+    --crm-theme-input: #111820;
+}
+
+html[data-front-theme="sea"] {
+    --crm-theme-bg: #eef7fb;
+    --crm-theme-panel: #ffffff;
+    --crm-theme-line: #bfd8e6;
+    --crm-theme-text: #153443;
+    --crm-theme-muted: #55707d;
+    --crm-theme-strong: #082f49;
+    --crm-theme-side: #073447;
+    --crm-theme-side-soft: #0d4f68;
+    --crm-theme-accent: #0891b2;
+    --crm-theme-blue: #2563eb;
+    --crm-theme-hover: #e8f7ff;
+}
+
+html[data-front-theme="warm"] {
+    --crm-theme-bg: #f8f3ed;
+    --crm-theme-panel: #fffdf9;
+    --crm-theme-line: #e4d5c4;
+    --crm-theme-text: #34261d;
+    --crm-theme-muted: #7a685a;
+    --crm-theme-strong: #24170f;
+    --crm-theme-side: #30251e;
+    --crm-theme-side-soft: #44342a;
+    --crm-theme-accent: #b45309;
+    --crm-theme-blue: #1d4ed8;
+    --crm-theme-hover: #fff4e6;
+    --crm-theme-input: #fffaf3;
+}
+
+html[data-front-theme="contrast"] {
+    --crm-theme-bg: #000000;
+    --crm-theme-panel: #ffffff;
+    --crm-theme-line: #000000;
+    --crm-theme-text: #000000;
+    --crm-theme-muted: #1f2937;
+    --crm-theme-strong: #000000;
+    --crm-theme-side: #000000;
+    --crm-theme-side-soft: #111111;
+    --crm-theme-accent: #ffcc00;
+    --crm-theme-blue: #005fcc;
+    --crm-theme-hover: #fff7cc;
+}
+
+html[data-front-theme] body {
+    background: var(--crm-theme-bg);
+    color: var(--crm-theme-text);
+}
+
+html[data-front-theme] .front-header,
+html[data-front-theme] .naui-header,
+html[data-front-theme] .card,
+html[data-front-theme] .login-card,
+html[data-front-theme] .register-card,
+html[data-front-theme] .login-box,
+html[data-front-theme] .wrap .card,
+html[data-front-theme] .stat-box,
+html[data-front-theme] .naui-card,
+html[data-front-theme] .content-card,
+html[data-front-theme] .main-header,
+html[data-front-theme] .main-footer,
+html[data-front-theme] .dropdown-menu {
+    background: var(--crm-theme-panel) !important;
+    color: var(--crm-theme-text);
+    border-color: var(--crm-theme-line) !important;
+}
+
+html[data-front-theme] .front-main,
+html[data-front-theme] .admin-main,
+html[data-front-theme] .naui-content,
+html[data-front-theme] .content-wrapper {
+    background: var(--crm-theme-bg) !important;
+    color: var(--crm-theme-text);
+}
+
+html[data-front-theme] .admin-header,
+html[data-front-theme] .admin-sidebar,
+html[data-front-theme] .naui-sidebar {
+    background: var(--crm-theme-side) !important;
+    color: #eef2f6;
+    border-color: var(--crm-theme-side-soft) !important;
+}
+
+html[data-front-theme] .front-header .logo,
+html[data-front-theme] .admin-header .logo,
+html[data-front-theme] .card h3,
+html[data-front-theme] .login-card .logo h1,
+html[data-front-theme] .register-card .logo h1,
+html[data-front-theme] .login-box h2,
+html[data-front-theme] .logo-area h1,
+html[data-front-theme] .admin-main .page-header h2,
+html[data-front-theme] .stat-item .stat-number,
+html[data-front-theme] .naui-sidebar .logo {
+    color: var(--crm-theme-strong) !important;
+}
+
+html[data-front-theme] .admin-header .logo,
+html[data-front-theme] .admin-header .header-right a,
+html[data-front-theme] .admin-header .header-right span {
+    color: #eef2f6 !important;
+}
+
+html[data-front-theme] .front-header .nav-links a,
+html[data-front-theme] .front-header .user-name,
+html[data-front-theme] .front-header .lang-btn,
+html[data-front-theme] .login-card .logo p,
+html[data-front-theme] .register-card .logo p,
+html[data-front-theme] .card-desc,
+html[data-front-theme] .form-group label,
+html[data-front-theme] .dropdown-item,
+html[data-front-theme] .nav-link,
+html[data-front-theme] .naui-menu-item {
+    color: var(--crm-theme-text) !important;
+}
+
+html[data-front-theme] .front-header .nav-links a:hover,
+html[data-front-theme] .front-header .nav-links a.active,
+html[data-front-theme] .dropdown-item.active,
+html[data-front-theme] .dropdown-item:hover,
+html[data-front-theme] .nav-link.active,
+html[data-front-theme] .naui-menu-item:hover,
+html[data-front-theme] .naui-menu-item.active {
+    color: var(--crm-theme-blue) !important;
+    background: var(--crm-theme-hover) !important;
+}
+
+html[data-front-theme] input,
+html[data-front-theme] select,
+html[data-front-theme] textarea,
+html[data-front-theme] .naui-input {
+    background: var(--crm-theme-input);
+    color: var(--crm-theme-text);
+    border-color: var(--crm-theme-line);
+}
+
+html[data-front-theme] .table,
+html[data-front-theme] .layui-table,
+html[data-front-theme] .naui-table,
+html[data-front-theme] .naui-table th,
+html[data-front-theme] .naui-table td {
+    color: var(--crm-theme-text);
+    border-color: var(--crm-theme-line);
+}
+
+html[data-front-theme] .naui-table th,
+html[data-front-theme] .table thead th {
+    background: var(--crm-theme-hover);
+    color: var(--crm-theme-strong);
+}
+
+html[data-front-theme] a {
+    color: var(--crm-theme-blue);
+}

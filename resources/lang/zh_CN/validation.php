@@ -1,0 +1,38 @@
+<?php
+return [
+    'accepted' => ':attribute 必须接受。',
+    'active_url' => ':attribute 不是一个有效的网址。',
+    'after' => ':attribute 必须要晚于 :date。',
+    'alpha' => ':attribute 只能由字母组成。',
+    'alpha_dash' => ':attribute 只能由字母、数字、短划线和下划线组成。',
+    'alpha_num' => ':attribute 只能由字母和数字组成。',
+    'array' => ':attribute 必须是一个数组。',
+    'before' => ':attribute 必须要早于 :date。',
+    'between' => [
+        'numeric' => ':attribute 必须介于 :min - :max 之间。',
+        'file' => ':attribute 必须介于 :min - :max KB 之间。',
+        'string' => ':attribute 必须介于 :min - :max 个字符之间。',
+        'array' => ':attribute 必须只有 :min - :max 个单元。',
+    ],
+    'boolean' => ':attribute 是否必须为布尔值。',
+    'confirmed' => ':attribute 两次输入不一致。',
+    'date' => ':attribute 不是一个有效的日期。',
+    'email' => ':attribute 不是一个有效的邮箱。',
+    'exists' => '选中的 :attribute 无效。',
+    'image' => ':attribute 必须是图片。',
+    'integer' => ':attribute 必须是整数。',
+    'max' => [
+        'numeric' => ':attribute 不能大于 :max。',
+        'file' => ':attribute 不能大于 :max KB。',
+        'string' => ':attribute 不能大于 :max 个字符。',
+        'array' => ':attribute 最多只有 :max 个单元。',
+    ],
+    'min' => [
+        'numeric' => ':attribute 必须大于等于 :min。',
+        'file' => ':attribute 必须大于等于 :min KB。',
+        'string' => ':attribute 至少为 :min 个字符。',
+        'array' => ':attribute 至少有 :min 个单元。',
+    ],
+    'required' => ':attribute 不能为空。',
+    'unique' => ':attribute 已经存在。',
+];

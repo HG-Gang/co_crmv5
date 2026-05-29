@@ -34,5 +34,5 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('/js/front/layui/module-page.js') }}?v=2026052907"></script>
+<script src="{{ asset('/js/front/layui/module-page.js') }}?v=2026052911"></script>
 @endsection

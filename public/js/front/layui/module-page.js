@@ -9,10 +9,11 @@
  * Keeping this logic in one Layui/jQuery file prevents repeated inline Blade JS
  * and keeps public text controlled by the language packs.
  */
-layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
+layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     var $ = layui.jquery;
     var layer = layui.layer;
     var form = layui.form;
+    var laydate = layui.laydate;
     var laypage = layui.laypage;
     var $page = $('#frontModulePage');
 
@@ -189,6 +190,45 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         }
 
         $summary.html(toggle + '<div class="module-summary-items' + (summaryCollapsed ? ' is-collapsed' : '') + '">' + html + '</div>');
+    }
+
+
+    function initDatePickers() {
+        if (!laydate || !laydate.render) {
+            return;
+        }
+        $('.J_layDate').each(function () {
+            var el = this;
+            if ($(el).data('crmLaydateReady')) {
+                return;
+            }
+            $(el).data('crmLaydateReady', true);
+            laydate.render({ elem: el, trigger: 'click', type: 'date' });
+        });
+    }
+
+    function initEnhancedUpload() {
+        $('.J_crmUploadInput').each(function () {
+            var input = this;
+            var $input = $(input);
+            var id = $input.attr('id');
+            var $list = $('#' + id + '_list');
+            if ($input.data('crmUploadReady')) {
+                return;
+            }
+            $input.data('crmUploadReady', true);
+            $('#' + id + '_trigger').on('click', function () {
+                input.click();
+            });
+            $input.on('change', function () {
+                var files = input.files || [];
+                var html = '';
+                for (var i = 0; i < files.length; i++) {
+                    html += '<span class="crm-upload-chip"><i class="layui-icon layui-icon-picture"></i><span>' + escapeHtml(files[i].name) + '</span></span>';
+                }
+                $list.html(html);
+            });
+        });
     }
 
     function numeric(value) {
@@ -381,6 +421,44 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         return formatValue(value);
     }
 
+    function parseImages(value) {
+        var parsed;
+
+        if (!value) {
+            return [];
+        }
+        if ($.isArray(value)) {
+            return value.filter(Boolean);
+        }
+        if (typeof value === 'string') {
+            try {
+                parsed = JSON.parse(value);
+                if ($.isArray(parsed)) {
+                    return parsed.filter(Boolean);
+                }
+            } catch (e) {}
+            return value.split(',').map(function (item) {
+                return $.trim(item);
+            }).filter(Boolean);
+        }
+
+        return [];
+    }
+
+    function imageCellHtml(row, column) {
+        var value = getValue(row, column.displayKey || column.key);
+        var images = /(^|_)(image|images|avatar|photo|voucher|url)(_|$)/i.test(column.key || '') ? parseImages(value) : [];
+
+        if (!images.length) {
+            return '';
+        }
+
+        return '<span class="crm-image-icons">' + images.map(function (src, index) {
+            var name = String(src || '').split('/').pop().replace(/[_-]/g, ' ');
+            return '<a href="' + escapeHtml(src) + '" target="_blank" rel="noopener" title="' + escapeHtml(name || t(column.label || column.key)) + '" aria-label="' + escapeHtml(t(column.label || column.key) + ' ' + (index + 1)) + '"><span aria-hidden="true">▧</span></a>';
+        }).join('') + '</span>';
+    }
+
     function columnCellClass(column) {
         if (column.align) {
             return ' module-cell-' + column.align;
@@ -411,9 +489,13 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         var numberValue = Number(rawValue || 0);
         var html = escapeHtml(value);
         var levelValue = column.levelClassKey ? getValue(row, column.levelClassKey) : '';
+        var imageHtml = imageCellHtml(row, column);
 
         if (column.format === 'agentLevelSelect') {
             return agentLevelSelectHtml(row, rowIndex);
+        }
+        if (imageHtml) {
+            return imageHtml;
         }
         if ((column.format === 'money' || column.format === 'lots') && !isNaN(numberValue) && numberValue < 0) {
             html = '<span class="value-negative">' + html + '</span>';
@@ -701,6 +783,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         }
         $('.J_moduleRecordId').val('');
         form.render();
+        initEnhancedUpload();
+        initDatePickers();
         loadData();
     }
 
@@ -926,7 +1010,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
             area: area,
             maxHeight: height,
             shade: 0.25,
-            content: '<div style="padding:16px;">' + html + '</div>'
+            content: '<div style="padding:16px;max-height:' + (height - 54) + 'px;overflow:auto;box-sizing:border-box;">' + html + '</div>'
         });
     }
 
@@ -1019,8 +1103,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         var value;
         var group;
         var width = Math.min(920, Math.max(320, window.innerWidth - 32));
-        var height = Math.min(680, Math.max(360, window.innerHeight - 80));
-        var area = window.innerWidth < 768 ? [width + 'px', height + 'px'] : [width + 'px', 'auto'];
+        var height = Math.min(680, Math.max(320, window.innerHeight - 48));
+        var area = [width + 'px', height + 'px'];
 
         fields = normalizeDetailFields(fields, row);
         for (i = 0; i < fields.length; i++) {
@@ -1057,7 +1141,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
             area: area,
             maxHeight: height,
             shade: 0.25,
-            content: '<div style="padding:16px;">' + html + '</div>'
+            content: '<div style="padding:16px;max-height:' + (height - 54) + 'px;overflow:auto;box-sizing:border-box;">' + html + '</div>'
         });
     }
 
@@ -1223,6 +1307,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         clickedChain = [];
         renderChain([]);
         form.render();
+        initEnhancedUpload();
+        initDatePickers();
         loadData();
     });
 
@@ -1296,6 +1382,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         }
         renderChartSelectors();
         form.render();
+        initEnhancedUpload();
+        initDatePickers();
         loadData();
     }
 

@@ -13,6 +13,7 @@
     .withdraw-page.is-disabled .withdraw-form-area { opacity: .55; pointer-events: none; }
     .withdraw-page .withdraw-table-wrap { width: 100%; overflow-x: auto; }
     .withdraw-page .withdraw-table-wrap .layui-table-view { min-width: 1100px; }
+    .withdraw-page .crm-table-summary { justify-content: flex-start; }
 </style>
 @endsection
 

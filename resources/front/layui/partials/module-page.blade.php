@@ -133,17 +133,40 @@
                                                 title="{{ __($field['title'] ?? $field['label']) }}"
                                             >
                                         @else
-                                            <input
-                                                type="{{ $field['type'] ?? 'text' }}"
-                                                name="{{ $field['name'] }}"
-                                                class="layui-input"
-                                                data-translate-placeholder="{{ $field['placeholder'] ?? $field['label'] }}"
-                                                placeholder="{{ __($field['placeholder'] ?? $field['label']) }}"
-                                                autocomplete="off"
-                                                @if(!empty($field['accept'])) accept="{{ $field['accept'] }}" @endif
-                                                @if(!empty($field['multiple'])) multiple @endif
-                                                @if(!empty($field['verify'])) lay-verify="{{ $field['verify'] }}" @endif
-                                            >
+                                            @if(($field['type'] ?? 'text') === 'file')
+                                                @php $uploadId = 'crm_upload_' . md5($field['name'] . $loop->index); @endphp
+                                                <div class="crm-upload-card">
+                                                    <div class="crm-upload-main">
+                                                        <button type="button" class="layui-btn layui-btn-primary crm-upload-action" id="{{ $uploadId }}_trigger">
+                                                            <i class="layui-icon layui-icon-upload-drag"></i>
+                                                            <span data-translate="{{ $field['label'] }}">{{ __($field['label']) }}</span>
+                                                        </button>
+                                                        <div class="crm-upload-tip">
+                                                            <span data-translate="front.upload_drag_tip">{{ __('front.upload_drag_tip') }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <input
+                                                        id="{{ $uploadId }}"
+                                                        type="file"
+                                                        name="{{ $field['name'] }}"
+                                                        class="layui-hide J_crmUploadInput"
+                                                        @if(!empty($field['accept'])) accept="{{ $field['accept'] }}" @endif
+                                                        @if(!empty($field['multiple'])) multiple @endif
+                                                        @if(!empty($field['verify'])) lay-verify="{{ $field['verify'] }}" @endif
+                                                    >
+                                                    <div class="crm-upload-list" id="{{ $uploadId }}_list"></div>
+                                                </div>
+                                            @else
+                                                <input
+                                                    type="{{ $field['type'] ?? 'text' }}"
+                                                    name="{{ $field['name'] }}"
+                                                    class="layui-input"
+                                                    data-translate-placeholder="{{ $field['placeholder'] ?? $field['label'] }}"
+                                                    placeholder="{{ __($field['placeholder'] ?? $field['label']) }}"
+                                                    autocomplete="off"
+                                                    @if(!empty($field['verify'])) lay-verify="{{ $field['verify'] }}" @endif
+                                                >
+                                            @endif
                                         @endif
                                     </div>
                                 </div>

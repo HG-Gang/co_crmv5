@@ -62,4 +62,5 @@ return [
     'page_size' => '每页条数',
     'prev_page' => '上一页',
     'next_page' => '下一页',
+    'required' => '为必填项',
 ];

@@ -1289,6 +1289,92 @@
     text-decoration: none;
 }
 
+.crm-date-popover {
+    position: absolute;
+    z-index: 3000;
+    width: 264px;
+    padding: 10px;
+    color: var(--crm-text);
+    background: var(--crm-panel);
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius-sm);
+    box-shadow: 0 18px 50px rgba(15,23,42,.18);
+}
+
+.crm-date-head,
+.crm-date-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.crm-date-head button,
+.crm-date-foot button,
+.crm-date-grid button {
+    border: 0;
+    border-radius: 8px;
+    color: var(--crm-text);
+    background: transparent;
+    cursor: pointer;
+}
+
+.crm-date-head button {
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+}
+
+.crm-date-week,
+.crm-date-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.crm-date-week {
+    margin: 10px 0 5px;
+    color: var(--crm-muted);
+    font-size: 12px;
+    text-align: center;
+}
+
+.crm-date-grid button {
+    height: 30px;
+    font-variant-numeric: tabular-nums;
+}
+
+.crm-date-grid button:hover,
+.crm-date-foot button:hover,
+.crm-date-head button:hover {
+    color: var(--crm-primary);
+    background: var(--crm-primary-soft);
+}
+
+.crm-date-grid button.is-muted {
+    color: var(--crm-muted);
+    opacity: .48;
+}
+
+.crm-date-grid button.is-today {
+    color: var(--crm-primary);
+    font-weight: 800;
+}
+
+.crm-date-grid button.is-selected {
+    color: #fff;
+    background: var(--crm-primary);
+}
+
+.crm-date-foot {
+    margin-top: 10px;
+    justify-content: flex-end;
+}
+
+.crm-date-foot button {
+    padding: 5px 10px;
+}
+
 .crm-detail-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1458,10 +1544,11 @@
 
 .crm-modal-card {
     width: min(920px, calc(100vw - 32px));
+    height: auto;
     max-height: calc(100dvh - 32px);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow: visible;
     border-radius: var(--crm-radius-sm);
     background: var(--crm-panel);
     color: var(--crm-text);
@@ -1504,7 +1591,7 @@
 .crm-modal-body {
     padding: 14px 16px 18px;
     overflow: auto;
-    max-height: calc(100dvh - 96px);
+    max-height: calc(100dvh - 110px);
     display: grid;
     gap: 14px;
 }

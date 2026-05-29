@@ -90,7 +90,7 @@ var PayChannelManager = (function () {
             }
             html += '</ul><div class="layui-tab-content">';
             for (i = 0; i < channels.length; i++) {
-                html += '<div class="layui-tab-item" data-channel-panel="' + escapeHtml(channels[i].code) + '"><div class="payment-channel-panel">';
+                html += '<div class="layui-tab-item" data-channel-panel="' + escapeHtml(channels[i].code) + '"><div class="payment-channel-panel layui-elem-quote">';
                 html += '<strong>' + escapeHtml(channels[i].name) + '</strong>';
                 html += '<div class="channel-meta"><span class="channel-rate">' + escapeHtml(t('front.exchange_rate')) + ': ' + escapeHtml(channels[i].exchange_rate) + '</span></div>';
                 if (channels[i].min_amount || channels[i].max_amount) {
@@ -108,6 +108,9 @@ var PayChannelManager = (function () {
 
             $container.html(html);
             select(defaultChannel ? defaultChannel.code : channels[0].code);
+            if (typeof layui !== 'undefined' && layui.element && layui.element.render) {
+                layui.element.render('tab', 'paymentChannelTabs');
+            }
         }
 
         function findChannel(code) {

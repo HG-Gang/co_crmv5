@@ -482,7 +482,7 @@ select {
     border: 1px solid var(--front-line);
     border-radius: var(--front-radius-sm);
 }
-.crm-table-summary { display: flex; flex-wrap: nowrap; gap: 6px; margin: 0 0 10px; overflow-x: auto; padding-bottom: 2px; }
+.crm-table-summary { display: flex; flex-wrap: nowrap; justify-content: flex-start; gap: 6px; margin: 0 0 10px; overflow-x: auto; padding-bottom: 2px; }
 .crm-table-summary:empty { display: none; }
 .crm-table-summary-item { display: inline-flex; align-items: center; gap: 6px; flex: 0 0 auto; min-height: 28px; padding: 4px 10px; color: var(--front-text); background: var(--front-panel); border: 1px solid var(--front-line); border-radius: 999px; font-size: 12px; white-space: nowrap; }
 .crm-table-summary-item strong { color: var(--front-strong); font-weight: 800; font-variant-numeric: tabular-nums; }
@@ -494,6 +494,9 @@ select {
 .crm-table-summary-item.summary-color-5 strong { color: var(--front-accent); }
 .crm-table-summary-item.summary-color-6 strong { color: #c2410c; }
 .crm-table-summary-item.summary-color-7 strong { color: var(--front-strong); }
+.crm-image-icons { display: inline-flex; align-items: center; gap: 6px; }
+.crm-image-icons a { width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; color: var(--front-blue); background: var(--front-blue-soft); border: 1px solid var(--front-line); border-radius: var(--front-radius-sm); text-decoration: none; }
+.crm-image-icons a:hover { color: #fff; background: var(--front-blue); }
 .crm-date-shortcuts { margin: -4px 0 10px 112px; display: flex; gap: 6px; flex-wrap: wrap; }
 .crm-date-shortcuts .layui-btn { margin-left: 0; }
 .front-module-page .module-chain { display: none; margin: 0 0 12px; padding: 10px 12px; background: var(--front-panel); border: 1px solid var(--front-line); border-radius: var(--front-radius-sm); }
@@ -851,7 +854,14 @@ html[data-front-theme] .layui-btn {
     padding: 14px;
     border: 1px dashed var(--front-line);
     border-radius: 14px;
-    background: var(--front-table-head);
+    background: linear-gradient(135deg, var(--front-table-head), color-mix(in srgb, var(--front-blue-soft) 34%, var(--front-panel)));
+}
+
+.crm-upload-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 .crm-upload-action {
@@ -865,6 +875,15 @@ html[data-front-theme] .layui-btn {
     background: var(--front-panel);
     color: var(--front-strong);
     cursor: pointer;
+}
+
+.crm-upload-action .layui-icon {
+    font-size: 18px;
+}
+
+.crm-upload-tip {
+    color: var(--front-muted);
+    font-size: 12px;
 }
 
 .crm-upload-list {

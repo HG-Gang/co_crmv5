@@ -12,7 +12,7 @@
     <title>{{ __('common.system_name') }} - {{ $pageTitle }}</title>
     <script src="{{ asset('/js/common/theme-sync.js') }}?v=2026052908"></script>
     <link rel="stylesheet" href="{{ asset('/js/common/layui-v2.13.5/layui/css/layui.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/front/style.css') }}?v=2026052908">
+    <link rel="stylesheet" href="{{ asset('/css/front/style.css') }}?v=2026052911">
     @yield('styles')
 </head>
 <body class="{{ $isFrame ? 'front-frame-body' : 'layui-layout-body front-shell-body' }}">
@@ -87,11 +87,11 @@
             <li class="layui-nav-item">
                 <a href="javascript:;" title="{{ __('front.skin_mode') }}"><i class="layui-icon layui-icon-theme"></i><span id="frontThemeBadge" class="front-theme-badge"></span></a>
                 <dl class="layui-nav-child">
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="light" data-skin="light">☀ 浅色</a></dd>
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="dark" data-skin="dark">☾ 深色</a></dd>
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="sea" data-skin="sea">≋ 海蓝</a></dd>
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="warm" data-skin="warm">◐ 暖色</a></dd>
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="contrast" data-skin="contrast">▣ 高对比</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="light" data-skin="light">☼ 清透白</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="dark" data-skin="dark">☾ 夜间蓝</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="sea" data-skin="sea">≋ 海盐蓝</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="warm" data-skin="warm">◐ 暖砂色</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="contrast" data-skin="contrast">▣ 清晰高对比</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">

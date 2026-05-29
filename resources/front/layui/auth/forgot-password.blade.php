@@ -6,7 +6,7 @@
     <title>{{ __('auth.forgot_password') }} - {{ __('common.system_name') }}</title>
     <script src="{{ asset('/js/common/theme-sync.js') }}?v=2026052908"></script>
     <link rel="stylesheet" href="{{ asset('/js/common/layui-v2.13.5/layui/css/layui.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/front/style.css') }}?v=2026052908">
+    <link rel="stylesheet" href="{{ asset('/css/front/style.css') }}?v=2026052911">
 </head>
 <body class="auth-wrapper">
 <div class="auth-card">

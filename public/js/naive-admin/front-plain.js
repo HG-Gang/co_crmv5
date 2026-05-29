@@ -31,11 +31,11 @@
     var resizeBound = false;
 
     var skins = [
-        { value: 'light', label: '浅色', icon: '☀', en: 'Light' },
-        { value: 'dark', label: '深色', icon: '☾', en: 'Dark' },
-        { value: 'sea', label: '海蓝', icon: '≋', en: 'Sea Blue' },
-        { value: 'warm', label: '暖色', icon: '◐', en: 'Warm' },
-        { value: 'contrast', label: '高对比', icon: '▣', en: 'High Contrast' }
+        { value: 'light', label: '清透白', icon: '☼', en: 'Clean Light' },
+        { value: 'dark', label: '夜间蓝', icon: '☾', en: 'Night Blue' },
+        { value: 'sea', label: '海盐蓝', icon: '≋', en: 'Sea Salt' },
+        { value: 'warm', label: '暖砂色', icon: '◐', en: 'Warm Sand' },
+        { value: 'contrast', label: '清晰高对比', icon: '▣', en: 'Clean Contrast' }
     ];
 
     var frontMenus = [
@@ -85,7 +85,7 @@
         dashboard: { title: tr('front.dashboard', '控制台', 'Dashboard'), desc: tr('front.dashboard_desc', '关键指标、注册链接、账户概况和近期公告。', 'Key metrics, register links, account overview and news.'), kind: 'dashboard', endpoint: '/dashboardData' },
         profile: { title: tr('front.profile', '个人资料', 'Profile'), desc: tr('front.profile_desc', '账户基本资料。', 'Basic account profile.'), kind: 'detail', endpoint: '/profileInfo', detailFields: ['user_id', 'user_name', 'email_masked', 'phone_masked', 'account_type', 'auth_status', 'id_card_no_masked', 'last_login_at'] },
         account: { title: tr('menu.front_account_info', '账户综合 / 余额', 'Account Overview'), desc: tr('front.account_overview_desc', '资金、余额、净值、认证和账户状态。', 'Funds, balance, equity, verification and account status.'), kind: 'detail', endpoint: '/accountInfo', detailFields: ['user_id', 'user_name', 'total_funds', 'equity', 'total_deposit', 'total_rebate', 'total_withdraw', 'open_order_count', 'closed_order_count', 'profit_7d', 'profit_15d', 'profit_30d'] },
-        vouchers: { title: tr('menu.front_voucher', '凭证审核', 'Vouchers'), desc: tr('front.voucher_desc', '凭证列表。', 'Voucher list.'), endpoint: '/voucherList', fields: ['id', 'user_id', 'review_status', 'amount', 'created_at'] },
+        vouchers: { title: tr('menu.front_voucher', '凭证审核', 'Vouchers'), desc: tr('front.voucher_desc', '凭证列表。', 'Voucher list.'), endpoint: '/voucherList', fields: ['id', 'user_id', 'review_status', 'images', 'amount', 'created_at'] },
         deposits: { title: tr('menu.front_deposit', '入金管理', 'Deposits'), desc: tr('front.deposit_desc', '入金记录。', 'Deposit records.'), endpoint: '/depositHistory', fields: ['id', 'order_no', 'amount', 'payment_channel', 'status', 'created_at'] },
         withdrawals: { title: tr('menu.front_withdraw', '出金管理', 'Withdrawals'), desc: tr('front.withdraw_desc', '出金记录。', 'Withdrawal records.'), endpoint: '/withdrawHistory', fields: ['id', 'order_no', 'apply_amount', 'status', 'created_at'] },
         flow: { title: tr('menu.front_flow', '账户流水', 'Account Flow'), desc: tr('front.account_flow_desc', '资金变动流水。', 'Fund movement records.'), endpoint: '/accountFlow', fields: ['id', 'user_id', 'type', 'amount', 'balance', 'created_at'] },
@@ -94,7 +94,7 @@
         'closed-orders': { title: tr('menu.front_closed_orders', '历史订单', 'Closed Orders'), desc: tr('front.closed_orders_desc', '已平仓订单。', 'Closed orders.'), endpoint: '/closedOrders', fields: ['order_no', 'user_id', 'symbol', 'volume', 'open_time', 'close_time', 'profit'] },
         'agent-sub': { title: tr('menu.front_agent_sub', '下级代理', 'Sub Agents'), desc: tr('front.agent_sub_desc', '代理网络。', 'Agent network.'), endpoint: '/agentSubList', fields: ['user_id', 'user_name', 'email', 'account_type', 'created_at'] },
         'agent-customers': { title: tr('menu.front_agent_customers', '直属客户', 'Direct Customers'), desc: tr('front.agent_customers_desc', '客户列表。', 'Customer list.'), endpoint: '/agentCustomerList', fields: ['user_id', 'user_name', 'email', 'account_type', 'total_funds'] },
-        'agent-confirm': { title: tr('menu.front_agent_confirm', '代理级别确认', 'Agent Level Confirm'), desc: tr('front.agent_confirm_desc', '级别确认状态。', 'Level confirmation status.'), kind: 'detail', endpoint: '/agentConfirmLevel' },
+        'agent-confirm': { title: tr('menu.front_agent_confirm', '代理级别确认', 'Agent Level Confirm'), desc: tr('front.agent_confirm_desc', '级别确认状态。', 'Level confirmation status.'), endpoint: '/agentConfirmLevel', fields: ['userId', 'userName', 'summary.current_level', 'summary.next_level', 'summary.is_confirmed', 'summary.confirmed_at'] },
         'group-change': { title: tr('menu.front_group_change', '组别变更', 'Group Change'), desc: tr('front.group_change_desc', '组别变更记录。', 'Group change records.'), endpoint: '/agentGroupChangeList', fields: ['id', 'user_id', 'group_id', 'status', 'created_at'] },
         'commission-realtime': { title: tr('front.realtime_commission', '实时返佣', 'Real-time Commission'), desc: tr('front.realtime_commission_desc', '实时返佣订单。', 'Real-time commission orders.'), endpoint: '/commissionRealTime', collapsibleSummary: true, fields: ['ticket', 'login', 'symbol', 'volume_lots', 'profit_gain', 'profit_loss', 'profit_net', 'modify_time'] },
         'commission-history': { title: tr('front.commission_history', '返佣历史', 'Commission History'), desc: tr('front.commission_history_desc', '历史返佣记录。', 'Historical commission records.'), endpoint: '/commissionHistory', fields: ['id', 'agent_id', 'commission_amount', 'status', 'created_at'] },
@@ -196,6 +196,23 @@
         open_count: '持仓数',
         agent_level_name: '代理等级',
         id_card_no_masked: '身份证号',
+        total_deposit: '总入金',
+        total_withdraw: '总出金',
+        total_rebate: '总返佣',
+        open_order_count: '开仓订单数',
+        closed_order_count: '平仓订单数',
+        profit_7d: '近 7 天盈亏',
+        profit_15d: '近 15 天盈亏',
+        profit_30d: '近 30 天盈亏',
+        direct_agents: '直属代理',
+        direct_customers: '直属客户',
+        indirect_customers: '间接客户',
+        relation_amount: '相关金额',
+        images: '图片',
+        'summary.current_level': '当前等级',
+        'summary.next_level': '下一等级',
+        'summary.is_confirmed': '确认状态',
+        'summary.confirmed_at': '确认时间'
     };
 
     var fieldLabelKeys = {
@@ -239,9 +256,28 @@
         commission_rate: 'front.commission_rate',
         agent_level_name: 'front.agent_level',
         id_card_no_masked: 'front.id_card_no',
+        total_deposit: 'front.total_deposit',
+        total_withdraw: 'front.total_withdraw',
+        total_rebate: 'front.total_rebate',
+        image: 'front.images',
+        avatar: 'front.images',
+        voucher_images: 'front.voucher_images',
+        open_order_count: 'front.open_order_count',
+        closed_order_count: 'front.closed_order_count',
+        profit_7d: 'front.profit_7d',
+        profit_15d: 'front.profit_15d',
+        profit_30d: 'front.profit_30d',
+        direct_agents: 'front.direct_agents',
+        direct_customers: 'front.direct_customers',
+        indirect_customers: 'front.indirect_customers',
+        relation_amount: 'front.relation_amount',
+        images: 'front.images',
+        'summary.current_level': 'front.current_level',
+        'summary.next_level': 'front.next_level',
+        'summary.is_confirmed': 'front.is_confirmed',
+        'summary.confirmed_at': 'front.confirmed_at',
         total_yuerj: 'front.total_deposit',
         total_yuecj: 'front.total_withdraw',
-        total_rebate: 'front.total_rebate',
         total_net_worth: 'front.net_worth',
         total_comm: 'front.commission',
         total_noble_metal: 'front.noble_metal',
@@ -355,13 +391,50 @@
     }
 
     function fmt(value) {
+        value = value && typeof value === 'object' && !Array.isArray(value) ? JSON.stringify(value) : value;
         if (value === null || value === undefined || value === '') {
             return '-';
         }
         if (typeof value === 'number') {
             return Number.isInteger(value) ? String(value) : String(Math.round(value * 100) / 100);
         }
+        if (Array.isArray(value)) {
+            return value.length ? value.join(', ') : '-';
+        }
         return String(value);
+    }
+
+    function getFieldValue(row, key) {
+        return String(key || '').split('.').reduce(function (value, part) {
+            return value && typeof value === 'object' ? value[part] : undefined;
+        }, row || {});
+    }
+
+    function parseImages(value) {
+        if (!value) return [];
+        if (Array.isArray(value)) return value;
+        if (typeof value === 'string') {
+            try {
+                var parsed = JSON.parse(value);
+                if (Array.isArray(parsed)) return parsed;
+            } catch (e) {}
+            return value.split(',').map(function (item) { return item.trim(); }).filter(Boolean);
+        }
+        return [];
+    }
+
+    function valueHtml(key, value) {
+        var images = /(^|_)(image|images|avatar|photo|voucher|url)(_|$)/i.test(key) ? parseImages(value) : [];
+        if (images.length) {
+            return '<span class="crm-image-icons">' + images.map(function (src, index) {
+                return '<a href="' + esc(src) + '" target="_blank" rel="noopener" title="' + esc(fieldLabel(key) + ' ' + (index + 1)) + '">▧</a>';
+            }).join('') + '</span>';
+        }
+        return esc(fmt(value));
+    }
+
+    function tableCellHtml(key, row) {
+        return valueHtml(key, getFieldValue(row, key));
     }
 
     function mockDashboard() {
@@ -434,11 +507,12 @@
         if (key === 'username') return 'admin_' + (index + 1);
         if (key === 'email') return 'user' + index + '@example.com';
         if (key === 'order_no') return 'CO2026' + (100000 + index);
-        if (key === 'amount' || key === 'apply_amount') return Math.round((1200 + index * 83.7) * 100) / 100;
+        if (key === 'amount' || key === 'apply_amount' || key === 'total_deposit' || key === 'total_withdraw' || key === 'total_rebate' || key === 'total_funds' || key === 'equity' || key === 'relation_amount') return Math.round((1200 + index * 83.7) * 100) / 100;
         if (key === 'commission' || key === 'commission_amount') return Math.round((68 + index * 9.35) * 100) / 100;
         if (key === 'balance') return Math.round((18000 - index * 217.4) * 100) / 100;
         if (key === 'total_funds' || key === 'equity' || key === 'total') return Math.round((52000 + index * 1330.5) * 100) / 100;
-        if (key === 'profit') return Math.round(((index % 2 ? -1 : 1) * (260 + index * 18.2)) * 100) / 100;
+        if (key === 'profit' || key === 'profit_7d' || key === 'profit_15d' || key === 'profit_30d') return Math.round(((index % 2 ? -1 : 1) * (260 + index * 18.2)) * 100) / 100;
+        if (key === 'open_order_count' || key === 'closed_order_count' || key === 'direct_agents' || key === 'direct_customers' || key === 'indirect_customers') return (index + 1) * 3;
         if (key === 'volume') return Math.round((0.1 + (index % 8) * 0.15) * 100) / 100;
         if (key === 'symbol') return ['XAUUSD', 'EURUSD', 'GBPUSD', 'USDJPY'][index % 4];
         if (key === 'status' || key === 'review_status') return ['pending', 'approved', 'processing', 'rejected'][index % 4];
@@ -467,6 +541,10 @@
         if (key === 'address') return 'Demo address ' + (index + 1);
         if (key === 'is_default') return index % 3 === 0 ? 1 : 0;
         if (key === 'title') return 'Demo notice ' + (index + 1);
+        if (key === 'current_level') return 'A' + ((index % 3) + 1);
+        if (key === 'next_level') return 'A' + ((index % 3) + 2);
+        if (key === 'is_confirmed') return index % 2 ? 'confirmed' : 'pending';
+        if (key.indexOf('.') !== -1) return mockValue(key.split('.').pop(), index);
         if (/_at$|_time$|date/.test(key)) return date;
         return 'Demo ' + (index + 1);
     }
@@ -597,10 +675,11 @@
     function tableFiltersHtml(config) {
         var filters = tableFilters(config);
         return '<form class="crm-table-filters" data-table-filter>' + filters.map(function (filter) {
-            var type = filter.type === 'date' ? 'date' : 'text';
+            var isDate = filter.type === 'date';
+            var type = isDate ? 'text' : 'text';
             var value = currentTableFilters[filter.name] || '';
             var label = tr(filter.label, fieldLabel(filter.name));
-            return '<label><span>' + esc(label) + '</span><input class="crm-plain-input" type="' + type + '" name="' + esc(filter.name) + '" value="' + esc(value) + '" placeholder="' + esc(label) + '"></label>';
+            return '<label><span>' + esc(label) + '</span><input class="crm-plain-input' + (isDate ? ' crm-date-input' : '') + '" type="' + type + '" name="' + esc(filter.name) + '" value="' + esc(value) + '" placeholder="' + esc(label) + '" autocomplete="off"' + (isDate ? ' data-date-picker' : '') + '></label>';
         }).join('') + '<div class="crm-table-filter-actions"><button class="crm-plain-primary" type="submit" data-action="table-search">' + esc(tr('common.search', '搜索', 'Search')) + '</button><button class="crm-plain-secondary" type="button" data-action="table-reset">' + esc(tr('common.reset', '重置', 'Reset')) + '</button></div></form>';
     }
 
@@ -865,6 +944,23 @@
         app.querySelectorAll('[data-action="search"]').forEach(function (button) {
             button.addEventListener('click', filterCurrentTable);
         });
+        bindDateInputs();
+    }
+
+    function bindDateInputs() {
+        app.querySelectorAll('[data-date-picker]').forEach(function (input) {
+            input.addEventListener('focus', function () {
+                if (input.type !== 'date') {
+                    input.type = 'date';
+                    if (input.showPicker) {
+                        try { input.showPicker(); } catch (e) {}
+                    }
+                }
+            });
+            input.addEventListener('blur', function () {
+                if (!input.value) input.type = 'text';
+            });
+        });
     }
 
     function bindLogout() {
@@ -961,7 +1057,7 @@
                 }
             }).catch(function () {});
         } else if (config.kind === 'detail') {
-            renderDetail(config, mockRows({ fields: ['user_id', 'user_name', 'email', 'account_type', 'total_funds', 'equity', 'effective_credit', 'commission_rate'] }, 1)[0]);
+            renderDetail(config, mockRows({ fields: (config.detailFields || ['user_id', 'user_name', 'email', 'account_type', 'total_funds', 'equity', 'effective_credit', 'commission_rate']) }, 1)[0]);
             api(config.endpoint, {}).then(function (body) {
                 if (success(body) && body.data) renderPageWithData(config, normalizeDetailData(config, body.data));
             }).catch(function () {});
@@ -1132,7 +1228,7 @@
             }).join('') + '</div></section>';
         }
         content.innerHTML = '<section class="crm-section"><h2 class="crm-section-title">' + esc(config.title) + '</h2><div class="crm-detail-grid">' + keys.map(function (key) {
-            return '<div class="crm-detail-item"><p class="crm-detail-label">' + esc(fieldLabel(key)) + '</p><p class="crm-detail-value">' + esc(fmt(data[key])) + '</p></div>';
+            return '<div class="crm-detail-item"><p class="crm-detail-label">' + esc(fieldLabel(key)) + '</p><p class="crm-detail-value">' + valueHtml(key, getFieldValue(data, key)) + '</p></div>';
         }).join('') + '</div></section>' + charts;
         if (charts) renderCharts(currentStats);
     }
@@ -1145,12 +1241,12 @@
         currentRows = rows || [];
         var summary = tableSummary(fields, currentRows);
         content.innerHTML = [
-            '<section class="crm-data-panel"><div class="crm-data-head"><h2>' + esc(config.title) + '</h2></div><div class="crm-table-filters"><input class="crm-plain-input" id="plainSearch" placeholder="' + esc(tr('common.search_placeholder', '输入关键词', 'Search keyword')) + '"><button class="crm-plain-secondary" data-action="search">' + esc(tr('common.search', '搜索', 'Search')) + '</button></div>',
+            '<section class="crm-data-panel"><h2 class="crm-data-title">' + esc(config.title) + '</h2><div class="crm-table-filters"><input class="crm-plain-input" id="plainSearch" placeholder="' + esc(tr('common.search_placeholder', '输入关键词', 'Search keyword')) + '"><button class="crm-plain-secondary" data-action="search" type="button">' + esc(tr('common.search', '搜索', 'Search')) + '</button></div>',
             config.collapsibleSummary ? '<button type="button" class="crm-summary-toggle" data-action="toggle-summary"><span>&gt;</span>' + esc(tr('front.summary', '汇总', 'Summary')) + '</button>' : '',
-            '<div class="crm-table-wrap"><table class="crm-plain-table"><thead><tr>' + fields.map(function (key) { return '<th>' + esc(fieldLabel(key)) + '</th>'; }).join('') + '<th>' + esc(tr('common.operation', '操作', 'Action')) + '</th></tr></thead><tbody>' + rows.map(function (row) {
+            '<div class="crm-table-summary' + (config.collapsibleSummary ? ' is-collapsed' : '') + '">' + summaryText(summary, currentRows.length) + '</div><div class="crm-table-wrap"><table class="crm-plain-table"><thead><tr>' + fields.map(function (key) { return '<th>' + esc(fieldLabel(key)) + '</th>'; }).join('') + '<th>' + esc(tr('common.operation', '操作', 'Action')) + '</th></tr></thead><tbody>' + rows.map(function (row) {
                 var rowIndex = currentRows.indexOf(row);
-                return '<tr data-row-index="' + rowIndex + '">' + fields.map(function (key) { return '<td title="' + esc(fmt(row[key])) + '">' + esc(fmt(row[key])) + '</td>'; }).join('') + '<td><button class="crm-table-action" type="button" data-row-detail="' + rowIndex + '">' + esc(tr('common.detail', '详情', 'Detail')) + '</button></td></tr>';
-            }).join('') + '</tbody><tfoot><tr><td>' + esc(tr('front.summary', '汇总', 'Summary')) + '</td>' + fields.slice(1).map(function (key) { return '<td>' + esc(summary[key] || '-') + '</td>'; }).join('') + '<td>' + currentRows.length + ' ' + esc(tr('front.rows_unit', '条', 'rows')) + '</td></tr></tfoot></table></div><div class="crm-table-summary' + (config.collapsibleSummary ? ' is-collapsed' : '') + '">' + summaryText(summary, currentRows.length) + '</div><div class="crm-row-detail" id="plainRowDetail">' + esc(tr('front.click_detail_hint', '点击详情查看单行完整数据。', 'Click detail to view the complete row.')) + '</div></section>'
+                return '<tr data-row-index="' + rowIndex + '">' + fields.map(function (key) { var raw = getFieldValue(row, key); return '<td title="' + esc(fmt(raw)) + '">' + tableCellHtml(key, row) + '</td>'; }).join('') + '<td><button class="crm-table-action" type="button" data-row-detail="' + rowIndex + '">' + esc(tr('common.detail', '详情', 'Detail')) + '</button></td></tr>';
+            }).join('') + '</tbody><tfoot><tr><td>' + esc(tr('front.summary', '汇总', 'Summary')) + '</td>' + fields.slice(1).map(function (key) { return '<td>' + esc(summary[key] || '-') + '</td>'; }).join('') + '<td>' + currentRows.length + ' ' + esc(tr('front.rows_unit', '条', 'rows')) + '</td></tr></tfoot></table></div></section>'
         ].join('');
         var filterNode = content.querySelector('.crm-table-filters');
         if (filterNode) {
@@ -1164,8 +1260,8 @@
             var sum = 0;
             var count = 0;
             rows.forEach(function (row) {
-                var value = Number(row[key]);
-                if (isFinite(value) && !/_id$|^id$|status|sort|level$/.test(key)) {
+                var value = Number(getFieldValue(row, key));
+                if (isFinite(value) && !/_id$|^id$|status|sort|level$|phone|mobile|tel|recipient_phone/.test(key)) {
                     sum += value;
                     count += 1;
                 }
@@ -1210,7 +1306,7 @@
     function detailGroupForKey(key) {
         if (/^(id|user|login|email|phone|account|agent|group|level|auth|parent|real_name|username)/i.test(key)) return 'identity';
         if (/^(ticket|order|symbol|cmd|volume|open_|close_|sl|tp|stop_|take_|reason|comment)/i.test(key)) return 'trade';
-        if (/(amount|balance|equity|credit|margin|profit|commission|rebate|fee|swaps|funds|rate|total)/i.test(key)) return 'finance';
+        if (/(amount|balance|equity|credit|margin|profit|commission|rebate|fee|swaps|funds|rate|total|open_order_count|closed_order_count)/i.test(key)) return 'finance';
         if (/(_at|_time|date|created|updated|modify)/i.test(key)) return 'time';
         return 'other';
     }
@@ -1223,7 +1319,7 @@
         return '<div class="crm-modal-mask" id="plainDetailModal"><div class="crm-modal-card" role="dialog" aria-modal="true"><div class="crm-modal-head"><h3>' + esc(tr('common.detail', '详情', 'Detail')) + '</h3><button type="button" class="crm-modal-close" data-close-detail>&times;</button></div><div class="crm-modal-body">' + Object.keys(groups).map(function (group) {
             if (!groups[group].length) return '';
             return '<section class="crm-modal-section"><h4>' + esc(detailGroupTitle(group)) + '</h4><dl>' + groups[group].map(function (key) {
-                return '<div><dt>' + esc(fieldLabel(key)) + '</dt><dd>' + esc(fmt(row[key])) + '</dd></div>';
+                return '<div><dt>' + esc(fieldLabel(key)) + '</dt><dd>' + valueHtml(key, getFieldValue(row, key)) + '</dd></div>';
             }).join('') + '</dl></section>';
         }).join('') + '</div></div></div>';
     }
@@ -1235,13 +1331,7 @@
 
     function showRowDetail(index) {
         var row = currentRows[Number(index)];
-        var detail = document.getElementById('plainRowDetail');
         if (!row) return;
-        if (detail) {
-            detail.innerHTML = Object.keys(row).slice(0, 6).map(function (key) {
-                return '<span><strong>' + esc(fieldLabel(key)) + '</strong>' + esc(fmt(row[key])) + '</span>';
-            }).join('');
-        }
         closeDetailModal();
         document.body.insertAdjacentHTML('beforeend', detailModalHtml(row));
         var modal = document.getElementById('plainDetailModal');

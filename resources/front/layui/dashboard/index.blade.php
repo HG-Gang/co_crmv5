@@ -61,14 +61,14 @@
     .dashboard-section-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(320px, .75fr); gap: 14px; }
     .dashboard-chart-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 14px; align-items: stretch; }
     .dashboard-chart-card { grid-column: span 6; }
-    .dashboard-chart-card.is-funds { grid-column: span 8; }
-    .dashboard-chart-card.is-network { grid-column: span 4; }
+    .dashboard-chart-card.is-funds { grid-column: span 6; }
+    .dashboard-chart-card.is-network { grid-column: span 6; }
     .dashboard-chart-card.is-orders { grid-column: span 5; }
     .dashboard-chart-card.is-commission { grid-column: span 7; }
-    .dashboard-chart { width: 100%; height: 250px; }
-    .dashboard-chart-card.is-funds .dashboard-chart { height: 292px; }
-    .dashboard-chart-card .layui-card-body { min-height: 288px; }
-    .dashboard-chart-card.is-funds .layui-card-body { min-height: 328px; }
+    .dashboard-chart { width: 100%; height: 230px; }
+    .dashboard-chart-card.is-funds .dashboard-chart { height: 230px; }
+    .dashboard-chart-card .layui-card-body { min-height: 264px; }
+    .dashboard-chart-card.is-funds .layui-card-body { min-height: 264px; }
     .dashboard-chart-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .dashboard-chart-type { height: 28px; min-width: 92px; border: 1px solid var(--front-line, #dde4ec); border-radius: 6px; background: var(--front-input, #fff); color: var(--front-text, #1f2937); }
     .dashboard-share-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }

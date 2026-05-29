@@ -7,7 +7,7 @@
     <script src="{{ asset('/js/common/theme-sync.js') }}?v=2026052908"></script>
     {{-- Layui local CSS --}}
     <link rel="stylesheet" href="{{ asset('/js/common/layui-v2.13.5/layui/css/layui.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/front/style.css') }}?v=2026052908">
+    <link rel="stylesheet" href="{{ asset('/css/front/style.css') }}?v=2026052911">
     <style>
         body {
             min-height: 100vh;

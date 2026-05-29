@@ -318,103 +318,105 @@ body { min-height: 100%; color: #1f2937; background: #edf1f5; }
     .crm-detail-field dt { border-bottom: 1px solid var(--front-line); }
 }
 
-/* 2026-05 Layui visual refresh */
+/* 2026 clean Layui skin system */
 :root {
-    --front-bg: #f6f9fc;
+    --front-bg: #f5f8fb;
     --front-panel: #ffffff;
-    --front-line: #e4ebf3;
-    --front-text: #1f2933;
-    --front-muted: #667085;
-    --front-strong: #111827;
-    --front-side: #0f172a;
-    --front-side-soft: #1e293b;
+    --front-line: #dfe8f1;
+    --front-text: #334155;
+    --front-muted: #6b7c90;
+    --front-strong: #0f172a;
+    --front-side: #172033;
+    --front-side-soft: #23314a;
     --front-accent: #10b981;
-    --front-blue: #3b82f6;
+    --front-blue: #2563eb;
     --front-cyan: #06b6d4;
-    --front-warn: #d97706;
-    --front-danger: #d03050;
+    --front-warn: #f59e0b;
+    --front-danger: #ef4444;
     --front-input: #ffffff;
-    --front-table-head: #f7f9fc;
-    --front-hover: #eef6ff;
-    --front-shadow: rgba(15, 23, 42, .06);
+    --front-table-head: #f2f6fa;
+    --front-hover: #edf6ff;
+    --front-shadow: rgba(15, 23, 42, .08);
 }
 
 html[data-front-theme="dark"] {
-    --front-bg: #0b1120;
-    --front-panel: #111827;
-    --front-line: #273549;
-    --front-text: #dbeafe;
-    --front-muted: #94a3b8;
-    --front-strong: #f8fafc;
-    --front-side: #020617;
-    --front-side-soft: #0f172a;
-    --front-accent: #2dd4bf;
+    --front-bg: #0d1424;
+    --front-panel: #141e30;
+    --front-line: #26364e;
+    --front-text: #d3deea;
+    --front-muted: #8da1b7;
+    --front-strong: #f8fbff;
+    --front-side: #0a1020;
+    --front-side-soft: #121d31;
+    --front-accent: #34d399;
     --front-blue: #60a5fa;
     --front-cyan: #22d3ee;
-    --front-warn: #f59e0b;
+    --front-warn: #fbbf24;
     --front-danger: #fb7185;
-    --front-input: #111820;
-    --front-table-head: #1f2933;
-    --front-hover: #202b36;
-    --front-shadow: rgba(0, 0, 0, .24);
+    --front-input: #111b2b;
+    --front-table-head: #1d2a3d;
+    --front-hover: #1f3047;
+    --front-shadow: rgba(0, 0, 0, .32);
 }
 
 html[data-front-theme="sea"] {
-    --front-bg: #eef9ff;
+    --front-bg: #eef9fb;
     --front-panel: #ffffff;
-    --front-line: #cbe4f2;
-    --front-text: #153443;
-    --front-muted: #55707d;
-    --front-strong: #082f49;
-    --front-side: #082f49;
-    --front-side-soft: #0c4a6e;
-    --front-accent: #06b6d4;
-    --front-blue: #2563eb;
+    --front-line: #cdeaf0;
+    --front-text: #28505d;
+    --front-muted: #6d8993;
+    --front-strong: #0f3440;
+    --front-side: #073b4c;
+    --front-side-soft: #0c6176;
+    --front-accent: #14b8a6;
+    --front-blue: #0891b2;
     --front-cyan: #0f766e;
-    --front-warn: #b45309;
-    --front-danger: #be123c;
+    --front-warn: #d97706;
+    --front-danger: #e14b5f;
     --front-input: #ffffff;
-    --front-table-head: #e4f3fa;
-    --front-hover: #e8f7ff;
+    --front-table-head: #e2f5f7;
+    --front-hover: #dcf7fb;
+    --front-shadow: rgba(8, 78, 99, .10);
 }
 
 html[data-front-theme="warm"] {
-    --front-bg: #fff7ed;
-    --front-panel: #fffcf7;
-    --front-line: #f0dcc3;
-    --front-text: #34261d;
-    --front-muted: #7a685a;
-    --front-strong: #24170f;
-    --front-side: #292524;
-    --front-side-soft: #44403c;
-    --front-accent: #f97316;
-    --front-blue: #1d4ed8;
-    --front-cyan: #0f766e;
+    --front-bg: #fbf7ef;
+    --front-panel: #ffffff;
+    --front-line: #eadfce;
+    --front-text: #56483b;
+    --front-muted: #8a7a67;
+    --front-strong: #2b2118;
+    --front-side: #35281d;
+    --front-side-soft: #55402e;
+    --front-accent: #16a34a;
+    --front-blue: #d97706;
+    --front-cyan: #0ea5a8;
     --front-warn: #d97706;
     --front-danger: #dc2626;
     --front-input: #fffaf3;
-    --front-table-head: #f4eadf;
-    --front-hover: #fff4e6;
+    --front-table-head: #f4ecdf;
+    --front-hover: #fff3dd;
+    --front-shadow: rgba(120, 83, 32, .10);
 }
 
 html[data-front-theme="contrast"] {
-    --front-bg: #000000;
+    --front-bg: #f8fafc;
     --front-panel: #ffffff;
-    --front-line: #000000;
-    --front-text: #000000;
-    --front-muted: #1f2937;
-    --front-strong: #000000;
-    --front-side: #000000;
-    --front-side-soft: #111111;
-    --front-accent: #ffcc00;
-    --front-blue: #005fcc;
-    --front-cyan: #006b5f;
+    --front-line: #cbd5e1;
+    --front-text: #1e293b;
+    --front-muted: #475569;
+    --front-strong: #020617;
+    --front-side: #0f172a;
+    --front-side-soft: #1e293b;
+    --front-accent: #047857;
+    --front-blue: #4f46e5;
+    --front-cyan: #0369a1;
     --front-warn: #b45309;
-    --front-danger: #b00020;
+    --front-danger: #be123c;
     --front-input: #ffffff;
-    --front-table-head: #fffbeb;
-    --front-hover: #fff7cc;
-    --front-shadow: rgba(0, 0, 0, .35);
+    --front-table-head: #eef2ff;
+    --front-hover: #e0e7ff;
+    --front-shadow: rgba(15, 23, 42, .11);
 }
 
 html[data-front-theme] body,
@@ -990,4 +992,107 @@ select {
     .auth-card {
         padding: 28px 20px;
     }
+}
+
+
+html[data-front-theme] .layui-card,
+html[data-front-theme] .layui-layer,
+html[data-front-theme] .module-chart-card,
+html[data-front-theme] .dashboard-stat-card {
+    border-radius: 14px;
+    box-shadow: 0 14px 34px var(--front-shadow);
+}
+
+html[data-front-theme] .layui-btn {
+    border-radius: 10px;
+}
+
+.payment-channel-layui-tabs {
+    margin: 0;
+}
+
+.payment-channel-layui-tabs .layui-tab-title {
+    height: auto;
+    border-bottom-color: var(--front-line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.payment-channel-layui-tabs .layui-tab-title li {
+    min-width: auto;
+    line-height: 34px;
+    margin: 0;
+    padding: 0 14px;
+    border: 1px solid var(--front-line);
+    border-radius: 999px;
+    background: var(--front-panel);
+    color: var(--front-text);
+}
+
+.payment-channel-layui-tabs .layui-tab-title li.layui-this {
+    color: #fff;
+    border-color: var(--front-blue);
+    background: var(--front-blue);
+}
+
+.payment-channel-layui-tabs .layui-tab-title .layui-this:after {
+    display: none;
+}
+
+.payment-channel-layui-tabs .layui-tab-content {
+    padding: 12px 0 0;
+}
+
+.payment-channel-panel {
+    padding: 12px;
+    border: 1px solid var(--front-line);
+    border-radius: 12px;
+    background: var(--front-table-head);
+}
+
+.payment-channel-panel .channel-meta {
+    margin-top: 5px;
+    color: var(--front-muted);
+    font-size: 12px;
+}
+
+.crm-upload-card {
+    padding: 14px;
+    border: 1px dashed var(--front-line);
+    border-radius: 14px;
+    background: var(--front-table-head);
+}
+
+.crm-upload-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 0 16px;
+    border: 1px solid var(--front-line);
+    border-radius: 12px;
+    background: var(--front-panel);
+    color: var(--front-strong);
+    cursor: pointer;
+}
+
+.crm-upload-list {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.crm-upload-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 240px;
+    padding: 6px 10px;
+    border: 1px solid var(--front-line);
+    border-radius: 999px;
+    background: var(--front-panel);
+    color: var(--front-text);
+    font-size: 12px;
 }

@@ -28,7 +28,7 @@
     ],
     'columns' => [
         ['key' => 'recipient_name', 'label' => 'front.receiver_name'],
-        ['key' => 'recipient_phone', 'label' => 'front.phone'],
+        ['key' => 'recipient_phone', 'label' => 'front.phone', 'total' => false],
         ['key' => 'recipient_address', 'label' => 'front.address'],
         ['key' => 'is_default', 'label' => 'front.default_address'],
     ],
@@ -41,5 +41,5 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('/js/front/layui/module-page.js') }}?v=2026052907"></script>
+<script src="{{ asset('/js/front/layui/module-page.js') }}?v=2026052911"></script>
 @endsection

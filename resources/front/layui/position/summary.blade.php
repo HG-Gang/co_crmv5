@@ -18,7 +18,7 @@
         ['name' => 'enddate', 'label' => 'front.date_to', 'type' => 'date'],
     ],
     'columns' => [
-        ['key' => 'user_id', 'label' => 'front.user_id', 'action' => 'positionSummaryDrill', 'actionIf' => 'can_drill', 'levelClassKey' => 'agent_level_rank'],
+        ['key' => 'user_id', 'label' => 'front.user_id', 'action' => 'positionSummaryDrill', 'actionIf' => 'can_drill', 'levelClassKey' => 'agent_level_rank', 'chainAction' => true],
         ['key' => 'agent_level_name', 'label' => 'front.agent_level', 'format' => 'agentLevel', 'rankKey' => 'agent_level_rank'],
         ['key' => 'user_name', 'label' => 'front.user_name', 'action' => 'showUserInfo', 'api' => '/api/front/userDetail', 'idField' => 'user_id', 'linkClass' => 'module-link-user'],
         ['key' => 'total_yuerj', 'label' => 'front.total_deposit', 'format' => 'money'],
@@ -40,5 +40,5 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('/js/front/layui/module-page.js') }}?v=2026052907"></script>
+<script src="{{ asset('/js/front/layui/module-page.js') }}?v=2026052913"></script>
 @endsection

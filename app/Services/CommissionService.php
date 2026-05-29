@@ -18,23 +18,33 @@ class CommissionService
     {
         $descendantIds = DB::table('agent_descendants')
             ->where('agent_id', $agentId)
-            ->pluck('descendant_id');
+            ->pluck('descendant_id')
+            ->all();
 
-        // Open positions (close_time = '1970-01-01 00:00:00')
+        if (!$descendantIds) {
+            return [
+                'total' => 0,
+                'breakdown' => [],
+            ];
+        }
+
         $openPositions = UserTrade::whereIn('user_id', $descendantIds)
             ->where('close_time', '1970-01-01 00:00:00')
             ->get();
 
         $agentInfo = UserInfo::where('user_id', $agentId)->first();
+        $users = UserInfo::whereIn('user_id', $openPositions->pluck('user_id')->unique()->all())
+            ->get()
+            ->keyBy('user_id');
         $totalCommission = 0;
         $breakdown = [];
+        [$spreadValue, $spreadRatio] = $this->spreadForAgent($agentInfo);
 
         foreach ($openPositions as $position) {
-            $user = UserInfo::where('user_id', $position->user_id)->first();
+            $user = $users->get($position->user_id);
             if (!$user) continue;
 
             $volumeLots = $position->volume / 100;
-            [$spreadValue, $spreadRatio] = $this->spreadForAgent($agentInfo);
 
             $commissionPerLot = $spreadValue * $spreadRatio;
             

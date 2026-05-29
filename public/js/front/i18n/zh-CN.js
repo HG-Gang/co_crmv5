@@ -7,7 +7,7 @@ var LANG_DATA = {
     'confirm_password': '确认密码',
     'username': '用户名',
     'phone': '手机号',
-    'phone_invalid': '手机号格式不正确',
+    'phone_invalid': '手机号需为 12-20 位数字',
     'id_card_no': '身份证号',
     'id_card_required': '请填写身份证号',
     'email_code': '邮箱验证码',

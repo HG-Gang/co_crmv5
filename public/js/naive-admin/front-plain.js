@@ -84,7 +84,7 @@
     var frontModules = {
         dashboard: { title: tr('front.dashboard', '控制台', 'Dashboard'), desc: tr('front.dashboard_desc', '关键指标、注册链接、账户概况和近期公告。', 'Key metrics, register links, account overview and news.'), kind: 'dashboard', endpoint: '/dashboardData' },
         profile: { title: tr('front.profile', '个人资料', 'Profile'), desc: tr('front.profile_desc', '账户基本资料。', 'Basic account profile.'), kind: 'detail', endpoint: '/profileInfo', detailFields: ['user_id', 'user_name', 'email_masked', 'phone_masked', 'account_type', 'auth_status', 'id_card_no_masked', 'last_login_at'] },
-        account: { title: tr('menu.front_account_info', '账户综合 / 余额', 'Account Overview'), desc: tr('front.account_overview_desc', '资金、余额、净值、认证和账户状态。', 'Funds, balance, equity, verification and account status.'), kind: 'detail', endpoint: '/accountInfo' },
+        account: { title: tr('menu.front_account_info', '账户综合 / 余额', 'Account Overview'), desc: tr('front.account_overview_desc', '资金、余额、净值、认证和账户状态。', 'Funds, balance, equity, verification and account status.'), kind: 'detail', endpoint: '/accountInfo', detailFields: ['user_id', 'user_name', 'total_funds', 'equity', 'total_deposit', 'total_rebate', 'total_withdraw', 'open_order_count', 'closed_order_count', 'profit_7d', 'profit_15d', 'profit_30d'] },
         vouchers: { title: tr('menu.front_voucher', '凭证审核', 'Vouchers'), desc: tr('front.voucher_desc', '凭证列表。', 'Voucher list.'), endpoint: '/voucherList', fields: ['id', 'user_id', 'review_status', 'amount', 'created_at'] },
         deposits: { title: tr('menu.front_deposit', '入金管理', 'Deposits'), desc: tr('front.deposit_desc', '入金记录。', 'Deposit records.'), endpoint: '/depositHistory', fields: ['id', 'order_no', 'amount', 'payment_channel', 'status', 'created_at'] },
         withdrawals: { title: tr('menu.front_withdraw', '出金管理', 'Withdrawals'), desc: tr('front.withdraw_desc', '出金记录。', 'Withdrawal records.'), endpoint: '/withdrawHistory', fields: ['id', 'order_no', 'apply_amount', 'status', 'created_at'] },
@@ -96,7 +96,7 @@
         'agent-customers': { title: tr('menu.front_agent_customers', '直属客户', 'Direct Customers'), desc: tr('front.agent_customers_desc', '客户列表。', 'Customer list.'), endpoint: '/agentCustomerList', fields: ['user_id', 'user_name', 'email', 'account_type', 'total_funds'] },
         'agent-confirm': { title: tr('menu.front_agent_confirm', '代理级别确认', 'Agent Level Confirm'), desc: tr('front.agent_confirm_desc', '级别确认状态。', 'Level confirmation status.'), kind: 'detail', endpoint: '/agentConfirmLevel' },
         'group-change': { title: tr('menu.front_group_change', '组别变更', 'Group Change'), desc: tr('front.group_change_desc', '组别变更记录。', 'Group change records.'), endpoint: '/agentGroupChangeList', fields: ['id', 'user_id', 'group_id', 'status', 'created_at'] },
-        'commission-realtime': { title: tr('front.realtime_commission', '实时返佣', 'Real-time Commission'), desc: tr('front.realtime_commission_desc', '实时返佣订单。', 'Real-time commission orders.'), endpoint: '/commissionRealTime', fields: ['order_no', 'user_id', 'symbol', 'commission_amount', 'open_time'] },
+        'commission-realtime': { title: tr('front.realtime_commission', '实时返佣', 'Real-time Commission'), desc: tr('front.realtime_commission_desc', '实时返佣订单。', 'Real-time commission orders.'), endpoint: '/commissionRealTime', collapsibleSummary: true, fields: ['ticket', 'login', 'symbol', 'volume_lots', 'profit_gain', 'profit_loss', 'profit_net', 'modify_time'] },
         'commission-history': { title: tr('front.commission_history', '返佣历史', 'Commission History'), desc: tr('front.commission_history_desc', '历史返佣记录。', 'Historical commission records.'), endpoint: '/commissionHistory', fields: ['id', 'agent_id', 'commission_amount', 'status', 'created_at'] },
         'commission-transfer': { title: tr('front.commission_transfer', '佣金转账', 'Commission Transfer'), desc: tr('front.commission_transfer_desc', '佣金转账记录。', 'Commission transfer records.'), endpoint: '/commissionHistory', fields: ['id', 'agent_id', 'commission_amount', 'status', 'created_at'] },
         'gift-address': { title: tr('front.gift_address', '地址管理', 'Address'), desc: tr('front.gift_address_desc', '收货地址。', 'Delivery addresses.'), endpoint: '/giftAddressList', fields: ['id', 'real_name', 'phone', 'address', 'is_default'] },
@@ -624,14 +624,14 @@
                 renderPageWithData(config, normalizeRows(body.data, config));
             }
         }).catch(function () {
-            if (config.noMock) renderPageWithData(config, []);
+            renderPageWithData(config, config.noMock ? [] : mockRows(config));
         });
     }
 
     function skinOptions() {
         return skins.map(function (item) {
             var current = item.value === skin;
-            return '<option value="' + esc(item.value) + '"' + (current ? ' selected' : '') + '>' + esc((current ? '✓ ' : '') + skinLabel(item)) + '</option>';
+            return '<option value="' + esc(item.value) + '"' + (current ? ' selected' : '') + '>' + esc(item.icon + ' ' + skinLabel(item)) + '</option>';
         }).join('');
     }
 
@@ -641,17 +641,17 @@
             { value: 'layui', label: '□ ' + styleLabel('layui') }
         ].map(function (item) {
             var current = item.value === uiStyle;
-            return '<option value="' + esc(item.value) + '"' + (current ? ' selected' : '') + '>' + esc((current ? '✓ ' : '') + item.label) + '</option>';
+            return '<option value="' + esc(item.value) + '"' + (current ? ' selected' : '') + '>' + esc(item.label) + '</option>';
         }).join('');
     }
 
     function localeOptions() {
         return [
-            { value: 'zh-CN', label: '中文' },
-            { value: 'en', label: 'English' }
+            { value: 'zh-CN', label: '中' },
+            { value: 'en', label: 'EN' }
         ].map(function (item) {
             var current = item.value === locale;
-            return '<option value="' + esc(item.value) + '"' + (current ? ' selected' : '') + '>' + esc((current ? '✓ ' : '') + item.label) + '</option>';
+            return '<option value="' + esc(item.value) + '"' + (current ? ' selected' : '') + '>' + esc(item.label) + '</option>';
         }).join('');
     }
 
@@ -674,7 +674,7 @@
             '<main class="crm-main">',
             '<header class="crm-topbar">',
             '<div class="crm-page-title"><button type="button" class="crm-mobile-menu crm-plain-secondary" data-action="toggle-menu">' + esc(tr('common.menu', '菜单', 'Menu')) + '</button><div><h1>' + esc(config.title) + '</h1><p>' + esc(config.desc) + '</p></div></div>',
-            '<div class="crm-top-actions"><label class="crm-skin-select"><span class="crm-style-select-icon" aria-hidden="true"></span>' + esc(tr('front.ui_style', '界面', 'UI')) + '<select id="crmStyleSelect">' + styleOptions() + '</select></label><label class="crm-skin-select"><span class="crm-skin-select-icon" aria-hidden="true"></span>' + esc(tr('front.skin_mode', '皮肤', 'Theme')) + '<select id="crmSkinSelect">' + skinOptions() + '</select></label><label class="crm-skin-select"><span class="crm-locale-select-icon" aria-hidden="true"></span>' + esc(tr('common.language', '语言', 'Language')) + '<select id="crmLocaleSelect">' + localeOptions() + '</select></label><button type="button" class="crm-plain-secondary" data-action="legacy">□ ' + esc(styleLabel('layui')) + '</button><button type="button" class="crm-plain-secondary" data-action="refresh">' + esc(tr('common.refresh', '刷新', 'Refresh')) + '</button><button type="button" class="crm-plain-secondary" data-action="logout">' + esc(tr('common.logout', '退出', 'Logout')) + '</button></div>',
+            '<div class="crm-top-actions"><label class="crm-skin-select" title="' + esc(tr('front.ui_style', '界面', 'UI')) + '"><span class="crm-style-select-icon" aria-hidden="true"></span><select id="crmStyleSelect" aria-label="' + esc(tr('front.ui_style', '界面', 'UI')) + '">' + styleOptions() + '</select></label><label class="crm-skin-select" title="' + esc(tr('front.skin_mode', '皮肤', 'Theme')) + '"><span class="crm-skin-select-icon" aria-hidden="true"></span><select id="crmSkinSelect" aria-label="' + esc(tr('front.skin_mode', '皮肤', 'Theme')) + '">' + skinOptions() + '</select></label><label class="crm-skin-select" title="' + esc(tr('common.language', '语言', 'Language')) + '"><span class="crm-locale-select-icon" aria-hidden="true"></span><select id="crmLocaleSelect" aria-label="' + esc(tr('common.language', '语言', 'Language')) + '">' + localeOptions() + '</select></label><button type="button" class="crm-plain-secondary" data-action="legacy">□ ' + esc(styleLabel('layui')) + '</button><button type="button" class="crm-plain-secondary" data-action="refresh">' + esc(tr('common.refresh', '刷新', 'Refresh')) + '</button><button type="button" class="crm-plain-secondary" data-action="logout">' + esc(tr('common.logout', '退出', 'Logout')) + '</button></div>',
             '</header>',
             '<section class="crm-content"><div class="crm-content-inner" id="crmPlainContent"></div></section>',
             '</main>',
@@ -840,6 +840,15 @@
     }
 
     function bindSearch() {
+        app.querySelectorAll('[data-action="toggle-summary"]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var summary = app.querySelector('.crm-table-summary');
+                var icon = button.querySelector('span');
+                if (!summary) return;
+                summary.classList.toggle('is-collapsed');
+                if (icon) icon.textContent = summary.classList.contains('is-collapsed') ? '>' : '∨';
+            });
+        });
         app.querySelectorAll('[data-table-filter]').forEach(function (form) {
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
@@ -1048,7 +1057,7 @@
     }
 
     function dashboardControlPanel() {
-        return '<section class="crm-dashboard-controls"><label class="crm-skin-select"><span class="crm-style-select-icon" aria-hidden="true"></span>' + esc(tr('front.ui_style', '界面', 'UI')) + '<select data-crm-style-select>' + styleOptions() + '</select></label><label class="crm-skin-select"><span class="crm-skin-select-icon" aria-hidden="true"></span>' + esc(tr('front.skin_mode', '皮肤', 'Theme')) + '<select data-crm-skin-select>' + skinOptions() + '</select></label><label class="crm-skin-select"><span class="crm-locale-select-icon" aria-hidden="true"></span>' + esc(tr('common.language', '语言', 'Language')) + '<select data-crm-locale-select>' + localeOptions() + '</select></label></section>';
+        return '<section class="crm-dashboard-controls"><label class="crm-skin-select" title="' + esc(tr('front.ui_style', '界面', 'UI')) + '"><span class="crm-style-select-icon" aria-hidden="true"></span><select data-crm-style-select aria-label="' + esc(tr('front.ui_style', '界面', 'UI')) + '">' + styleOptions() + '</select></label><label class="crm-skin-select" title="' + esc(tr('front.skin_mode', '皮肤', 'Theme')) + '"><span class="crm-skin-select-icon" aria-hidden="true"></span><select data-crm-skin-select aria-label="' + esc(tr('front.skin_mode', '皮肤', 'Theme')) + '">' + skinOptions() + '</select></label><label class="crm-skin-select" title="' + esc(tr('common.language', '语言', 'Language')) + '"><span class="crm-locale-select-icon" aria-hidden="true"></span><select data-crm-locale-select aria-label="' + esc(tr('common.language', '语言', 'Language')) + '">' + localeOptions() + '</select></label></section>';
     }
 
     function renderDashboard(data) {
@@ -1057,6 +1066,17 @@
         var links = (data.share_urls || data.profile && data.profile.share_urls || []).slice(0, 4);
         if (!links.length) links = mockDashboard().share_urls;
         var stats = statItems(data);
+        stats.forEach(function (item) {
+            item.breakdownLabels = locale === 'en' ? ['Deposit', 'Rebate', 'Withdraw', 'Orders', 'Agents', 'Clients'] : ['入金', '返佣', '出金', '订单', '代理', '客户'];
+            item.breakdownValues = [
+                Number((data.stats || {}).monthly_deposit || 0),
+                Number((data.stats || {}).monthly_commission || (data.stats || {}).total_commission || 0),
+                Number((data.stats || {}).monthly_withdraw || 0),
+                Number((data.stats || {}).open_orders_count || (data.stats || {}).monthly_open_orders || 0),
+                Number((data.stats || {}).direct_agents || 0) + Number((data.stats || {}).indirect_agents || 0),
+                Number((data.stats || {}).direct_customers || 0) + Number((data.stats || {}).indirect_customers || 0)
+            ];
+        });
         currentStats = stats;
         var dashboardTitle = guard === 'admin' ? tr('common.dashboard', '后台管理控制台', 'Admin Dashboard') : tr('front.dashboard', '代理与客户工作台', 'Front Dashboard');
         var dashboardDesc = guard === 'admin' ? tr('front.naive_admin_desc', '原生 JS 渲染后台模块，保留 naive-admin 的侧栏、密度和图表体验。', 'Plain JavaScript admin workspace with Naive-style layout.') : tr('front.naive_front_desc', '无 Vue 运行时，页面切换稳定，保留 naive-admin 的信息密度和侧栏布局。', 'Plain JavaScript rendering without Vue runtime, keeping the Naive-style density and sidebar.');
@@ -1098,10 +1118,23 @@
     function renderDetail(config, data) {
         var content = document.getElementById('crmPlainContent');
         var keys = (config && config.detailFields) || Object.keys(data || {});
+        var charts = '';
+
         if (!keys.length) keys = ['user_id', 'user_name', 'email', 'account_type', 'total_funds', 'equity'];
+        if (config && config.endpoint === '/accountInfo') {
+            currentStats = [
+                {key: 'funds_profile', label: tr('front.funds_profile', '资金画像', 'Funds Profile'), value: Number(data.total_deposit || data.total_funds || 0), breakdownLabels: [tr('front.total_deposit', '入金', 'Deposit'), tr('front.total_rebate', '返佣', 'Rebate'), tr('front.total_withdraw', '出金', 'Withdraw'), tr('front.total_funds', '余额', 'Funds')], breakdownValues: [Number(data.total_deposit || 0), Number(data.total_rebate || 0), Number(data.total_withdraw || 0), Number(data.total_funds || 0)]},
+                {key: 'order_profile', label: tr('front.order_profile', '订单画像', 'Order Profile'), value: Number(data.closed_order_count || 0), breakdownLabels: [tr('front.open_order_count', '开仓订单数', 'Open Orders'), tr('front.closed_order_count', '平仓订单数', 'Closed Orders'), tr('front.profit_7d', '近 7 天盈亏', '7-Day P/L'), tr('front.profit_15d', '近 15 天盈亏', '15-Day P/L'), tr('front.profit_30d', '近 30 天盈亏', '30-Day P/L')], breakdownValues: [Number(data.open_order_count || 0), Number(data.closed_order_count || 0), Number(data.profit_7d || 0), Number(data.profit_15d || 0), Number(data.profit_30d || 0)]},
+                {key: 'client_profile', label: tr('front.client_profile', '客户画像', 'Client Profile'), value: Number(data.relation_amount || 0), breakdownLabels: [tr('front.direct_agents', '直属代理', 'Direct Agents'), tr('front.direct_customers', '直属客户', 'Direct Customers'), tr('front.indirect_customers', '间接客户', 'Indirect Customers'), tr('front.relation_amount', '相关金额', 'Related Amount')], breakdownValues: [Number(data.direct_agents || 0), Number(data.direct_customers || 0), Number(data.indirect_customers || 0), Number(data.relation_amount || 0)]}
+            ];
+            charts = '<section class="crm-chart-board"><div class="crm-section-head"><div><h2 class="crm-section-title">' + esc(tr('front.account_chart_title', '账户综合图表', 'Account Overview Charts')) + '</h2></div></div><div class="crm-chart-grid">' + currentStats.map(function (item, index) {
+                return '<article class="crm-chart-card"><div class="crm-chart-head"><div><p class="crm-chart-title">' + esc(item.label) + '</p><p class="crm-chart-meta">' + esc(fmt(item.value)) + '</p></div><select class="crm-chart-type" data-chart-type="' + index + '">' + chartTypeOptions(index) + '</select></div><div class="crm-chart-canvas" id="plainChart' + index + '"></div></article>';
+            }).join('') + '</div></section>';
+        }
         content.innerHTML = '<section class="crm-section"><h2 class="crm-section-title">' + esc(config.title) + '</h2><div class="crm-detail-grid">' + keys.map(function (key) {
             return '<div class="crm-detail-item"><p class="crm-detail-label">' + esc(fieldLabel(key)) + '</p><p class="crm-detail-value">' + esc(fmt(data[key])) + '</p></div>';
-        }).join('') + '</div></section>';
+        }).join('') + '</div></section>' + charts;
+        if (charts) renderCharts(currentStats);
     }
 
     function renderTable(config, rows) {
@@ -1113,10 +1146,11 @@
         var summary = tableSummary(fields, currentRows);
         content.innerHTML = [
             '<section class="crm-data-panel"><div class="crm-data-head"><h2>' + esc(config.title) + '</h2></div><div class="crm-table-filters"><input class="crm-plain-input" id="plainSearch" placeholder="' + esc(tr('common.search_placeholder', '输入关键词', 'Search keyword')) + '"><button class="crm-plain-secondary" data-action="search">' + esc(tr('common.search', '搜索', 'Search')) + '</button></div>',
+            config.collapsibleSummary ? '<button type="button" class="crm-summary-toggle" data-action="toggle-summary"><span>&gt;</span>' + esc(tr('front.summary', '汇总', 'Summary')) + '</button>' : '',
             '<div class="crm-table-wrap"><table class="crm-plain-table"><thead><tr>' + fields.map(function (key) { return '<th>' + esc(fieldLabel(key)) + '</th>'; }).join('') + '<th>' + esc(tr('common.operation', '操作', 'Action')) + '</th></tr></thead><tbody>' + rows.map(function (row) {
                 var rowIndex = currentRows.indexOf(row);
                 return '<tr data-row-index="' + rowIndex + '">' + fields.map(function (key) { return '<td title="' + esc(fmt(row[key])) + '">' + esc(fmt(row[key])) + '</td>'; }).join('') + '<td><button class="crm-table-action" type="button" data-row-detail="' + rowIndex + '">' + esc(tr('common.detail', '详情', 'Detail')) + '</button></td></tr>';
-            }).join('') + '</tbody><tfoot><tr><td>' + esc(tr('front.summary', '汇总', 'Summary')) + '</td>' + fields.slice(1).map(function (key) { return '<td>' + esc(summary[key] || '-') + '</td>'; }).join('') + '<td>' + currentRows.length + ' ' + esc(tr('front.rows_unit', '条', 'rows')) + '</td></tr></tfoot></table></div><div class="crm-table-summary">' + summaryText(summary, currentRows.length) + '</div><div class="crm-row-detail" id="plainRowDetail">' + esc(tr('front.click_detail_hint', '点击详情查看单行完整数据。', 'Click detail to view the complete row.')) + '</div></section>'
+            }).join('') + '</tbody><tfoot><tr><td>' + esc(tr('front.summary', '汇总', 'Summary')) + '</td>' + fields.slice(1).map(function (key) { return '<td>' + esc(summary[key] || '-') + '</td>'; }).join('') + '<td>' + currentRows.length + ' ' + esc(tr('front.rows_unit', '条', 'rows')) + '</td></tr></tfoot></table></div><div class="crm-table-summary' + (config.collapsibleSummary ? ' is-collapsed' : '') + '">' + summaryText(summary, currentRows.length) + '</div><div class="crm-row-detail" id="plainRowDetail">' + esc(tr('front.click_detail_hint', '点击详情查看单行完整数据。', 'Click detail to view the complete row.')) + '</div></section>'
         ].join('');
         var filterNode = content.querySelector('.crm-table-filters');
         if (filterNode) {
@@ -1234,8 +1268,8 @@
 
     function chartOption(item, type) {
         var base = Math.max(Number(item.value) || 10, 10);
-        var labels = locale === 'en' ? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Now'] : ['一月', '二月', '三月', '四月', '五月', '当前'];
-        var points = [0.62, 0.78, 0.71, 0.88, 0.95, 1].map(function (rate, index) {
+        var labels = item.breakdownLabels || (locale === 'en' ? ['Deposit', 'Rebate', 'Withdraw', 'Orders', 'Agents', 'Clients'] : ['入金', '返佣', '出金', '订单', '代理', '客户']);
+        var points = item.breakdownValues || [0.62, 0.78, 0.71, 0.88, 0.95, 1].map(function (rate, index) {
             return Math.round((base * rate + index * 4) * 100) / 100;
         });
         var colors = ['#18a058', '#2080f0', '#f0a020', '#d03050', '#0e7a83', '#7c3aed'];

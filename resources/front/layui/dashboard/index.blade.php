@@ -5,8 +5,9 @@
 
 @section('styles')
 <style>
-    .dashboard-page { display: grid; gap: 14px; }
+    .dashboard-page { display: grid; gap: 12px; }
     .dashboard-page .layui-card { margin-bottom: 0; border-radius: 10px; overflow: hidden; }
+    .dashboard-page .layui-card-body { padding: 12px; }
     .dashboard-hero {
         display: grid;
         grid-template-columns: minmax(0, 1.4fr) minmax(280px, .9fr);
@@ -16,7 +17,7 @@
     }
     .dashboard-hero-main {
         position: relative;
-        padding: 22px;
+        padding: 20px;
         color: #fff;
         border-radius: 12px;
         overflow: hidden;
@@ -35,10 +36,12 @@
     .dashboard-hero-title { position: relative; z-index: 1; font-size: 22px; line-height: 32px; font-weight: 800; }
     .dashboard-hero-title strong { margin: 0 8px; }
     .dashboard-hero-sub { position: relative; z-index: 1; margin-top: 8px; color: rgba(255,255,255,.78); }
+    .dashboard-auth-guide { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; padding: 8px 12px; border-radius: 999px; color: #0f172a; background: #fff; box-shadow: 0 8px 24px rgba(15,23,42,.16); }
+    .dashboard-auth-guide:hover { color: var(--front-blue, #1677ff); }
     .dashboard-title-badge { margin-left: 8px; vertical-align: middle; }
     .dashboard-hero-mini { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
     .dashboard-mini-pill { padding: 6px 10px; border: 1px solid rgba(255,255,255,.26); border-radius: 999px; background: rgba(255,255,255,.12); color: #fff; font-size: 12px; }
-    .dashboard-control-panel { padding: 16px; border: 1px solid var(--front-line, #dde4ec); border-radius: 8px; background: var(--front-panel, #fff); }
+    .dashboard-control-panel { padding: 12px; border: 1px solid var(--front-line, #dde4ec); border-radius: 8px; background: var(--front-panel, #fff); }
     .dashboard-actions { display: grid; gap: 10px; }
     .dashboard-switch-control { min-height: 36px; display: flex; align-items: center; gap: 8px; padding: 0 10px; border: 1px solid var(--front-line, #dce3ec); border-radius: 6px; background: var(--front-input, #fff); color: var(--front-muted, #4b5563); font-size: 12px; }
     .dashboard-switch-control i { color: var(--front-blue, #1677ff); font-size: 16px; }
@@ -47,7 +50,7 @@
     .dashboard-downloads { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
     .dashboard-downloads .layui-btn { margin: 0; }
     .dashboard-metric-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
-    .dashboard-metric-card .layui-card-body { min-height: 78px; padding: 14px; }
+    .dashboard-metric-card .layui-card-body { min-height: 70px; padding: 11px; }
     .dashboard-metric-label { margin-bottom: 8px; color: var(--front-muted, #6b7280); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .dashboard-value { min-height: 30px; font-size: 22px; line-height: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
     .dashboard-value.blue { color: var(--front-blue, #2080f0); }
@@ -62,10 +65,12 @@
     .dashboard-chart-card.is-network { grid-column: span 4; }
     .dashboard-chart-card.is-orders { grid-column: span 5; }
     .dashboard-chart-card.is-commission { grid-column: span 7; }
-    .dashboard-chart { width: 100%; height: 282px; }
-    .dashboard-chart-card.is-funds .dashboard-chart { height: 330px; }
-    .dashboard-chart-card .layui-card-body { min-height: 314px; }
-    .dashboard-chart-card.is-funds .layui-card-body { min-height: 362px; }
+    .dashboard-chart { width: 100%; height: 250px; }
+    .dashboard-chart-card.is-funds .dashboard-chart { height: 292px; }
+    .dashboard-chart-card .layui-card-body { min-height: 288px; }
+    .dashboard-chart-card.is-funds .layui-card-body { min-height: 328px; }
+    .dashboard-chart-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .dashboard-chart-type { height: 28px; min-width: 92px; border: 1px solid var(--front-line, #dde4ec); border-radius: 6px; background: var(--front-input, #fff); color: var(--front-text, #1f2937); }
     .dashboard-share-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     .dashboard-share-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 10px; border: 1px solid var(--front-line, #edf0f3); border-radius: 8px; background: var(--front-table-head, #f8fafc); }
     .dashboard-share-label { margin-bottom: 5px; color: var(--front-strong, #1f2937); font-weight: 700; }
@@ -91,6 +96,10 @@
                 <span data-translate="front.monthly_period">{{ __('front.monthly_period') }}</span>
                 <span id="periodRange"></span>
             </div>
+            <a class="dashboard-auth-guide layui-hide" id="identityGuideBtn" href="/front/profile?frame=1#identityForm">
+                <i class="layui-icon layui-icon-auz"></i>
+                <span data-translate="front.identity_upload_guide">{{ __('front.identity_upload_guide') }}</span>
+            </a>
             <div class="dashboard-hero-mini">
                 <span class="dashboard-mini-pill"><span data-translate="front.direct_agents">{{ __('front.direct_agents') }}</span>: <b id="directAgentsCount">0</b></span>
                 <span class="dashboard-mini-pill"><span data-translate="front.indirect_agents">{{ __('front.indirect_agents') }}</span>: <b id="indirectAgentsCount">0</b></span>
@@ -136,10 +145,10 @@
     </section>
 
     <section class="dashboard-chart-grid">
-        <div class="layui-card dashboard-chart-card is-funds"><div class="layui-card-header" data-translate="front.funds_chart">资金健康度</div><div class="layui-card-body"><div id="fundsChart" class="dashboard-chart"></div></div></div>
-        <div class="layui-card dashboard-chart-card is-network"><div class="layui-card-header" data-translate="front.network_chart">客户 / 代理结构</div><div class="layui-card-body"><div id="networkChart" class="dashboard-chart"></div></div></div>
-        <div class="layui-card dashboard-chart-card is-orders"><div class="layui-card-header" data-translate="front.order_chart">订单活跃度</div><div class="layui-card-body"><div id="orderChart" class="dashboard-chart"></div></div></div>
-        <div class="layui-card dashboard-chart-card is-commission"><div class="layui-card-header" data-translate="front.commission_chart">返佣表现</div><div class="layui-card-body"><div id="commissionChart" class="dashboard-chart"></div></div></div>
+        <div class="layui-card dashboard-chart-card is-funds"><div class="layui-card-header dashboard-chart-head"><span data-translate="front.funds_chart">资金健康度</span><select class="dashboard-chart-type" data-chart-target="fundsChart"></select></div><div class="layui-card-body"><div id="fundsChart" class="dashboard-chart"></div></div></div>
+        <div class="layui-card dashboard-chart-card is-network"><div class="layui-card-header dashboard-chart-head"><span data-translate="front.network_chart">客户 / 代理结构</span><select class="dashboard-chart-type" data-chart-target="networkChart"></select></div><div class="layui-card-body"><div id="networkChart" class="dashboard-chart"></div></div></div>
+        <div class="layui-card dashboard-chart-card is-orders"><div class="layui-card-header dashboard-chart-head"><span data-translate="front.order_chart">订单活跃度</span><select class="dashboard-chart-type" data-chart-target="orderChart"></select></div><div class="layui-card-body"><div id="orderChart" class="dashboard-chart"></div></div></div>
+        <div class="layui-card dashboard-chart-card is-commission"><div class="layui-card-header dashboard-chart-head"><span data-translate="front.commission_chart">返佣表现</span><select class="dashboard-chart-type" data-chart-target="commissionChart"></select></div><div class="layui-card-body"><div id="commissionChart" class="dashboard-chart"></div></div></div>
     </section>
 
     <section class="dashboard-metric-grid">

@@ -31,11 +31,11 @@
     var resizeBound = false;
 
     var skins = [
-        { value: 'light', label: '清透白', icon: '☼', en: 'Clean Light' },
-        { value: 'dark', label: '夜间蓝', icon: '☾', en: 'Night Blue' },
-        { value: 'sea', label: '海盐蓝', icon: '≋', en: 'Sea Salt' },
-        { value: 'warm', label: '暖砂色', icon: '◐', en: 'Warm Sand' },
-        { value: 'contrast', label: '清晰高对比', icon: '▣', en: 'Clean Contrast' }
+        { value: 'light', label: '云白', icon: '◌', en: 'Cloud' },
+        { value: 'dark', label: '静夜', icon: '◑', en: 'Night' },
+        { value: 'sea', label: '湖蓝', icon: '≋', en: 'Lake' },
+        { value: 'warm', label: '米杏', icon: '◒', en: 'Linen' },
+        { value: 'contrast', label: '墨灰', icon: '◇', en: 'Slate' }
     ];
 
     var frontMenus = [
@@ -94,7 +94,7 @@
         'closed-orders': { title: tr('menu.front_closed_orders', '历史订单', 'Closed Orders'), desc: tr('front.closed_orders_desc', '已平仓订单。', 'Closed orders.'), endpoint: '/closedOrders', fields: ['order_no', 'user_id', 'symbol', 'volume', 'open_time', 'close_time', 'profit'] },
         'agent-sub': { title: tr('menu.front_agent_sub', '下级代理', 'Sub Agents'), desc: tr('front.agent_sub_desc', '代理网络。', 'Agent network.'), endpoint: '/agentSubList', fields: ['user_id', 'user_name', 'email', 'account_type', 'created_at'] },
         'agent-customers': { title: tr('menu.front_agent_customers', '直属客户', 'Direct Customers'), desc: tr('front.agent_customers_desc', '客户列表。', 'Customer list.'), endpoint: '/agentCustomerList', fields: ['user_id', 'user_name', 'email', 'account_type', 'total_funds'] },
-        'agent-confirm': { title: tr('menu.front_agent_confirm', '代理级别确认', 'Agent Level Confirm'), desc: tr('front.agent_confirm_desc', '级别确认状态。', 'Level confirmation status.'), endpoint: '/agentConfirmLevel', fields: ['userId', 'userName', 'summary.current_level', 'summary.next_level', 'summary.is_confirmed', 'summary.confirmed_at'] },
+        'agent-confirm': { title: tr('menu.front_agent_confirm', '代理级别确认', 'Agent Level Confirm'), desc: tr('front.agent_confirm_desc', '级别确认状态。', 'Level confirmation status.'), endpoint: '/agentConfirmLevel', fields: ['userId', 'userName', 'current_level', 'next_level', 'commission_rate', 'is_confirmed', 'confirmed_at'] },
         'group-change': { title: tr('menu.front_group_change', '组别变更', 'Group Change'), desc: tr('front.group_change_desc', '组别变更记录。', 'Group change records.'), endpoint: '/agentGroupChangeList', fields: ['id', 'user_id', 'group_id', 'status', 'created_at'] },
         'commission-realtime': { title: tr('front.realtime_commission', '实时返佣', 'Real-time Commission'), desc: tr('front.realtime_commission_desc', '实时返佣订单。', 'Real-time commission orders.'), endpoint: '/commissionRealTime', collapsibleSummary: true, fields: ['ticket', 'login', 'symbol', 'volume_lots', 'profit_gain', 'profit_loss', 'profit_net', 'modify_time'] },
         'commission-history': { title: tr('front.commission_history', '返佣历史', 'Commission History'), desc: tr('front.commission_history_desc', '历史返佣记录。', 'Historical commission records.'), endpoint: '/commissionHistory', fields: ['id', 'agent_id', 'commission_amount', 'status', 'created_at'] },
@@ -412,22 +412,26 @@
 
     function parseImages(value) {
         if (!value) return [];
-        if (Array.isArray(value)) return value;
+        if (Array.isArray(value)) return value.filter(Boolean);
         if (typeof value === 'string') {
             try {
                 var parsed = JSON.parse(value);
-                if (Array.isArray(parsed)) return parsed;
+                if (Array.isArray(parsed)) return parsed.filter(Boolean);
             } catch (e) {}
             return value.split(',').map(function (item) { return item.trim(); }).filter(Boolean);
         }
         return [];
     }
 
+    function plainTitle(value) {
+        return String(value || '').split('/').pop().replace(/[_-]/g, ' ');
+    }
+
     function valueHtml(key, value) {
         var images = /(^|_)(image|images|avatar|photo|voucher|url)(_|$)/i.test(key) ? parseImages(value) : [];
         if (images.length) {
             return '<span class="crm-image-icons">' + images.map(function (src, index) {
-                return '<a href="' + esc(src) + '" target="_blank" rel="noopener" title="' + esc(fieldLabel(key) + ' ' + (index + 1)) + '">▧</a>';
+                return '<a href="' + esc(src) + '" target="_blank" rel="noopener" title="' + esc(plainTitle(src) || (fieldLabel(key) + ' ' + (index + 1))) + '" aria-label="' + esc(fieldLabel(key) + ' ' + (index + 1)) + '"><span aria-hidden="true">▧</span></a>';
             }).join('') + '</span>';
         }
         return esc(fmt(value));
@@ -552,11 +556,28 @@
     function mockRows(config, count) {
         var fields = (config && config.fields) || ['id', 'user_id', 'status', 'created_at'];
         var rows = [];
+        var rangeList;
         for (var i = 0; i < (count || 18); i += 1) {
             var row = {};
             fields.forEach(function (key) {
                 row[key] = mockValue(key, i);
             });
+            if (config && config.endpoint === '/agentConfirmLevel') {
+                rangeList = [
+                    { level_id: '1', level_name: 'A1', prop: '18%', selected: i % 3 === 0 },
+                    { level_id: '2', level_name: 'A2', prop: '24%', selected: i % 3 === 1 },
+                    { level_id: '3', level_name: 'A3', prop: '30%', selected: i % 3 === 2 }
+                ];
+                row.userId = 10001 + i;
+                row.userName = 'Demo Agent ' + (i + 1);
+                row.current_level = rangeList[i % rangeList.length].level_name;
+                row.next_level = rangeList[(i + 1) % rangeList.length].level_name;
+                row.commission_rate = rangeList[i % rangeList.length].prop;
+                row.is_confirmed = i % 2 ? tr('front.yes', '是', 'Yes') : tr('front.no', '否', 'No');
+                row.confirmed_at = i % 2 ? mockValue('created_at', i) : '-';
+                row.range_list = rangeList;
+                row.userGroupId = String((i % 3) + 1);
+            }
             rows.push(row);
         }
         return rows;
@@ -948,19 +969,112 @@
     }
 
     function bindDateInputs() {
-        app.querySelectorAll('[data-date-picker]').forEach(function (input) {
-            input.addEventListener('focus', function () {
-                if (input.type !== 'date') {
-                    input.type = 'date';
-                    if (input.showPicker) {
-                        try { input.showPicker(); } catch (e) {}
-                    }
-                }
-            });
-            input.addEventListener('blur', function () {
-                if (!input.value) input.type = 'text';
-            });
+        document.querySelectorAll('.crm-date-popover').forEach(function (popover) {
+            popover.remove();
         });
+        app.querySelectorAll('[data-date-picker]').forEach(function (input) {
+            input.addEventListener('focus', function () { openDatePopover(input); });
+            input.addEventListener('click', function () { openDatePopover(input); });
+        });
+    }
+
+    function parseDateValue(value) {
+        var parts = String(value || '').match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+        var now = new Date();
+
+        if (!parts) return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        return new Date(Number(parts[1]), Number(parts[2]) - 1, Number(parts[3]));
+    }
+
+    function padDate(value) {
+        return value < 10 ? '0' + value : String(value);
+    }
+
+    function formatDate(date) {
+        return date.getFullYear() + '-' + padDate(date.getMonth() + 1) + '-' + padDate(date.getDate());
+    }
+
+    function openDatePopover(input) {
+        var viewDate = parseDateValue(input.value);
+        var selected = input.value;
+        var popover = document.createElement('div');
+
+        document.querySelectorAll('.crm-date-popover').forEach(function (node) {
+            node.remove();
+        });
+        popover.className = 'crm-date-popover';
+        document.body.appendChild(popover);
+
+        function render() {
+            var year = viewDate.getFullYear();
+            var month = viewDate.getMonth();
+            var first = new Date(year, month, 1);
+            var start = new Date(year, month, 1 - first.getDay());
+            var today = formatDate(new Date());
+            var html = '<div class="crm-date-head"><button type="button" data-date-prev>‹</button><strong>' + year + '-' + padDate(month + 1) + '</strong><button type="button" data-date-next>›</button></div>';
+            var i;
+            var day;
+            var value;
+
+            html += '<div class="crm-date-week"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div><div class="crm-date-grid">';
+            for (i = 0; i < 42; i++) {
+                day = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
+                value = formatDate(day);
+                html += '<button type="button" data-date-value="' + value + '" class="' + (day.getMonth() !== month ? 'is-muted ' : '') + (value === selected ? 'is-selected ' : '') + (value === today ? 'is-today' : '') + '">' + day.getDate() + '</button>';
+            }
+            html += '</div><div class="crm-date-foot"><button type="button" data-date-today>' + esc(tr('common.today', '今天', 'Today')) + '</button><button type="button" data-date-clear>' + esc(tr('common.clear', '清空', 'Clear')) + '</button></div>';
+            popover.innerHTML = html;
+        }
+
+        function place() {
+            var rect = input.getBoundingClientRect();
+            popover.style.left = Math.min(rect.left + window.scrollX, window.scrollX + window.innerWidth - 280) + 'px';
+            popover.style.top = (rect.bottom + window.scrollY + 6) + 'px';
+        }
+
+        function close(event) {
+            if (event && (popover.contains(event.target) || event.target === input)) return;
+            popover.remove();
+            document.removeEventListener('mousedown', close);
+        }
+
+        render();
+        place();
+        popover.addEventListener('click', function (event) {
+            var target = event.target;
+            var value = target.getAttribute('data-date-value');
+
+            if (target.hasAttribute('data-date-prev')) {
+                viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1);
+                render();
+                return;
+            }
+            if (target.hasAttribute('data-date-next')) {
+                viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1);
+                render();
+                return;
+            }
+            if (target.hasAttribute('data-date-today')) {
+                input.value = formatDate(new Date());
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                close();
+                return;
+            }
+            if (target.hasAttribute('data-date-clear')) {
+                input.value = '';
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                close();
+                return;
+            }
+            if (value) {
+                input.value = value;
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                close();
+            }
+        });
+        setTimeout(function () {
+            document.addEventListener('mousedown', close);
+        }, 0);
     }
 
     function bindLogout() {
@@ -1044,6 +1158,7 @@
     function renderPage(page, force) {
         currentPage = page || 'dashboard';
         var config = modules[currentPage] || modules.dashboard;
+        closeDetailModal();
         if (currentPage === 'login') {
             renderLogin();
             return;
@@ -1261,7 +1376,7 @@
             var count = 0;
             rows.forEach(function (row) {
                 var value = Number(getFieldValue(row, key));
-                if (isFinite(value) && !/_id$|^id$|status|sort|level$|phone|mobile|tel|recipient_phone/.test(key)) {
+                if (isFinite(value) && !/_id$|^id$|status|sort|level$|phone|mobile|tel|recipient_phone|receiver_phone|userphone|contact_phone|bank_no|card_no|account_no/i.test(key)) {
                     sum += value;
                     count += 1;
                 }
@@ -1327,6 +1442,9 @@
     function closeDetailModal() {
         var modal = document.getElementById('plainDetailModal');
         if (modal) modal.remove();
+        document.querySelectorAll('.crm-row-detail').forEach(function (detail) {
+            detail.remove();
+        });
     }
 
     function showRowDetail(index) {

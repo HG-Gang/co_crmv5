@@ -207,11 +207,11 @@ layui.use(['layer', 'jquery'], function() {
         var currentTheme = window.CrmTheme ? CrmTheme.get() : (localStorage.getItem('front_theme') || 'light');
         var currentStyle = localStorage.getItem('crm_ui_style') || localStorage.getItem('front_ui_style') || 'layui';
         var themeLabels = {
-            light: '☀ ' + CrmLang.t('front.theme_light'),
-            dark: '☾ ' + CrmLang.t('front.theme_dark'),
-            sea: '≋ ' + CrmLang.t('front.theme_sea'),
-            warm: '◐ ' + CrmLang.t('front.theme_warm'),
-            contrast: '▣ ' + CrmLang.t('front.theme_contrast')
+            light: '◌ ' + CrmLang.t('front.theme_light_fresh'),
+            dark: '◑ ' + CrmLang.t('front.theme_dark_fresh'),
+            sea: '≋ ' + CrmLang.t('front.theme_sea_fresh'),
+            warm: '◒ ' + CrmLang.t('front.theme_warm_fresh'),
+            contrast: '◇ ' + CrmLang.t('front.theme_contrast_fresh')
         };
         $('#dashboardStyleSelect option[value="layui"]').text('▣ ' + (isEn ? 'Layui Style' : 'Layui 风格'));
         $('#dashboardStyleSelect option[value="naive"]').text('□ ' + (isEn ? 'Naive Style' : 'Naive 风格'));
@@ -231,7 +231,6 @@ layui.use(['layer', 'jquery'], function() {
 
     function applyDashboardTheme(theme, persist) {
         $('#dashboardThemeSelect').val(theme);
-        $('#dashboardThemeLabel').text(themeText(theme));
         if (window.CrmTheme) {
             theme = persist === false ? CrmTheme.apply(theme, {broadcast: false}) : CrmTheme.set(theme);
         } else {
@@ -251,11 +250,11 @@ layui.use(['layer', 'jquery'], function() {
 
     function themeText(theme) {
         var labels = {
-            light: CrmLang.t('front.theme_light'),
-            dark: CrmLang.t('front.theme_dark'),
-            sea: CrmLang.t('front.theme_sea'),
-            warm: CrmLang.t('front.theme_warm'),
-            contrast: CrmLang.t('front.theme_contrast')
+            light: CrmLang.t('front.theme_light_fresh'),
+            dark: CrmLang.t('front.theme_dark_fresh'),
+            sea: CrmLang.t('front.theme_sea_fresh'),
+            warm: CrmLang.t('front.theme_warm_fresh'),
+            contrast: CrmLang.t('front.theme_contrast_fresh')
         };
 
         return labels[theme] || labels.light || theme;

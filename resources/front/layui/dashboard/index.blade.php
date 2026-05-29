@@ -49,10 +49,10 @@
     .dashboard-current-label { flex: 0 0 auto; padding: 2px 7px; border-radius: 4px; color: var(--front-blue, #1677ff); background: rgba(22, 119, 255, .08); font-weight: 700; }
     .dashboard-downloads { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
     .dashboard-downloads .layui-btn { margin: 0; }
-    .dashboard-metric-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
-    .dashboard-metric-card .layui-card-body { min-height: 70px; padding: 11px; }
+    .dashboard-metric-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 9px; }
+    .dashboard-metric-card .layui-card-body { min-height: 56px; padding: 8px 10px; }
     .dashboard-metric-label { margin-bottom: 8px; color: var(--front-muted, #6b7280); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .dashboard-value { min-height: 30px; font-size: 22px; line-height: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .dashboard-value { min-height: 24px; font-size: 18px; line-height: 24px; font-weight: 800; font-variant-numeric: tabular-nums; }
     .dashboard-value.blue { color: var(--front-blue, #2080f0); }
     .dashboard-value.green { color: var(--front-accent, #18a058); }
     .dashboard-value.orange { color: var(--front-warn, #d97706); }
@@ -119,13 +119,12 @@
                 <label class="dashboard-switch-control">
                     <i class="layui-icon layui-icon-theme"></i>
                     <select id="dashboardThemeSelect" aria-label="皮肤">
-                        <option value="light">☀ 浅色</option>
-                        <option value="dark">☾ 深色</option>
-                        <option value="sea">≋ 海蓝</option>
-                        <option value="warm">◐ 暖色</option>
-                        <option value="contrast">▣ 高对比</option>
+                        <option value="light">◌ 云白</option>
+                        <option value="dark">◑ 静夜</option>
+                        <option value="sea">≋ 湖蓝</option>
+                        <option value="warm">◒ 米杏</option>
+                        <option value="contrast">◇ 墨灰</option>
                     </select>
-                    <span id="dashboardThemeLabel" class="dashboard-current-label"></span>
                 </label>
                 <div class="dashboard-downloads">
                     <a id="pcDownloadLink" class="layui-btn layui-btn-primary layui-btn-sm" href="#" target="_blank" rel="noopener"><i class="layui-icon layui-icon-download-circle"></i> <span data-translate="front.pc_download">{{ __('front.pc_download') }}</span></a>

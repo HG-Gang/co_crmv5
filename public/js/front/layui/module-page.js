@@ -224,7 +224,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
                 var files = input.files || [];
                 var html = '';
                 for (var i = 0; i < files.length; i++) {
-                    html += '<span class="crm-upload-chip">▧ ' + escapeHtml(files[i].name) + '</span>';
+                    html += '<span class="crm-upload-chip"><i class="layui-icon layui-icon-picture"></i><span>' + escapeHtml(files[i].name) + '</span></span>';
                 }
                 $list.html(html);
             });
@@ -421,6 +421,44 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
         return formatValue(value);
     }
 
+    function parseImages(value) {
+        var parsed;
+
+        if (!value) {
+            return [];
+        }
+        if ($.isArray(value)) {
+            return value.filter(Boolean);
+        }
+        if (typeof value === 'string') {
+            try {
+                parsed = JSON.parse(value);
+                if ($.isArray(parsed)) {
+                    return parsed.filter(Boolean);
+                }
+            } catch (e) {}
+            return value.split(',').map(function (item) {
+                return $.trim(item);
+            }).filter(Boolean);
+        }
+
+        return [];
+    }
+
+    function imageCellHtml(row, column) {
+        var value = getValue(row, column.displayKey || column.key);
+        var images = /(^|_)(image|images|avatar|photo|voucher|url)(_|$)/i.test(column.key || '') ? parseImages(value) : [];
+
+        if (!images.length) {
+            return '';
+        }
+
+        return '<span class="crm-image-icons">' + images.map(function (src, index) {
+            var name = String(src || '').split('/').pop().replace(/[_-]/g, ' ');
+            return '<a href="' + escapeHtml(src) + '" target="_blank" rel="noopener" title="' + escapeHtml(name || t(column.label || column.key)) + '" aria-label="' + escapeHtml(t(column.label || column.key) + ' ' + (index + 1)) + '"><span aria-hidden="true">▧</span></a>';
+        }).join('') + '</span>';
+    }
+
     function columnCellClass(column) {
         if (column.align) {
             return ' module-cell-' + column.align;
@@ -451,9 +489,13 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
         var numberValue = Number(rawValue || 0);
         var html = escapeHtml(value);
         var levelValue = column.levelClassKey ? getValue(row, column.levelClassKey) : '';
+        var imageHtml = imageCellHtml(row, column);
 
         if (column.format === 'agentLevelSelect') {
             return agentLevelSelectHtml(row, rowIndex);
+        }
+        if (imageHtml) {
+            return imageHtml;
         }
         if ((column.format === 'money' || column.format === 'lots') && !isNaN(numberValue) && numberValue < 0) {
             html = '<span class="value-negative">' + html + '</span>';

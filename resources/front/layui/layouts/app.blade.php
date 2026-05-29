@@ -85,13 +85,13 @@
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:;" title="{{ __('front.skin_mode') }}"><i class="layui-icon layui-icon-theme"></i><span id="frontThemeBadge" class="front-theme-badge"></span></a>
+                <a href="javascript:;" title="{{ __('front.skin_mode') }}"><i class="layui-icon layui-icon-theme"></i></a>
                 <dl class="layui-nav-child">
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="light" data-skin="light">☼ 清透白</a></dd>
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="dark" data-skin="dark">☾ 夜间蓝</a></dd>
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="sea" data-skin="sea">≋ 海盐蓝</a></dd>
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="warm" data-skin="warm">◐ 暖砂色</a></dd>
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="contrast" data-skin="contrast">▣ 清晰高对比</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="light" data-skin="light">◌ 云白</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="dark" data-skin="dark">◑ 静夜</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="sea" data-skin="sea">≋ 湖蓝</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="warm" data-skin="warm">◒ 米杏</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="contrast" data-skin="contrast">◇ 墨灰</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">

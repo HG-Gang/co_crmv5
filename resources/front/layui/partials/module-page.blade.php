@@ -136,7 +136,15 @@
                                             @if(($field['type'] ?? 'text') === 'file')
                                                 @php $uploadId = 'crm_upload_' . md5($field['name'] . $loop->index); @endphp
                                                 <div class="crm-upload-card">
-                                                    <button type="button" class="crm-upload-action" id="{{ $uploadId }}_trigger">▧ <span data-translate="{{ $field['label'] }}">{{ __($field['label']) }}</span></button>
+                                                    <div class="crm-upload-main">
+                                                        <button type="button" class="layui-btn layui-btn-primary crm-upload-action" id="{{ $uploadId }}_trigger">
+                                                            <i class="layui-icon layui-icon-upload-drag"></i>
+                                                            <span data-translate="{{ $field['label'] }}">{{ __($field['label']) }}</span>
+                                                        </button>
+                                                        <div class="crm-upload-tip">
+                                                            <span data-translate="front.upload_drag_tip">{{ __('front.upload_drag_tip') }}</span>
+                                                        </div>
+                                                    </div>
                                                     <input
                                                         id="{{ $uploadId }}"
                                                         type="file"

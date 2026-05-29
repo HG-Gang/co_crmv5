@@ -260,7 +260,7 @@ var CrmTable = (function () {
             return true;
         }
 
-        if (/(phone|mobile|tel|recipient_phone)/.test(key)) {
+        if (/(phone|mobile|tel|recipient_phone|receiver_phone|userphone|contact_phone|bank_no|card_no|account_no)/.test(key)) {
             return false;
         }
 
@@ -344,6 +344,14 @@ var CrmTable = (function () {
             return;
         }
 
+        $target.each(function () {
+            var $summary = $(this);
+            var $next = $summary.next();
+            if ($next.hasClass('layui-table-view') || $next.is('table') || $next.hasClass('module-table-wrap') || $next.hasClass('flow-table-wrap') || $next.hasClass('withdraw-table-wrap')) {
+                return;
+            }
+            $summary.insertBefore($summary.siblings('.layui-table-view, table, .module-table-wrap, .flow-table-wrap, .withdraw-table-wrap').first());
+        });
         summary = summarizeRows(rows, columns);
         html += '<div class="crm-table-summary-item summary-color-0">';
         html += '<span>' + escapeHtml(t('common.total')) + '</span>';

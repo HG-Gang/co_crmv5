@@ -5,15 +5,8 @@
 
 @section('styles')
 <style>
-    .deposit-channel-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
-    .deposit-channel-card { border: 1px solid #e6e6e6; border-radius: 999px; padding: 8px 13px; min-height: 38px; cursor: pointer; background: #fff; }
-    .deposit-channel-card.is-active { color: #fff; border-color: var(--front-blue, #2080f0); background: var(--front-blue, #2080f0); box-shadow: 0 8px 18px rgba(32,128,240,.16); }
     .deposit-page .layui-card-header { font-weight: 600; }
     .deposit-page .deposit-form-row .layui-input { max-width: 240px; }
-    .deposit-page .deposit-channel-card .channel-name { font-weight: 700; }
-    .deposit-page .deposit-channel-card .channel-meta { margin-top: 3px; font-size: 12px; line-height: 18px; color: #6b7280; }
-    .deposit-page .deposit-channel-card.is-active .channel-meta { color: rgba(255,255,255,.82); }
-    .deposit-page .deposit-channel-card .channel-rate { display: inline-block; padding: 1px 6px; border-radius: 999px; color: #0f766e; background: #e6fffb; border: 1px solid #99f6e4; }
     .deposit-page .deposit-retry { display: none; margin-left: 10px; }
     .deposit-page.is-disabled .deposit-form-area { opacity: .55; pointer-events: none; }
 </style>
@@ -133,7 +126,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('/js/common/pay-channel-manager.js') }}?v=2026052913"></script>
+<script src="{{ asset('/js/common/pay-channel-manager.js') }}?v=2026052911"></script>
 <script src="{{ asset('/js/common/deposit-page-core.js') }}"></script>
 <script src="{{ asset('/js/front/layui/deposit/index.js') }}?v=2026052913"></script>
 @endsection

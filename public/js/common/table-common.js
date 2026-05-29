@@ -260,6 +260,10 @@ var CrmTable = (function () {
             return true;
         }
 
+        if (/(phone|mobile|tel|recipient_phone)/.test(key)) {
+            return false;
+        }
+
         return /(amount|balance|equity|credit|margin|profit|commission|rebate|deposit|withdraw|fee|volume|lots|count|total)/.test(key);
     }
 

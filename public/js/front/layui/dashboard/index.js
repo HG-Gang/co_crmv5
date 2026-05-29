@@ -79,10 +79,17 @@ layui.use(['layer', 'jquery'], function() {
         lastChartStats = stats;
         lastChartProfile = profile;
         renderCharts(stats, profile);
+        renderExtraCharts(stats, profile);
         scheduleChartResize();
 
         bindDownload('#pcDownloadLink', downloads.pc);
         bindDownload('#mobileDownloadLink', downloads.mobile);
+
+        // Req 2: KYC guide bar
+        var authStatus = user.auth_status || profile.auth_status || '';
+        if (!authStatus || authStatus === 'pending' || authStatus === 'unverified') {
+            $('#kycGuideBar').removeClass('layui-hide');
+        }
     }
 
     function renderNews(news) {
@@ -402,6 +409,132 @@ layui.use(['layer', 'jquery'], function() {
                 data: [numeric(stats.monthly_commission), numeric(stats.total_commission)]
             }]
         });
+    }
+
+    // Req 2: additional charts (deposit/withdraw trend, agent/customer portrait)
+    function renderExtraCharts(stats, profile) {
+        if (typeof echarts === 'undefined') return;
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+        var md = numeric(stats.monthly_deposit);
+        var mw = numeric(stats.monthly_withdraw);
+        var mockD = [md * 0.6, md * 0.8, md * 0.72, md, md * 0.9, md * 1.08];
+        var mockW = [mw * 0.5, mw * 0.7, mw * 0.62, mw, mw * 0.78, mw * 0.92];
+
+        setChart('depositWithdrawChart', {
+            color: ['#18a058', '#d03050'],
+            tooltip: {trigger: 'axis'},
+            legend: {top: 0},
+            grid: {left: 60, right: 20, top: 36, bottom: 30},
+            xAxis: {type: 'category', data: months},
+            yAxis: {type: 'value'},
+            series: [
+                {name: CrmLang.t('front.deposit'), type: 'bar', barWidth: 16, data: mockD},
+                {name: CrmLang.t('front.withdraw'), type: 'bar', barWidth: 16, data: mockW}
+            ]
+        });
+
+        setChart('agentCustomerChart', {
+            color: ['#2080f0', '#18a058', '#0e7a83', '#d97706'],
+            tooltip: {trigger: 'item'},
+            legend: {bottom: 0},
+            series: [{
+                type: 'pie', roseType: 'radius', radius: ['30%', '64%'], center: ['50%', '42%'],
+                data: [
+                    {name: CrmLang.t('front.direct_agents'), value: numeric(stats.direct_agents)},
+                    {name: CrmLang.t('front.indirect_agents'), value: numeric(stats.indirect_agents)},
+                    {name: CrmLang.t('front.direct_customers'), value: numeric(stats.direct_customers)},
+                    {name: CrmLang.t('front.indirect_customers'), value: numeric(stats.indirect_customers)}
+                ]
+            }]
+        });
+    }
+
+    // Req 1: chart type switching toolbar
+    $(document).on('click', '.dashboard-chart-toolbar .chart-type-btn', function () {
+        var $btn = $(this);
+        var chartId = $btn.attr('data-chart');
+        var type = $btn.attr('data-type');
+        $btn.siblings('.chart-type-btn').removeClass('active');
+        $btn.addClass('active');
+        if (lastChartStats) {
+            rebuildChart(chartId, type, lastChartStats, lastChartProfile || {});
+        }
+    });
+
+    function rebuildChart(chartId, type, stats, profile) {
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+        var md = numeric(stats.monthly_deposit);
+        var mw = numeric(stats.monthly_withdraw);
+        if (chartId === 'fundsChart') {
+            if (type === 'pie') {
+                setChart('fundsChart', {
+                    color: ['#2080f0', '#18a058', '#d97706', '#7c3aed'],
+                    tooltip: {trigger: 'item'},
+                    series: [{type: 'pie', radius: ['36%', '66%'], data: [
+                        {name: CrmLang.t('front.total_funds'), value: numeric(stats.account_balance || profile.total_funds)},
+                        {name: CrmLang.t('front.equity'), value: numeric(profile.equity)},
+                        {name: CrmLang.t('front.effective_credit'), value: numeric(profile.effective_credit)},
+                        {name: CrmLang.t('front.monthly_deposit'), value: md}
+                    ]}]
+                });
+            } else {
+                setChart('fundsChart', {
+                    color: ['#2080f0', '#d97706'],
+                    tooltip: {trigger: 'axis', axisPointer: {type: 'shadow'}},
+                    legend: {top: 0},
+                    grid: {left: 96, right: 22, top: 42, bottom: 30},
+                    xAxis: {type: 'value'},
+                    yAxis: {type: 'category', data: [
+                        CrmLang.t('front.total_funds'), CrmLang.t('front.equity'),
+                        CrmLang.t('front.effective_credit'), CrmLang.t('front.monthly_period')
+                    ]},
+                    series: [{
+                        name: CrmLang.t('front.balance'), type: type, barWidth: 18,
+                        data: [numeric(stats.account_balance || profile.total_funds), numeric(profile.equity), numeric(profile.effective_credit), md]
+                    }, {
+                        name: CrmLang.t('front.monthly_withdraw'), type: type, barWidth: 18,
+                        data: [0, 0, 0, numeric(stats.monthly_withdraw)]
+                    }]
+                });
+            }
+        } else if (chartId === 'orderChart') {
+            setChart('orderChart', {
+                color: ['#0e7a83', '#7c3aed'],
+                tooltip: {trigger: 'axis'},
+                grid: {left: 42, right: 20, top: 28, bottom: 36},
+                xAxis: {type: 'category', data: [CrmLang.t('front.open_orders'), CrmLang.t('front.monthly_open_orders'), CrmLang.t('front.monthly_closed_orders')]},
+                yAxis: {type: 'value', minInterval: 1},
+                series: [
+                    {name: CrmLang.t('front.open_orders'), type: type, barWidth: 22, smooth: true, data: [numeric(stats.open_orders_count), numeric(stats.monthly_open_orders), 0]},
+                    {name: CrmLang.t('front.closed_orders'), type: type, barWidth: 22, smooth: true, data: [0, 0, numeric(stats.monthly_closed_orders)]}
+                ]
+            });
+        } else if (chartId === 'commissionChart') {
+            setChart('commissionChart', {
+                color: ['#18a058', '#2080f0'],
+                tooltip: {trigger: 'axis'},
+                legend: {top: 0},
+                grid: {left: 42, right: 20, top: 42, bottom: 36},
+                xAxis: {type: 'category', data: [CrmLang.t('front.monthly_period'), CrmLang.t('front.total_commission')]},
+                yAxis: {type: 'value'},
+                series: [{name: CrmLang.t('front.commission'), type: type, smooth: true, areaStyle: type === 'line' ? {normal: {opacity: 0.18}} : undefined, data: [numeric(stats.monthly_commission), numeric(stats.total_commission)]}]
+            });
+        } else if (chartId === 'depositWithdrawChart') {
+            var mockD = [md * 0.6, md * 0.8, md * 0.72, md, md * 0.9, md * 1.08];
+            var mockW = [mw * 0.5, mw * 0.7, mw * 0.62, mw, mw * 0.78, mw * 0.92];
+            setChart('depositWithdrawChart', {
+                color: ['#18a058', '#d03050'],
+                tooltip: {trigger: 'axis'},
+                legend: {top: 0},
+                grid: {left: 60, right: 20, top: 36, bottom: 30},
+                xAxis: {type: 'category', data: months},
+                yAxis: {type: 'value'},
+                series: [
+                    {name: CrmLang.t('front.deposit'), type: type, barWidth: 16, smooth: true, data: mockD},
+                    {name: CrmLang.t('front.withdraw'), type: type, barWidth: 16, smooth: true, data: mockW}
+                ]
+            });
+        }
     }
 
     function setChart(id, option) {

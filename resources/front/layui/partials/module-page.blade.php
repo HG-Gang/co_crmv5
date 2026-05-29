@@ -22,9 +22,17 @@
 
 <style>
     .front-module-page .module-toolbar { margin-bottom: 15px; }
-    .front-module-page .module-stat { background: var(--front-panel); border: 1px solid var(--front-line); border-radius: 6px; padding: 18px; margin-bottom: 15px; min-height: 78px; }
-    .front-module-page .module-stat-label { color: var(--front-muted); font-size: 13px; margin-bottom: 8px; }
-    .front-module-page .module-stat-value { color: var(--front-strong); font-size: 22px; font-weight: 600; word-break: break-word; }
+    .front-module-page .module-stats-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; text-align: left; margin-bottom: 14px; }
+    .front-module-page .module-stat-item { background: var(--front-panel); border: 1px solid var(--front-line); border-radius: 6px; padding: 12px 16px; min-width: 140px; }
+    .front-module-page .module-stat-label { color: var(--front-muted); font-size: 12px; margin-bottom: 6px; }
+    .front-module-page .module-stat-value { color: var(--front-strong); font-size: 18px; font-weight: 600; word-break: break-word; }
+    /* Req 16: collapsible chart section for commission pages */
+    .module-chart-collapse { margin-bottom: 14px; }
+    .module-chart-toggle { display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border: 1px solid var(--front-line, #dce3ec); border-radius: 6px; background: transparent; color: var(--front-muted, #6b7280); font-size: 12px; cursor: pointer; user-select: none; }
+    .module-chart-toggle .toggle-arrow { display: inline-block; transition: transform .25s; }
+    .module-chart-toggle.open .toggle-arrow { transform: rotate(90deg); }
+    .module-chart-body { display: none; margin-top: 10px; }
+    .module-chart-body.show { display: block; }
     .front-module-page .module-empty { text-align: center; color: var(--front-muted); padding: 28px 0; }
     .front-module-page .layui-card-header { font-weight: 600; }
     .front-module-page .module-table-wrap { width: 100%; overflow-x: auto; }
@@ -145,12 +153,25 @@
                 <hr>
             @endif
 
+            {{-- Req 9: summary in independent left-aligned div --}}
             @if(!empty($summaryFields) && $showSummary)
-                <div class="layui-row layui-col-space15" id="moduleSummary"></div>
+                <div id="moduleSummary"></div>
+            @endif
+
+            {{-- Req 16: collapsible chart div for commission stats --}}
+            @if(!empty($showChartCollapse))
+            <div class="module-chart-collapse">
+                <button type="button" class="module-chart-toggle" id="moduleChartToggle">
+                    <span class="toggle-arrow">»</span> <span data-translate="front.chart_view">{{ __('front.chart_view', '图表查看') }}</span>
+                </button>
+                <div class="module-chart-body" id="moduleChartBody">
+                    <div id="moduleStatsChart" style="width:100%;height:240px;"></div>
+                </div>
+            </div>
             @endif
 
             @if($showChain)
-                <div class="module-chain" id="moduleChain"></div>
+                <div class="module-chain" id="moduleChain" style="display:none;"></div>
             @endif
 
             @if(!empty($columns))

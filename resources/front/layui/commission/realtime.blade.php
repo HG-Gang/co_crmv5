@@ -11,6 +11,7 @@
     'api' => '/api/front/commissionRealTime',
     'listKey' => 'list',
     'showSummary' => true,
+    'showChartCollapse' => true,
     'filters' => [
         ['name' => 'userId', 'label' => 'front.user_id', 'type' => 'text'],
         ['name' => 'orderId', 'label' => 'front.order_no', 'type' => 'text'],
@@ -38,5 +39,52 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('/js/front/layui/module-page.js') }}?v=2026052907"></script>
+{{-- Req 15: module-page with performance optimization --}}
+<script src="{{ asset('/js/front/layui/module-page.js') }}?v=2026052918"></script>
+<script>
+// Req 16: collapsible chart toggle + Req 15: lazy chart init
+(function () {
+    var chartInstance = null;
+    var toggleBtn = document.getElementById('moduleChartToggle');
+    var chartBody = document.getElementById('moduleChartBody');
+    if (!toggleBtn || !chartBody) return;
+
+    toggleBtn.addEventListener('click', function () {
+        var isOpen = chartBody.classList.contains('show');
+        if (isOpen) {
+            chartBody.classList.remove('show');
+            toggleBtn.classList.remove('open');
+        } else {
+            chartBody.classList.add('show');
+            toggleBtn.classList.add('open');
+            if (!chartInstance && typeof echarts !== 'undefined') {
+                var el = document.getElementById('moduleStatsChart');
+                if (el) {
+                    chartInstance = echarts.init(el);
+                    chartInstance.setOption({
+                        color: ['#18a058', '#d03050', '#2080f0'],
+                        tooltip: { trigger: 'axis' },
+                        legend: { top: 0 },
+                        grid: { left: 60, right: 20, top: 36, bottom: 30 },
+                        xAxis: { type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'] },
+                        yAxis: { type: 'value' },
+                        series: [
+                            { name: 'Gain', type: 'bar', barWidth: 14, data: [320, 280, 410, 390, 520] },
+                            { name: 'Loss', type: 'bar', barWidth: 14, data: [-110, -80, -150, -120, -200] },
+                            { name: 'Net', type: 'line', smooth: true, data: [210, 200, 260, 270, 320] }
+                        ]
+                    });
+                    setTimeout(function () { chartInstance.resize(); }, 100);
+                }
+            } else if (chartInstance) {
+                chartInstance.resize();
+            }
+        }
+    });
+
+    window.addEventListener('resize', function () {
+        if (chartInstance) chartInstance.resize();
+    });
+})();
+</script>
 @endsection

@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Front;
 
 use App\Models\AgentDescendant;
-use App\Models\UserInfo;
 use App\Models\AgentLevel;
+use App\Models\CommissionRecord;
+use App\Models\DepositRecord;
 use App\Models\GroupConfig;
-use App\Models\TransApplyLog;
 use App\Models\SystemConfig;
+use App\Models\TransApplyLog;
+use App\Models\UserInfo;
 use App\Models\UserLoginLog;
+use App\Models\UserTrade;
+use App\Models\WithdrawRecord;
 use App\Services\FamilyTreeService;
 use App\Constants\ResponseCode;
 use App\Support\FrontLegacyData;
@@ -229,6 +233,8 @@ class AgentController extends FrontBaseController
         if ($rank < 1 || $rank > 5) {
             $rank = 5;
         }
+        $closedTrades = UserTrade::where('user_id', $targetUserId)->where('close_time', '>', '1971-01-01 00:00:00');
+        $openTrades = UserTrade::where('user_id', $targetUserId)->where('close_time', '<=', '1971-01-01 00:00:00');
 
         return $this->success(array_merge(FrontLegacyData::userBasicAlias($user), [
             'account_type_text' => (int) $user->account_type === 1 ? __('register.agent') : __('register.customer'),
@@ -242,6 +248,14 @@ class AgentController extends FrontBaseController
             'address' => $user->address,
             'id_card_no' => FrontLegacyData::maskIdCard((string) ($user->auth->id_card_no ?? '')),
             'auth_status_text' => (int) $user->auth_status === 1 ? __('front.status_verified') : __('front.status_unverified'),
+            'total_deposit' => DepositRecord::where('user_id', $targetUserId)->sum('amount'),
+            'total_withdraw' => WithdrawRecord::where('user_id', $targetUserId)->sum('apply_amount'),
+            'total_rebate' => CommissionRecord::where('agent_id', $targetUserId)->sum('commission_amount'),
+            'open_order_count' => (clone $openTrades)->count(),
+            'closed_order_count' => (clone $closedTrades)->count(),
+            'profit_7d' => (clone $closedTrades)->where('close_time', '>=', now()->subDays(7))->sum('profit'),
+            'profit_15d' => (clone $closedTrades)->where('close_time', '>=', now()->subDays(15))->sum('profit'),
+            'profit_30d' => (clone $closedTrades)->where('close_time', '>=', now()->subDays(30))->sum('profit'),
         ]), __('response.query_success'), ResponseCode::SUCCESS);
     }
 

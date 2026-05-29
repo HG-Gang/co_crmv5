@@ -11,7 +11,9 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
     bindPreviewUpload('#idCardFrontBtn', '#idCardFrontPreview', 'id_card_front');
     bindPreviewUpload('#idCardBackBtn', '#idCardBackPreview', 'id_card_back');
     bindPreviewUpload('#bankCardImgBtn', '#bankCardImgPreview', 'bank_card_img');
+    bindPreviewUpload('#bankCardBackImgBtn', '#bankCardBackImgPreview', 'bank_card_img_back');
     bindPreviewUpload('#bankChangeCardImgBtn', '#bankChangeCardImgPreview', 'bank_change_card_img');
+    bindPreviewUpload('#bankChangeCardBackImgBtn', '#bankChangeCardBackImgPreview', 'bank_change_card_img_back');
 
     form.verify({
         password: function(value) {
@@ -22,6 +24,11 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
         confirmPass: function(value) {
             if (value !== $('#new_password').val()) {
                 return CrmLang.t('register.passwordMismatch');
+            }
+        },
+        profileRequired: function(value, elem) {
+            if (!$.trim(value || '')) {
+                return requiredMessage(elem);
             }
         }
     });
@@ -151,6 +158,12 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
     });
 
     form.on('submit(identitySubmit)', function(data) {
+        if (!validateRequired($(data.form), {
+            id_card_front: 'profile.idCardFront',
+            id_card_back: 'profile.idCardBack'
+        })) {
+            return false;
+        }
         submitMultipart('/api/front/submitIdentity', data.form, {
             id_card_front: 'id_card_front',
             id_card_back: 'id_card_back'
@@ -164,6 +177,9 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
     });
 
     form.on('submit(bankSubmit)', function(data) {
+        if (!validateRequired($(data.form), {bank_card_img: 'profile.bankCardFront'})) {
+            return false;
+        }
         submitMultipart('/api/front/submitBankCard', data.form, {
             bank_card_img: 'bank_card_img'
         }, function() {
@@ -176,6 +192,9 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
     });
 
     form.on('submit(bankChangeSubmit)', function(data) {
+        if (!validateRequired($(data.form), {bank_change_card_img: 'profile.bankCardFront'})) {
+            return false;
+        }
         submitMultipart('/api/front/submitBankChange', data.form, {
             bank_card_img: 'bank_change_card_img'
         }, function() {
@@ -209,6 +228,38 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
         });
     }
 
+    function requiredMessage(elem) {
+        var label = $(elem).closest('.layui-form-item').find('.layui-form-label').first().text() || $(elem).attr('name') || '';
+        return CrmLang.t('profile.fieldRequired').replace('{field}', $.trim(label));
+    }
+
+    function uploadRequiredMessage(labelKey) {
+        return CrmLang.t('profile.uploadRequired').replace('{field}', CrmLang.t(labelKey));
+    }
+
+    function validateRequired($form, fileMap) {
+        var valid = true;
+        $form.find('[lay-verify*="required"],[lay-verify*="profileRequired"]').each(function () {
+            if (!$.trim($(this).val() || '')) {
+                layer.msg(requiredMessage(this), {icon: 2});
+                this.focus();
+                valid = false;
+                return false;
+            }
+        });
+        if (!valid) {
+            return false;
+        }
+        $.each(fileMap || {}, function (fieldName, labelKey) {
+            if (!uploadFiles[fieldName]) {
+                layer.msg(uploadRequiredMessage(labelKey), {icon: 2});
+                valid = false;
+                return false;
+            }
+        });
+        return valid;
+    }
+
     function submitMultipart(url, formEl, fileMap, done) {
         var loadIdx = layer.load(1);
         var formData = new FormData(formEl);
@@ -221,7 +272,7 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
                 cacheField = fileMap[requestField];
                 if (!uploadFiles[cacheField]) {
                     layer.close(loadIdx);
-                    layer.msg(CrmLang.t('common.error'), {icon: 2});
+                    layer.msg(uploadRequiredMessage(cacheField === 'id_card_front' ? 'profile.idCardFront' : cacheField === 'id_card_back' ? 'profile.idCardBack' : 'profile.bankCardFront'), {icon: 2});
                     return;
                 }
                 formData.append(requestField, uploadFiles[cacheField]);
@@ -310,6 +361,8 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
             auto: false,
             accept: 'images',
             exts: 'jpg|jpeg|png|gif|webp',
+            size: 4096,
+            drag: true,
             choose: function(obj) {
                 var files = obj.pushFile();
                 var keys = Object.keys(files);
@@ -331,6 +384,6 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
         $.each(fields || [], function(_, fieldName) {
             delete uploadFiles[fieldName];
         });
-        $('#idCardFrontPreview, #idCardBackPreview, #bankCardImgPreview, #bankChangeCardImgPreview').hide().attr('src', '');
+        $('#idCardFrontPreview, #idCardBackPreview, #bankCardImgPreview, #bankCardBackImgPreview, #bankChangeCardImgPreview, #bankChangeCardBackImgPreview').hide().attr('src', '');
     }
 });

@@ -3,6 +3,7 @@
     $formFields = $formFields ?? [];
     $columns = $columns ?? [];
     $summaryFields = $summaryFields ?? [];
+    $chartGroups = $chartGroups ?? [];
     $submitApi = $submitApi ?? '';
     $editApi = $editApi ?? '';
     $listKey = $listKey ?? '';
@@ -25,10 +26,20 @@
     .front-module-page .module-stat { background: var(--front-panel); border: 1px solid var(--front-line); border-radius: 6px; padding: 18px; margin-bottom: 15px; min-height: 78px; }
     .front-module-page .module-stat-label { color: var(--front-muted); font-size: 13px; margin-bottom: 8px; }
     .front-module-page .module-stat-value { color: var(--front-strong); font-size: 22px; font-weight: 600; word-break: break-word; }
+    .front-module-page .module-summary-toggle { display: inline-flex; align-items: center; gap: 5px; height: 30px; margin: 0 0 10px 7.5px; padding: 0 12px; border: 1px solid var(--front-line); border-radius: 999px; color: var(--front-text); background: var(--front-panel); cursor: pointer; }
+    .front-module-page .module-summary-toggle span { color: var(--front-blue); font-weight: 800; }
+    .front-module-page .module-summary-items { display: flex; flex-wrap: wrap; width: 100%; }
+    .front-module-page .module-summary-items.is-collapsed { display: none; }
     .front-module-page .module-empty { text-align: center; color: var(--front-muted); padding: 28px 0; }
     .front-module-page .layui-card-header { font-weight: 600; }
     .front-module-page .module-table-wrap { width: 100%; overflow-x: auto; }
     .front-module-page .module-table-wrap table { min-width: 980px; }
+    .front-module-page .module-chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-bottom: 15px; }
+    .front-module-page .module-chart-card { border: 1px solid var(--front-line); border-radius: 10px; padding: 12px; background: var(--front-panel); }
+    .front-module-page .module-chart-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+    .front-module-page .module-chart-title { color: var(--front-strong); font-weight: 700; }
+    .front-module-page .module-chart-type { width: 112px; height: 30px; border: 1px solid var(--front-line); border-radius: 999px; padding: 0 9px; background: var(--front-panel); color: var(--front-text); }
+    .front-module-page .module-chart-canvas { height: 240px; }
 </style>
 
 <div
@@ -41,6 +52,7 @@
     data-default-filters='@json($defaultFilters)'
     data-columns='@json($columns)'
     data-summary-fields='@json($summaryFields)'
+    data-chart-groups='@json($chartGroups)'
     data-row-actions='@json($rowActions)'
     data-per-page="20"
 >
@@ -147,6 +159,20 @@
 
             @if(!empty($summaryFields) && $showSummary)
                 <div class="layui-row layui-col-space15" id="moduleSummary"></div>
+            @endif
+
+            @if(!empty($chartGroups))
+                <div class="module-chart-grid" id="moduleChartGrid">
+                    @foreach($chartGroups as $chart)
+                        <div class="module-chart-card">
+                            <div class="module-chart-head">
+                                <div class="module-chart-title" data-translate="{{ $chart['title'] }}">{{ __($chart['title']) }}</div>
+                                <select class="module-chart-type J_moduleChartType" data-chart-target="{{ $chart['target'] }}" lay-ignore></select>
+                            </div>
+                            <div class="module-chart-canvas" id="{{ $chart['target'] }}"></div>
+                        </div>
+                    @endforeach
+                </div>
             @endif
 
             @if($showChain)

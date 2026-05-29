@@ -262,6 +262,11 @@ body { min-height: 100%; color: #1f2937; background: #edf1f5; }
 .crm-detail-field dt { color: var(--front-muted); background: rgba(248,250,252,.72); font-weight: 700; }
 .crm-detail-field dd { color: var(--front-strong); }
 .crm-detail-field .module-agent-level { display: inline-flex; width: fit-content; }
+.crm-detail-bars { display: grid; gap: 10px; padding: 12px; }
+.crm-detail-bar { position: relative; display: grid; grid-template-columns: 140px 88px minmax(100px, 1fr); gap: 10px; align-items: center; color: var(--front-text); font-size: 13px; }
+.crm-detail-bar span { color: var(--front-muted); font-weight: 700; }
+.crm-detail-bar strong { text-align: right; color: var(--front-strong); }
+.crm-detail-bar i { display: block; height: 8px; min-width: 6px; border-radius: 999px; background: linear-gradient(90deg, var(--front-blue), var(--front-accent)); }
 .layui-layer-page { max-width: calc(100vw - 24px); }
 .layui-layer-content { max-width: 100%; }
 
@@ -315,34 +320,34 @@ body { min-height: 100%; color: #1f2937; background: #edf1f5; }
 
 /* 2026-05 Layui visual refresh */
 :root {
-    --front-bg: #f4f6f8;
+    --front-bg: #f6f9fc;
     --front-panel: #ffffff;
-    --front-line: #dde4ec;
+    --front-line: #e4ebf3;
     --front-text: #1f2933;
     --front-muted: #667085;
     --front-strong: #111827;
-    --front-side: #151b23;
-    --front-side-soft: #202a35;
-    --front-accent: #18a058;
-    --front-blue: #2080f0;
-    --front-cyan: #0e7a83;
+    --front-side: #0f172a;
+    --front-side-soft: #1e293b;
+    --front-accent: #10b981;
+    --front-blue: #3b82f6;
+    --front-cyan: #06b6d4;
     --front-warn: #d97706;
     --front-danger: #d03050;
     --front-input: #ffffff;
     --front-table-head: #f7f9fc;
-    --front-hover: #f8fbff;
-    --front-shadow: rgba(31, 35, 40, .04);
+    --front-hover: #eef6ff;
+    --front-shadow: rgba(15, 23, 42, .06);
 }
 
 html[data-front-theme="dark"] {
-    --front-bg: #101418;
-    --front-panel: #181f26;
-    --front-line: #2b3742;
-    --front-text: #d7dee8;
+    --front-bg: #0b1120;
+    --front-panel: #111827;
+    --front-line: #273549;
+    --front-text: #dbeafe;
     --front-muted: #94a3b8;
     --front-strong: #f8fafc;
-    --front-side: #0b1015;
-    --front-side-soft: #151d26;
+    --front-side: #020617;
+    --front-side-soft: #0f172a;
     --front-accent: #2dd4bf;
     --front-blue: #60a5fa;
     --front-cyan: #22d3ee;
@@ -355,15 +360,15 @@ html[data-front-theme="dark"] {
 }
 
 html[data-front-theme="sea"] {
-    --front-bg: #eef7fb;
+    --front-bg: #eef9ff;
     --front-panel: #ffffff;
-    --front-line: #bfd8e6;
+    --front-line: #cbe4f2;
     --front-text: #153443;
     --front-muted: #55707d;
     --front-strong: #082f49;
-    --front-side: #073447;
-    --front-side-soft: #0d4f68;
-    --front-accent: #0891b2;
+    --front-side: #082f49;
+    --front-side-soft: #0c4a6e;
+    --front-accent: #06b6d4;
     --front-blue: #2563eb;
     --front-cyan: #0f766e;
     --front-warn: #b45309;
@@ -374,15 +379,15 @@ html[data-front-theme="sea"] {
 }
 
 html[data-front-theme="warm"] {
-    --front-bg: #f8f3ed;
-    --front-panel: #fffdf9;
-    --front-line: #e4d5c4;
+    --front-bg: #fff7ed;
+    --front-panel: #fffcf7;
+    --front-line: #f0dcc3;
     --front-text: #34261d;
     --front-muted: #7a685a;
     --front-strong: #24170f;
-    --front-side: #30251e;
-    --front-side-soft: #44342a;
-    --front-accent: #b45309;
+    --front-side: #292524;
+    --front-side-soft: #44403c;
+    --front-accent: #f97316;
     --front-blue: #1d4ed8;
     --front-cyan: #0f766e;
     --front-warn: #d97706;
@@ -658,7 +663,16 @@ select {
 }
 
 .front-shell-body .layui-layout-admin .layui-header .layui-nav .layui-nav-item > a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-width: 38px;
     color: var(--front-text);
+}
+
+.front-shell-body .layui-layout-admin .layui-header .layui-nav .layui-nav-item > a .layui-icon {
+    font-size: 18px;
 }
 
 .front-shell-body .layui-layout-admin .layui-header .layui-nav .layui-nav-item > a:hover {

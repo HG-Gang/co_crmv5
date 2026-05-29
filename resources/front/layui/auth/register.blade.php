@@ -79,7 +79,7 @@
                                 <option value="63">+63</option>
                                 <option value="62">+62</option>
                             </select>
-                            <input type="text" name="phone_number" required lay-verify="required|phoneNumber" class="layui-input">
+                            <input type="tel" name="phone_number" required lay-verify="required|phoneNumber" class="layui-input register-phone-input" minlength="12" maxlength="20" inputmode="numeric" autocomplete="tel">
                         </div>
                     </div>
                 </div>
@@ -170,6 +170,6 @@
     <script src="{{ asset('/js/common/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('/js/common/layui-v2.13.5/layui/layui.js') }}"></script>
     <script src="{{ asset('/js/front/layui/common.js') }}"></script>
-    <script src="{{ asset('/js/front/layui/auth/register.js') }}"></script>
+    <script src="{{ asset('/js/front/layui/auth/register.js') }}?v=2026052913"></script>
 </body>
 </html>

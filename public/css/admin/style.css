@@ -1,0 +1,564 @@
+:root {
+    --admin-bg: #f4f6f8;
+    --admin-panel: #ffffff;
+    --admin-line: #dde4ec;
+    --admin-text: #1f2933;
+    --admin-muted: #667085;
+    --admin-strong: #111827;
+    --admin-side: #151b23;
+    --admin-side-soft: #202a35;
+    --admin-accent: #18a058;
+    --admin-blue: #2080f0;
+    --admin-warn: #d97706;
+    --admin-danger: #d03050;
+    --admin-hover: #f8fbff;
+    --admin-input: #ffffff;
+}
+
+html[data-front-theme="dark"] {
+    --admin-bg: #101418;
+    --admin-panel: #181f26;
+    --admin-line: #2b3742;
+    --admin-text: #d7dee8;
+    --admin-muted: #94a3b8;
+    --admin-strong: #f8fafc;
+    --admin-side: #0b1015;
+    --admin-side-soft: #151d26;
+    --admin-accent: #2dd4bf;
+    --admin-blue: #60a5fa;
+    --admin-warn: #f59e0b;
+    --admin-danger: #fb7185;
+    --admin-hover: #202b36;
+    --admin-input: #111820;
+}
+
+html[data-front-theme="sea"] {
+    --admin-bg: #eef7fb;
+    --admin-panel: #ffffff;
+    --admin-line: #bfd8e6;
+    --admin-text: #153443;
+    --admin-muted: #55707d;
+    --admin-strong: #082f49;
+    --admin-side: #073447;
+    --admin-side-soft: #0d4f68;
+    --admin-accent: #0891b2;
+    --admin-blue: #2563eb;
+    --admin-warn: #b45309;
+    --admin-danger: #be123c;
+    --admin-hover: #e8f7ff;
+}
+
+html[data-front-theme="warm"] {
+    --admin-bg: #f8f3ed;
+    --admin-panel: #fffdf9;
+    --admin-line: #e4d5c4;
+    --admin-text: #34261d;
+    --admin-muted: #7a685a;
+    --admin-strong: #24170f;
+    --admin-side: #30251e;
+    --admin-side-soft: #44342a;
+    --admin-accent: #b45309;
+    --admin-blue: #1d4ed8;
+    --admin-warn: #d97706;
+    --admin-danger: #dc2626;
+    --admin-hover: #fff4e6;
+    --admin-input: #fffaf3;
+}
+
+html[data-front-theme="contrast"] {
+    --admin-bg: #000000;
+    --admin-panel: #ffffff;
+    --admin-line: #000000;
+    --admin-text: #000000;
+    --admin-muted: #1f2937;
+    --admin-strong: #000000;
+    --admin-side: #000000;
+    --admin-side-soft: #111111;
+    --admin-accent: #ffcc00;
+    --admin-blue: #005fcc;
+    --admin-warn: #b45309;
+    --admin-danger: #b00020;
+    --admin-hover: #fff7cc;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+    color: var(--admin-text);
+    background: var(--admin-bg);
+    letter-spacing: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+    letter-spacing: 0;
+}
+
+.layui-layout-admin .layui-header {
+    height: 60px;
+    background: var(--admin-panel);
+    border-bottom: 1px solid var(--admin-line);
+    box-shadow: 0 8px 20px rgba(17, 24, 39, .04);
+}
+
+.layui-layout-admin .layui-logo {
+    width: 220px;
+    height: 60px;
+    line-height: 60px;
+    color: #ffffff !important;
+    background: var(--admin-side) !important;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item {
+    line-height: 60px;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item > a {
+    color: var(--admin-text);
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item > a:hover {
+    color: var(--admin-accent);
+}
+
+.layui-layout-admin .layui-header .layui-nav-child {
+    background: var(--admin-panel);
+    border-color: var(--admin-line);
+}
+
+.layui-layout-admin .layui-header .layui-nav-child a {
+    color: var(--admin-text);
+}
+
+.layui-layout-admin .layui-nav-child dd.layui-this > a,
+.layui-layout-admin .layui-nav-child a.is-current {
+    color: var(--admin-blue) !important;
+    background: var(--admin-hover);
+    font-weight: 700;
+}
+
+.layui-layout-admin .layui-nav-child a.crm-theme-switch.is-current,
+.layui-layout-admin .layui-nav-child a.crm-style-switch.is-current {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.layui-layout-admin .layui-nav-child a.crm-theme-switch.is-current::after,
+.layui-layout-admin .layui-nav-child a.crm-style-switch.is-current::after {
+    content: "✓";
+    min-width: 18px;
+    height: 18px;
+    padding: 0 6px;
+    border-radius: 999px;
+    color: #ffffff;
+    background: var(--admin-blue);
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+}
+
+.admin-theme-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 18px;
+    margin-left: 6px;
+    padding: 0 6px;
+    border-radius: 4px;
+    color: var(--admin-blue);
+    background: rgba(32, 128, 240, .1);
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 700;
+}
+
+.layui-layout-left {
+    left: 220px;
+}
+
+.layui-side-menu,
+.layui-layout-admin .layui-side {
+    top: 60px;
+    width: 220px;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0) 180px),
+        var(--admin-side) !important;
+    color: #eef2f6 !important;
+}
+
+.layui-side-scroll {
+    width: 240px;
+}
+
+.layui-nav-tree {
+    width: 220px;
+    padding: 10px 8px;
+    background: transparent !important;
+}
+
+.layui-nav-tree .layui-nav-item a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 42px;
+    line-height: 42px;
+    border-radius: 6px;
+    color: rgba(255,255,255,.78);
+}
+
+.layui-nav-tree .layui-nav-item i {
+    width: 18px;
+    text-align: center;
+    font-size: 16px;
+    opacity: .9;
+}
+
+.layui-nav-tree .layui-nav-item a:hover {
+    color: #ffffff;
+    background: rgba(255,255,255,.08) !important;
+}
+
+.layui-nav-tree .layui-this > a,
+.layui-nav-tree .layui-this > a:hover {
+    color: #ffffff !important;
+    background: var(--admin-accent) !important;
+}
+
+.layui-nav-tree .layui-nav-child {
+    padding: 4px 0 6px;
+    background: transparent !important;
+}
+
+.layui-nav-tree .layui-nav-child a {
+    padding-left: 34px !important;
+    font-size: 13px;
+}
+
+.layui-body {
+    top: 60px;
+    left: 220px;
+    bottom: 38px;
+    padding: 0;
+    overflow: auto;
+    background: var(--admin-bg);
+}
+
+.admin-page-shell,
+.layui-body > div[style*="padding"] {
+    padding: 18px !important;
+}
+
+.layui-footer {
+    left: 220px;
+    height: 38px;
+    line-height: 38px;
+    color: var(--admin-muted);
+    background: var(--admin-panel);
+    border-top: 1px solid var(--admin-line);
+}
+
+.layui-breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0 12px;
+    border: 1px solid var(--admin-line);
+    border-radius: 6px;
+    background: var(--admin-panel);
+}
+
+.layui-body hr {
+    margin: 14px 0;
+    border-color: transparent;
+}
+
+.layui-card {
+    border: 1px solid var(--admin-line);
+    border-radius: 8px;
+    background: var(--admin-panel);
+    box-shadow: 0 10px 26px rgba(31, 35, 40, .04);
+}
+
+.layui-card-header {
+    min-height: 46px;
+    line-height: 46px;
+    border-bottom-color: var(--admin-line);
+    color: var(--admin-strong);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.layui-card-body {
+    padding: 16px;
+}
+
+.layui-btn {
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.layui-btn:not(.layui-btn-primary) {
+    background-color: var(--admin-accent);
+}
+
+.layui-bg-blue,
+.layui-btn-normal {
+    background-color: var(--admin-blue) !important;
+}
+
+.layui-bg-green {
+    background-color: var(--admin-accent) !important;
+}
+
+.layui-bg-orange,
+.layui-btn-warm {
+    background-color: var(--admin-warn) !important;
+}
+
+.layui-btn-danger {
+    background-color: var(--admin-danger) !important;
+}
+
+.layui-badge {
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.layui-btn-primary:hover {
+    border-color: var(--admin-blue);
+    color: var(--admin-blue);
+}
+
+.layui-input,
+.layui-select,
+.layui-textarea {
+    border-radius: 6px;
+    border-color: var(--admin-line);
+    background: var(--admin-input);
+    color: var(--admin-text);
+}
+
+.layui-input:focus,
+.layui-textarea:focus {
+    border-color: rgba(24,160,88,.7) !important;
+    box-shadow: 0 0 0 3px rgba(24,160,88,.1);
+}
+
+.layui-form-label {
+    color: var(--admin-text);
+}
+
+.layui-form-pane .layui-form-label {
+    background: var(--admin-hover);
+    border-color: var(--admin-line);
+}
+
+.layui-table,
+.layui-table-view {
+    color: var(--admin-text);
+    background: var(--admin-panel);
+}
+
+.layui-table-view {
+    border-color: var(--admin-line);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.layui-table th {
+    color: var(--admin-strong);
+    background: var(--admin-hover);
+    font-weight: 700;
+}
+
+.layui-table td,
+.layui-table th {
+    border-color: var(--admin-line);
+    white-space: nowrap;
+}
+
+.layui-table td {
+    color: var(--admin-text);
+    background: var(--admin-panel);
+}
+
+.layui-table tbody tr:hover,
+.layui-table tbody tr:hover td {
+    background: var(--admin-hover);
+}
+
+.card-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.stat-item {
+    position: relative;
+    min-height: 118px;
+    padding: 18px;
+    border: 1px solid var(--admin-line);
+    border-radius: 8px;
+    background: var(--admin-panel);
+    box-shadow: 0 10px 24px rgba(31, 35, 40, .04);
+    text-align: left;
+    overflow: hidden;
+}
+
+.stat-item::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: var(--admin-accent);
+}
+
+.stat-item:nth-child(2n)::before {
+    background: var(--admin-blue);
+}
+
+.stat-item:nth-child(3n)::before {
+    background: #0e7a83;
+}
+
+.stat-item .stat-icon {
+    float: right;
+    color: var(--admin-accent);
+    font-size: 28px;
+    opacity: .22;
+}
+
+.stat-item .stat-number {
+    margin-top: 18px;
+    color: var(--admin-strong);
+    font-size: 26px;
+    line-height: 1.15;
+    font-weight: 800;
+}
+
+.stat-item .stat-label {
+    color: var(--admin-muted);
+    font-size: 13px;
+}
+
+.login-container {
+    width: min(420px, calc(100vw - 36px)) !important;
+    margin: 9vh auto !important;
+    padding: 34px !important;
+    border: 1px solid var(--admin-line) !important;
+    border-radius: 8px !important;
+    background: var(--admin-panel) !important;
+    box-shadow: 0 24px 70px rgba(17, 24, 39, .16) !important;
+}
+
+.login-logo {
+    color: var(--admin-strong) !important;
+    font-size: 24px !important;
+    font-weight: 800 !important;
+}
+
+body.admin-login-body,
+body:has(.login-container) {
+    min-height: 100vh;
+    background:
+        linear-gradient(90deg, rgba(255,255,255,.7) 1px, transparent 1px) 0 0 / 26px 26px,
+        linear-gradient(rgba(255,255,255,.7) 1px, transparent 1px) 0 0 / 26px 26px,
+        var(--admin-bg);
+}
+
+.login-language {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.lang-switch {
+    color: var(--admin-blue);
+    cursor: pointer;
+}
+
+.lang-active {
+    color: var(--admin-accent);
+    font-weight: 700;
+}
+
+.admin-form-actions {
+    margin-top: 20px;
+}
+
+.admin-dialog-body {
+    padding: 20px;
+}
+
+@media screen and (max-width: 1100px) {
+    .card-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .layui-layout-admin .layui-logo {
+        width: 150px;
+        font-size: 14px;
+    }
+
+    .layui-layout-left {
+        left: 150px;
+    }
+
+    .layui-layout-admin .layui-side {
+        left: -220px;
+    }
+
+    .layui-body,
+    .layui-footer {
+        left: 0;
+    }
+
+    .layui-footer {
+        display: none;
+    }
+
+    .admin-page-shell,
+    .layui-body > div[style*="padding"] {
+        padding: 12px !important;
+    }
+
+    .layui-card-body {
+        padding: 12px;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .card-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .layui-layout-right .layui-nav-item > a {
+        padding: 0 10px;
+    }
+
+    .layui-form-pane .layui-form-label {
+        float: none;
+        display: block;
+        width: auto;
+        padding: 0 0 6px;
+        border: 0;
+        background: transparent;
+        text-align: left;
+    }
+
+    .layui-form-pane .layui-input-block {
+        margin-left: 0;
+    }
+}

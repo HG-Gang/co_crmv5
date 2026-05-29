@@ -1,0 +1,22 @@
+<?php
+return [
+    'dashboard' => '仪表盘',
+    'users' => '用户管理',
+    'agents' => '代理管理',
+    'customers' => '客户管理',
+    'deposit' => '入金管理',
+    'withdraw' => '出金管理',
+    'commission' => '佣金管理',
+    'system' => '系统管理',
+    'roles' => '角色管理',
+    'permissions' => '权限管理',
+    'settings' => '系统设置',
+    'logs' => '系统日志',
+    'news' => '新闻资讯',
+    'payment_channels' => '支付通道',
+    'big_agents' => '大代理管理',
+    'risk_control' => '风控管理',
+    'groups' => '分组管理',
+    'levels' => '等级管理',
+    'blacklist' => '黑名单',
+];

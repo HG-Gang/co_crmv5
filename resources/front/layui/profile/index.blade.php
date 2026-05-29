@@ -17,6 +17,15 @@
     .profile-page .layui-form-label { width: 122px; }
     .profile-page .layui-input-block { margin-left: 122px; }
     .profile-actions { margin-left: 122px; }
+    /* Req 5 & 7: Modern upload component with front/back sides */
+    .profile-upload-zone { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-start; }
+    .profile-upload-card { position: relative; width: 180px; min-height: 120px; border: 2px dashed var(--front-line, #d0d5dd); border-radius: 8px; background: var(--front-table-head, #f8fafc); text-align: center; padding: 12px 8px; cursor: pointer; transition: border-color .2s, box-shadow .2s; }
+    .profile-upload-card:hover { border-color: var(--front-blue, #2080f0); box-shadow: 0 0 0 3px rgba(32,128,240,.1); }
+    .profile-upload-card .layui-icon { font-size: 32px; color: var(--front-blue, #2080f0); display: block; margin: 0 auto 6px; }
+    .profile-upload-card .upload-label { font-size: 12px; color: var(--front-muted, #6b7280); }
+    .profile-upload-card .upload-side-tag { position: absolute; top: 6px; right: 6px; padding: 1px 6px; border-radius: 4px; background: var(--front-blue, #2080f0); color: #fff; font-size: 10px; }
+    .profile-upload-card img { max-width: 100%; max-height: 80px; object-fit: cover; border-radius: 4px; display: none; }
+    .profile-upload-card img.has-src { display: block; margin: 0 auto; }
     .profile-upload-field { display: flex; align-items: center; gap: 10px; }
     .profile-upload-preview { display: none; width: 120px; height: 76px; object-fit: cover; border: 1px solid #dde4ec; border-radius: 6px; background: #f8fafc; }
     @media screen and (max-width: 768px) {
@@ -29,6 +38,7 @@
         .profile-page .layui-form-label { float: none; display: block; width: auto; padding: 0 0 6px; background: transparent; border: 0; text-align: left; }
         .profile-page .layui-input-block,
         .profile-actions { margin-left: 0; }
+        .profile-upload-card { width: 140px; min-height: 100px; }
     }
 </style>
 @endsection
@@ -63,7 +73,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.userName">{{ __('front.user_name') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="user_name" required lay-verify="required" class="layui-input">
+                                <input type="text" name="user_name" required lay-verify="required" lay-reqtext="{{ __('front.user_name') }} {{ __('common.required') }}" class="layui-input">
                             </div>
                         </div>
                     </div>
@@ -117,19 +127,19 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.currentPassword">{{ __('auth.old_password') }}</label>
                             <div class="layui-input-block">
-                                <input type="password" name="old_password" required lay-verify="required" class="layui-input">
+                                <input type="password" name="old_password" required lay-verify="required" lay-reqtext="{{ __('auth.old_password') }} {{ __('common.required') }}" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="auth.newPassword">{{ __('auth.new_password') }}</label>
                             <div class="layui-input-block">
-                                <input type="password" name="password" required lay-verify="required|password" id="new_password" class="layui-input">
+                                <input type="password" name="password" required lay-verify="required|password" lay-reqtext="{{ __('auth.new_password') }} {{ __('common.required') }}" id="new_password" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="auth.confirmPassword">{{ __('auth.confirm_password') }}</label>
                             <div class="layui-input-block">
-                                <input type="password" name="password_confirmation" required lay-verify="required|confirmPass" class="layui-input">
+                                <input type="password" name="password_confirmation" required lay-verify="required|confirmPass" lay-reqtext="{{ __('auth.confirm_password') }} {{ __('common.required') }}" class="layui-input">
                             </div>
                         </div>
                         <div class="profile-actions">
@@ -147,19 +157,19 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.fullPhone">{{ __('profile.full_phone') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="verify_phone" required lay-verify="required" class="layui-input" autocomplete="off">
+                                <input type="text" name="verify_phone" required lay-verify="required" lay-reqtext="{{ __('profile.full_phone') }} {{ __('common.required') }}" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.currentEmail">{{ __('profile.current_email') }}</label>
                             <div class="layui-input-block">
-                                <input type="email" name="current_email" required lay-verify="required|email" class="layui-input" autocomplete="off">
+                                <input type="email" name="current_email" required lay-verify="required|email" lay-reqtext="{{ __('profile.current_email') }} {{ __('common.required') }}" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.newEmail">{{ __('profile.new_email') }}</label>
                             <div class="layui-input-block">
-                                <input type="email" name="new_email" required lay-verify="required|email" class="layui-input" autocomplete="off">
+                                <input type="email" name="new_email" required lay-verify="required|email" lay-reqtext="{{ __('profile.new_email') }} {{ __('common.required') }}" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="profile-actions">
@@ -182,19 +192,19 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.fullPhone">{{ __('profile.full_phone') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="verify_phone" required lay-verify="required" class="layui-input" autocomplete="off">
+                                <input type="text" name="verify_phone" required lay-verify="required" lay-reqtext="{{ __('profile.full_phone') }} {{ __('common.required') }}" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.currentEmail">{{ __('profile.current_email') }}</label>
                             <div class="layui-input-block">
-                                <input type="email" name="verify_email" required lay-verify="required|email" class="layui-input" autocomplete="off">
+                                <input type="email" name="verify_email" required lay-verify="required|email" lay-reqtext="{{ __('profile.current_email') }} {{ __('common.required') }}" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.newPhone">{{ __('front.phone') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="new_phone" required lay-verify="required" class="layui-input" autocomplete="off">
+                                <input type="text" name="new_phone" required lay-verify="required" lay-reqtext="{{ __('front.phone') }} {{ __('common.required') }}" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="profile-actions">
@@ -218,18 +228,24 @@
                                 <input type="text" name="id_card_no" required lay-verify="required" class="layui-input" autocomplete="off">
                             </div>
                         </div>
+                        {{-- Req 5 & 7: Modern upload with front/back cards --}}
                         <div class="layui-form-item">
-                            <label class="layui-form-label" data-translate="profile.idCardFront">{{ __('profile.id_card_front') }}</label>
-                            <div class="layui-input-block profile-upload-field">
-                                <button type="button" class="layui-btn layui-btn-primary" id="idCardFrontBtn"><i class="layui-icon layui-icon-upload"></i></button>
-                                <img id="idCardFrontPreview" class="profile-upload-preview" alt="">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label" data-translate="profile.idCardBack">{{ __('profile.id_card_back') }}</label>
-                            <div class="layui-input-block profile-upload-field">
-                                <button type="button" class="layui-btn layui-btn-primary" id="idCardBackBtn"><i class="layui-icon layui-icon-upload"></i></button>
-                                <img id="idCardBackPreview" class="profile-upload-preview" alt="">
+                            <label class="layui-form-label" data-translate="profile.idCardImages">{{ __('profile.id_card_front', '身份证照片') }}</label>
+                            <div class="layui-input-block">
+                                <div class="profile-upload-zone">
+                                    <div class="profile-upload-card" id="idCardFrontBtn">
+                                        <span class="upload-side-tag" data-translate="profile.front_side">{{ __('profile.front_side', '正面') }}</span>
+                                        <i class="layui-icon layui-icon-upload-drag"></i>
+                                        <img id="idCardFrontPreview" alt="">
+                                        <div class="upload-label" data-translate="profile.clickUploadFront">{{ __('profile.click_upload_front', '点击上传正面') }}</div>
+                                    </div>
+                                    <div class="profile-upload-card" id="idCardBackBtn">
+                                        <span class="upload-side-tag" style="background:var(--front-accent,#18a058)" data-translate="profile.back_side">{{ __('profile.back_side', '反面') }}</span>
+                                        <i class="layui-icon layui-icon-upload-drag"></i>
+                                        <img id="idCardBackPreview" alt="">
+                                        <div class="upload-label" data-translate="profile.clickUploadBack">{{ __('profile.click_upload_back', '点击上传反面') }}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="profile-actions">
@@ -268,11 +284,24 @@
                                 <input type="text" name="bank_addr" required lay-verify="required" class="layui-input" autocomplete="off">
                             </div>
                         </div>
+                        {{-- Req 5 & 7: Bank card with front/back modern upload --}}
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.bankCardImage">{{ __('profile.bank_card_image') }}</label>
-                            <div class="layui-input-block profile-upload-field">
-                                <button type="button" class="layui-btn layui-btn-primary" id="bankCardImgBtn"><i class="layui-icon layui-icon-upload"></i></button>
-                                <img id="bankCardImgPreview" class="profile-upload-preview" alt="">
+                            <div class="layui-input-block">
+                                <div class="profile-upload-zone">
+                                    <div class="profile-upload-card" id="bankCardFrontBtn">
+                                        <span class="upload-side-tag" data-translate="profile.front_side">{{ __('profile.front_side', '正面') }}</span>
+                                        <i class="layui-icon layui-icon-upload-drag"></i>
+                                        <img id="bankCardFrontPreview" alt="">
+                                        <div class="upload-label" data-translate="profile.clickUploadFront">{{ __('profile.click_upload_front', '点击上传正面') }}</div>
+                                    </div>
+                                    <div class="profile-upload-card" id="bankCardBackBtn">
+                                        <span class="upload-side-tag" style="background:var(--front-accent,#18a058)" data-translate="profile.back_side">{{ __('profile.back_side', '反面') }}</span>
+                                        <i class="layui-icon layui-icon-upload-drag"></i>
+                                        <img id="bankCardBackPreview" alt="">
+                                        <div class="upload-label" data-translate="profile.clickUploadBack">{{ __('profile.click_upload_back', '点击上传反面') }}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="profile-actions">
@@ -317,11 +346,24 @@
                                 <input type="text" name="bank_addr" required lay-verify="required" class="layui-input" autocomplete="off">
                             </div>
                         </div>
+                        {{-- Req 5 & 7: Change bank card with front/back modern upload --}}
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.bankCardImage">{{ __('profile.bank_card_image') }}</label>
-                            <div class="layui-input-block profile-upload-field">
-                                <button type="button" class="layui-btn layui-btn-primary" id="bankChangeCardImgBtn"><i class="layui-icon layui-icon-upload"></i></button>
-                                <img id="bankChangeCardImgPreview" class="profile-upload-preview" alt="">
+                            <div class="layui-input-block">
+                                <div class="profile-upload-zone">
+                                    <div class="profile-upload-card" id="bankChangeCardFrontBtn">
+                                        <span class="upload-side-tag" data-translate="profile.front_side">{{ __('profile.front_side', '正面') }}</span>
+                                        <i class="layui-icon layui-icon-upload-drag"></i>
+                                        <img id="bankChangeCardFrontPreview" alt="">
+                                        <div class="upload-label" data-translate="profile.clickUploadFront">{{ __('profile.click_upload_front', '点击上传正面') }}</div>
+                                    </div>
+                                    <div class="profile-upload-card" id="bankChangeCardBackBtn">
+                                        <span class="upload-side-tag" style="background:var(--front-accent,#18a058)" data-translate="profile.back_side">{{ __('profile.back_side', '反面') }}</span>
+                                        <i class="layui-icon layui-icon-upload-drag"></i>
+                                        <img id="bankChangeCardBackPreview" alt="">
+                                        <div class="upload-label" data-translate="profile.clickUploadBack">{{ __('profile.click_upload_back', '点击上传反面') }}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="profile-actions">

@@ -313,4 +313,11 @@ return [
     'type' => 'Type',
     'agent_id' => 'Agent ID',
     'name' => 'Name',
+    'kyc_not_verified' => 'Identity not verified, some features are restricted',
+    'go_verify' => 'Verify Now',
+    'chart_view' => 'Chart View',
+    'day_label' => 'Day',
+    'pnl' => 'P&L',
+    'commission_rate' => 'Commission Rate',
+    'total_commission' => 'Total Commission',
 ];

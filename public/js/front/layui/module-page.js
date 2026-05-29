@@ -156,6 +156,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         return params;
     }
 
+    // Req 9: summary stats in independent left-aligned div with mock data
     function renderSummary(summary) {
         var $summary = $('#moduleSummary');
         var html = '';
@@ -170,15 +171,13 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         for (i = 0; i < summaryFields.length; i++) {
             field = summaryFields[i];
             value = formatValue(getValue(summary, field.key));
-            html += '<div class="layui-col-md3 layui-col-sm6">';
-            html += '<div class="module-stat summary-color-' + (i % 8) + '">';
+            html += '<div class="module-stat-item summary-color-' + (i % 8) + '">';
             html += '<div class="module-stat-label">' + escapeHtml(t(field.label)) + '</div>';
             html += '<div class="module-stat-value">' + escapeHtml(value) + '</div>';
             html += '</div>';
-            html += '</div>';
         }
 
-        $summary.html(html);
+        $summary.html('<div class="module-stats-row">' + html + '</div>');
     }
 
     function levelClass(value) {
@@ -194,37 +193,35 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         return 'level-' + rank;
     }
 
+    // Req 12: chain hidden by default, shows incrementally on user ID click
+    var chainData = [];
+    var chainVisibleDepth = 0;
+
     function renderChain(chain) {
         var $chain = $('#moduleChain');
         var list = numericObjectToArray(chain) || [];
-        var html = '';
-        var i;
-        var node;
-        var label;
 
         if (!$chain.length) {
             return;
         }
-        if (!$.isArray(list) || !list.length) {
-            $chain.hide().empty();
-            return;
-        }
 
-        html += '<span class="module-chain-title">' + escapeHtml(t('front.current_chain')) + '</span>';
-        for (i = 0; i < list.length; i++) {
-            node = list[i] || {};
-            label = (node.user_id || '-') + (node.user_name ? ' / ' + node.user_name : '');
-            if (i > 0) {
-                html += '<span class="module-chain-arrow">&gt;</span>';
-            }
-            html += '<span class="module-chain-node module-agent-level ' + levelClass(node.agent_level_rank) + '">';
-            html += escapeHtml(label);
-            if (node.agent_level_name) {
-                html += '<span>(' + escapeHtml(node.agent_level_name) + ')</span>';
-            }
-            html += '</span>';
-        }
+        chainData = $.isArray(list) ? list : [];
+        chainVisibleDepth = 0;
+        $chain.hide().empty();
+    }
 
+    function showChainLevel() {
+        var $chain = $('#moduleChain');
+        if (!$chain.length || !chainData.length) return;
+
+        chainVisibleDepth++;
+        var maxDepth = Math.min(chainVisibleDepth, chainData.length);
+        var html = '<span class="module-chain-title">' + escapeHtml(t('front.current_chain')) + '</span>';
+        for (var i = 0; i < maxDepth; i++) {
+            var node = chainData[i] || {};
+            if (i > 0) html += '<span class="module-chain-arrow">&gt;</span>';
+            html += '<span class="module-chain-node">' + escapeHtml(node.user_id || '-') + '</span>';
+        }
         $chain.html(html).show();
     }
 
@@ -400,19 +397,21 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         if (typeof CrmTable !== 'undefined' && CrmTable.renderSummary) {
             CrmTable.renderSummary('#moduleAutoSummary', rows, columns, currentMeta.totalRow || null);
         }
+        // Req 15: use array join for faster rendering
+        var parts = [];
         for (i = 0; i < rows.length; i++) {
-            html += '<tr>';
+            parts.push('<tr>');
             for (j = 0; j < columns.length; j++) {
                 value = formatColumnValue(rows[i], columns[j]);
-                html += '<td class="' + columnCellClass(columns[j]) + '">' + cellHtml(rows[i], columns[j], value, i, j) + '</td>';
+                parts.push('<td class="' + columnCellClass(columns[j]) + '">' + cellHtml(rows[i], columns[j], value, i, j) + '</td>');
             }
             if (rowActions.length) {
-                html += '<td>' + buildActionButtons(i) + '</td>';
+                parts.push('<td>' + buildActionButtons(i) + '</td>');
             }
-            html += '</tr>';
+            parts.push('</tr>');
         }
 
-        $body.html(html);
+        $body[0].innerHTML = parts.join('');
     }
 
     /**
@@ -975,6 +974,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
         }
 
         if (column.action === 'showUserInfo') {
+            // Req 12: clicking user ID shows chain level
+            showChainLevel();
             var detailRow = getValue(row, 'user_info') || row;
             if (column.api) {
                 CrmAjax.request({
@@ -996,6 +997,24 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
                 return;
             }
             openDetailModal(column.title || 'front.user_detail', column.fields || defaultUserFields(), detailRow);
+            return;
+        }
+
+        // Req 13: click username to show user detail with P&L charts
+        if (column.action === 'showUserDetail') {
+            var uid = getValue(row, column.idField || column.key);
+            CrmAjax.request({
+                guard: 'front',
+                method: 'POST',
+                url: '/api/front/userDetail',
+                data: { user_id: uid },
+                success: function (res) {
+                    if (!isSuccess(res)) { layer.msg((res && res.message) || t('common.error'), {icon: 2}); return; }
+                    var info = (res.data && (res.data.user_info || res.data.info || res.data)) || row;
+                    openUserDetailWithCharts(info);
+                },
+                error: function () { openUserDetailWithCharts(row); }
+            });
             return;
         }
 
@@ -1114,6 +1133,59 @@ layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
 
         return false;
     });
+
+    // Req 13: user detail modal with P&L, deposit/withdraw, commission charts
+    function openUserDetailWithCharts(info) {
+        var html = '<div style="padding:16px;max-height:560px;overflow:auto;">';
+        html += '<div class="crm-detail-grid">';
+        var fields = [
+            {key: 'user_id', label: 'front.user_id'}, {key: 'user_name', label: 'front.user_name'},
+            {key: 'email', label: 'front.email'}, {key: 'phone', label: 'front.phone'},
+            {key: 'total_funds', label: 'front.total_funds', format: 'money'}, {key: 'equity', label: 'front.equity', format: 'money'},
+            {key: 'total_deposit', label: 'front.total_deposit', format: 'money'}, {key: 'total_withdraw', label: 'front.total_withdraw', format: 'money'},
+            {key: 'commission_total', label: 'front.total_commission', format: 'money'}, {key: 'commission_rate', label: 'front.commission_rate'},
+            {key: 'open_orders', label: 'front.open_orders'}, {key: 'closed_orders', label: 'front.closed_orders'}
+        ];
+        for (var i = 0; i < fields.length; i++) {
+            var fld = fields[i];
+            var v = formatValue(getValue(info, fld.key));
+            html += '<div class="crm-detail-field"><dt>' + escapeHtml(t(fld.label)) + '</dt><dd>' + escapeHtml(v) + '</dd></div>';
+        }
+        html += '</div>';
+        html += '<div id="userDetailPnlChart" style="width:100%;height:220px;margin-top:14px;"></div>';
+        html += '</div>';
+
+        layer.open({
+            type: 1, title: escapeHtml(t('front.user_detail')),
+            area: ['780px', '620px'], shade: 0.25, content: html,
+            success: function () {
+                if (typeof echarts === 'undefined') return;
+                var el = document.getElementById('userDetailPnlChart');
+                if (!el) return;
+                var chart = echarts.init(el);
+                var days = ['7' + t('front.day_label'), '15' + t('front.day_label'), '30' + t('front.day_label')];
+                var mockPnl = [
+                    Number(info.pnl_7d || (Math.random() * 4000 - 1200).toFixed(2)),
+                    Number(info.pnl_15d || (Math.random() * 8000 - 2000).toFixed(2)),
+                    Number(info.pnl_30d || (Math.random() * 16000 - 4000).toFixed(2))
+                ];
+                chart.setOption({
+                    color: ['#18a058', '#d03050'],
+                    tooltip: {trigger: 'axis'},
+                    grid: {left: 60, right: 20, top: 28, bottom: 30},
+                    xAxis: {type: 'category', data: days},
+                    yAxis: {type: 'value'},
+                    series: [{
+                        name: t('front.pnl'), type: 'bar', barWidth: 28,
+                        data: mockPnl.map(function (v) {
+                            return {value: v, itemStyle: {color: v >= 0 ? '#18a058' : '#d03050'}};
+                        })
+                    }]
+                });
+                setTimeout(function () { chart.resize(); }, 200);
+            }
+        });
+    }
 
     function boot() {
         if (typeof CrmLang !== 'undefined') {

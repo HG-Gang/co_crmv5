@@ -977,3 +977,56 @@ select {
         padding: 28px 20px;
     }
 }
+
+/* Req 9: module-stats-row - independent left-aligned stats */
+.module-stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-start;
+    text-align: left;
+    margin-bottom: 14px;
+}
+.module-stat-item {
+    background: var(--front-panel, #fff);
+    border: 1px solid var(--front-line, #dde4ec);
+    border-radius: 6px;
+    padding: 10px 14px;
+    min-width: 130px;
+}
+.module-stat-item .module-stat-label { font-size: 12px; color: var(--front-muted, #667085); margin-bottom: 4px; }
+.module-stat-item .module-stat-value { font-size: 17px; font-weight: 600; color: var(--front-strong, #111827); }
+
+/* Req 17: LayUI skin refresh - cleaner feel */
+html[data-front-theme] .layui-card {
+    box-shadow: 0 1px 4px var(--front-shadow, rgba(31,35,40,.04));
+    border-color: var(--front-line);
+    border-radius: 8px;
+}
+html[data-front-theme] .layui-card-header {
+    border-bottom: 1px solid var(--front-line);
+    background: transparent;
+}
+html[data-front-theme] .layui-side {
+    background: linear-gradient(180deg, var(--front-side), var(--front-side-soft));
+}
+html[data-front-theme] .layui-layout-admin .layui-header {
+    background: var(--front-side);
+    box-shadow: 0 1px 6px rgba(0,0,0,.08);
+}
+html[data-front-theme] .layui-btn {
+    border-radius: 6px;
+}
+html[data-front-theme] .layui-form-pane .layui-form-label {
+    border-radius: 6px 0 0 6px;
+}
+html[data-front-theme] .layui-input,
+html[data-front-theme] .layui-select,
+html[data-front-theme] .layui-textarea {
+    border-radius: 6px;
+}
+html[data-front-theme="sea"] .layui-card { border-color: var(--front-line); }
+html[data-front-theme="warm"] .layui-card { border-color: var(--front-line); }
+html[data-front-theme="contrast"] .layui-card { border-width: 2px; border-color: #000; }
+html[data-front-theme="contrast"] .layui-table th { border-bottom: 2px solid #000; }
+html[data-front-theme="dark"] .module-stat-item { background: var(--front-panel); border-color: var(--front-line); }

@@ -62,4 +62,5 @@ return [
     'page_size' => 'Page Size',
     'prev_page' => 'Previous Page',
     'next_page' => 'Next Page',
+    'required' => 'is required',
 ];

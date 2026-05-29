@@ -674,7 +674,12 @@
             '<main class="crm-main">',
             '<header class="crm-topbar">',
             '<div class="crm-page-title"><button type="button" class="crm-mobile-menu crm-plain-secondary" data-action="toggle-menu">' + esc(tr('common.menu', '菜单', 'Menu')) + '</button><div><h1>' + esc(config.title) + '</h1><p>' + esc(config.desc) + '</p></div></div>',
-            '<div class="crm-top-actions"><label class="crm-skin-select"><span class="crm-style-select-icon" aria-hidden="true"></span>' + esc(tr('front.ui_style', '界面', 'UI')) + '<select id="crmStyleSelect">' + styleOptions() + '</select></label><label class="crm-skin-select"><span class="crm-skin-select-icon" aria-hidden="true"></span>' + esc(tr('front.skin_mode', '皮肤', 'Theme')) + '<select id="crmSkinSelect">' + skinOptions() + '</select></label><label class="crm-skin-select"><span class="crm-locale-select-icon" aria-hidden="true"></span>' + esc(tr('common.language', '语言', 'Language')) + '<select id="crmLocaleSelect">' + localeOptions() + '</select></label><button type="button" class="crm-plain-secondary" data-action="legacy">□ ' + esc(styleLabel('layui')) + '</button><button type="button" class="crm-plain-secondary" data-action="refresh">' + esc(tr('common.refresh', '刷新', 'Refresh')) + '</button><button type="button" class="crm-plain-secondary" data-action="logout">' + esc(tr('common.logout', '退出', 'Logout')) + '</button></div>',
+            '<div class="crm-top-actions">' +
+            '<div class="crm-icon-dropdown" title="' + esc(tr('front.ui_style', '界面', 'UI')) + '"><span class="crm-icon-trigger crm-style-select-icon">▣</span><div class="crm-icon-dropdown-menu"><select id="crmStyleSelect">' + styleOptions() + '</select></div></div>' +
+            '<div class="crm-icon-dropdown" title="' + esc(tr('front.skin_mode', '皮肤', 'Theme')) + '"><span class="crm-icon-trigger crm-skin-select-icon">☀</span><div class="crm-icon-dropdown-menu"><select id="crmSkinSelect">' + skinOptions() + '</select></div></div>' +
+            '<div class="crm-icon-dropdown" title="' + esc(tr('common.language', '语言', 'Language')) + '"><span class="crm-icon-trigger crm-locale-select-icon">🌐</span><div class="crm-icon-dropdown-menu"><select id="crmLocaleSelect">' + localeOptions() + '</select></div></div>' +
+            '<button type="button" class="crm-plain-secondary" data-action="refresh">↻</button>' +
+            '<button type="button" class="crm-plain-secondary" data-action="logout">' + esc(tr('common.logout', '退出', 'Logout')) + '</button></div>',
             '</header>',
             '<section class="crm-content"><div class="crm-content-inner" id="crmPlainContent"></div></section>',
             '</main>',
@@ -1075,18 +1080,22 @@
                 var item = stats.filter(function (stat) { return stat.key === key; })[0] || { label: fieldLabel(key), value: 0 };
                 return '<div class="crm-detail-item"><p class="crm-detail-label">' + esc(item.label) + '</p><p class="crm-detail-value">' + esc(fmt(item.value)) + '</p></div>';
             }).join('') + '</div></section>';
+        var authStatus = profile.auth_status || '';
+        var kycBar = (!authStatus || authStatus === 'pending' || authStatus === 'unverified')
+            ? '<div class="crm-kyc-bar"><span class="crm-kyc-icon">⚠</span><span>' + esc(tr('front.kyc_not_verified', '您尚未完成实名认证，部分功能受限', 'Identity not verified, some features are restricted')) + '</span><button class="crm-plain-primary crm-kyc-btn" data-page="profile">' + esc(tr('front.go_verify', '立即认证', 'Verify Now')) + '</button></div>'
+            : '';
         content.innerHTML = [
-            '<section class="crm-overview-band"><div class="crm-overview-copy"><span class="crm-kicker">Plain Naive Style</span><h2>' + esc(dashboardTitle) + '</h2><p>' + esc(dashboardDesc) + '</p></div><div class="crm-quick-panel"><p>' + esc(tr('front.quick_entry', '快捷入口', 'Quick Entry')) + '</p><div>' + menus.slice(1, 9).map(function (item) {
+            '<section class="crm-overview-band"><div class="crm-overview-copy"><span class="crm-kicker">Plain Naive Style</span><h2>' + esc(dashboardTitle) + '</h2><p>' + esc(dashboardDesc) + '</p>' + kycBar + '</div><div class="crm-quick-panel"><p>' + esc(tr('front.quick_entry', '快捷入口', 'Quick Entry')) + '</p><div>' + menus.slice(1, 9).map(function (item) {
                 return '<button class="crm-action-chip" data-page="' + esc(item.key) + '"><span class="crm-action-dot"></span><span>' + esc(item.label) + '</span></button>';
             }).join('') + '</div></div></section>',
             dashboardControlPanel(),
             downloadPanel,
             registerPanel,
             '<div class="crm-grid stats">' + stats.map(function (item) {
-                return '<article class="crm-stat"><span class="crm-stat-icon">' + esc(item.icon) + '</span><p class="crm-stat-label">' + esc(item.label) + '</p><p class="crm-stat-value">' + esc(fmt(item.value)) + '</p><p class="crm-stat-note">' + esc(item.note) + '</p></article>';
+                return '<article class="crm-stat crm-stat-compact"><span class="crm-stat-icon">' + esc(item.icon) + '</span><p class="crm-stat-label">' + esc(item.label) + '</p><p class="crm-stat-value">' + esc(fmt(item.value)) + '</p><p class="crm-stat-note">' + esc(item.note) + '</p></article>';
             }).join('') + '</div>',
             '<section class="crm-chart-board"><div class="crm-section-head"><div><h2 class="crm-section-title">ECharts</h2><p class="crm-section-subtitle">' + esc(tr('front.chart_board_desc', '每个指标保留独立图形视图。', 'Each metric keeps an independent chart view.')) + '</p></div></div><div class="crm-chart-grid">' + stats.map(function (item, index) {
-                return '<article class="crm-chart-card"><div class="crm-chart-head"><div><p class="crm-chart-title">' + esc(item.label) + '</p><p class="crm-chart-meta">' + esc(fmt(item.value)) + '</p></div><select class="crm-chart-type" data-chart-type="' + index + '">' + chartTypeOptions(index) + '</select></div><div class="crm-chart-canvas" id="plainChart' + index + '"></div></article>';
+                return '<article class="crm-chart-card crm-chart-card-compact"><div class="crm-chart-head"><div><p class="crm-chart-title">' + esc(item.label) + '</p><p class="crm-chart-meta">' + esc(fmt(item.value)) + '</p></div><select class="crm-chart-type" data-chart-type="' + index + '">' + chartTypeOptions(index) + '</select></div><div class="crm-chart-canvas" id="plainChart' + index + '"></div></article>';
             }).join('') + '</div></section>',
             '<div class="crm-grid two">' + detailPanel + '<section class="crm-section"><h2 class="crm-section-title">' + esc(tr('front.news_list', '新闻公告', 'News')) + '</h2><div class="crm-news-list">' + (data.news || []).map(function (item) {
                 return '<article class="crm-news-item"><p class="crm-news-title">' + esc(item.title) + '</p><p class="crm-news-meta">' + esc(fmt(item.created_at)) + '</p></article>';

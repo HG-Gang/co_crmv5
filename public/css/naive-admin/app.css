@@ -1679,3 +1679,112 @@ select {
         justify-content: flex-start;
     }
 }
+
+/* Req 1: compact stat cards & chart cards */
+.crm-stat-compact {
+    min-height: 58px;
+    padding: 6px 8px 6px 36px;
+}
+.crm-stat-compact .crm-stat-value { font-size: 15px; }
+.crm-chart-card-compact { min-height: 200px; padding: 10px; }
+.crm-chart-card-compact .crm-chart-canvas { height: 148px; }
+
+/* Req 2: KYC verification bar */
+.crm-kyc-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: rgba(240,160,32,.12);
+    border: 1px solid rgba(240,160,32,.3);
+    font-size: 13px;
+    color: var(--crm-text);
+}
+.crm-kyc-icon { font-size: 16px; }
+.crm-kyc-btn { margin-left: auto; font-size: 12px; padding: 4px 14px; }
+
+/* Req 11: icon-only selectors with hover dropdown */
+.crm-icon-dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+.crm-icon-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid var(--crm-line);
+    background: var(--crm-panel);
+    cursor: pointer;
+    font-size: 16px;
+    transition: background .2s;
+}
+.crm-icon-trigger:hover { background: var(--crm-bg); }
+.crm-icon-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 999;
+    min-width: 110px;
+    padding: 4px;
+    margin-top: 4px;
+    border-radius: 6px;
+    background: var(--crm-panel);
+    border: 1px solid var(--crm-line);
+    box-shadow: 0 6px 18px rgba(0,0,0,.12);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition: opacity .2s, visibility .2s, transform .2s;
+}
+.crm-icon-dropdown:hover .crm-icon-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.crm-icon-dropdown-menu select {
+    width: 100%;
+    padding: 4px 6px;
+    font-size: 12px;
+    border: 1px solid var(--crm-line);
+    border-radius: 4px;
+    background: var(--crm-panel);
+    color: var(--crm-text);
+}
+
+/* Req 17: cleaner skin overhaul */
+.crm-skin-light .crm-sidebar,
+.crm-skin-sea .crm-sidebar {
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 200px), var(--crm-side);
+    border-right-color: rgba(0,0,0,.08);
+}
+.crm-skin-sea .crm-stat { border-color: rgba(8,145,178,.15); }
+.crm-skin-warm .crm-stat { border-color: rgba(180,83,9,.12); }
+.crm-skin-warm .crm-sidebar { border-right-color: rgba(48,37,30,.12); }
+.crm-skin-contrast .crm-stat { border-color: #000; border-width: 2px; }
+.crm-skin-contrast .crm-sidebar { border-right-color: #000; }
+.crm-skin-contrast .crm-chart-card { border-color: #000; border-width: 2px; }
+.crm-skin-dark .crm-chart-card-compact,
+.crm-skin-dark .crm-stat-compact { background: var(--crm-panel); }
+.crm-skin-dark .crm-icon-trigger { border-color: var(--crm-line); background: var(--crm-panel); }
+.crm-skin-dark .crm-icon-dropdown-menu { background: var(--crm-panel); border-color: var(--crm-line); }
+.crm-skin-dark .crm-kyc-bar { background: rgba(245,158,11,.15); border-color: rgba(245,158,11,.3); }
+
+/* Cleaner feel: softer shadows, rounder corners */
+.crm-chart-card,
+.crm-stat,
+.crm-register-card,
+.crm-detail-item,
+.crm-news-item {
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.crm-chart-card:hover,
+.crm-stat:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    transition: box-shadow .2s;
+}

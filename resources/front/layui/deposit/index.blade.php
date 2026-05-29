@@ -67,10 +67,15 @@
                     </div>
                 </div>
 
+                {{-- Req 8: Payment channels displayed using tabs --}}
                 <div class="layui-form-item">
                     <label class="layui-form-label" data-translate="front.payment_channel">{{ __('front.payment_channel') }}</label>
                     <div class="layui-input-block">
-                        <div class="layui-row layui-col-space12" id="depositChannelList"></div>
+                        <div class="layui-tab layui-tab-brief" lay-filter="depositChannelTabs" id="depositChannelTabs">
+                            <ul class="layui-tab-title" id="depositChannelTabTitles"></ul>
+                            <div class="layui-tab-content" id="depositChannelTabContent"></div>
+                        </div>
+                        <div class="layui-row layui-col-space12 layui-hide" id="depositChannelList"></div>
                     </div>
                 </div>
                 </div>

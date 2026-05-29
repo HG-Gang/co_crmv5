@@ -313,4 +313,11 @@ return [
     'type' => '类型',
     'agent_id' => '代理ID',
     'name' => '名称',
+    'kyc_not_verified' => '您尚未完成实名认证，部分功能受限',
+    'go_verify' => '立即认证',
+    'chart_view' => '图表查看',
+    'day_label' => '天',
+    'pnl' => '盈亏',
+    'commission_rate' => '返佣比例',
+    'total_commission' => '总返佣',
 ];

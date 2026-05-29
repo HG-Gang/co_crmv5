@@ -63,5 +63,5 @@
 
 @section('scripts')
 <script src="{{ asset('/js/common/echarts.common.min.js') }}"></script>
-<script src="{{ asset('/js/front/layui/module-page.js') }}?v=2026052913"></script>
+<script src="{{ asset('/js/front/layui/module-page.js') }}?v=2026052911"></script>
 @endsection

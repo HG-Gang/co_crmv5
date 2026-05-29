@@ -81,14 +81,17 @@ var PayChannelManager = (function () {
                 return;
             }
 
-            html += '<div class="deposit-channel-tabs">';
+            html += '<div class="layui-tab payment-channel-layui-tabs" lay-filter="paymentChannelTabs"><ul class="layui-tab-title">';
             for (i = 0; i < channels.length; i++) {
                 if (!defaultChannel || channels[i].is_default) {
                     defaultChannel = channels[i];
                 }
-
-                html += '<div class="deposit-channel-card J_payChannelCard" data-channel-code="' + escapeHtml(channels[i].code) + '">';
-                html += '<span class="channel-name">' + escapeHtml(channels[i].name) + '</span>';
+                html += '<li class="J_payChannelCard" data-channel-code="' + escapeHtml(channels[i].code) + '">' + escapeHtml(channels[i].name) + '</li>';
+            }
+            html += '</ul><div class="layui-tab-content">';
+            for (i = 0; i < channels.length; i++) {
+                html += '<div class="layui-tab-item" data-channel-panel="' + escapeHtml(channels[i].code) + '"><div class="payment-channel-panel layui-elem-quote">';
+                html += '<strong>' + escapeHtml(channels[i].name) + '</strong>';
                 html += '<div class="channel-meta"><span class="channel-rate">' + escapeHtml(t('front.exchange_rate')) + ': ' + escapeHtml(channels[i].exchange_rate) + '</span></div>';
                 if (channels[i].min_amount || channels[i].max_amount) {
                     html += '<div class="channel-meta">' + escapeHtml(t('front.channel_min_max')) + ': ' + escapeHtml(channels[i].min_amount || 0) + ' - ' + escapeHtml(channels[i].max_amount || '-') + '</div>';
@@ -99,12 +102,15 @@ var PayChannelManager = (function () {
                 if (channels[i].description) {
                     html += '<div class="channel-meta">' + escapeHtml(channels[i].description) + '</div>';
                 }
-                html += '</div>';
+                html += '</div></div>';
             }
-            html += '</div>';
+            html += '</div></div>';
 
             $container.html(html);
             select(defaultChannel ? defaultChannel.code : channels[0].code);
+            if (typeof layui !== 'undefined' && layui.element && layui.element.render) {
+                layui.element.render('tab', 'paymentChannelTabs');
+            }
         }
 
         function findChannel(code) {
@@ -144,9 +150,11 @@ var PayChannelManager = (function () {
             if (opts.passagewayInput) {
                 $(opts.passagewayInput).val(channel ? channel.passageway : '');
             }
-            $(opts.container).find('.J_payChannelCard').removeClass('is-active');
+            $(opts.container).find('.J_payChannelCard').removeClass('is-active layui-this');
+            $(opts.container).find('.layui-tab-item').removeClass('layui-show');
             if (selectedCode) {
-                $(opts.container).find('[data-channel-code="' + selectedCode + '"]').addClass('is-active');
+                $(opts.container).find('[data-channel-code="' + selectedCode + '"]').addClass('is-active layui-this');
+                $(opts.container).find('[data-channel-panel="' + selectedCode + '"]').addClass('layui-show');
             }
             syncAmount();
         }

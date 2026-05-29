@@ -332,7 +332,6 @@ layui.use(['element', 'layer', 'jquery'], function () {
         $('.theme-switch').removeClass('is-current');
         $('.theme-switch[data-theme="' + activeTheme + '"]').parent().addClass('layui-this');
         $('.theme-switch[data-theme="' + activeTheme + '"]').addClass('is-current');
-        $('#frontThemeBadge').text(themeText(activeTheme));
         if (persist && !window.CrmTheme) {
             localStorage.setItem('front_theme', activeTheme);
             localStorage.setItem('crm_theme', activeTheme);
@@ -361,11 +360,11 @@ layui.use(['element', 'layer', 'jquery'], function () {
 
     function updateThemeSwitchLabels() {
         var labels = {
-            light: '☀ ' + themeText('light'),
-            dark: '☾ ' + themeText('dark'),
+            light: '◌ ' + themeText('light'),
+            dark: '◑ ' + themeText('dark'),
             sea: '≋ ' + themeText('sea'),
-            warm: '◐ ' + themeText('warm'),
-            contrast: '▣ ' + themeText('contrast')
+            warm: '◒ ' + themeText('warm'),
+            contrast: '◇ ' + themeText('contrast')
         };
 
         $('.theme-switch').each(function () {
@@ -384,11 +383,11 @@ layui.use(['element', 'layer', 'jquery'], function () {
 
     function themeText(theme) {
         var map = {
-            light: CrmLang.t('front.theme_light'),
-            dark: CrmLang.t('front.theme_dark'),
-            sea: CrmLang.t('front.theme_sea'),
-            warm: CrmLang.t('front.theme_warm'),
-            contrast: CrmLang.t('front.theme_contrast')
+            light: CrmLang.t('front.theme_light_fresh'),
+            dark: CrmLang.t('front.theme_dark_fresh'),
+            sea: CrmLang.t('front.theme_sea_fresh'),
+            warm: CrmLang.t('front.theme_warm_fresh'),
+            contrast: CrmLang.t('front.theme_contrast_fresh')
         };
 
         return map[theme] || map.light || theme;

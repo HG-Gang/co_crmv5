@@ -81,16 +81,14 @@ var PayChannelManager = (function () {
                 return;
             }
 
+            html += '<div class="deposit-channel-tabs">';
             for (i = 0; i < channels.length; i++) {
                 if (!defaultChannel || channels[i].is_default) {
                     defaultChannel = channels[i];
                 }
 
-                html += '<div class="layui-col-md2 layui-col-sm3 layui-col-xs6">';
                 html += '<div class="deposit-channel-card J_payChannelCard" data-channel-code="' + escapeHtml(channels[i].code) + '">';
-                html += '<div class="layui-form-item">';
-                html += '<input type="radio" name="deposit_channel_radio" value="' + escapeHtml(channels[i].code) + '" lay-filter="depositChannel" title="' + escapeHtml(channels[i].name) + '">';
-                html += '</div>';
+                html += '<span class="channel-name">' + escapeHtml(channels[i].name) + '</span>';
                 html += '<div class="channel-meta"><span class="channel-rate">' + escapeHtml(t('front.exchange_rate')) + ': ' + escapeHtml(channels[i].exchange_rate) + '</span></div>';
                 if (channels[i].min_amount || channels[i].max_amount) {
                     html += '<div class="channel-meta">' + escapeHtml(t('front.channel_min_max')) + ': ' + escapeHtml(channels[i].min_amount || 0) + ' - ' + escapeHtml(channels[i].max_amount || '-') + '</div>';
@@ -101,13 +99,11 @@ var PayChannelManager = (function () {
                 if (channels[i].description) {
                     html += '<div class="channel-meta">' + escapeHtml(channels[i].description) + '</div>';
                 }
-                html += '</div></div>';
+                html += '</div>';
             }
+            html += '</div>';
 
             $container.html(html);
-            if (layui.form) {
-                layui.form.render('radio');
-            }
             select(defaultChannel ? defaultChannel.code : channels[0].code);
         }
 
@@ -151,10 +147,6 @@ var PayChannelManager = (function () {
             $(opts.container).find('.J_payChannelCard').removeClass('is-active');
             if (selectedCode) {
                 $(opts.container).find('[data-channel-code="' + selectedCode + '"]').addClass('is-active');
-                $(opts.container).find('input[name="deposit_channel_radio"][value="' + selectedCode + '"]').prop('checked', true);
-            }
-            if (layui.form) {
-                layui.form.render('radio');
             }
             syncAmount();
         }
@@ -181,12 +173,6 @@ var PayChannelManager = (function () {
         $(opts.container).on('click', '.J_payChannelCard', function () {
             select($(this).attr('data-channel-code'));
         });
-
-        if (layui.form) {
-            layui.form.on('radio(depositChannel)', function (data) {
-                select(data.value);
-            });
-        }
 
         return {
             render: render,

@@ -11,6 +11,29 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
         rateInput: '#depositExchangeRate'
     });
 
+    function money(value) {
+        var numberValue = Number(value || 0);
+        return isNaN(numberValue) ? '0.00' : numberValue.toFixed(2);
+    }
+
+    function renderMockSummary() {
+        var html = '';
+        var items = [
+            {label: CrmLang.t('front.today_deposit'), value: 12800.45},
+            {label: CrmLang.t('front.pending_count'), value: 6, text: true},
+            {label: CrmLang.t('front.week_deposit'), value: 86420.33},
+            {label: CrmLang.t('front.average_amount'), value: 3180.75}
+        ];
+
+        items.forEach(function (item, index) {
+            html += '<div class="crm-table-summary-item summary-color-' + (index % 8) + '">';
+            html += '<span>' + item.label + '</span>';
+            html += '<strong>' + (item.text ? item.value : money(item.value)) + '</strong>';
+            html += '</div>';
+        });
+        $('#depositMockSummary').html(html);
+    }
+
     function boot() {
         if (typeof CrmLang !== 'undefined') {
             CrmLang.updateUI();
@@ -45,6 +68,7 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
                 {field: 'modify_time', title: CrmLang.t('front.flow_time'), minWidth: 170}
             ]
         });
+        renderMockSummary();
     }
 
     if (typeof CrmLang !== 'undefined' && CrmLang.loadLanguage) {

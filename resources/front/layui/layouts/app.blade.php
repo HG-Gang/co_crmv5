@@ -71,21 +71,21 @@
         <!-- Right Header -->
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <a href="javascript:;" data-translate="common.language">{{ __('common.language') }}</a>
+                <a href="javascript:;" title="{{ __('common.language') }}"><i class="layui-icon layui-icon-website"></i></a>
                 <dl class="layui-nav-child">
                     <dd><a href="javascript:;" class="lang-switch" data-lang="zh-CN" data-translate="common.langZh">{{ __('common.lang_zh') }}</a></dd>
                     <dd><a href="javascript:;" class="lang-switch" data-lang="en" data-translate="common.langEn">{{ __('common.lang_en') }}</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:;"><i class="layui-icon layui-icon-template-1"></i> <span data-translate="front.ui_style">{{ __('front.ui_style') }}</span></a>
+                <a href="javascript:;" title="{{ __('front.ui_style') }}"><i class="layui-icon layui-icon-template-1"></i></a>
                 <dl class="layui-nav-child">
                     <dd><a href="javascript:;" class="crm-style-switch" data-style="layui">▣ Layui 风格</a></dd>
                     <dd><a href="javascript:;" class="crm-style-switch" data-style="naive">□ Naive 风格</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:;"><i class="layui-icon layui-icon-theme"></i> <span data-translate="front.skin_mode">皮肤</span><span id="frontThemeBadge" class="front-theme-badge"></span></a>
+                <a href="javascript:;" title="{{ __('front.skin_mode') }}"><i class="layui-icon layui-icon-theme"></i><span id="frontThemeBadge" class="front-theme-badge"></span></a>
                 <dl class="layui-nav-child">
                     <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="light" data-skin="light">☀ 浅色</a></dd>
                     <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="dark" data-skin="dark">☾ 深色</a></dd>

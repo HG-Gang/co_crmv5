@@ -22,6 +22,7 @@
         <div class="layui-card-header" data-translate="front.withdraw">{{ __('front.withdraw') }}</div>
         <div class="layui-card-body">
             <div class="front-inline-notice layui-hide" id="withdrawDisabledNotice"></div>
+            <div class="crm-table-summary withdraw-mock-summary" id="withdrawMockSummary"></div>
 
             <form class="layui-form layui-form-pane" id="withdrawForm" lay-filter="withdrawForm">
                 <div class="withdraw-form-area">
@@ -174,5 +175,5 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('/js/front/layui/withdraw/index.js') }}"></script>
+<script src="{{ asset('/js/front/layui/withdraw/index.js') }}?v=2026052913"></script>
 @endsection

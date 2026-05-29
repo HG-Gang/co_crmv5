@@ -19,6 +19,11 @@
     .profile-actions { margin-left: 122px; }
     .profile-upload-field { display: flex; align-items: center; gap: 10px; }
     .profile-upload-preview { display: none; width: 120px; height: 76px; object-fit: cover; border: 1px solid #dde4ec; border-radius: 6px; background: #f8fafc; }
+    .profile-upload-card { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; width: 132px; height: 92px; border: 1px dashed #b8c4d2; border-radius: 10px; color: #667085; background: #f8fafc; cursor: pointer; transition: all .2s; }
+    .profile-upload-card:hover { color: var(--front-blue, #2080f0); border-color: var(--front-blue, #2080f0); background: #eef6ff; }
+    .profile-upload-card i { font-size: 22px; }
+    .profile-upload-card span { font-size: 12px; }
+    .profile-upload-field.is-card-upload { align-items: flex-start; flex-wrap: wrap; }
     @media screen and (max-width: 768px) {
         .profile-head { align-items: flex-start; }
         .profile-page .layui-form-label { width: 96px; }
@@ -63,7 +68,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.userName">{{ __('front.user_name') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="user_name" required lay-verify="required" class="layui-input">
+                                <input type="text" name="user_name" required lay-verify="profileRequired" class="layui-input">
                             </div>
                         </div>
                     </div>
@@ -117,19 +122,19 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.currentPassword">{{ __('auth.old_password') }}</label>
                             <div class="layui-input-block">
-                                <input type="password" name="old_password" required lay-verify="required" class="layui-input">
+                                <input type="password" name="old_password" required lay-verify="profileRequired" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="auth.newPassword">{{ __('auth.new_password') }}</label>
                             <div class="layui-input-block">
-                                <input type="password" name="password" required lay-verify="required|password" id="new_password" class="layui-input">
+                                <input type="password" name="password" required lay-verify="profileRequired|password" id="new_password" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="auth.confirmPassword">{{ __('auth.confirm_password') }}</label>
                             <div class="layui-input-block">
-                                <input type="password" name="password_confirmation" required lay-verify="required|confirmPass" class="layui-input">
+                                <input type="password" name="password_confirmation" required lay-verify="profileRequired|confirmPass" class="layui-input">
                             </div>
                         </div>
                         <div class="profile-actions">
@@ -147,19 +152,19 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.fullPhone">{{ __('profile.full_phone') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="verify_phone" required lay-verify="required" class="layui-input" autocomplete="off">
+                                <input type="text" name="verify_phone" required lay-verify="profileRequired" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.currentEmail">{{ __('profile.current_email') }}</label>
                             <div class="layui-input-block">
-                                <input type="email" name="current_email" required lay-verify="required|email" class="layui-input" autocomplete="off">
+                                <input type="email" name="current_email" required lay-verify="profileRequired|email" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.newEmail">{{ __('profile.new_email') }}</label>
                             <div class="layui-input-block">
-                                <input type="email" name="new_email" required lay-verify="required|email" class="layui-input" autocomplete="off">
+                                <input type="email" name="new_email" required lay-verify="profileRequired|email" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="profile-actions">
@@ -182,19 +187,19 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.fullPhone">{{ __('profile.full_phone') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="verify_phone" required lay-verify="required" class="layui-input" autocomplete="off">
+                                <input type="text" name="verify_phone" required lay-verify="profileRequired" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.currentEmail">{{ __('profile.current_email') }}</label>
                             <div class="layui-input-block">
-                                <input type="email" name="verify_email" required lay-verify="required|email" class="layui-input" autocomplete="off">
+                                <input type="email" name="verify_email" required lay-verify="profileRequired|email" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.newPhone">{{ __('front.phone') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="new_phone" required lay-verify="required" class="layui-input" autocomplete="off">
+                                <input type="text" name="new_phone" required lay-verify="profileRequired" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="profile-actions">
@@ -215,20 +220,20 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="front.id_card_no">{{ __('front.id_card_no') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="id_card_no" required lay-verify="required" class="layui-input" autocomplete="off">
+                                <input type="text" name="id_card_no" required lay-verify="profileRequired" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.idCardFront">{{ __('profile.id_card_front') }}</label>
-                            <div class="layui-input-block profile-upload-field">
-                                <button type="button" class="layui-btn layui-btn-primary" id="idCardFrontBtn"><i class="layui-icon layui-icon-upload"></i></button>
+                            <div class="layui-input-block profile-upload-field is-card-upload">
+                                <button type="button" class="profile-upload-card" id="idCardFrontBtn"><i class="layui-icon layui-icon-upload-drag"></i><span data-translate="profile.uploadFront">{{ __('profile.upload_front') }}</span></button>
                                 <img id="idCardFrontPreview" class="profile-upload-preview" alt="">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.idCardBack">{{ __('profile.id_card_back') }}</label>
-                            <div class="layui-input-block profile-upload-field">
-                                <button type="button" class="layui-btn layui-btn-primary" id="idCardBackBtn"><i class="layui-icon layui-icon-upload"></i></button>
+                            <div class="layui-input-block profile-upload-field is-card-upload">
+                                <button type="button" class="profile-upload-card" id="idCardBackBtn"><i class="layui-icon layui-icon-upload-drag"></i><span data-translate="profile.uploadBack">{{ __('profile.upload_back') }}</span></button>
                                 <img id="idCardBackPreview" class="profile-upload-preview" alt="">
                             </div>
                         </div>
@@ -253,26 +258,28 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="front.bank_name">{{ __('front.bank_name') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="bank_name" required lay-verify="required" class="layui-input" autocomplete="off">
+                                <input type="text" name="bank_name" required lay-verify="profileRequired" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="front.bank_no">{{ __('front.bank_no') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="bank_no" required lay-verify="required" class="layui-input" autocomplete="off">
+                                <input type="text" name="bank_no" required lay-verify="profileRequired" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.bankAddress">{{ __('auth.address') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="bank_addr" required lay-verify="required" class="layui-input" autocomplete="off">
+                                <input type="text" name="bank_addr" required lay-verify="profileRequired" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <label class="layui-form-label" data-translate="profile.bankCardImage">{{ __('profile.bank_card_image') }}</label>
-                            <div class="layui-input-block profile-upload-field">
-                                <button type="button" class="layui-btn layui-btn-primary" id="bankCardImgBtn"><i class="layui-icon layui-icon-upload"></i></button>
+                            <label class="layui-form-label" data-translate="profile.bankCardFront">{{ __('profile.bank_card_front') }}</label>
+                            <div class="layui-input-block profile-upload-field is-card-upload">
+                                <button type="button" class="profile-upload-card" id="bankCardImgBtn"><i class="layui-icon layui-icon-upload-drag"></i><span data-translate="profile.uploadFront">{{ __('profile.upload_front') }}</span></button>
                                 <img id="bankCardImgPreview" class="profile-upload-preview" alt="">
+                                <button type="button" class="profile-upload-card" id="bankCardBackImgBtn"><i class="layui-icon layui-icon-upload-drag"></i><span data-translate="profile.uploadBack">{{ __('profile.upload_back') }}</span></button>
+                                <img id="bankCardBackImgPreview" class="profile-upload-preview" alt="">
                             </div>
                         </div>
                         <div class="profile-actions">
@@ -290,38 +297,40 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.fullPhone">{{ __('profile.full_phone') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="verify_phone" required lay-verify="required" class="layui-input" autocomplete="off">
+                                <input type="text" name="verify_phone" required lay-verify="profileRequired" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.currentEmail">{{ __('profile.current_email') }}</label>
                             <div class="layui-input-block">
-                                <input type="email" name="verify_email" required lay-verify="required|email" class="layui-input" autocomplete="off">
+                                <input type="email" name="verify_email" required lay-verify="profileRequired|email" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="front.bank_name">{{ __('front.bank_name') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="bank_name" required lay-verify="required" class="layui-input" autocomplete="off">
+                                <input type="text" name="bank_name" required lay-verify="profileRequired" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="front.bank_no">{{ __('front.bank_no') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="bank_no" required lay-verify="required" class="layui-input" autocomplete="off">
+                                <input type="text" name="bank_no" required lay-verify="profileRequired" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" data-translate="profile.bankAddress">{{ __('auth.address') }}</label>
                             <div class="layui-input-block">
-                                <input type="text" name="bank_addr" required lay-verify="required" class="layui-input" autocomplete="off">
+                                <input type="text" name="bank_addr" required lay-verify="profileRequired" class="layui-input" autocomplete="off">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <label class="layui-form-label" data-translate="profile.bankCardImage">{{ __('profile.bank_card_image') }}</label>
-                            <div class="layui-input-block profile-upload-field">
-                                <button type="button" class="layui-btn layui-btn-primary" id="bankChangeCardImgBtn"><i class="layui-icon layui-icon-upload"></i></button>
+                            <label class="layui-form-label" data-translate="profile.bankCardFront">{{ __('profile.bank_card_front') }}</label>
+                            <div class="layui-input-block profile-upload-field is-card-upload">
+                                <button type="button" class="profile-upload-card" id="bankChangeCardImgBtn"><i class="layui-icon layui-icon-upload-drag"></i><span data-translate="profile.uploadFront">{{ __('profile.upload_front') }}</span></button>
                                 <img id="bankChangeCardImgPreview" class="profile-upload-preview" alt="">
+                                <button type="button" class="profile-upload-card" id="bankChangeCardBackImgBtn"><i class="layui-icon layui-icon-upload-drag"></i><span data-translate="profile.uploadBack">{{ __('profile.upload_back') }}</span></button>
+                                <img id="bankChangeCardBackImgPreview" class="profile-upload-preview" alt="">
                             </div>
                         </div>
                         <div class="profile-actions">
@@ -336,5 +345,5 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('/js/front/layui/profile/index.js') }}"></script>
+<script src="{{ asset('/js/front/layui/profile/index.js') }}?v=2026052913"></script>
 @endsection

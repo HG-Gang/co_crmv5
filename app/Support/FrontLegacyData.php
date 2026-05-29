@@ -553,6 +553,8 @@ class FrontLegacyData
         return [
             'ticket' => 'total',
             'profit' => self::money((clone $query)->sum('profit')),
+            'total_commission' => self::money((clone $query)->sum('commission_agent')),
+            'total_volume' => self::lots((clone $query)->sum('volume')),
         ];
     }
 }

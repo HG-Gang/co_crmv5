@@ -5,6 +5,12 @@ layui.use(['layer', 'jquery'], function() {
     var charts = {};
     var lastChartStats = null;
     var lastChartProfile = null;
+    var chartTypes = {
+        fundsChart: 'bar',
+        networkChart: 'pie',
+        orderChart: 'bar',
+        commissionChart: 'line'
+    };
 
     CrmLang.switchUI();
     bindDashboardSwitches();
@@ -55,6 +61,7 @@ layui.use(['layer', 'jquery'], function() {
         $('#welcomeUser').text(user.user_name || user.email || '-');
         $('#customerTitle').text(user.title || '');
         $('#periodRange').text((period.from || '-') + ' - ' + (period.to || '-'));
+        $('#identityGuideBtn').toggleClass('layui-hide', Number(profile.auth_status || user.auth_status || 0) === 1);
 
         $('#commissionRate').text(formatRate(profile.commission_rate));
         $('#totalCommission').text(formatMoney(stats.total_commission));
@@ -177,6 +184,14 @@ layui.use(['layer', 'jquery'], function() {
         });
 
         applyDashboardTheme(theme);
+        renderChartSelectors();
+
+        $('.dashboard-chart-type').off('change.dashboardChart').on('change.dashboardChart', function () {
+            chartTypes[$(this).attr('data-chart-target')] = $(this).val() || 'bar';
+            if (lastChartStats && lastChartProfile) {
+                renderCharts(lastChartStats, lastChartProfile);
+            }
+        });
 
         window.addEventListener('crm:theme-change', function (event) {
             var nextTheme = event.detail && event.detail.theme;
@@ -211,6 +226,7 @@ layui.use(['layer', 'jquery'], function() {
                 $(this).text((value === currentTheme ? '✓ ' : '') + themeLabels[value]);
             }
         });
+        renderChartSelectors();
     }
 
     function applyDashboardTheme(theme, persist) {
@@ -315,93 +331,96 @@ layui.use(['layer', 'jquery'], function() {
         return numberValue.toFixed(2) + '%';
     }
 
+    function renderChartSelectors() {
+        var options = [
+            ['bar', CrmLang.t('front.chart_bar')],
+            ['line', CrmLang.t('front.chart_line')],
+            ['area', CrmLang.t('front.chart_area')],
+            ['pie', CrmLang.t('front.chart_pie')]
+        ];
+        $('.dashboard-chart-type').each(function () {
+            var $select = $(this);
+            var target = $select.attr('data-chart-target');
+            var current = chartTypes[target] || $select.val() || 'bar';
+            var html = '';
+            $.each(options, function (_, item) {
+                html += '<option value="' + item[0] + '"' + (item[0] === current ? ' selected' : '') + '>' + escapeHtml(item[1]) + '</option>';
+            });
+            $select.html(html);
+        });
+    }
+
+    function chartSeries(name, values, type) {
+        if (type === 'pie') {
+            return [{
+                name: name,
+                type: 'pie',
+                radius: ['30%', '64%'],
+                center: ['50%', '52%'],
+                data: values.map(function (item) {
+                    return {name: item.name, value: item.value};
+                })
+            }];
+        }
+        return [{
+            name: name,
+            type: type === 'area' ? 'line' : type,
+            smooth: type !== 'bar',
+            areaStyle: type === 'area' ? {normal: {opacity: 0.18}} : null,
+            barWidth: type === 'bar' ? 18 : null,
+            data: values.map(function (item) {
+                return item.value;
+            })
+        }];
+    }
+
+    function chartOption(name, values, type, colors) {
+        var option = {color: colors, tooltip: {trigger: 'item'}, legend: {bottom: 0}};
+        if (type !== 'pie') {
+            option.tooltip = {trigger: 'axis', axisPointer: {type: type === 'bar' ? 'shadow' : 'line'}};
+            option.grid = {left: 56, right: 22, top: 38, bottom: 36};
+            option.xAxis = {type: 'category', data: values.map(function (item) { return item.name; })};
+            option.yAxis = {type: 'value'};
+            option.legend = null;
+        }
+        option.series = chartSeries(name, values, type);
+        return option;
+    }
+
     function renderCharts(stats, profile) {
         if (typeof echarts === 'undefined') {
             return;
         }
 
-        setChart('fundsChart', {
-            color: ['#2080f0', '#18a058', '#d97706', '#7c3aed'],
-            tooltip: {trigger: 'axis', axisPointer: {type: 'shadow'}},
-            legend: {top: 0},
-            grid: {left: 96, right: 22, top: 42, bottom: 30},
-            xAxis: {type: 'value'},
-            yAxis: {type: 'category', data: [
-                CrmLang.t('front.total_funds'),
-                CrmLang.t('front.equity'),
-                CrmLang.t('front.effective_credit'),
-                CrmLang.t('front.monthly_period')
-            ]},
-            series: [{
-                name: CrmLang.t('front.balance'),
-                type: 'bar',
-                barWidth: 18,
-                data: [
-                    numeric(stats.account_balance || profile.total_funds),
-                    numeric(profile.equity),
-                    numeric(profile.effective_credit),
-                    numeric(stats.monthly_deposit)
-                ]
-            }, {
-                name: CrmLang.t('front.monthly_withdraw'),
-                type: 'bar',
-                barWidth: 18,
-                data: [0, 0, 0, numeric(stats.monthly_withdraw)]
-            }]
-        });
+        var funds = [
+            {name: CrmLang.t('front.total_funds'), value: numeric(stats.account_balance || profile.total_funds)},
+            {name: CrmLang.t('front.equity'), value: numeric(profile.equity)},
+            {name: CrmLang.t('front.effective_credit'), value: numeric(profile.effective_credit)},
+            {name: CrmLang.t('front.monthly_deposit'), value: numeric(stats.monthly_deposit)},
+            {name: CrmLang.t('front.monthly_withdraw'), value: numeric(stats.monthly_withdraw)}
+        ];
+        setChart('fundsChart', chartOption(CrmLang.t('front.funds_chart'), funds, chartTypes.fundsChart, ['#2080f0', '#18a058', '#d97706', '#7c3aed', '#ef4444']));
 
-        setChart('networkChart', {
-            color: ['#2080f0', '#18a058', '#0e7a83', '#d97706'],
-            tooltip: {trigger: 'item'},
-            legend: {bottom: 0},
-            series: [{
-                type: 'pie',
-                roseType: 'radius',
-                radius: ['32%', '68%'],
-                center: ['50%', '44%'],
-                data: [
-                    {name: CrmLang.t('front.direct_agents'), value: numeric(stats.direct_agents)},
-                    {name: CrmLang.t('front.indirect_agents'), value: numeric(stats.indirect_agents)},
-                    {name: CrmLang.t('front.direct_customers'), value: numeric(stats.direct_customers)},
-                    {name: CrmLang.t('front.indirect_customers'), value: numeric(stats.indirect_customers)}
-                ]
-            }]
-        });
+        var network = [
+            {name: CrmLang.t('front.direct_agents'), value: numeric(stats.direct_agents)},
+            {name: CrmLang.t('front.indirect_agents'), value: numeric(stats.indirect_agents)},
+            {name: CrmLang.t('front.direct_customers'), value: numeric(stats.direct_customers)},
+            {name: CrmLang.t('front.indirect_customers'), value: numeric(stats.indirect_customers)}
+        ];
+        setChart('networkChart', chartOption(CrmLang.t('front.network_chart'), network, chartTypes.networkChart, ['#2080f0', '#18a058', '#0e7a83', '#d97706']));
 
-        setChart('orderChart', {
-            color: ['#0e7a83', '#7c3aed', '#2080f0'],
-            tooltip: {trigger: 'axis'},
-            grid: {left: 42, right: 20, top: 28, bottom: 36},
-            xAxis: {type: 'category', data: [CrmLang.t('front.open_orders'), CrmLang.t('front.monthly_open_orders'), CrmLang.t('front.monthly_closed_orders')]},
-            yAxis: {type: 'value', minInterval: 1},
-            series: [{
-                name: CrmLang.t('front.open_orders'),
-                type: 'bar',
-                barWidth: 22,
-                data: [numeric(stats.open_orders_count), numeric(stats.monthly_open_orders), 0]
-            }, {
-                name: CrmLang.t('front.closed_orders'),
-                type: 'bar',
-                barWidth: 22,
-                data: [0, 0, numeric(stats.monthly_closed_orders)]
-            }]
-        });
+        var orders = [
+            {name: CrmLang.t('front.open_orders'), value: numeric(stats.open_orders_count)},
+            {name: CrmLang.t('front.monthly_open_orders'), value: numeric(stats.monthly_open_orders)},
+            {name: CrmLang.t('front.monthly_closed_orders'), value: numeric(stats.monthly_closed_orders)}
+        ];
+        setChart('orderChart', chartOption(CrmLang.t('front.order_chart'), orders, chartTypes.orderChart, ['#0e7a83', '#7c3aed', '#2080f0']));
 
-        setChart('commissionChart', {
-            color: ['#18a058', '#2080f0'],
-            tooltip: {trigger: 'axis'},
-            legend: {top: 0},
-            grid: {left: 42, right: 20, top: 42, bottom: 36},
-            xAxis: {type: 'category', data: [CrmLang.t('front.monthly_period'), CrmLang.t('front.total_commission')]},
-            yAxis: {type: 'value'},
-            series: [{
-                name: CrmLang.t('front.commission'),
-                type: 'line',
-                smooth: true,
-                areaStyle: {normal: {opacity: 0.18}},
-                data: [numeric(stats.monthly_commission), numeric(stats.total_commission)]
-            }]
-        });
+        var commission = [
+            {name: CrmLang.t('front.monthly_commission'), value: numeric(stats.monthly_commission)},
+            {name: CrmLang.t('front.total_commission'), value: numeric(stats.total_commission)}
+        ];
+        setChart('commissionChart', chartOption(CrmLang.t('front.commission_chart'), commission, chartTypes.commissionChart, ['#18a058', '#2080f0']));
     }
 
     function setChart(id, option) {

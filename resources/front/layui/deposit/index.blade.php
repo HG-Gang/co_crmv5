@@ -66,7 +66,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" data-translate="front.payment_channel">{{ __('front.payment_channel') }}</label>
                     <div class="layui-input-block">
-                        <div class="layui-row layui-col-space12" id="depositChannelList"></div>
+                        <div id="depositChannelList"></div>
                     </div>
                 </div>
                 </div>

@@ -1,12 +1,12 @@
 /**
- * Front Layout JS
- * Handles sidebar menus, user info, and logout.
+ * AdminLTE 前台布局脚本。
+ * 负责加载用户信息、菜单树、退出登录和旧版亮暗风格切换。
  */
 $(function() {
     'use strict';
 
     /**
-     * Load User Profile Info
+     * 加载当前登录用户资料并写入侧边栏头像、昵称、角色和加入时间。
      */
     function loadUserInfo() {
         CRM.ajax({
@@ -27,7 +27,7 @@ $(function() {
     }
 
     /**
-     * Load Sidebar Menus
+     * 从接口读取前台菜单，成功后交给 renderMenus 生成树形导航。
      */
     function loadMenus() {
         CRM.ajax({
@@ -42,7 +42,7 @@ $(function() {
     }
 
     /**
-     * Render sidebar menus dynamically
+     * 动态渲染侧边栏菜单，并根据当前路径给父子菜单加 active/menu-open 状态。
      */
     function renderMenus(menus) {
         var $menu = $('#sidebar-menu');
@@ -86,7 +86,7 @@ $(function() {
     }
 
     /**
-     * Handle Logout
+     * 退出登录时先确认，再调用接口清理服务端状态和本地 token。
      */
     $('#btn-logout').on('click', function(e) {
         e.preventDefault();
@@ -102,7 +102,7 @@ $(function() {
     });
 
     /**
-     * Handle UI Style Toggle
+     * 兼容旧版 AdminLTE 亮暗风格切换，实际新皮肤由统一主题脚本负责。
      */
     $('#ui-style-switcher').on('click', function(e) {
         e.preventDefault();
@@ -110,7 +110,7 @@ $(function() {
         CRM.switchStyle(newStyle);
     });
 
-    // Initialize layout data
+    // 页面初始化时优先加载登录态数据；未登录用户统一跳回登录/注册之外的入口。
     if (CRM.getToken()) {
         loadUserInfo();
         loadMenus();

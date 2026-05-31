@@ -10,9 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>{{ __('common.system_name') }} - {{ $pageTitle }}</title>
-    <script src="{{ asset('/js/common/theme-sync.js') }}?v=2026052908"></script>
+    <script src="{{ asset('/js/common/theme-sync.js') }}?v=2026053103"></script>
     <link rel="stylesheet" href="{{ asset('/js/common/layui-v2.13.5/layui/css/layui.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/front/style.css') }}?v=2026052911">
+    <link rel="stylesheet" href="{{ asset('/css/front/style.css') }}?v=2026053111">
     @yield('styles')
 </head>
 <body class="{{ $isFrame ? 'front-frame-body' : 'layui-layout-body front-shell-body' }}">
@@ -25,7 +25,7 @@
 
 <script src="{{ asset('/js/common/jquery/jquery-3.6.0.min.js') }}"></script>
 <script src="{{ asset('/js/common/layui-v2.13.5/layui/layui.js') }}"></script>
-<script src="{{ asset('/js/common/i18n.js') }}?v=2026052907"></script>
+<script src="{{ asset('/js/common/i18n.js') }}?v=2026053110"></script>
 <script src="{{ asset('/js/common/ajax.js') }}"></script>
 <script src="{{ asset('/js/common/table-common.js') }}"></script>
 <script src="{{ asset('/js/common/date-range-shortcuts.js') }}"></script>
@@ -80,18 +80,18 @@
             <li class="layui-nav-item">
                 <a href="javascript:;" title="{{ __('front.ui_style') }}"><i class="layui-icon layui-icon-template-1"></i></a>
                 <dl class="layui-nav-child">
-                    <dd><a href="javascript:;" class="crm-style-switch" data-style="layui">▣ Layui 风格</a></dd>
-                    <dd><a href="javascript:;" class="crm-style-switch" data-style="naive">□ Naive 风格</a></dd>
+                    <dd><a href="javascript:;" class="crm-style-switch" data-style="layui"><i class="layui-icon layui-icon-template-1"></i> Layui</a></dd>
+                    <dd><a href="javascript:;" class="crm-style-switch" data-style="naive"><i class="layui-icon layui-icon-component"></i> Naive</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:;" title="{{ __('front.skin_mode') }}"><i class="layui-icon layui-icon-theme"></i><span id="frontThemeBadge" class="front-theme-badge"></span></a>
+                <a href="javascript:;" title="{{ __('front.skin_mode') }}"><i class="layui-icon layui-icon-theme"></i></a>
                 <dl class="layui-nav-child">
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="light" data-skin="light">☼ 清透白</a></dd>
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="dark" data-skin="dark">☾ 夜间蓝</a></dd>
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="sea" data-skin="sea">≋ 海盐蓝</a></dd>
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="warm" data-skin="warm">◐ 暖砂色</a></dd>
-                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="contrast" data-skin="contrast">▣ 清晰高对比</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="light" data-skin="light"><i class="layui-icon layui-icon-light"></i> 晨光白</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="dark" data-skin="dark"><i class="layui-icon layui-icon-moon"></i> 墨玉夜</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="sea" data-skin="sea"><i class="layui-icon layui-icon-water"></i> 湖蓝青</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="warm" data-skin="warm"><i class="layui-icon layui-icon-tree"></i> 竹影绿</a></dd>
+                    <dd><a href="javascript:;" class="theme-switch crm-naive-skin-switch" data-theme="contrast" data-skin="contrast"><i class="layui-icon layui-icon-diamond"></i> 银灰蓝</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
@@ -129,11 +129,11 @@
 
 <script src="{{ asset('/js/common/jquery/jquery-3.6.0.min.js') }}"></script>
 <script src="{{ asset('/js/common/layui-v2.13.5/layui/layui.js') }}"></script>
-<script src="{{ asset('/js/common/i18n.js') }}?v=2026052907"></script>
+<script src="{{ asset('/js/common/i18n.js') }}?v=2026053110"></script>
 <script src="{{ asset('/js/common/ajax.js') }}"></script>
 <script src="{{ asset('/js/common/table-common.js') }}"></script>
 <script src="{{ asset('/js/common/date-range-shortcuts.js') }}"></script>
-<script src="{{ asset('/js/front/layui/layout.js') }}?v=2026052908"></script>
+<script src="{{ asset('/js/front/layui/layout.js') }}?v=2026053103"></script>
 </body>
 </html>
 @endif

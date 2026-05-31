@@ -5,6 +5,11 @@ layui.use(['form', 'layer', 'jquery'], function() {
     CrmLang.switchUI();
 
     form.verify({
+        profileRequired: function(value, elem) {
+            if (!$.trim(value || '')) {
+                return requiredMessage(elem);
+            }
+        },
         password: function(value) {
             if (value.length < 6) return CrmLang.t('register.passwordRule');
         },
@@ -13,6 +18,28 @@ layui.use(['form', 'layer', 'jquery'], function() {
             if (value !== pwd) return CrmLang.t('register.passwordMismatch');
         }
     });
+
+    function translateOr(key, fallback) {
+        var value = CrmLang.t(key);
+        return value && value !== key ? value : fallback;
+    }
+
+    // 生成“当前表单 + 当前字段”的必填提示，避免修改密码页多个密码框提示不清楚。
+    function requiredTemplateMessage(formTitle, fieldTitle) {
+        var template = translateOr('front.profile_required_message', '请填写【{form}】的【{field}】');
+        return template
+            .replace('{form}', $.trim(formTitle || translateOr('profile.changePassword', '修改密码')))
+            .replace('{field}', $.trim(fieldTitle || ''));
+    }
+
+    // 根据触发校验的输入框反查卡片标题和字段标签，让提示对应到用户刚点击提交的表单。
+    function requiredMessage(elem) {
+        var $elem = $(elem);
+        var formTitle = $.trim($elem.closest('.layui-card').find('.layui-card-header').first().text()) || translateOr('profile.changePassword', '修改密码');
+        var fieldTitle = $.trim($elem.closest('.layui-form-item').find('.layui-form-label').first().text()) || $elem.attr('name') || '';
+
+        return requiredTemplateMessage(formTitle, fieldTitle);
+    }
 
     form.on('submit(passwordSubmit)', function(data) {
         var loadIdx = layer.load(1);

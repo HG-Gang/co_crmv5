@@ -26,8 +26,8 @@
     .front-module-page .module-stat { background: var(--front-panel); border: 1px solid var(--front-line); border-radius: 6px; padding: 18px; margin-bottom: 15px; min-height: 78px; }
     .front-module-page .module-stat-label { color: var(--front-muted); font-size: 13px; margin-bottom: 8px; }
     .front-module-page .module-stat-value { color: var(--front-strong); font-size: 22px; font-weight: 600; word-break: break-word; }
-    .front-module-page .module-summary-toggle { display: inline-flex; align-items: center; gap: 5px; height: 30px; margin: 0 0 10px 7.5px; padding: 0 12px; border: 1px solid var(--front-line); border-radius: 999px; color: var(--front-text); background: var(--front-panel); cursor: pointer; }
-    .front-module-page .module-summary-toggle span { color: var(--front-blue); font-weight: 800; }
+    .front-module-page .module-summary-toggle { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 30px; margin: 0 0 10px 7.5px; padding: 0; border: 1px solid var(--front-line); border-radius: 8px; color: var(--front-blue); background: var(--front-panel); cursor: pointer; }
+    .front-module-page .module-summary-toggle span { font-weight: 800; line-height: 1; }
     .front-module-page .module-summary-items { display: flex; flex-wrap: wrap; width: 100%; }
     .front-module-page .module-summary-items.is-collapsed { display: none; }
     .front-module-page .module-empty { text-align: center; color: var(--front-muted); padding: 28px 0; }
@@ -35,7 +35,7 @@
     .front-module-page .module-table-wrap { width: 100%; overflow-x: auto; }
     .front-module-page .module-table-wrap table { min-width: 980px; }
     .front-module-page .module-chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-bottom: 15px; }
-    .front-module-page .module-chart-card { border: 1px solid var(--front-line); border-radius: 10px; padding: 12px; background: var(--front-panel); }
+    .front-module-page .module-chart-card { border: 1px solid var(--front-line); border-radius: 8px; padding: 12px; background: var(--front-panel); }
     .front-module-page .module-chart-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
     .front-module-page .module-chart-title { color: var(--front-strong); font-weight: 700; }
     .front-module-page .module-chart-type { width: 112px; height: 30px; border: 1px solid var(--front-line); border-radius: 999px; padding: 0 9px; background: var(--front-panel); color: var(--front-text); }
@@ -135,8 +135,21 @@
                                         @else
                                             @if(($field['type'] ?? 'text') === 'file')
                                                 @php $uploadId = 'crm_upload_' . md5($field['name'] . $loop->index); @endphp
-                                                <div class="crm-upload-card">
-                                                    <button type="button" class="crm-upload-action" id="{{ $uploadId }}_trigger">▧ <span data-translate="{{ $field['label'] }}">{{ __($field['label']) }}</span></button>
+                                                <div class="crm-upload-card" data-upload-card="{{ $uploadId }}">
+                                                    <div class="crm-upload-main">
+                                                        <button type="button" class="crm-upload-action" id="{{ $uploadId }}_trigger">
+                                                            <i class="layui-icon layui-icon-upload-drag"></i>
+                                                            <span data-translate="{{ $field['label'] }}">{{ __($field['label']) }}</span>
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            class="crm-upload-clear J_crmUploadClear"
+                                                            data-upload-target="{{ $uploadId }}"
+                                                            title="{{ __('common.reset') }}"
+                                                        >
+                                                            <i class="layui-icon layui-icon-close"></i>
+                                                        </button>
+                                                    </div>
                                                     <input
                                                         id="{{ $uploadId }}"
                                                         type="file"
@@ -146,6 +159,7 @@
                                                         @if(!empty($field['multiple'])) multiple @endif
                                                         @if(!empty($field['verify'])) lay-verify="{{ $field['verify'] }}" @endif
                                                     >
+                                                    <p class="crm-upload-hint" id="{{ $uploadId }}_status" data-translate="front.no_file_selected">{{ __('front.no_file_selected') }}</p>
                                                     <div class="crm-upload-list" id="{{ $uploadId }}_list"></div>
                                                 </div>
                                             @else

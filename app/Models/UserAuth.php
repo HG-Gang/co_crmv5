@@ -26,7 +26,7 @@ class UserAuth extends BaseModel
         'user_id', 'real_name', 'id_card', 'id_card_no', 'id_card_front', 'id_card_back',
         'id_card_hand', 'id_card_status', 'status', 'audit_time', 'audit_remark',
         'bank_no', 'bank_no_tmp', 'bank_name', 'bank_name_tmp', 'bank_addr', 'bank_addr_tmp',
-        'bank_branch', 'bank_account', 'bank_user', 'bank_card_img', 'bank_card_img_tmp',
+        'bank_branch', 'bank_account', 'bank_user', 'bank_card_img', 'bank_card_back_img', 'bank_card_img_tmp', 'bank_card_back_img_tmp',
         'bank_status', 'bank_remarks', 'id_card_remarks'
     ];
 

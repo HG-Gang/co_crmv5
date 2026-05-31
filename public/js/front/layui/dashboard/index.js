@@ -1,4 +1,5 @@
 layui.use(['layer', 'jquery'], function() {
+    // Layui 控制台页面入口：负责读取仪表盘数据、绑定顶部切换器，并统一维护本页图表实例。
     var layer = layui.layer;
     var $ = layui.jquery;
     var currentNews = [];
@@ -52,6 +53,7 @@ layui.use(['layer', 'jquery'], function() {
     }
 
     function renderDashboard(data) {
+        // 接口返回的用户、统计、画像数据会同时驱动数字卡片、实名认证引导、分享链接和图表。
         var user = data.user || {};
         var stats = data.stats || {};
         var profile = data.profile || {};
@@ -162,6 +164,7 @@ layui.use(['layer', 'jquery'], function() {
     }
 
     function bindDashboardSwitches() {
+        // 控制台的皮肤、UI 风格和语言需要同步写入公共缓存，保证父级布局和当前 iframe 展示一致。
         var theme = window.CrmTheme ? CrmTheme.get() : (localStorage.getItem('front_theme') || localStorage.getItem('crm_theme') || localStorage.getItem('crm_naive_skin') || 'light');
         var style = 'layui';
 
@@ -181,6 +184,22 @@ layui.use(['layer', 'jquery'], function() {
             if (nextStyle === 'naive') {
                 window.top.location.href = '/front-naive/dashboard';
             }
+        });
+
+        $('#dashboardLocaleSelect').val(CrmLang.getLocale ? CrmLang.getLocale() : (localStorage.getItem('crm_locale') || 'zh-CN')).on('change', function () {
+            var nextLocale = $(this).val() || 'zh-CN';
+
+            // 控制台语言切换和壳层语言共用同一份缓存，切换后刷新当前页，
+            // 让图表、卡片、下拉选项全部重新取多语言文案。
+            if (CrmLang.loadLanguage) {
+                CrmLang.loadLanguage(nextLocale).then(function () {
+                    window.location.reload();
+                });
+                return;
+            }
+            localStorage.setItem('crm_locale', nextLocale);
+            document.documentElement.setAttribute('lang', nextLocale);
+            window.location.reload();
         });
 
         applyDashboardTheme(theme);
@@ -207,11 +226,11 @@ layui.use(['layer', 'jquery'], function() {
         var currentTheme = window.CrmTheme ? CrmTheme.get() : (localStorage.getItem('front_theme') || 'light');
         var currentStyle = localStorage.getItem('crm_ui_style') || localStorage.getItem('front_ui_style') || 'layui';
         var themeLabels = {
-            light: '☀ ' + CrmLang.t('front.theme_light'),
-            dark: '☾ ' + CrmLang.t('front.theme_dark'),
-            sea: '≋ ' + CrmLang.t('front.theme_sea'),
-            warm: '◐ ' + CrmLang.t('front.theme_warm'),
-            contrast: '▣ ' + CrmLang.t('front.theme_contrast')
+            light: '○ ' + CrmLang.t('front.theme_light'),
+            dark: '● ' + CrmLang.t('front.theme_dark'),
+            sea: '◇ ' + CrmLang.t('front.theme_sea'),
+            warm: '◌ ' + CrmLang.t('front.theme_warm'),
+            contrast: '◆ ' + CrmLang.t('front.theme_contrast')
         };
         $('#dashboardStyleSelect option[value="layui"]').text('▣ ' + (isEn ? 'Layui Style' : 'Layui 风格'));
         $('#dashboardStyleSelect option[value="naive"]').text('□ ' + (isEn ? 'Naive Style' : 'Naive 风格'));
@@ -225,6 +244,11 @@ layui.use(['layer', 'jquery'], function() {
             if (themeLabels[value]) {
                 $(this).text((value === currentTheme ? '✓ ' : '') + themeLabels[value]);
             }
+        });
+        $('#dashboardLocaleSelect option').each(function () {
+            var value = $(this).val();
+            var label = value === 'en' ? 'EN' : '中';
+            $(this).text((value === (CrmLang.getLocale ? CrmLang.getLocale() : localStorage.getItem('crm_locale')) ? '✓ ' : '') + label);
         });
         renderChartSelectors();
     }
@@ -388,6 +412,7 @@ layui.use(['layer', 'jquery'], function() {
     }
 
     function renderCharts(stats, profile) {
+        // 图表数据全部从最新统计快照生成，切换柱状图/折线图/面积图/饼图时不会重新请求接口。
         if (typeof echarts === 'undefined') {
             return;
         }
@@ -424,6 +449,7 @@ layui.use(['layer', 'jquery'], function() {
     }
 
     function setChart(id, option) {
+        // 每个 DOM 只初始化一次 ECharts 实例，后续仅 setOption，减少控制台反复切换时的重绘成本。
         var el = document.getElementById(id);
 
         if (!el) {

@@ -1,3 +1,9 @@
+/**
+ * 前台 Layui 资料页交互脚本。
+ *
+ * 这个文件把头像、资料、密码、邮箱、手机号、实名和银行卡验证
+ * 统一放在一起，方便每个提交入口只校验自己对应卡片里的字段。
+ */
 layui.use(['form', 'layer', 'jquery', 'upload'], function() {
     var form = layui.form;
     var layer = layui.layer;
@@ -35,7 +41,7 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
 
     $('#submitAvatar').on('click', function() {
         if (!uploadFiles.avatar) {
-            layer.msg(CrmLang.t('common.error'), {icon: 2});
+            layer.msg(requiredTemplateMessage(translateOr('front.avatar_upload', '头像上传'), translateOr('front.avatar', '头像')), {icon: 2});
             return;
         }
 
@@ -177,30 +183,38 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
     });
 
     form.on('submit(bankSubmit)', function(data) {
-        if (!validateRequired($(data.form), {bank_card_img: 'profile.bankCardFront'})) {
+        if (!validateRequired($(data.form), {
+            bank_card_img: 'profile.bankCardFront',
+            bank_card_img_back: 'profile.bankCardBack'
+        })) {
             return false;
         }
         submitMultipart('/api/front/submitBankCard', data.form, {
-            bank_card_img: 'bank_card_img'
+            bank_card_img: 'bank_card_img',
+            bank_card_back_img: 'bank_card_img_back'
         }, function() {
             layer.msg(CrmLang.t('profile.saveSuccess'), {icon: 1});
             data.form.reset();
-            clearUploadPreview(['bank_card_img']);
+            clearUploadPreview(['bank_card_img', 'bank_card_img_back']);
             loadProfileInfo();
         });
         return false;
     });
 
     form.on('submit(bankChangeSubmit)', function(data) {
-        if (!validateRequired($(data.form), {bank_change_card_img: 'profile.bankCardFront'})) {
+        if (!validateRequired($(data.form), {
+            bank_change_card_img: 'profile.bankCardFront',
+            bank_change_card_img_back: 'profile.bankCardBack'
+        })) {
             return false;
         }
         submitMultipart('/api/front/submitBankChange', data.form, {
-            bank_card_img: 'bank_change_card_img'
+            bank_card_img: 'bank_change_card_img',
+            bank_card_back_img: 'bank_change_card_img_back'
         }, function() {
             layer.msg(CrmLang.t('profile.saveSuccess'), {icon: 1});
             data.form.reset();
-            clearUploadPreview(['bank_change_card_img']);
+            clearUploadPreview(['bank_change_card_img', 'bank_change_card_img_back']);
             loadProfileInfo();
         });
         return false;
@@ -228,13 +242,48 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
         });
     }
 
-    function requiredMessage(elem) {
-        var label = $(elem).closest('.layui-form-item').find('.layui-form-label').first().text() || $(elem).attr('name') || '';
-        return CrmLang.t('profile.fieldRequired').replace('{field}', $.trim(label));
+    function translateOr(key, fallback) {
+        var value = CrmLang.t(key);
+        return value && value !== key ? value : fallback;
     }
 
-    function uploadRequiredMessage(labelKey) {
-        return CrmLang.t('profile.uploadRequired').replace('{field}', CrmLang.t(labelKey));
+    function requiredTemplateMessage(formTitle, fieldTitle) {
+        var template = translateOr('front.profile_required_message', '请填写【{form}】的【{field}】');
+        return template
+            .replace('{form}', $.trim(formTitle || translateOr('front.profile', '个人中心')))
+            .replace('{field}', $.trim(fieldTitle || ''));
+    }
+
+    function formTitle(elemOrForm) {
+        var $form = $(elemOrForm).is('form') ? $(elemOrForm) : $(elemOrForm).closest('form');
+        var $title = $form.closest('.layui-card-body').find('.profile-section-title').first().clone();
+
+        $title.find('.layui-badge').remove();
+        return $.trim($title.text()) || translateOr('front.profile', '个人中心');
+    }
+
+    function requiredMessage(elem) {
+        var label = $(elem).closest('.layui-form-item').find('.layui-form-label').first().text() || $(elem).attr('name') || '';
+        return requiredTemplateMessage(formTitle(elem), label);
+    }
+
+    function uploadRequiredMessage(labelKey, formEl) {
+        return requiredTemplateMessage(formTitle(formEl), CrmLang.t(labelKey));
+    }
+
+    // 把缓存字段映射到用户能看懂的上传文案，保证校验提示能精确指向
+    // 对应按钮，不会让错误信息和实际操作脱节。
+    function uploadLabelKey(fieldName) {
+        var labels = {
+            id_card_front: 'profile.idCardFront',
+            id_card_back: 'profile.idCardBack',
+            bank_card_img: 'profile.bankCardFront',
+            bank_card_img_back: 'profile.bankCardBack',
+            bank_change_card_img: 'profile.bankCardFront',
+            bank_change_card_img_back: 'profile.bankCardBack'
+        };
+
+        return labels[fieldName] || fieldName;
     }
 
     function validateRequired($form, fileMap) {
@@ -252,7 +301,7 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
         }
         $.each(fileMap || {}, function (fieldName, labelKey) {
             if (!uploadFiles[fieldName]) {
-                layer.msg(uploadRequiredMessage(labelKey), {icon: 2});
+                layer.msg(uploadRequiredMessage(labelKey, $form), {icon: 2});
                 valid = false;
                 return false;
             }
@@ -260,6 +309,8 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
         return valid;
     }
 
+    // 把已选预览文件按后端字段名塞进 FormData。通过这层映射，同一
+    // 个按钮可以对应不同的上传接口。
     function submitMultipart(url, formEl, fileMap, done) {
         var loadIdx = layer.load(1);
         var formData = new FormData(formEl);
@@ -272,7 +323,7 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
                 cacheField = fileMap[requestField];
                 if (!uploadFiles[cacheField]) {
                     layer.close(loadIdx);
-                    layer.msg(uploadRequiredMessage(cacheField === 'id_card_front' ? 'profile.idCardFront' : cacheField === 'id_card_back' ? 'profile.idCardBack' : 'profile.bankCardFront'), {icon: 2});
+                    layer.msg(uploadRequiredMessage(uploadLabelKey(cacheField), formEl), {icon: 2});
                     return;
                 }
                 formData.append(requestField, uploadFiles[cacheField]);

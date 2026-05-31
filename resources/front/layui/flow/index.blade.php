@@ -92,5 +92,5 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('/js/front/layui/flow/index.js') }}?v=2026052913"></script>
+<script src="{{ asset('/js/front/layui/flow/index.js') }}?v=2026053111"></script>
 @endsection

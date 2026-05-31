@@ -19,7 +19,7 @@
     .profile-actions { margin-left: 122px; }
     .profile-upload-field { display: flex; align-items: center; gap: 10px; }
     .profile-upload-preview { display: none; width: 120px; height: 76px; object-fit: cover; border: 1px solid #dde4ec; border-radius: 6px; background: #f8fafc; }
-    .profile-upload-card { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; width: 132px; height: 92px; border: 1px dashed #b8c4d2; border-radius: 10px; color: #667085; background: #f8fafc; cursor: pointer; transition: all .2s; }
+    .profile-upload-card { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; width: 132px; height: 92px; border: 1px dashed #b8c4d2; border-radius: 8px; color: #667085; background: #f8fafc; cursor: pointer; transition: all .2s; }
     .profile-upload-card:hover { color: var(--front-blue, #2080f0); border-color: var(--front-blue, #2080f0); background: #eef6ff; }
     .profile-upload-card i { font-size: 22px; }
     .profile-upload-card span { font-size: 12px; }
@@ -278,6 +278,11 @@
                             <div class="layui-input-block profile-upload-field is-card-upload">
                                 <button type="button" class="profile-upload-card" id="bankCardImgBtn"><i class="layui-icon layui-icon-upload-drag"></i><span data-translate="profile.uploadFront">{{ __('profile.upload_front') }}</span></button>
                                 <img id="bankCardImgPreview" class="profile-upload-preview" alt="">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" data-translate="profile.bankCardBack">{{ __('profile.bank_card_back') }}</label>
+                            <div class="layui-input-block profile-upload-field is-card-upload">
                                 <button type="button" class="profile-upload-card" id="bankCardBackImgBtn"><i class="layui-icon layui-icon-upload-drag"></i><span data-translate="profile.uploadBack">{{ __('profile.upload_back') }}</span></button>
                                 <img id="bankCardBackImgPreview" class="profile-upload-preview" alt="">
                             </div>
@@ -329,6 +334,11 @@
                             <div class="layui-input-block profile-upload-field is-card-upload">
                                 <button type="button" class="profile-upload-card" id="bankChangeCardImgBtn"><i class="layui-icon layui-icon-upload-drag"></i><span data-translate="profile.uploadFront">{{ __('profile.upload_front') }}</span></button>
                                 <img id="bankChangeCardImgPreview" class="profile-upload-preview" alt="">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" data-translate="profile.bankCardBack">{{ __('profile.bank_card_back') }}</label>
+                            <div class="layui-input-block profile-upload-field is-card-upload">
                                 <button type="button" class="profile-upload-card" id="bankChangeCardBackImgBtn"><i class="layui-icon layui-icon-upload-drag"></i><span data-translate="profile.uploadBack">{{ __('profile.upload_back') }}</span></button>
                                 <img id="bankChangeCardBackImgPreview" class="profile-upload-preview" alt="">
                             </div>
@@ -345,5 +355,5 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('/js/front/layui/profile/index.js') }}?v=2026052913"></script>
+<script src="{{ asset('/js/front/layui/profile/index.js') }}?v=2026053110"></script>
 @endsection

@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title data-translate="reset_password_title">Forgot Password</title>
-    <script src="/js/common/theme-sync.js?v=2026052908"></script>
+    <script src="/js/common/theme-sync.js?v=2026053102"></script>
     <link rel="stylesheet" href="/js/common/layui-v2.13.5/layui/css/layui.css">
-    <link rel="stylesheet" href="/css/common/theme-sync.css?v=2026052908">
+    <link rel="stylesheet" href="/css/common/theme-sync.css?v=2026053102">
     <style>
         :root { --primary: #18a058; --bg: #f0f2f5; --card: #fff; --text: #1c2127; --border: #e5e7eb; }
         * { box-sizing: border-box; margin: 0; padding: 0; }

@@ -69,7 +69,9 @@ class ProfileController extends FrontBaseController
             $authPayload['id_card_front_url'] = $this->resolveFileUrl($userAuth->id_card_front ?? '');
             $authPayload['id_card_back_url'] = $this->resolveFileUrl($userAuth->id_card_back ?? '');
             $authPayload['bank_card_img_url'] = $this->resolveFileUrl($userAuth->bank_card_img ?? '');
+            $authPayload['bank_card_back_img_url'] = $this->resolveFileUrl($userAuth->bank_card_back_img ?? '');
             $authPayload['bank_card_img_tmp_url'] = $this->resolveFileUrl($userAuth->bank_card_img_tmp ?? '');
+            $authPayload['bank_card_back_img_tmp_url'] = $this->resolveFileUrl($userAuth->bank_card_back_img_tmp ?? '');
         }
 
         $data = [
@@ -295,6 +297,7 @@ class ProfileController extends FrontBaseController
             'bank_no' => 'required|string|max:50',
             'bank_addr' => 'required|string|max:500',
             'bank_card_img' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'bank_card_back_img' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
         ]);
 
         if ($validator->fails()) {
@@ -306,14 +309,16 @@ class ProfileController extends FrontBaseController
             return $this->error(__('auth.user_info_not_found'), ResponseCode::USER_NOT_FOUND);
         }
 
-        $path = $this->storeProfileFile($request, 'bank_card_img', 'auth/' . $userInfo->user_id . '/bank');
+        $frontPath = $this->storeProfileFile($request, 'bank_card_img', 'auth/' . $userInfo->user_id . '/bank');
+        $backPath = $this->storeProfileFile($request, 'bank_card_back_img', 'auth/' . $userInfo->user_id . '/bank');
         UserAuth::updateOrCreate(
             ['user_id' => $userInfo->user_id],
             [
                 'bank_name' => trim((string) $request->input('bank_name')),
                 'bank_no' => trim((string) $request->input('bank_no')),
                 'bank_addr' => trim((string) $request->input('bank_addr')),
-                'bank_card_img' => $path,
+                'bank_card_img' => $frontPath,
+                'bank_card_back_img' => $backPath,
                 'bank_status' => 1,
                 'bank_remarks' => '',
             ]
@@ -331,6 +336,7 @@ class ProfileController extends FrontBaseController
             'bank_no' => 'required|string|max:50',
             'bank_addr' => 'required|string|max:500',
             'bank_card_img' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'bank_card_back_img' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
         ]);
 
         if ($validator->fails()) {
@@ -342,14 +348,16 @@ class ProfileController extends FrontBaseController
             return $this->error(__('profile.email_verify_failed'), ResponseCode::VALIDATION_FAILED);
         }
 
-        $path = $this->storeProfileFile($request, 'bank_card_img', 'auth/' . $userInfo->user_id . '/bank-change');
+        $frontPath = $this->storeProfileFile($request, 'bank_card_img', 'auth/' . $userInfo->user_id . '/bank-change');
+        $backPath = $this->storeProfileFile($request, 'bank_card_back_img', 'auth/' . $userInfo->user_id . '/bank-change');
         UserAuth::updateOrCreate(
             ['user_id' => $userInfo->user_id],
             [
                 'bank_name_tmp' => trim((string) $request->input('bank_name')),
                 'bank_no_tmp' => trim((string) $request->input('bank_no')),
                 'bank_addr_tmp' => trim((string) $request->input('bank_addr')),
-                'bank_card_img_tmp' => $path,
+                'bank_card_img_tmp' => $frontPath,
+                'bank_card_back_img_tmp' => $backPath,
                 'bank_status' => 3,
                 'bank_remarks' => '',
             ]

@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title data-translate="auth.register">Register - CRM v5</title>
-    <script src="{{ asset('js/common/theme-sync.js') }}?v=2026052908"></script>
+    <script src="{{ asset('js/common/theme-sync.js') }}?v=2026053102"></script>
     <link rel="stylesheet" href="{{ asset('js/common/layui-v2.13.5/layui/css/layui.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/common/theme-sync.css') }}?v=2026052908">
+    <link rel="stylesheet" href="{{ asset('css/common/theme-sync.css') }}?v=2026053102">
     <style>
         body { background: #f5f7fa; min-height: 100vh; display: flex; align-items: center; justify-content: center; margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         .register-container { width: 520px; }
@@ -91,7 +91,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label data-translate="auth.phone">Phone</label>
-                    <input type="text" name="phone" value="{{ old('phone') }}" placeholder="" data-translate-placeholder="auth.phone">
+                    <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="" data-translate-placeholder="auth.phone" minlength="12" maxlength="20" inputmode="numeric" autocomplete="tel">
                 </div>
                 <div class="form-group">
                     <label data-translate="auth.gender">Gender</label>

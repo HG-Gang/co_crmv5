@@ -1,3 +1,7 @@
+/**
+ * Layui 前台出金页入口脚本。
+ * 负责读取出金限制、计算手续费/实际到账金额、提交出金申请，并在表格上方展示靠左汇总数据。
+ */
 layui.use(['jquery', 'form', 'table', 'layer'], function () {
     var $ = layui.jquery;
     var form = layui.form;
@@ -13,19 +17,23 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
     };
     var historyRendered = false;
 
+    // 统一读取多语言文案，缺少语言模块时返回 key，便于定位缺失项。
     function t(key) {
         return typeof CrmLang !== 'undefined' && CrmLang.t ? CrmLang.t(key) : key;
     }
 
+    // 兼容新旧接口成功码，优先使用公共表格工具的判断规则。
     function isSuccess(res) {
         return typeof CrmTable !== 'undefined' && CrmTable.isSuccess ? CrmTable.isSuccess(res) : (res && res.code >= 1000 && res.code < 4000);
     }
 
+    // 金额展示统一保留两位小数，避免空值或异常值破坏页面布局。
     function money(value) {
         var numberValue = Number(value || 0);
         return isNaN(numberValue) ? '0.00' : numberValue.toFixed(2);
     }
 
+    // 出金页顶部模拟汇总，独立于 table footer，满足汇总信息靠左展示的业务要求。
     function renderMockSummary() {
         var html = '';
         var items = [
@@ -44,11 +52,13 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
         $('#withdrawMockSummary').html(html);
     }
 
+    // 银行卡只展示末四位，详情和表格都不直接暴露完整卡号。
     function bankNo(value) {
         value = String(value || '');
         return value.length > 4 ? value.replace(/.(?=.{4})/g, '*') : value;
     }
 
+    // 收集历史记录筛选条件，只提交用户实际填写的字段。
     function collectFilters() {
         var params = {};
 
@@ -64,6 +74,7 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
         return params;
     }
 
+    // 根据接口返回的出金开关控制表单可用状态，并把禁用原因展示给用户。
     function renderAllowedState(message) {
         var $notice = $('#withdrawDisabledNotice');
         var disabled = !pageData.isAllowed;
@@ -82,6 +93,7 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
         $notice.removeClass('layui-hide').text(message || t('front.withdraw_disabled'));
     }
 
+    // 将页面配置接口返回的余额、银行卡、限额和汇率写入表单，同时触发金额重算。
     function fillPageFields(data) {
         var user = data.user || {};
         var bank = data.bank || {};
@@ -104,6 +116,7 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
         renderAllowedState(data.disabled_message || '');
     }
 
+    // 加载出金页面配置。失败时明确提示，不做静默兜底，避免用户误以为可以出金。
     function loadPageConfig() {
         CrmAjax.request({
             guard: 'front',
@@ -123,6 +136,7 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
         });
     }
 
+    // 根据申请金额和费率实时计算手续费与实际到账金额。
     function calculateAmount() {
         var amount = Number($('#withdrawAmount').val() || 0);
         var fee = 0;
@@ -137,6 +151,7 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
         $('#withdrawActualAmount').val(money(actual));
     }
 
+    // 首次渲染历史表格，之后只 reload 数据，避免重复创建 Layui table 实例。
     function renderHistoryTable() {
         var columns = [
             {field: 'order_no', title: t('front.order_no'), minWidth: 180},
@@ -172,6 +187,7 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
         historyRendered = true;
     }
 
+    // 出金提交前做前端必填和金额边界校验，提示语直接对应用户当前点击的提交按钮。
     function validateSubmit(field) {
         var amount = Number(field.amount || 0);
 
@@ -207,6 +223,7 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
         return true;
     }
 
+    // 提交出金申请后保留用户 ID 和页面配置，再刷新配置与历史记录。
     function submitWithdraw(field) {
         var amount = Number(field.amount || 0);
 
@@ -259,6 +276,7 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
         });
     }
 
+    // 用户输入金额时立即刷新手续费和到账金额，减少提交后的不确定感。
     $('#withdrawAmount').on('input propertychange', calculateAmount);
 
     form.on('submit(withdrawSubmit)', function (data) {
@@ -278,6 +296,7 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
         renderHistoryTable();
     });
 
+    // 页面启动顺序：语言、日期、表单、mock 汇总、页面配置和历史表格依次初始化。
     function boot() {
         if (typeof CrmLang !== 'undefined') {
             CrmLang.updateUI();

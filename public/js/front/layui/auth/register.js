@@ -1,3 +1,9 @@
+/**
+ * 前台 Layui 注册页控制脚本。
+ *
+ * 这里负责邀请人校验、验证码刷新、邮箱验证码发送，以及后端要求
+ * 的更长手机号校验规则。
+ */
 layui.config({
     base: '/js/front/layui/'
 }).use(['form', 'layer', 'jquery', 'common'], function() {
@@ -73,6 +79,7 @@ layui.config({
             var pwd = $('input[name=password]').val();
             if (value !== pwd) return CRM.t('password_confirm');
         },
+        // 手机号字段要兼容后端要求的完整长度，所以这里允许 12 到 20 位数字。
         phoneNumber: function(value) {
             if (!/^[0-9]{12,20}$/.test(value)) return CRM.t('phone_invalid');
         },
@@ -139,6 +146,7 @@ layui.config({
     });
 
     function sendEmailCode() {
+        // 复用当前表单值，保证验证码请求始终绑定到用户刚刚填写的注册内容。
         var data = form.val('registerForm');
         var payload = $.extend({}, data, {
             commission_mode: queryValue('commission_mode') || queryValue('comm_type') || ''

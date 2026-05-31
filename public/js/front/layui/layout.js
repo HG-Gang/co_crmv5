@@ -10,6 +10,8 @@ layui.use(['element', 'layer', 'jquery'], function () {
     var activeTheme = window.CrmTheme ? CrmTheme.get() : (localStorage.getItem('front_theme') || localStorage.getItem('crm_theme') || localStorage.getItem('crm_naive_skin') || 'light');
     var activeStyle = localStorage.getItem('crm_ui_style') || localStorage.getItem('front_ui_style') || 'layui';
 
+    // 将菜单 slug 和旧 FontAwesome 图标统一映射为 Layui 图标。
+    // 这样壳层导航可以稳定显示图标，不再依赖后端拼接好的图标 HTML。
     var slugIconMap = {
         front_dashboard: 'layui-icon layui-icon-console',
         front_profile: 'layui-icon layui-icon-username',
@@ -78,7 +80,7 @@ layui.use(['element', 'layer', 'jquery'], function () {
         'fa-box': 'layui-icon layui-icon-cart'
     };
 
-
+    // 在壳层启动前先应用缓存的主题和风格，避免首屏先闪旧样式。
     applyTheme(activeTheme);
     applyStyleState(activeStyle);
 
@@ -97,6 +99,8 @@ layui.use(['element', 'layer', 'jquery'], function () {
             return;
         }
 
+        // 已登录用户直接拉取头部信息和菜单树；登录/注册页则跳过这些
+        // 请求，保持页面尽量轻。
         if (token) {
             loadUserInfo();
             loadMenus();
@@ -120,6 +124,8 @@ layui.use(['element', 'layer', 'jquery'], function () {
     $('.lang-switch').on('click', function () {
         var lang = $(this).data('lang');
 
+        // 切换语言时同步刷新缓存菜单和当前 frame 文案，保证壳层和
+        // iframe 的语言状态一致。
         CrmLang.loadLanguage(lang).then(function () {
             if (cachedMenus.length) {
                 renderMenus(cachedMenus);
@@ -131,6 +137,7 @@ layui.use(['element', 'layer', 'jquery'], function () {
     });
 
     $('.theme-switch').on('click', function () {
+        // Layui 主题切换走统一皮肤同步器，Naive 页面也能读取同一份缓存。
         applyTheme($(this).data('theme') || 'light', true);
     });
 
@@ -149,6 +156,7 @@ layui.use(['element', 'layer', 'jquery'], function () {
         if ($(this).hasClass('theme-switch')) {
             return;
         }
+        // Naive 皮肤在这里仅更新共享主题标记，页面跳转由 UI 风格切换入口负责。
         applyTheme(skin, true);
         layer.msg(CrmLang.t('common.success') || '已保存');
     });
@@ -332,7 +340,6 @@ layui.use(['element', 'layer', 'jquery'], function () {
         $('.theme-switch').removeClass('is-current');
         $('.theme-switch[data-theme="' + activeTheme + '"]').parent().addClass('layui-this');
         $('.theme-switch[data-theme="' + activeTheme + '"]').addClass('is-current');
-        $('#frontThemeBadge').text(themeText(activeTheme));
         if (persist && !window.CrmTheme) {
             localStorage.setItem('front_theme', activeTheme);
             localStorage.setItem('crm_theme', activeTheme);
@@ -355,22 +362,22 @@ layui.use(['element', 'layer', 'jquery'], function () {
     }
 
     function updateStyleSwitchLabels() {
-        $('.crm-style-switch[data-style="layui"]').text('▣ ' + styleText('layui'));
-        $('.crm-style-switch[data-style="naive"]').text('□ ' + styleText('naive'));
+        $('.crm-style-switch[data-style="layui"]').html('<i class="layui-icon layui-icon-template-1"></i> ' + escapeHtml(styleText('layui')));
+        $('.crm-style-switch[data-style="naive"]').html('<i class="layui-icon layui-icon-component"></i> ' + escapeHtml(styleText('naive')));
     }
 
     function updateThemeSwitchLabels() {
         var labels = {
-            light: '☀ ' + themeText('light'),
-            dark: '☾ ' + themeText('dark'),
-            sea: '≋ ' + themeText('sea'),
-            warm: '◐ ' + themeText('warm'),
-            contrast: '▣ ' + themeText('contrast')
+            light: '<i class="layui-icon layui-icon-light"></i> ' + escapeHtml(themeText('light')),
+            dark: '<i class="layui-icon layui-icon-moon"></i> ' + escapeHtml(themeText('dark')),
+            sea: '<i class="layui-icon layui-icon-water"></i> ' + escapeHtml(themeText('sea')),
+            warm: '<i class="layui-icon layui-icon-tree"></i> ' + escapeHtml(themeText('warm')),
+            contrast: '<i class="layui-icon layui-icon-diamond"></i> ' + escapeHtml(themeText('contrast'))
         };
 
         $('.theme-switch').each(function () {
             var theme = $(this).data('theme') || 'light';
-            $(this).text(labels[theme] || theme);
+            $(this).html(labels[theme] || escapeHtml(theme));
         });
     }
 

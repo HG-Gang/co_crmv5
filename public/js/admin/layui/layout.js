@@ -210,11 +210,11 @@ layui.use(['element', 'layer', 'jquery'], function () {
 
     function themeText(theme) {
         var map = {
-            light: '浅色',
-            dark: '深色',
-            sea: '海蓝',
-            warm: '暖色',
-            contrast: '高对比'
+            light: '月白蓝',
+            dark: '星岩黑',
+            sea: '潮汐青',
+            warm: '松林绿',
+            contrast: '银岩灰'
         };
 
         return map[theme] || map.light;

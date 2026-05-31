@@ -3,9 +3,7 @@ layui.use(['jquery', 'form', 'table', 'element', 'layer'], function () {
     var form = layui.form;
     var table = layui.table;
     var element = layui.element;
-    var rendered = {};
     var activeType = 'deposit';
-    var usingMock = {};
     var mockRows = {
         deposit: [
             {order_no: 'MOCK-D-10001', userId: '1001', depositType: 'USDT', depositComment: 'TRC20', depositActProfit: 1200.50, modify_time: '2026-05-27 10:30:00'},
@@ -49,6 +47,76 @@ layui.use(['jquery', 'form', 'table', 'element', 'layer'], function () {
     function bankNo(value) {
         value = String(value || '');
         return value.length > 4 ? value.replace(/.(?=.{4})/g, '*') : value;
+    }
+
+    // 中文说明：把时间字符串统一转成时间戳，便于按日期范围过滤 mock 数据。
+    function toTimeValue(value) {
+        var parsed = Date.parse(value || '');
+        return isNaN(parsed) ? 0 : parsed;
+    }
+
+    // 中文说明：把任意值转换成可模糊匹配的小写字符串。
+    function toSearchText(value) {
+        return String(value == null ? '' : value).toLowerCase();
+    }
+
+    // 中文说明：不同 tab 对应的时间字段不同，这里集中映射，避免筛选逻辑散落各处。
+    function timeFieldByType(type) {
+        var map = {
+            deposit: 'modify_time',
+            withdraw: 'withdrawalDate',
+            withdraw_apply: 'rec_crt_date',
+            direct_deposit: 'directModifyTime',
+            direct_withdraw: 'directdrawalModifyTime',
+            direct_agents_deposit: 'directModifyTime',
+            direct_agents_withdraw: 'directdrawalModifyTime'
+        };
+
+        return map[type] || 'modify_time';
+    }
+
+    // 中文说明：账户流水页面只展示 mock 测试数据，所以搜索条件直接在前端内存里过滤。
+    function filterMockRows(type, params) {
+        var rows = (mockRows[type] || []).slice();
+        var startTime = toTimeValue(params.startdate);
+        var endTime = toTimeValue(params.enddate);
+        var timeField = timeFieldByType(type);
+
+        return rows.filter(function (row) {
+            var keep = true;
+
+            $.each(params, function (key, value) {
+                var searchValue = toSearchText(value).trim();
+
+                if (!searchValue || key === 'flow_type' || key === 'startdate' || key === 'enddate') {
+                    return;
+                }
+
+                if (!Object.keys(row).some(function (field) {
+                    return toSearchText(row[field]).indexOf(searchValue) !== -1;
+                })) {
+                    keep = false;
+                    return false;
+                }
+            });
+
+            if (!keep) {
+                return false;
+            }
+
+            if (startTime || endTime) {
+                var rowTime = toTimeValue(row[timeField]);
+
+                if (startTime && rowTime < startTime) {
+                    return false;
+                }
+                if (endTime && rowTime > endTime) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
     }
 
     function column(field, titleKey, width, templet, format) {
@@ -159,45 +227,28 @@ layui.use(['jquery', 'form', 'table', 'element', 'layer'], function () {
     }
 
     function renderTable(type) {
-        syncWithdrawSource(type);
-        if (rendered[type]) {
-            return;
-        }
+        var params = collect(type);
+        var rows = filterMockRows(type, params);
 
+        syncWithdrawSource(type);
         table.render(CrmTable.layuiConfig('front', {
             elem: '#flowTable_' + type,
             id: 'flowTable_' + type,
-            url: '/api/front/accountFlow',
-            where: collect(type),
+            data: rows,
+            page: false,
             cols: [columns[type] || columns.deposit],
             summaryElem: '#flowSummary_' + type,
             done: function (res) {
-                var rows = res && res.data ? res.data : [];
-
-                if (rows.length || !mockRows[type] || usingMock[type]) {
-                    return;
-                }
-                usingMock[type] = true;
-                table.reloadData('flowTable_' + type, {
-                    data: mockRows[type],
-                    page: false
-                });
                 if (typeof CrmTable !== 'undefined' && CrmTable.renderSummary) {
-                    CrmTable.renderSummary('#flowSummary_' + type, mockRows[type], columns[type] || columns.deposit, null);
+                    CrmTable.renderSummary('#flowSummary_' + type, rows, columns[type] || columns.deposit, null);
                 }
             }
         }));
-        rendered[type] = true;
     }
 
     form.on('submit(flowSearch)', function (data) {
         var type = $(data.form).attr('data-flow-type') || activeType;
-        usingMock[type] = false;
         renderTable(type);
-        table.reloadData('flowTable_' + type, {
-            where: collect(type),
-            page: {curr: 1}
-        });
         return false;
     });
 
@@ -206,13 +257,8 @@ layui.use(['jquery', 'form', 'table', 'element', 'layer'], function () {
         var type = $form.attr('data-flow-type') || activeType;
 
         $form[0].reset();
-        usingMock[type] = false;
         form.render();
         renderTable(type);
-        table.reloadData('flowTable_' + type, {
-            where: collect(type),
-            page: {curr: 1}
-        });
     });
 
     element.on('tab(frontFlowTabs)', function (data) {

@@ -13,21 +13,21 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label" data-translate="profile.currentPassword">{{ __('auth.old_password') }}</label>
                         <div class="layui-input-block">
-                            <input type="password" name="old_password" required lay-verify="required" class="layui-input">
+                            <input type="password" name="old_password" required lay-verify="profileRequired" class="layui-input">
                         </div>
                     </div>
                     
                     <div class="layui-form-item">
                         <label class="layui-form-label" data-translate="auth.newPassword">{{ __('auth.new_password') }}</label>
                         <div class="layui-input-block">
-                            <input type="password" name="password" required lay-verify="required|password" id="new_password" class="layui-input">
+                            <input type="password" name="password" required lay-verify="profileRequired|password" id="new_password" class="layui-input">
                         </div>
                     </div>
                     
                     <div class="layui-form-item">
                         <label class="layui-form-label" data-translate="auth.confirmPassword">{{ __('auth.confirm_password') }}</label>
                         <div class="layui-input-block">
-                            <input type="password" name="password_confirmation" required lay-verify="required|confirmPass" class="layui-input">
+                            <input type="password" name="password_confirmation" required lay-verify="profileRequired|confirmPass" class="layui-input">
                         </div>
                     </div>
                     

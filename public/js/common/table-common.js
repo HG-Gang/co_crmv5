@@ -1,16 +1,15 @@
 /**
- * Shared table and list utilities for front/admin Layui pages.
+ * 前台/后台 Layui 页面共用的表格与列表工具。
  *
- * The old CRM kept repeated list behavior in common.js/tableCommon.js.  This
- * file is the Laravel/Layui replacement: every page can reuse one response
- * normalizer, one auth-header builder, one value formatter, and one Layui table
- * parser instead of re-implementing the same rules in each Blade page script.
+ * 旧 CRM 里很多列表逻辑散落在 common.js/tableCommon.js 中。这里把
+ * 它们收拢成 Laravel/Layui 版本，所有页面都可以复用统一的响应整理、
+ * 认证头构造、值格式化和 Layui 表格解析逻辑。
  */
 var CrmTable = (function () {
     'use strict';
 
     /**
-     * Return the active i18n text and keep the key as a diagnostic fallback.
+     * 取当前语言文案，找不到时保留 key 作为排查兜底。
      */
     function t(key) {
         if (typeof CrmLang !== 'undefined' && CrmLang.t) {
@@ -21,7 +20,7 @@ var CrmTable = (function () {
     }
 
     /**
-     * Convert an API value into safe HTML text before injecting it into a table.
+     * 在写入表格前先把接口值转成安全的 HTML 文本。
      */
     function escapeHtml(value) {
         return String(value === null || typeof value === 'undefined' ? '' : value)
@@ -33,7 +32,7 @@ var CrmTable = (function () {
     }
 
     /**
-     * Resolve nested object values such as "login.email" from API rows.
+     * 从接口行数据里解析类似 "login.email" 这样的嵌套字段。
      */
     function getValue(row, path) {
         var parts;
@@ -57,8 +56,8 @@ var CrmTable = (function () {
     }
 
     /**
-     * ApiResponse casts root arrays to objects.  Numeric object keys are turned
-     * back into arrays so Layui and the generic front renderer receive lists.
+     * ApiResponse 会把根数组转成对象，这里把连续数字 key 再转回数组，
+     * 让 Layui 和通用前台渲染器都能继续按列表处理。
      */
     function toArray(value) {
         var keys;
@@ -85,8 +84,8 @@ var CrmTable = (function () {
     }
 
     /**
-     * Format objects consistently.  Relation objects are represented by the
-     * first common display field, while unknown objects are JSON encoded.
+     * 统一对象格式化规则。关联对象优先取常见展示字段，不认识的对象
+     * 则直接转成 JSON，避免表格里出现不可读的 [object Object]。
      */
     function formatValue(value) {
         if (value === null || typeof value === 'undefined' || value === '') {
@@ -110,14 +109,14 @@ var CrmTable = (function () {
     }
 
     /**
-     * Match the project's business success codes rather than HTTP status only.
+     * 按项目自己的业务成功码判断，而不是只看 HTTP 状态码。
      */
     function isSuccess(res) {
         return res && res.code >= 1000 && res.code < 4000;
     }
 
     /**
-     * Build the authenticated request headers used by Layui table.render.
+     * 组装 Layui table.render 会用到的鉴权请求头。
      */
     function authHeaders(guard) {
         var token = typeof CrmAjax !== 'undefined' ? CrmAjax.getToken(guard || 'front') : '';
@@ -136,8 +135,8 @@ var CrmTable = (function () {
     }
 
     /**
-     * Normalize Laravel paginator, custom {list,total}, plain array, and nested
-     * list responses into one shape for both static HTML tables and Layui tables.
+     * 把 Laravel 分页、{list,total}、纯数组和嵌套 list 返回统一成一个
+     * 结构，方便静态 HTML 表格和 Layui 表格共用。
      */
     function normalizePayload(data, listPath) {
         var source = data || {};
@@ -206,8 +205,8 @@ var CrmTable = (function () {
     }
 
     /**
-     * Layui table.parseData adapter.  The backend remains unchanged while every
-     * table receives the code/msg/count/data fields Layui expects.
+     * Layui table.parseData 适配器。
+     * 后端保持不变，但每个表格都能拿到 Layui 需要的 code/msg/count/data 字段。
      */
     function layuiParseData(listPath) {
         return function (res) {
@@ -435,8 +434,8 @@ var CrmTable = (function () {
     }
 
     /**
-     * Old common.js exposed "checkField" for batch table operations.  The new
-     * helper keeps that behavior but avoids page-level duplication.
+     * 旧 common.js 里暴露过批量表格操作的 "checkField"。
+     * 这里保留同样的行为，但避免每个页面重复实现。
      */
     function selectedField(tableId, field) {
         var table = typeof layui !== 'undefined' ? layui.table : null;
@@ -458,8 +457,8 @@ var CrmTable = (function () {
     }
 
     /**
-     * Standard iframe modal used by admin/front detail pages.  It mirrors the
-     * old modalBoxByPage behavior while keeping Layui-specific code centralized.
+     * 管理端和前台详情页共用的标准 iframe 弹窗。
+     * 这里复刻旧 modalBoxByPage 的行为，同时把 Layui 相关代码集中起来。
      */
     function openIframe(title, url, area) {
         var layer = typeof layui !== 'undefined' ? layui.layer : null;

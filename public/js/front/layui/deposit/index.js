@@ -1,6 +1,11 @@
+/**
+ * Layui 前台入金页入口脚本。
+ * 负责初始化支付通道 Tab、日期筛选、入金提交核心逻辑和表格上方的模拟汇总数据。
+ */
 layui.use(['jquery', 'form', 'table', 'layer'], function () {
     var $ = layui.jquery;
 
+    // 支付通道的展示、选择、金额联动统一交给公共管理器，页面只关心选择结果。
     var manager = PayChannelManager.create({
         container: '#depositChannelList',
         input: '#depositChannel',
@@ -11,11 +16,13 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
         rateInput: '#depositExchangeRate'
     });
 
+    // 所有金额在页面展示前统一格式化，避免接口空值或字符串导致 NaN 露出。
     function money(value) {
         var numberValue = Number(value || 0);
         return isNaN(numberValue) ? '0.00' : numberValue.toFixed(2);
     }
 
+    // 入金页面顶部需要独立的测试汇总块，当前用本地 mock 数据保证无接口时也能展示效果。
     function renderMockSummary() {
         var html = '';
         var items = [
@@ -34,6 +41,7 @@ layui.use(['jquery', 'form', 'table', 'layer'], function () {
         $('#depositMockSummary').html(html);
     }
 
+    // 页面启动顺序：先加载语言和日期控件，再交给 DepositPageCore 拉配置、渲染表格和绑定提交。
     function boot() {
         if (typeof CrmLang !== 'undefined') {
             CrmLang.updateUI();

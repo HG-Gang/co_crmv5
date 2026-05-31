@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $guard === 'admin' ? 'CoCRM Admin' : 'CoCRM Front' }}</title>
-    <script src="/js/common/theme-sync.js?v=2026052908"></script>
-    <link rel="stylesheet" href="/css/naive-admin/app.css?v=2026052911">
+    <script src="/js/common/theme-sync.js?v=2026053103"></script>
+    <link rel="stylesheet" href="/css/naive-admin/app.css?v=2026053111">
 </head>
 <body>
     <div id="naive-crm-app">
@@ -27,8 +27,8 @@
         };
     </script>
     <script src="/js/common/jquery/jquery-3.6.0.min.js"></script>
-    <script src="/js/common/i18n.js?v=2026052907"></script>
+    <script src="/js/common/i18n.js?v=2026053110"></script>
     <script src="/js/common/echarts.common.min.js"></script>
-    <script src="/js/naive-admin/front-plain.js?v=2026052911"></script>
+    <script src="/js/naive-admin/front-plain.js?v=2026053111"></script>
 </body>
 </html>

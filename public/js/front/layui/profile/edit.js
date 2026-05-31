@@ -8,6 +8,36 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
     // Load initial profile data
     loadProfileInfo();
 
+    form.verify({
+        profileRequired: function(value, elem) {
+            if (!$.trim(value || '')) {
+                return requiredMessage(elem);
+            }
+        }
+    });
+
+    function translateOr(key, fallback) {
+        var value = CrmLang.t(key);
+        return value && value !== key ? value : fallback;
+    }
+
+    // 统一独立资料页的必填提示格式，明确告诉用户是哪个表单、哪个字段没有填写。
+    function requiredTemplateMessage(formTitle, fieldTitle) {
+        var template = translateOr('front.profile_required_message', '请填写【{form}】的【{field}】');
+        return template
+            .replace('{form}', $.trim(formTitle || translateOr('profile.editProfile', '编辑资料')))
+            .replace('{field}', $.trim(fieldTitle || ''));
+    }
+
+    // 从当前输入框所在卡片标题和表单标签中提取可读名称，避免只提示笼统的 common.error。
+    function requiredMessage(elem) {
+        var $elem = $(elem);
+        var formTitle = $.trim($elem.closest('.layui-card').find('.layui-card-header').first().text()) || translateOr('profile.editProfile', '编辑资料');
+        var fieldTitle = $.trim($elem.closest('.layui-form-item').find('.layui-form-label').first().text()) || $elem.attr('name') || '';
+
+        return requiredTemplateMessage(formTitle, fieldTitle);
+    }
+
     function loadProfileInfo() {
         CrmAjax.request({
             guard: 'front',
@@ -53,7 +83,7 @@ layui.use(['form', 'layer', 'jquery', 'upload'], function() {
 
     $('#submitAvatar').on('click', function() {
         if (!selectedAvatar) {
-            layer.msg(CrmLang.t('common.error'), {icon: 2});
+            layer.msg(requiredTemplateMessage(translateOr('profile.uploadAvatar', '头像上传'), translateOr('front.avatar', '头像')), {icon: 2});
             return;
         }
 

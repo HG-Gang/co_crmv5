@@ -1,6 +1,11 @@
+/**
+ * CRM 前后台统一 Ajax 工具。
+ * 负责 token 读写、语言头、外部地址拦截、登录失效处理和普通上传请求。
+ */
 var CrmAjax = (function() {
     'use strict';
 
+    // 根据 guard 读取前台或后台 token，同时兼容旧 key 和新 key。
     function getToken(guard) {
         if (guard === 'admin') {
             return localStorage.getItem('admin_token') || localStorage.getItem('admin_jwt_token');
@@ -9,6 +14,7 @@ var CrmAjax = (function() {
         return localStorage.getItem('front_token') || localStorage.getItem('front_jwt_token');
     }
 
+    // 登录成功后同时写入新旧 token key，避免不同页面脚本读取不到登录态。
     function setToken(guard, token) {
         if (guard === 'admin') {
             localStorage.setItem('admin_token', token);
@@ -20,6 +26,7 @@ var CrmAjax = (function() {
         localStorage.setItem('front_jwt_token', token);
     }
 
+    // token 失效或退出登录时清理对应 guard 的所有兼容 key。
     function removeToken(guard) {
         if (guard === 'admin') {
             localStorage.removeItem('admin_token');
@@ -31,6 +38,7 @@ var CrmAjax = (function() {
         localStorage.removeItem('front_jwt_token');
     }
 
+    // 只允许请求当前站点接口，阻止配置错误导致的外部地址请求。
     function isExternalUrl(url) {
         var link;
 
@@ -44,6 +52,7 @@ var CrmAjax = (function() {
         return link.origin !== window.location.origin;
     }
 
+    // 外部地址被拦截时走 error 回调，让页面按失败路径提示用户。
     function rejectExternalRequest(opts) {
         var res = {code: 5000, message: 'External API URL is blocked', data: {}};
 
@@ -52,6 +61,7 @@ var CrmAjax = (function() {
         }
     }
 
+    // 普通 JSON 请求入口：自动注入 token、语言头，并统一处理登录失效和单点冲突。
     function request(opts) {
         var guard = opts.guard || 'front';
         var token = getToken(guard);
@@ -107,6 +117,7 @@ var CrmAjax = (function() {
         });
     }
 
+    // 文件上传入口：保持 FormData 原样提交，并复用 token、语言和外部地址拦截。
     function upload(opts) {
         var guard = opts.guard || 'front';
         var token = getToken(guard);

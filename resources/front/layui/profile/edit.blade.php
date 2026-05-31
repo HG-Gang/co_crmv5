@@ -23,7 +23,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label" data-translate="profile.userName">{{ __('front.user_name') }}</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="user_name" required lay-verify="required" class="layui-input">
+                                    <input type="text" name="user_name" required lay-verify="profileRequired" class="layui-input">
                                 </div>
                             </div>
                         </div>

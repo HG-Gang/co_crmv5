@@ -1,22 +1,21 @@
 /**
- * Shared deposit page behavior.
- *
- * The old project had a dedicated depositPageCore.  This replacement keeps the
- * same separation of responsibilities: the page JS only passes selectors and
- * columns, while this core loads channel config, binds submit/search buttons,
- * validates the selected channel, and reloads deposit history.
+ * 入金页面公共核心逻辑。
+ * 页面入口只传入选择器、表格列和接口地址，本文件统一处理通道配置加载、提交校验、搜索重置和历史表格刷新。
  */
 var DepositPageCore = (function () {
     'use strict';
 
+    // 统一读取前台语言包，缺少语言对象时返回原 key，便于快速发现未补齐的多语言项。
     function t(key) {
         return typeof CrmLang !== 'undefined' && CrmLang.t ? CrmLang.t(key) : key;
     }
 
+    // 新旧接口成功码略有差异，优先复用公共表格工具的成功判断。
     function isSuccess(res) {
         return typeof CrmTable !== 'undefined' && CrmTable.isSuccess ? CrmTable.isSuccess(res) : (res && res.code === 1000);
     }
 
+    // 初始化入金页的全部运行状态；不同页面通过 options 复用同一套流程。
     function init(options) {
         var opts = options || {};
         var form = layui.form;
@@ -28,6 +27,7 @@ var DepositPageCore = (function () {
             lastPaymentUrl: ''
         };
 
+        // 只收集用户填写过的筛选条件，避免空字符串覆盖后端默认查询。
         function collectFilters() {
             var params = {};
 
@@ -43,6 +43,7 @@ var DepositPageCore = (function () {
             return params;
         }
 
+        // 获取当前用户可用状态、通道列表和默认用户信息，然后刷新通道 Tab。
         function loadPageConfig() {
             CrmAjax.request({
                 guard: 'front',
@@ -72,6 +73,7 @@ var DepositPageCore = (function () {
             });
         }
 
+        // 根据接口开关控制提交按钮，并把禁用原因展示在表单上方。
         function renderAllowedState(message) {
             var $notice = $(opts.disabledNotice);
             var $submit = $(opts.submitButton);
@@ -90,6 +92,7 @@ var DepositPageCore = (function () {
             $notice.removeClass('layui-hide').text(message || t('front.deposit_disabled'));
         }
 
+        // 渲染入金历史记录，summaryElem 会让公共表格工具把统计放在表格上方。
         function renderHistoryTable() {
             table.render(CrmTable.layuiConfig('front', {
                 elem: opts.tableElem,
@@ -101,6 +104,7 @@ var DepositPageCore = (function () {
             }));
         }
 
+        // 提交前先校验通道、金额和限额，通过后提交旧项目兼容字段。
         function submitDeposit(field) {
             var channel = manager.getSelected();
             var amount = Number(field.deposit_amt_usd || field.amount || 0);
@@ -169,6 +173,7 @@ var DepositPageCore = (function () {
             });
         }
 
+        // 支付链接只在提交成功后出现，方便用户重新打开支付页面。
         function toggleRetryButton() {
             var $button = $(opts.retryButton);
 

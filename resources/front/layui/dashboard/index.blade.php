@@ -1,4 +1,4 @@
-@extends('front_layui::layouts.app')
+﻿@extends('front_layui::layouts.app')
 
 @section('title', __('front.dashboard'))
 @section('breadcrumb', __('breadcrumb.front_dashboard'))
@@ -6,7 +6,7 @@
 @section('styles')
 <style>
     .dashboard-page { display: grid; gap: 12px; }
-    .dashboard-page .layui-card { margin-bottom: 0; border-radius: 10px; overflow: hidden; }
+    .dashboard-page .layui-card { margin-bottom: 0; border-radius: 8px; overflow: hidden; }
     .dashboard-page .layui-card-body { padding: 12px; }
     .dashboard-hero {
         display: grid;
@@ -19,7 +19,7 @@
         position: relative;
         padding: 20px;
         color: #fff;
-        border-radius: 12px;
+        border-radius: 8px;
         overflow: hidden;
         background: linear-gradient(135deg, var(--front-side, #151b23), var(--front-blue, #2080f0));
     }
@@ -42,17 +42,19 @@
     .dashboard-hero-mini { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
     .dashboard-mini-pill { padding: 6px 10px; border: 1px solid rgba(255,255,255,.26); border-radius: 999px; background: rgba(255,255,255,.12); color: #fff; font-size: 12px; }
     .dashboard-control-panel { padding: 12px; border: 1px solid var(--front-line, #dde4ec); border-radius: 8px; background: var(--front-panel, #fff); }
-    .dashboard-actions { display: grid; gap: 10px; }
-    .dashboard-switch-control { min-height: 36px; display: flex; align-items: center; gap: 8px; padding: 0 10px; border: 1px solid var(--front-line, #dce3ec); border-radius: 6px; background: var(--front-input, #fff); color: var(--front-muted, #4b5563); font-size: 12px; }
-    .dashboard-switch-control i { color: var(--front-blue, #1677ff); font-size: 16px; }
-    .dashboard-switch-control select { flex: 1; height: 32px; border: 0; background: transparent; color: inherit; outline: 0; cursor: pointer; }
+    .dashboard-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .dashboard-switch-control { position: relative; width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--front-line, #dce3ec); border-radius: 8px; background: var(--front-input, #fff); color: var(--front-blue, #1677ff); cursor: pointer; }
+    .dashboard-switch-control:hover { border-color: var(--front-blue, #1677ff); background: var(--front-hover, #e8f1ff); }
+    .dashboard-switch-control i { font-size: 18px; }
+    .dashboard-switch-control select { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; color: transparent; outline: 0; cursor: pointer; opacity: 0; }
+    .dashboard-switch-control select option { color: #1f2937; }
     .dashboard-current-label { flex: 0 0 auto; padding: 2px 7px; border-radius: 4px; color: var(--front-blue, #1677ff); background: rgba(22, 119, 255, .08); font-weight: 700; }
     .dashboard-downloads { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
     .dashboard-downloads .layui-btn { margin: 0; }
-    .dashboard-metric-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 9px; }
-    .dashboard-metric-card .layui-card-body { min-height: 56px; padding: 8px 10px; }
+    .dashboard-metric-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+    .dashboard-metric-card .layui-card-body { min-height: 70px; padding: 11px; }
     .dashboard-metric-label { margin-bottom: 8px; color: var(--front-muted, #6b7280); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .dashboard-value { min-height: 24px; font-size: 18px; line-height: 24px; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .dashboard-value { min-height: 30px; font-size: 22px; line-height: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
     .dashboard-value.blue { color: var(--front-blue, #2080f0); }
     .dashboard-value.green { color: var(--front-accent, #18a058); }
     .dashboard-value.orange { color: var(--front-warn, #d97706); }
@@ -65,10 +67,10 @@
     .dashboard-chart-card.is-network { grid-column: span 6; }
     .dashboard-chart-card.is-orders { grid-column: span 5; }
     .dashboard-chart-card.is-commission { grid-column: span 7; }
-    .dashboard-chart { width: 100%; height: 230px; }
-    .dashboard-chart-card.is-funds .dashboard-chart { height: 230px; }
-    .dashboard-chart-card .layui-card-body { min-height: 264px; }
-    .dashboard-chart-card.is-funds .layui-card-body { min-height: 264px; }
+    .dashboard-chart { width: 100%; height: 190px; }
+    .dashboard-chart-card.is-funds .dashboard-chart { height: 180px; }
+    .dashboard-chart-card .layui-card-body { min-height: 218px; }
+    .dashboard-chart-card.is-funds .layui-card-body { min-height: 210px; }
     .dashboard-chart-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .dashboard-chart-type { height: 28px; min-width: 92px; border: 1px solid var(--front-line, #dde4ec); border-radius: 6px; background: var(--front-input, #fff); color: var(--front-text, #1f2937); }
     .dashboard-share-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
@@ -109,21 +111,28 @@
         </div>
         <div class="dashboard-control-panel">
             <div class="dashboard-actions">
-                <label class="dashboard-switch-control">
+                <label class="dashboard-switch-control" title="{{ __('front.ui_style') }}">
                     <i class="layui-icon layui-icon-template-1"></i>
                     <select id="dashboardStyleSelect" aria-label="UI 风格">
                         <option value="layui">▣ Layui 风格</option>
                         <option value="naive">□ Naive 风格</option>
                     </select>
                 </label>
-                <label class="dashboard-switch-control">
+                <label class="dashboard-switch-control" title="{{ __('front.skin_mode') }}">
                     <i class="layui-icon layui-icon-theme"></i>
                     <select id="dashboardThemeSelect" aria-label="皮肤">
-                        <option value="light">◌ 云白</option>
-                        <option value="dark">◑ 静夜</option>
-                        <option value="sea">≋ 湖蓝</option>
-                        <option value="warm">◒ 米杏</option>
-                        <option value="contrast">◇ 墨灰</option>
+                        <option value="light">○ 月白蓝</option>
+                        <option value="dark">● 星岩黑</option>
+                        <option value="sea">◇ 潮汐青</option>
+                        <option value="warm">◌ 松林绿</option>
+                        <option value="contrast">◆ 银岩灰</option>
+                    </select>
+                </label>
+                <label class="dashboard-switch-control" title="{{ __('common.language') }}">
+                    <i class="layui-icon layui-icon-website"></i>
+                    <select id="dashboardLocaleSelect" aria-label="语言">
+                        <option value="zh-CN">中文</option>
+                        <option value="en">English</option>
                     </select>
                 </label>
                 <div class="dashboard-downloads">
@@ -168,5 +177,5 @@
 
 @section('scripts')
 <script src="{{ asset('/js/common/echarts.common.min.js') }}"></script>
-<script src="{{ asset('/js/front/layui/dashboard/index.js') }}?v=2026052912"></script>
+<script src="{{ asset('/js/front/layui/dashboard/index.js') }}?v=2026053111"></script>
 @endsection

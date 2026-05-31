@@ -1,10 +1,9 @@
 /**
- * Payment channel UI manager.
+ * 支付通道界面管理器。
  *
- * This is the new Layui/jQuery version of the old payChannelManager idea:
- * channel data comes from the API, this manager sorts/renders it, tracks the
- * selected channel, and recalculates the payable amount whenever the amount or
- * channel changes.
+ * 这是旧 payChannelManager 的 Layui/jQuery 版本：通道数据来自接口，
+ * 这里负责排序、渲染、记录选中通道，并在金额或通道变化时重新计算
+ * 实际应付金额。
  */
 var PayChannelManager = (function () {
     'use strict';
@@ -86,7 +85,7 @@ var PayChannelManager = (function () {
                 if (!defaultChannel || channels[i].is_default) {
                     defaultChannel = channels[i];
                 }
-                html += '<li class="J_payChannelCard" data-channel-code="' + escapeHtml(channels[i].code) + '">' + escapeHtml(channels[i].name) + '</li>';
+                html += '<li class="J_payChannelCard" lay-id="' + escapeHtml(channels[i].code) + '" data-channel-code="' + escapeHtml(channels[i].code) + '">' + escapeHtml(channels[i].name) + '</li>';
             }
             html += '</ul><div class="layui-tab-content">';
             for (i = 0; i < channels.length; i++) {
@@ -107,6 +106,11 @@ var PayChannelManager = (function () {
             html += '</div></div>';
 
             $container.html(html);
+            // 输出标准 Layui tab 结构后主动渲染一次，保证后续皮肤切换或
+            // 异步通道刷新时，tab 标题和内容区域仍按 Layui 组件行为工作。
+            if (window.layui && layui.element && layui.element.render) {
+                layui.element.render('tab');
+            }
             select(defaultChannel ? defaultChannel.code : channels[0].code);
             if (typeof layui !== 'undefined' && layui.element && layui.element.render) {
                 layui.element.render('tab', 'paymentChannelTabs');

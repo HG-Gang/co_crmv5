@@ -126,7 +126,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('/js/common/pay-channel-manager.js') }}?v=2026052911"></script>
+<script src="{{ asset('/js/common/pay-channel-manager.js') }}?v=2026053111"></script>
 <script src="{{ asset('/js/common/deposit-page-core.js') }}"></script>
 <script src="{{ asset('/js/front/layui/deposit/index.js') }}?v=2026052913"></script>
 @endsection

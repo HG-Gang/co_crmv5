@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>{{ __('auth.login') }} - {{ __('common.system_name') }}</title>
-    <script src="{{ asset('/js/common/theme-sync.js') }}?v=2026052908"></script>
+    <script src="{{ asset('/js/common/theme-sync.js') }}?v=2026053102"></script>
     {{-- Layui local CSS --}}
     <link rel="stylesheet" href="{{ asset('/js/common/layui-v2.13.5/layui/css/layui.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/front/style.css') }}?v=2026052911">
+    <link rel="stylesheet" href="{{ asset('/css/front/style.css') }}?v=2026053111">
     <style>
         body {
             min-height: 100vh;

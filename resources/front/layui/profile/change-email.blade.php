@@ -13,7 +13,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label" data-translate="profile.newEmail">{{ __('profile.new_email') }}</label>
                         <div class="layui-input-block">
-                            <input type="email" name="email" required lay-verify="required|email" class="layui-input">
+                            <input type="email" name="email" required lay-verify="profileRequired|email" class="layui-input">
                         </div>
                     </div>
                     

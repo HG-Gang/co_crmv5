@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title data-translate="register_title">{{ __('auth.register') }}</title>
-    <script src="{{ asset('/js/common/theme-sync.js') }}?v=2026052908"></script>
+    <script src="{{ asset('/js/common/theme-sync.js') }}?v=2026053102"></script>
     <link rel="stylesheet" href="{{ asset('/js/common/layui-v2.13.5/layui/css/layui.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/front/style.css') }}?v=2026052911">
+    <link rel="stylesheet" href="{{ asset('/css/front/style.css') }}?v=2026053111">
 </head>
 <body class="auth-wrapper">
     <div class="auth-card register-card">
@@ -170,6 +170,6 @@
     <script src="{{ asset('/js/common/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('/js/common/layui-v2.13.5/layui/layui.js') }}"></script>
     <script src="{{ asset('/js/front/layui/common.js') }}"></script>
-    <script src="{{ asset('/js/front/layui/auth/register.js') }}?v=2026052913"></script>
+    <script src="{{ asset('/js/front/layui/auth/register.js') }}?v=2026053102"></script>
 </body>
 </html>

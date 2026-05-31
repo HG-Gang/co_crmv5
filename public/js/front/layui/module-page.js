@@ -1,20 +1,21 @@
 /**
- * Front module page renderer.
+ * 前台模块页渲染器。
  *
- * The front business pages share the same interaction pattern:
- * 1. read API/form/table configuration from Blade data attributes;
- * 2. request protected front APIs with the stored JWT token;
- * 3. render summary blocks, list tables, pagination, and submit forms.
+ * 前台业务页的交互模式基本一致：
+ * 1. 从 Blade 的 data 属性读取接口、表单和表格配置；
+ * 2. 使用保存好的 JWT token 请求受保护的前台接口；
+ * 3. 渲染汇总区、列表表格、分页和提交表单。
  *
- * Keeping this logic in one Layui/jQuery file prevents repeated inline Blade JS
- * and keeps public text controlled by the language packs.
+ * 把这些逻辑收在一个 Layui/jQuery 文件里，可以避免每个 Blade 页面
+ * 重复写内联 JS，也能让公开文案统一交给语言包管理。
  */
-layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
+layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate', 'upload'], function () {
     var $ = layui.jquery;
     var layer = layui.layer;
     var form = layui.form;
     var laydate = layui.laydate;
     var laypage = layui.laypage;
+    var upload = layui.upload;
     var $page = $('#frontModulePage');
 
     if (!$page.length) {
@@ -34,6 +35,9 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     var currentMeta = {};
     var moduleCharts = {};
     var moduleChartTypes = {};
+    // 缓存当前选择的文件对象，提交 multipart 表单时显式追加，
+    // 避免依赖浏览器对隐藏 file 输入框的默认行为。
+    var moduleUploadFiles = {};
     var clickedChain = [];
     var summaryCollapsed = $page.hasClass('commission-realtime-module');
     var pageState = {
@@ -43,8 +47,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     };
 
     /**
-     * Safely parse JSON emitted by Blade data attributes.
-     * If a malformed value is found, the page remains usable with defaults.
+     * 安全解析 Blade data 属性里输出的 JSON。
+     * 如果值损坏了，就回退到默认值，页面仍然可以继续用。
      */
     function readJson(raw, fallback) {
         if (!raw) {
@@ -59,8 +63,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     }
 
     /**
-     * Translate a nested key through the shared JS language module.
-     * The key itself is returned as a last-resort fallback for diagnostics.
+     * 通过共享的 JS 语言模块翻译嵌套 key。
+     * 找不到文案时保留 key，方便排查问题。
      */
     function t(key) {
         if (typeof CrmLang !== 'undefined' && CrmLang.t) {
@@ -71,8 +75,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     }
 
     /**
-     * Escape user/API supplied values before injecting them into HTML.
-     * This avoids cross-page XSS when old system data contains markup.
+     * 在写入 HTML 前先转义用户或接口返回的值。
+     * 这样可以避免旧系统数据里带标签时触发跨页 XSS。
      */
     function escapeHtml(value) {
         if (typeof CrmTable !== 'undefined' && CrmTable.escapeHtml) {
@@ -91,8 +95,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     }
 
     /**
-     * Resolve dot-path values such as "descendant.user_name".
-     * Front APIs often return nested relation objects from Eloquent.
+     * 解析类似 "descendant.user_name" 这样的点路径值。
+     * 前台接口经常会直接返回 Eloquent 的嵌套关联对象。
      */
     function getValue(row, key) {
         if (typeof CrmTable !== 'undefined' && CrmTable.getValue) {
@@ -103,8 +107,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     }
 
     /**
-     * Convert objects with continuous numeric keys into arrays.
-     * ApiResponse casts arrays to objects, so this restores list semantics.
+     * 把连续数字 key 的对象转回数组。
+     * ApiResponse 会把数组转成对象，这里负责恢复列表语义。
      */
     function numericObjectToArray(value) {
         if (typeof CrmTable !== 'undefined' && CrmTable.toArray) {
@@ -115,8 +119,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     }
 
     /**
-     * Normalize different API response shapes into summary, rows, and pager.
-     * Supports plain objects, arrays, Laravel paginator objects, and nested keys.
+     * 把不同形状的接口返回统一成 summary、rows 和 pager。
+     * 兼容普通对象、数组、Laravel 分页对象和嵌套 key。
      */
     function normalizePayload(data) {
         if (typeof CrmTable !== 'undefined' && CrmTable.normalizePayload) {
@@ -127,8 +131,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     }
 
     /**
-     * Make API values readable in tables and cards.
-     * Objects are summarized by common display fields, otherwise JSON encoded.
+     * 让接口值在表格和卡片里更容易阅读。
+     * 对象优先取常见展示字段，不认识的对象则转成 JSON。
      */
     function formatValue(value) {
         if (typeof CrmTable !== 'undefined' && CrmTable.formatValue) {
@@ -186,7 +190,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
         }
 
         if ($page.hasClass('commission-realtime-module')) {
-            toggle = '<button type="button" class="module-summary-toggle" id="moduleSummaryToggle"><span>' + (summaryCollapsed ? '&gt;' : '&or;') + '</span>' + escapeHtml(t('front.summary')) + '</button>';
+            toggle = '<button type="button" class="module-summary-toggle" id="moduleSummaryToggle" title="' + escapeHtml(t('front.summary')) + '"><span>' + (summaryCollapsed ? '&#12299;' : '&#8744;') + '</span></button>';
         }
 
         $summary.html(toggle + '<div class="module-summary-items' + (summaryCollapsed ? ' is-collapsed' : '') + '">' + html + '</div>');
@@ -207,26 +211,115 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
         });
     }
 
+    function uploadEmptyText() {
+        return t('front.no_file_selected');
+    }
+
+    function uploadFileSize(file) {
+        var size = file && file.size ? file.size : 0;
+        if (size >= 1024 * 1024) {
+            return (size / 1024 / 1024).toFixed(1) + ' MB';
+        }
+        if (size >= 1024) {
+            return Math.ceil(size / 1024) + ' KB';
+        }
+        return size + ' B';
+    }
+
+    function revokeUploadUrls($input) {
+        var urls = $input.data('crmUploadUrls') || [];
+        $.each(urls, function (_, url) {
+            if (window.URL && URL.revokeObjectURL) {
+                URL.revokeObjectURL(url);
+            }
+        });
+        $input.removeData('crmUploadUrls');
+    }
+
+    function renderUploadPreview(file, url) {
+        var name = escapeHtml(file.name || '');
+        var size = escapeHtml(uploadFileSize(file));
+        var image = url
+            ? '<img src="' + escapeHtml(url) + '" alt="' + name + '">'
+            : '<span class="crm-upload-file-icon">▧</span>';
+
+        return '<div class="crm-upload-preview-item">' +
+            '<div class="crm-upload-thumb">' + image + '</div>' +
+            '<div class="crm-upload-file-meta">' +
+                '<b title="' + name + '">' + name + '</b>' +
+                '<em>' + size + '</em>' +
+            '</div>' +
+        '</div>';
+    }
+
+    function resetEnhancedUpload(input) {
+        var $input = $(input);
+        var id = $input.attr('id');
+        var fieldName = $input.attr('name');
+
+        if (!id) {
+            return;
+        }
+
+        revokeUploadUrls($input);
+        delete moduleUploadFiles[fieldName];
+        $input.val('');
+        $('#' + id + '_list').empty();
+        $('#' + id + '_status').text(uploadEmptyText()).removeClass('has-file');
+        $('[data-upload-target="' + id + '"]').removeClass('is-visible');
+    }
+
+    function resetAllEnhancedUploads() {
+        moduleUploadFiles = {};
+        $('.J_crmUploadInput').each(function () {
+            resetEnhancedUpload(this);
+        });
+    }
+
     function initEnhancedUpload() {
+        // 把每个自定义上传按钮都绑定到 layui.upload，这样既能生成预览，
+        // 也能把选中的文件缓存起来，供最终的 FormData 提交使用。
         $('.J_crmUploadInput').each(function () {
             var input = this;
             var $input = $(input);
             var id = $input.attr('id');
             var $list = $('#' + id + '_list');
+            var fieldName = $input.attr('name');
             if ($input.data('crmUploadReady')) {
                 return;
             }
             $input.data('crmUploadReady', true);
-            $('#' + id + '_trigger').on('click', function () {
-                input.click();
-            });
-            $input.on('change', function () {
-                var files = input.files || [];
-                var html = '';
-                for (var i = 0; i < files.length; i++) {
-                    html += '<span class="crm-upload-chip"><i class="layui-icon layui-icon-picture"></i><span>' + escapeHtml(files[i].name) + '</span></span>';
+
+            upload.render({
+                elem: '#' + id + '_trigger',
+                auto: false,
+                accept: ($input.attr('accept') || '').indexOf('image') !== -1 ? 'images' : 'file',
+                multiple: input.hasAttribute('multiple'),
+                choose: function (obj) {
+                    var files = obj.pushFile();
+                    var list = [];
+                    var html = '';
+                    var objectUrls = [];
+
+                    revokeUploadUrls($input);
+                    $.each(files, function (_, file) {
+                        var previewUrl = '';
+                        list.push(file);
+                        if (/^image\//.test(file.type || '') && window.URL && URL.createObjectURL) {
+                            previewUrl = URL.createObjectURL(file);
+                            objectUrls.push(previewUrl);
+                        }
+                        html += renderUploadPreview(file, previewUrl);
+                    });
+
+                    moduleUploadFiles[fieldName] = input.hasAttribute('multiple') ? list : (list[0] || null);
+                    $input.data('crmUploadUrls', objectUrls);
+                    $list.html(html);
+                    $('#' + id + '_status')
+                        .text(t('front.selected_files').replace('{count}', list.length))
+                        .addClass('has-file');
+                    $('[data-upload-target="' + id + '"]').addClass('is-visible');
                 }
-                $list.html(html);
             });
         });
     }
@@ -234,6 +327,53 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     function numeric(value) {
         var numberValue = Number(String(value || 0).replace(/,/g, ''));
         return isNaN(numberValue) ? 0 : numberValue;
+    }
+
+    function parseImages(value) {
+        if (!value) {
+            return [];
+        }
+        if ($.isArray(value)) {
+            return value;
+        }
+        if (typeof value === 'string') {
+            try {
+                var parsed = JSON.parse(value);
+                if ($.isArray(parsed)) {
+                    return parsed;
+                }
+            } catch (e) {}
+
+            return value.split(',').map(function (item) {
+                return $.trim(item.replace(/\\\//g, '/'));
+            }).filter(Boolean);
+        }
+
+        return [];
+    }
+
+    function imageUrl(value) {
+        var url = String(value || '').replace(/\\\//g, '/').trim();
+        if (!url) {
+            return '#';
+        }
+        if (/^(https?:)?\/\//i.test(url) || url.charAt(0) === '/') {
+            return url;
+        }
+
+        return '/' + url.replace(/^\/+/, '');
+    }
+
+    function imageIconsHtml(key, value) {
+        var images = /(^|_)(image|images|avatar|photo|voucher|url)(_|$)/i.test(key || '') ? parseImages(value) : [];
+
+        if (!images.length) {
+            return '';
+        }
+
+        return '<span class="crm-image-icons">' + images.map(function (src, index) {
+            return '<a href="' + escapeHtml(imageUrl(src)) + '" target="_blank" rel="noopener" title="' + escapeHtml(t('front.images') + ' ' + (index + 1)) + '">▧</a>';
+        }).join('') + '</span>';
     }
 
     function renderChartSelectors() {
@@ -421,44 +561,6 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
         return formatValue(value);
     }
 
-    function parseImages(value) {
-        var parsed;
-
-        if (!value) {
-            return [];
-        }
-        if ($.isArray(value)) {
-            return value.filter(Boolean);
-        }
-        if (typeof value === 'string') {
-            try {
-                parsed = JSON.parse(value);
-                if ($.isArray(parsed)) {
-                    return parsed.filter(Boolean);
-                }
-            } catch (e) {}
-            return value.split(',').map(function (item) {
-                return $.trim(item);
-            }).filter(Boolean);
-        }
-
-        return [];
-    }
-
-    function imageCellHtml(row, column) {
-        var value = getValue(row, column.displayKey || column.key);
-        var images = /(^|_)(image|images|avatar|photo|voucher|url)(_|$)/i.test(column.key || '') ? parseImages(value) : [];
-
-        if (!images.length) {
-            return '';
-        }
-
-        return '<span class="crm-image-icons">' + images.map(function (src, index) {
-            var name = String(src || '').split('/').pop().replace(/[_-]/g, ' ');
-            return '<a href="' + escapeHtml(src) + '" target="_blank" rel="noopener" title="' + escapeHtml(name || t(column.label || column.key)) + '" aria-label="' + escapeHtml(t(column.label || column.key) + ' ' + (index + 1)) + '"><span aria-hidden="true">▧</span></a>';
-        }).join('') + '</span>';
-    }
-
     function columnCellClass(column) {
         if (column.align) {
             return ' module-cell-' + column.align;
@@ -489,7 +591,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
         var numberValue = Number(rawValue || 0);
         var html = escapeHtml(value);
         var levelValue = column.levelClassKey ? getValue(row, column.levelClassKey) : '';
-        var imageHtml = imageCellHtml(row, column);
+        var imageHtml = imageIconsHtml(column.key, rawValue);
 
         if (column.format === 'agentLevelSelect') {
             return agentLevelSelectHtml(row, rowIndex);
@@ -516,6 +618,23 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
         return html;
     }
 
+    // 代理等级确认接口偶尔缺少 range_list，旧项目会直接给用户一个
+    // 可确认的等级选择。这里补同样的兜底数据，避免页面只剩空模板。
+    function defaultAgentLevelRange(row) {
+        var currentRate = Number(getValue(row, 'commprop') || getValue(row, 'comm_rate') || 35);
+        var currentLevel = getValue(row, 'userGroupId') || getValue(row, 'level_id') || 2;
+
+        if (isNaN(currentRate)) {
+            currentRate = 35;
+        }
+
+        return [
+            {level_id: 1, level_name: 'Level 1', prop: currentRate + 10, choice_gid: 1, def_gid: 1, extra_val: 0, selected: Number(currentLevel) === 1},
+            {level_id: 2, level_name: 'Level 2', prop: currentRate + 5, choice_gid: 2, def_gid: 2, extra_val: 0, selected: Number(currentLevel) === 2},
+            {level_id: 3, level_name: 'Level 3', prop: currentRate, choice_gid: 3, def_gid: 3, extra_val: 0, selected: Number(currentLevel) === 3}
+        ];
+    }
+
     function agentLevelSelectHtml(row, rowIndex) {
         var list = numericObjectToArray(getValue(row, 'range_list')) || [];
         var currentLevel = String(getValue(row, 'userGroupId') || getValue(row, 'level_id') || '');
@@ -530,7 +649,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
         var hasSelected = false;
 
         if (!list.length) {
-            return escapeHtml(currentRate || '-');
+            list = defaultAgentLevelRange(row);
         }
 
         for (i = 0; i < list.length; i++) {
@@ -603,9 +722,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     }
 
     /**
-     * Render row action buttons declared by Blade.  The button only carries an
-     * index; the actual API, payload, and row data stay in JS memory to avoid
-     * putting unescaped business data into HTML attributes.
+     * 渲染 Blade 里声明的行操作按钮。按钮本身只带索引，真正的接口、
+     * 参数和行数据都留在 JS 内存里，避免把未转义的业务数据塞进属性。
      */
     function buildActionButtons(rowIndex) {
         var html = '';
@@ -724,8 +842,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     function getSubmitUrl($form) {
         var recordId = $.trim($form.find('.J_moduleRecordId').val() || '');
 
-        // A non-empty hidden id means the user selected an existing row for
-        // editing, so the request must go to the page-specific update API.
+        // 隐藏的 id 不为空，说明用户选中了已有记录要编辑，所以请求要
+        // 走页面自己的更新接口。
         if (recordId && editApiUrl) {
             return editApiUrl;
         }
@@ -747,20 +865,38 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     }
 
     function submitMultipartForm($form) {
+        // 把可见表单值和缓存的文件对象合并成一个请求体。这样上传提交
+        // 的行为更确定，后端校验必填文件时也更容易排查。
         var token = CrmAjax.getToken('front');
         var headers = {
             Accept: 'application/json',
             'X-Locale': CrmLang.getLocale()
         };
+        var formData = new FormData($form[0]);
 
         if (token) {
             headers.Authorization = 'Bearer ' + token;
         }
 
+        $.each(moduleUploadFiles, function (fieldName, files) {
+            if (!fieldName || !files) {
+                return;
+            }
+            if ($.isArray(files)) {
+                $.each(files, function (_, file) {
+                    if (file) {
+                        formData.append(fieldName, file);
+                    }
+                });
+                return;
+            }
+            formData.append(fieldName, files);
+        });
+
         $.ajax({
             url: getSubmitUrl($form),
             type: 'POST',
-            data: new FormData($form[0]),
+            data: formData,
             processData: false,
             contentType: false,
             headers: headers,
@@ -781,6 +917,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
         if ($('.J_moduleForm')[0]) {
             $('.J_moduleForm')[0].reset();
         }
+        resetAllEnhancedUploads();
         $('.J_moduleRecordId').val('');
         form.render();
         initEnhancedUpload();
@@ -789,8 +926,8 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     }
 
     /**
-     * Copy a row into the shared form.  File fields are intentionally skipped
-     * because browsers do not allow setting them for security reasons.
+     * 把一行数据回填到共享表单里。文件字段会刻意跳过，因为出于安全
+     * 原因，浏览器不允许直接给 file 输入框赋值。
      */
     function fillFormFromRow(row) {
         var $form = $('.J_moduleForm');
@@ -799,6 +936,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
             return;
         }
 
+        resetAllEnhancedUploads();
         $form.find('input, select, textarea').each(function () {
             var $field = $(this);
             var name = $field.attr('name');
@@ -906,7 +1044,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
     }
 
     function defaultUserFields() {
-        return [
+        var fields = [
             {key: 'user_id', label: 'front.user_id'},
             {key: 'user_name', label: 'front.user_name'},
             {key: 'email', label: 'front.email'},
@@ -926,11 +1064,22 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
             {key: 'closed_order_count', label: 'front.closed_order_count'},
             {key: 'profit_7d', label: 'front.profit_7d', format: 'money'},
             {key: 'profit_15d', label: 'front.profit_15d', format: 'money'},
-            {key: 'profit_30d', label: 'front.profit_30d', format: 'money'},
-            {key: 'last_login_ip', label: 'front.last_login_ip'},
-            {key: 'last_login_at', label: 'front.last_login_at'},
-            {key: 'created_at', label: 'common.created_at'}
+            {key: 'profit_30d', label: 'front.profit_30d', format: 'money'}
         ];
+
+        // 代理管理页不展示登录历史类信息，避免把用户要求隐藏的登录轨迹带进详情弹框。
+        if (!/agent(Sub|Customer)List/i.test(apiUrl)) {
+            fields.push(
+                {key: 'last_login_ip', label: 'front.last_login_ip'},
+                {key: 'last_login_at', label: 'front.last_login_at'}
+            );
+        }
+
+        fields.push(
+            {key: 'created_at', label: 'common.created_at'}
+        );
+
+        return fields;
     }
 
     function defaultOrderFields() {
@@ -1150,6 +1299,9 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
             {label: 'front.total_deposit', value: getValue(row, 'total_deposit')},
             {label: 'front.total_withdraw', value: getValue(row, 'total_withdraw')},
             {label: 'front.total_rebate', value: getValue(row, 'total_rebate')},
+            {label: 'front.commission_rate', value: getValue(row, 'commprop') || getValue(row, 'comm_rate')},
+            {label: 'front.open_order_count', value: getValue(row, 'open_order_count') || getValue(row, 'open_count')},
+            {label: 'front.closed_order_count', value: getValue(row, 'closed_order_count') || getValue(row, 'closed_count')},
             {label: 'front.profit_7d', value: getValue(row, 'profit_7d')},
             {label: 'front.profit_15d', value: getValue(row, 'profit_15d')},
             {label: 'front.profit_30d', value: getValue(row, 'profit_30d')}
@@ -1247,6 +1399,10 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
         }
 
         if (column.action === 'showLoginHistory') {
+            // 代理管理页不允许打开登录历史，即使后续配置里误加了该动作也直接拦截。
+            if (/agent(Sub|Customer)List/i.test(apiUrl)) {
+                return;
+            }
             CrmAjax.request({
                 guard: 'front',
                 method: 'POST',
@@ -1301,6 +1457,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
         if ($('.J_moduleForm')[0]) {
             $('.J_moduleForm')[0].reset();
         }
+        resetAllEnhancedUploads();
         $('.J_moduleRecordId').val('');
         pageState.page = 1;
         pageState.filters = {};
@@ -1310,6 +1467,13 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate'], function () {
         initEnhancedUpload();
         initDatePickers();
         loadData();
+    });
+
+    $(document).on('click', '.J_crmUploadClear', function () {
+        var input = document.getElementById($(this).attr('data-upload-target'));
+        if (input) {
+            resetEnhancedUpload(input);
+        }
     });
 
     $('#moduleTableBody').on('click', '.J_moduleRowAction', function () {

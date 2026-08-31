@@ -52,8 +52,12 @@ sf_proc_*.err.lock
 sf_proc_*.out
 sf_proc_*.out.lock
 
-# 本地设计、审计与验收文档不提交到远端
-docs/
+# docs/ 整体提交（用户指令）。以下子项仍排除：
+# - *.sql 由全局规则拦下（docs 内 5 个转储合计 409MB）
+# - 编译产物 server*.exe / *.exe~ 由顶部编译产物规则拦下（约 122MB）
+# - 打包 zip 与 cocrm-effects-all 是同批截图的重复副本，只保留按 UI 家族分列的原始目录
+/docs/*.zip
+/docs/cocrm-effects-all/
 
 # 日志文件只保留目录占位，不提交实际日志内容
 *.log

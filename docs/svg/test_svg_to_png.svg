@@ -1,0 +1,231 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1125" height="1608" viewBox="0 0 1125 1608" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1B1F2B"/>
+      <stop offset="100%" stop-color="#171B26"/>
+    </linearGradient>
+
+    <linearGradient id="u1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#181C28"/>
+      <stop offset="100%" stop-color="#4D6CFF"/>
+    </linearGradient>
+    <linearGradient id="u2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#181C28"/>
+      <stop offset="100%" stop-color="#37D0B4"/>
+    </linearGradient>
+    <linearGradient id="u3" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#181C28"/>
+      <stop offset="100%" stop-color="#8B5EFF"/>
+    </linearGradient>
+    <linearGradient id="u4" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#181C28"/>
+      <stop offset="100%" stop-color="#D9A062"/>
+    </linearGradient>
+    <linearGradient id="u5" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#181C28"/>
+      <stop offset="100%" stop-color="#EC5EA5"/>
+    </linearGradient>
+    <linearGradient id="u6" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#181C28"/>
+      <stop offset="100%" stop-color="#5E83FF"/>
+    </linearGradient>
+
+    <linearGradient id="i1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4D6CFF"/>
+      <stop offset="100%" stop-color="#7A97FF"/>
+    </linearGradient>
+    <linearGradient id="i2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2DE2BF"/>
+      <stop offset="100%" stop-color="#6CE6CC"/>
+    </linearGradient>
+    <linearGradient id="i3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8F5CFF"/>
+      <stop offset="100%" stop-color="#B483FF"/>
+    </linearGradient>
+    <linearGradient id="i4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFB35C"/>
+      <stop offset="100%" stop-color="#FFD288"/>
+    </linearGradient>
+    <linearGradient id="i5" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF5D9D"/>
+      <stop offset="100%" stop-color="#FF8BC0"/>
+    </linearGradient>
+    <linearGradient id="i6" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5E83FF"/>
+      <stop offset="100%" stop-color="#88A7FF"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1125" height="1608" fill="url(#bgGrad)"/>
+
+  <!-- Card 1 -->
+  <rect x="62" y="62" width="390" height="8" rx="4" fill="url(#u1)"/>
+  <circle cx="46" cy="54" r="12.5" fill="url(#i1)"/>
+  <line x1="41.8" y1="51.8" x2="50.2" y2="48.4" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="41.8" y1="51.8" x2="42.6" y2="60.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="41.8" y1="51.8" x2="53.5" y2="57.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="50.2" y1="48.4" x2="53.5" y2="57.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="41.8" cy="51.8" r="1.9" fill="#FFFFFF"/>
+  <circle cx="50.2" cy="48.4" r="1.9" fill="#FFFFFF"/>
+  <circle cx="53.5" cy="57.2" r="1.9" fill="#FFFFFF"/>
+  <circle cx="42.6" cy="60.2" r="1.9" fill="#FFFFFF"/>
+  <text x="64" y="60" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="17.5" font-weight="700" fill="#FFFFFF">Device Side Connection and Overseas Software Issues</text>
+
+  <rect x="34" y="86" width="520" height="196" rx="20" fill="#233158"/>
+  <rect x="47" y="99" width="494" height="170" rx="16" fill="#1A223F" stroke="#31406E" stroke-opacity="0.32"/>
+  <text x="71" y="142" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="71" y="142">• There are currently connection-related issues on the</tspan>
+    <tspan x="89" dy="27">device side that need further investigation.</tspan>
+  </text>
+  <text x="71" y="207" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="71" y="207">• Controlling music playback fails to execute on</tspan>
+    <tspan x="89" dy="27">overseas software.</tspan>
+  </text>
+
+  <!-- Card 2 -->
+  <rect x="599" y="62" width="338" height="8" rx="4" fill="url(#u2)"/>
+  <circle cx="583" cy="54" r="12.5" fill="url(#i2)"/>
+  <rect x="577.8" y="56.0" width="2.8" height="4.2" rx="1.4" fill="#FFFFFF"/>
+  <rect x="582.4" y="53.2" width="2.8" height="7.0" rx="1.4" fill="#FFFFFF"/>
+  <rect x="587.0" y="49.8" width="2.8" height="10.4" rx="1.4" fill="#FFFFFF"/>
+  <rect x="591.6" y="54.0" width="2.8" height="6.2" rx="1.4" fill="#FFFFFF"/>
+  <text x="601" y="60" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="17.5" font-weight="700" fill="#FFFFFF">Audio Quality and Recognition Effect Issues</text>
+
+  <rect x="571" y="86" width="520" height="540" rx="20" fill="#214741"/>
+  <rect x="584" y="99" width="494" height="514" rx="16" fill="#1A3030" stroke="#2C5A53" stroke-opacity="0.34"/>
+  <text x="608" y="142" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="608" y="142">• The current sound is not clear enough, the volume is low,</tspan>
+    <tspan x="626" dy="27">the frequency is low, and there is an issue with the</tspan>
+    <tspan x="626" dy="27">pickup distance being too far.</tspan>
+  </text>
+  <text x="608" y="234" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="608" y="234">• The translation effect on the glasses is very poor,</tspan>
+    <tspan x="626" dy="27">especially when the sound is slightly unclear or the</tspan>
+    <tspan x="626" dy="27">volume is low, making the feature basically unusable.</tspan>
+  </text>
+  <text x="608" y="326" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="608" y="326">• When speaking loudly, the problem is relatively minor,</tspan>
+    <tspan x="626" dy="27">but a slightly lower volume significantly affects</tspan>
+    <tspan x="626" dy="27">recognition and display effects.</tspan>
+  </text>
+  <text x="608" y="418" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="608" y="418">• The issue should be investigated from the audio source,</tspan>
+    <tspan x="626" dy="27">with a focus on audio data quality on the Opus</tspan>
+    <tspan x="626" dy="27">link.</tspan>
+  </text>
+  <text x="608" y="510" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="608" y="510">• The phone's built-in microphone is currently in use,</tspan>
+    <tspan x="626" dy="27">and the recording effect is close to that of</tspan>
+    <tspan x="626" dy="27">headphones, but the sound level remains low</tspan>
+    <tspan x="626" dy="27">and performs poorly.</tspan>
+  </text>
+
+  <!-- Card 3 -->
+  <rect x="62" y="662" width="360" height="8" rx="4" fill="url(#u3)"/>
+  <circle cx="46" cy="654" r="12.5" fill="url(#i3)"/>
+  <path d="M38.8 651.8L46 648.2L53.2 651.8L46 655.4Z" fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round"/>
+  <path d="M38.8 655.8L46 652.2L53.2 655.8L46 659.4Z" fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round"/>
+  <path d="M38.8 659.8L46 656.2L53.2 659.8L46 663.4Z" fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round"/>
+  <text x="64" y="660" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="17.5" font-weight="700" fill="#FFFFFF">Translation Technical Scheme and Status Analysis</text>
+
+  <rect x="34" y="686" width="520" height="458" rx="20" fill="#30284F"/>
+  <rect x="47" y="699" width="494" height="432" rx="16" fill="#221B37" stroke="#473D70" stroke-opacity="0.34"/>
+  <text x="71" y="742" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="71" y="742">• The translation module also uses the Alibaba model,</tspan>
+    <tspan x="89" dy="27">but the actual effect is estimated to have issues.</tspan>
+  </text>
+  <text x="71" y="807" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="71" y="807">• Apple's native solution completes speech-to-text</tspan>
+    <tspan x="89" dy="27">locally before entering the subsequent translation</tspan>
+    <tspan x="89" dy="27">step.</tspan>
+  </text>
+  <text x="71" y="899" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="71" y="899">• The team has previously developed an app solution</tspan>
+    <tspan x="89" dy="27">based on Apple STT.</tspan>
+  </text>
+  <text x="71" y="964" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="71" y="964">• From a subjective experience, Apple's STT may even</tspan>
+    <tspan x="89" dy="27">perform better than the Microsoft solution.</tspan>
+  </text>
+  <text x="71" y="1029" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="71" y="1029">• The main issue with Apple's earlier solution appeared</tspan>
+    <tspan x="89" dy="27">in meeting-record scenarios with frequent</tspan>
+    <tspan x="89" dy="27">interruptions, because phrase-style recognition is</tspan>
+    <tspan x="89" dy="27">not suitable for long sentences.</tspan>
+  </text>
+
+  <!-- Card 4 -->
+  <rect x="599" y="662" width="402" height="8" rx="4" fill="url(#u4)"/>
+  <circle cx="583" cy="654" r="12.5" fill="url(#i4)"/>
+  <rect x="577.6" y="649.5" width="6.2" height="9.6" rx="1.2" fill="none" stroke="#FFFFFF" stroke-width="1.7"/>
+  <rect x="586.2" y="651.5" width="6.2" height="7.6" rx="1.2" fill="none" stroke="#FFFFFF" stroke-width="1.7"/>
+  <line x1="580.7" y1="654.3" x2="589.3" y2="654.3" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="601" y="660" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="17.5" font-weight="700" fill="#FFFFFF">Comparison of Meeting Records and Glass Display Effects</text>
+
+  <rect x="571" y="686" width="520" height="196" rx="20" fill="#443730"/>
+  <rect x="584" y="699" width="494" height="170" rx="16" fill="#2C2522" stroke="#5A493E" stroke-opacity="0.34"/>
+  <text x="608" y="742" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="608" y="742">• In trials, meeting records were basically accurate in</tspan>
+    <tspan x="626" dy="27">capturing each person's speech, with few typos.</tspan>
+  </text>
+  <text x="608" y="807" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="608" y="807">• Compared with meeting records, the display effect on</tspan>
+    <tspan x="626" dy="27">the glasses is much worse.</tspan>
+  </text>
+
+  <!-- Card 5 -->
+  <rect x="62" y="1180" width="346" height="8" rx="4" fill="url(#u5)"/>
+  <circle cx="46" cy="1172" r="12.5" fill="url(#i5)"/>
+  <path d="M41.8 1165.8H49.8L53.6 1169.6V1178.6H41.8Z" fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round"/>
+  <line x1="49.8" y1="1165.8" x2="49.8" y2="1169.6" stroke="#FFFFFF" stroke-width="1.7"/>
+  <line x1="45.0" y1="1172.5" x2="50.6" y2="1172.5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="45.0" y1="1176.0" x2="49.2" y2="1176.0" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="64" y="1178" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="17.5" font-weight="700" fill="#FFFFFF">Page Development and Other Functional Issues</text>
+
+  <rect x="34" y="1204" width="520" height="340" rx="20" fill="#43243B"/>
+  <rect x="47" y="1217" width="494" height="314" rx="16" fill="#2C1A28" stroke="#61354E" stroke-opacity="0.34"/>
+  <text x="71" y="1260" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="71" y="1260">• The PC side finished the pages related to emails</tspan>
+    <tspan x="89" dy="27">yesterday.</tspan>
+  </text>
+  <text x="71" y="1325" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="71" y="1325">• The email discount-code acquisition page was also</tspan>
+    <tspan x="89" dy="27">completed yesterday afternoon.</tspan>
+  </text>
+  <text x="71" y="1390" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="71" y="1390">• Work yesterday mainly focused on issues related to</tspan>
+    <tspan x="89" dy="27">compressed glasses replies.</tspan>
+  </text>
+  <text x="71" y="1455" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="71" y="1455">• Restart handling after phone shutdown was modified,</tspan>
+    <tspan x="89" dy="27">but two additional problems were still</tspan>
+    <tspan x="89" dy="27">exposed.</tspan>
+  </text>
+
+  <!-- Card 6 -->
+  <rect x="599" y="1180" width="326" height="8" rx="4" fill="url(#u6)"/>
+  <circle cx="583" cy="1172" r="12.5" fill="url(#i6)"/>
+  <path d="M577.2 1172.2L581.0 1176.0L589.2 1167.8" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="601" y="1178" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="17.5" font-weight="700" fill="#FFFFFF">Project Status and Delivery Readiness</text>
+
+  <rect x="571" y="1204" width="520" height="364" rx="20" fill="#243159"/>
+  <rect x="584" y="1217" width="494" height="338" rx="16" fill="#1A223F" stroke="#31406E" stroke-opacity="0.32"/>
+  <text x="608" y="1260" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="608" y="1260">• Core legal functions, consultant-related content,</tspan>
+    <tspan x="626" dy="27">and the feature list and specifications need to be</tspan>
+    <tspan x="626" dy="27">sorted out quickly to confirm project status.</tspan>
+  </text>
+  <text x="608" y="1352" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="608" y="1352">• Self-testing indicates that the basic functions are</tspan>
+    <tspan x="626" dy="27">largely usable, but some minor issues still</tspan>
+    <tspan x="626" dy="27">remain.</tspan>
+  </text>
+  <text x="608" y="1444" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="608" y="1444">• Major problems have mostly been resolved, and the</tspan>
+    <tspan x="626" dy="27">rest are mainly small delivery issues.</tspan>
+  </text>
+  <text x="608" y="1509" font-family="'Noto Sans','Arial Unicode MS',sans-serif" font-size="16" font-weight="400" fill="#F2F4F8">
+    <tspan x="608" y="1509">• The AI integration work is currently handled</tspan>
+    <tspan x="626" dy="27">internally by the team.</tspan>
+  </text>
+</svg>

@@ -1,0 +1,197 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1125" height="1584" viewBox="0 0 1125 1584" fill="none" text-rendering="geometricPrecision" style="font-family:'Noto Sans','Arial Unicode MS',sans-serif">
+  <defs>
+    <linearGradient id="line-bg-blue" x1="70" y1="0" x2="258" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#181D27"/>
+      <stop offset="100%" stop-color="#5A78FF"/>
+    </linearGradient>
+    <linearGradient id="line-green" x1="70" y1="0" x2="382" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#181D27"/>
+      <stop offset="100%" stop-color="#33D6BE"/>
+    </linearGradient>
+    <linearGradient id="line-purple" x1="604.5" y1="0" x2="834.5" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#181D27"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <linearGradient id="line-brown" x1="70" y1="0" x2="252" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#181D27"/>
+      <stop offset="100%" stop-color="#F0A450"/>
+    </linearGradient>
+    <linearGradient id="line-pink" x1="604.5" y1="0" x2="892.5" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#181D27"/>
+      <stop offset="100%" stop-color="#FF5C94"/>
+    </linearGradient>
+    <linearGradient id="line-todo" x1="70" y1="0" x2="214" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#181D27"/>
+      <stop offset="100%" stop-color="#5A78FF"/>
+    </linearGradient>
+    <linearGradient id="todo-head" x1="56" y1="0" x2="1069" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4D6CFF"/>
+      <stop offset="100%" stop-color="#5679FF"/>
+    </linearGradient>
+    <linearGradient id="line-conclusion" x1="70" y1="0" x2="264" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#181D27"/>
+      <stop offset="100%" stop-color="#5A78FF"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1125" height="1584" fill="#181D27"/>
+
+  <!-- Topic -->
+  <text x="40" y="72" fill="#FFFFFF" font-size="32" font-weight="700" letter-spacing="0.2px">
+    <tspan x="40" dy="0">Assessment of Multilingual</tspan>
+    <tspan x="40" dy="42">Cross-Border Payments, Compliance</tspan>
+    <tspan x="40" dy="42">Transformation, and System Upgrades</tspan>
+    <tspan x="40" dy="42">for the Southeast Asian Overseas Version</tspan>
+  </text>
+  <rect x="40" y="232" width="1045" height="2" fill="#2A3352"/>
+
+  <!-- Meeting Background Header -->
+  <rect x="70" y="288" width="188" height="10" rx="4" fill="url(#line-bg-blue)"/>
+  <circle cx="52" cy="280" r="12" fill="#5A78FF"/>
+  <circle cx="48" cy="276" r="1.7" fill="#FFFFFF"/>
+  <circle cx="55.5" cy="274.5" r="1.7" fill="#FFFFFF"/>
+  <circle cx="57" cy="282" r="1.7" fill="#FFFFFF"/>
+  <circle cx="49.5" cy="285.5" r="1.7" fill="#FFFFFF"/>
+  <path d="M49.2 277.2L54.2 275.1M50.2 278L55.6 281M50.1 284.5L55.6 282.5" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="70" y="286" fill="#FFFFFF" font-size="20" font-weight="700">Meeting Background</text>
+
+  <!-- Meeting Background Card -->
+  <rect x="40" y="320" width="1045" height="186" rx="20" fill="#1E274C"/>
+  <rect x="56" y="336" width="1013" height="154" rx="16" fill="#1A223C"/>
+
+  <text x="78" y="374" fill="#FFFFFF" font-size="18">•</text>
+  <text x="102" y="374" fill="#F2F4F8" font-size="16">
+    <tspan x="102" dy="0">The marketing department has completed the sorting of user payment habits and core competitor</tspan>
+    <tspan x="102" dy="28">advantages on mainstream platforms in Europe, America, and Southeast Asia.</tspan>
+  </text>
+
+  <text x="78" y="438" fill="#FFFFFF" font-size="18">•</text>
+  <text x="102" y="438" fill="#F2F4F8" font-size="16">
+    <tspan x="102" dy="0">The meeting focused on the capability support, compliance transformation, and system upgrade</tspan>
+    <tspan x="102" dy="28">requirements for the overseas version in Southeast Asia.</tspan>
+  </text>
+
+  <!-- Key Point 1 Header -->
+  <rect x="70" y="567" width="312" height="9" rx="4" fill="url(#line-green)"/>
+  <circle cx="52" cy="536" r="12" fill="#33D6BE"/>
+  <rect x="47.5" y="531.5" width="9" height="9" rx="1.8" stroke="#FFFFFF" stroke-width="1.5"/>
+  <path d="M52 529V531M52 541V543M45 536H47M57 536H59M48.5 532.5L47.4 531.4M55.5 539.5L56.6 540.6M55.5 532.5L56.6 531.4M48.5 539.5L47.4 540.6" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round"/>
+  <text x="70" y="542" fill="#FFFFFF" font-size="19" font-weight="700">
+    <tspan x="70" dy="0">Capability Requirements for the</tspan>
+    <tspan x="70" dy="23">Southeast Asian Overseas Version</tspan>
+  </text>
+
+  <!-- Key Point 1 Card -->
+  <rect x="40" y="596" width="510.5" height="210" rx="20" fill="#214641"/>
+  <rect x="56" y="612" width="478.5" height="178" rx="16" fill="#193732"/>
+  <text x="88" y="650" fill="#F2F4F8" font-size="16">
+    <tspan x="88" dy="0">It has been confirmed that the overseas version</tspan>
+    <tspan x="88" dy="24">in the Southeast Asian region needs to support</tspan>
+    <tspan x="88" dy="24">multiple languages and cross-border payments,</tspan>
+    <tspan x="88" dy="24">with planning based on user payment habits</tspan>
+    <tspan x="88" dy="24">and competitor advantages analysis.</tspan>
+  </text>
+
+  <!-- Key Point 2 Header -->
+  <rect x="604.5" y="567" width="222" height="9" rx="4" fill="url(#line-purple)"/>
+  <circle cx="586.5" cy="536" r="12" fill="#8B5CF6"/>
+  <path d="M581 534L586.5 531L592 534L586.5 537L581 534Z" fill="#FFFFFF"/>
+  <path d="M581 538L586.5 535L592 538L586.5 541L581 538Z" fill="#FFFFFF" opacity="0.9"/>
+  <path d="M581 542L586.5 539L592 542L586.5 545L581 542Z" fill="#FFFFFF" opacity="0.8"/>
+  <text x="604.5" y="542" fill="#FFFFFF" font-size="19" font-weight="700">
+    <tspan x="604.5" dy="0">Compliance and Security</tspan>
+    <tspan x="604.5" dy="23">Transformation Work</tspan>
+  </text>
+
+  <!-- Key Point 2 Card -->
+  <rect x="574.5" y="596" width="510.5" height="210" rx="20" fill="#302752"/>
+  <rect x="590.5" y="612" width="478.5" height="178" rx="16" fill="#231C3F"/>
+  <text x="622.5" y="650" fill="#F2F4F8" font-size="16">
+    <tspan x="622.5" dy="0">There is a need to advance security management</tspan>
+    <tspan x="622.5" dy="24">and complete a substantial amount of</tspan>
+    <tspan x="622.5" dy="24">compliance transformation according to</tspan>
+    <tspan x="622.5" dy="24">data privacy regulations.</tspan>
+  </text>
+
+  <!-- Key Point 3 Header -->
+  <rect x="70" y="867" width="182" height="9" rx="4" fill="url(#line-brown)"/>
+  <circle cx="52" cy="836" r="12" fill="#F0A450"/>
+  <path d="M48 832.5H56L59 836L56 839.5H48L45 836L48 832.5Z" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M49.8 836H54.2" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="70" y="842" fill="#FFFFFF" font-size="19" font-weight="700">
+    <tspan x="70" dy="0">R&amp;D System Upgrade</tspan>
+    <tspan x="70" dy="23">Requirements</tspan>
+  </text>
+
+  <!-- Key Point 3 Card -->
+  <rect x="40" y="896" width="510.5" height="186" rx="20" fill="#3A312D"/>
+  <rect x="56" y="912" width="478.5" height="154" rx="16" fill="#2B2522"/>
+  <text x="88" y="950" fill="#F2F4F8" font-size="16">
+    <tspan x="88" dy="0">The existing media player, payment system,</tspan>
+    <tspan x="88" dy="24">and backend services all need to be</tspan>
+    <tspan x="88" dy="24">upgraded to adapt to lossless audio</tspan>
+    <tspan x="88" dy="24">playback.</tspan>
+  </text>
+
+  <!-- Key Point 4 Header -->
+  <rect x="604.5" y="867" width="288" height="9" rx="4" fill="url(#line-pink)"/>
+  <circle cx="586.5" cy="836" r="12" fill="#FF5C94"/>
+  <path d="M587.8 830.8L582.8 837H586L585.2 841.2L590.2 835H587L587.8 830.8Z" fill="#FFFFFF"/>
+  <text x="604.5" y="842" fill="#FFFFFF" font-size="19" font-weight="700">
+    <tspan x="604.5" dy="0">Regional Function and Development</tspan>
+    <tspan x="604.5" dy="23">Assessment</tspan>
+  </text>
+
+  <!-- Key Point 4 Card -->
+  <rect x="574.5" y="896" width="510.5" height="186" rx="20" fill="#43213C"/>
+  <rect x="590.5" y="912" width="478.5" height="154" rx="16" fill="#30192B"/>
+  <text x="622.5" y="950" fill="#F2F4F8" font-size="16">
+    <tspan x="622.5" dy="0">Developers need to reassess the scope and</tspan>
+    <tspan x="622.5" dy="24">implementation methods for functions</tspan>
+    <tspan x="622.5" dy="24">related to songs based on IP restriction</tspan>
+    <tspan x="622.5" dy="24">areas.</tspan>
+  </text>
+
+  <!-- To-Do Header -->
+  <rect x="70" y="1120" width="144" height="10" rx="4" fill="url(#line-todo)"/>
+  <circle cx="52" cy="1112" r="12" fill="#5A78FF"/>
+  <rect x="46.5" y="1106.5" width="11" height="11" rx="1.8" stroke="#FFFFFF" stroke-width="1.5"/>
+  <path d="M49 1104.8V1108M55 1104.8V1108M49 1112.2L51.2 1114.4L55.5 1110.1" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="70" y="1118" fill="#FFFFFF" font-size="20" font-weight="700">To-Do Items</text>
+
+  <!-- To-Do Card -->
+  <rect x="40" y="1150" width="1045" height="140" rx="20" fill="#1E274C"/>
+  <rect x="56" y="1166" width="1013" height="108" rx="16" fill="#1A223C"/>
+  <rect x="56" y="1166" width="1013" height="44" rx="14" fill="url(#todo-head)"/>
+  <rect x="56" y="1210" width="1013" height="64" fill="#1A223C"/>
+  <line x1="56" y1="1210.5" x2="1069" y2="1210.5" stroke="#2A3352" stroke-width="1"/>
+  <text x="78" y="1194" fill="#FFFFFF" font-size="16" font-weight="700">Action Item</text>
+  <text x="78" y="1240" fill="#F2F4F8" font-size="15.5">
+    <tspan x="78" dy="0">Developers need to reassess the development work for functions</tspan>
+    <tspan x="78" dy="22">related to songs based on IP restriction areas.</tspan>
+  </text>
+
+  <!-- Conclusion Header -->
+  <rect x="70" y="1328" width="194" height="10" rx="4" fill="url(#line-conclusion)"/>
+  <circle cx="52" cy="1320" r="12" fill="#5A78FF"/>
+  <circle cx="52" cy="1320" r="4.8" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+  <path d="M52 1311.6V1314.2M60.4 1320H57.8M54.9 1322.9L58.1 1326.1" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round"/>
+  <path d="M50 1320.4L51.7 1322.1L55.2 1318.6" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="70" y="1326" fill="#FFFFFF" font-size="20" font-weight="700">Meeting Conclusion</text>
+
+  <!-- Conclusion Card -->
+  <rect x="40" y="1358" width="1045" height="186" rx="20" fill="#1E274C"/>
+  <rect x="56" y="1374" width="1013" height="154" rx="16" fill="#1A223C"/>
+
+  <text x="78" y="1412" fill="#FFFFFF" font-size="18">•</text>
+  <text x="102" y="1412" fill="#F2F4F8" font-size="16">
+    <tspan x="102" dy="0">It has been confirmed that the overseas version in the Southeast Asian region supports</tspan>
+    <tspan x="102" dy="28">multiple languages and cross-border payments.</tspan>
+  </text>
+
+  <text x="78" y="1476" fill="#FFFFFF" font-size="18">•</text>
+  <text x="102" y="1476" fill="#F2F4F8" font-size="16">
+    <tspan x="102" dy="0">The workload for data privacy compliance transformation and system upgrades is substantial</tspan>
+    <tspan x="102" dy="28">and requires a reassessment of related development work.</tspan>
+  </text>
+</svg>

@@ -1,0 +1,82 @@
+{
+    "user/deposit_btb_notify": {
+        "accepted_current_methods": ["POST"],
+        "reason": "旧 Route::any 暴露了未使用的方法；BTB 异步支付通知只允许 POST，避免 GET 或写方法绕过回调边界。"
+    },
+    "user/deposit_btb_return": {
+        "accepted_current_methods": ["GET"],
+        "reason": "旧 Route::any 暴露了未使用的方法；BTB 同步返回页只允许 GET，且不能据此确认支付成功。"
+    },
+    "user/deposit_exlink_bbnotify": {
+        "accepted_current_methods": ["POST"],
+        "reason": "旧 Route::any 暴露了未使用的方法；Exlink BB 异步通知只允许 POST 并统一执行验签和状态机。"
+    },
+    "user/deposit_exlink_bbreturn": {
+        "accepted_current_methods": ["GET"],
+        "reason": "旧 Route::any 暴露了未使用的方法；Exlink BB 同步返回只允许 GET 且仅展示待确认状态。"
+    },
+    "user/deposit_exlink_fbnotify": {
+        "accepted_current_methods": ["POST"],
+        "reason": "旧 Route::any 暴露了未使用的方法；Exlink FB 异步通知只允许 POST 并统一执行验签和状态机。"
+    },
+    "user/deposit_exlink_fbreturn": {
+        "accepted_current_methods": ["GET"],
+        "reason": "旧 Route::any 暴露了未使用的方法；Exlink FB 同步返回只允许 GET 且仅展示待确认状态。"
+    },
+    "user/deposit_notfiy": {
+        "accepted_current_methods": ["POST"],
+        "reason": "旧 Route::any 暴露了未使用的方法；默认支付异步通知只允许 POST，订单变化必须经过验签与幂等状态机。"
+    },
+    "user/deposit_notfiy2": {
+        "accepted_current_methods": ["POST"],
+        "reason": "旧 Route::any 暴露了未使用的方法；第二支付异步通知只允许 POST，订单变化必须经过验签与幂等状态机。"
+    },
+    "user/deposit_notfiy_otc": {
+        "accepted_current_methods": ["POST"],
+        "reason": "旧 Route::any 暴露了未使用的方法；OTC 入金异步通知只允许 POST，配置或验签不完整时失败关闭。"
+    },
+    "user/deposit_passto_notify": {
+        "accepted_current_methods": ["POST"],
+        "reason": "旧 Route::any 暴露了未使用的方法；PassTo 异步通知只允许 POST 并统一执行验签和状态机。"
+    },
+    "user/deposit_request": {
+        "accepted_current_methods": ["POST"],
+        "reason": "旧 Route::any 暴露了未使用的方法；入金创建属于资金写操作，只允许 POST 并复用现代幂等建单链。"
+    },
+    "user/deposit_request_otc": {
+        "accepted_current_methods": ["POST"],
+        "reason": "旧 Route::any 暴露了未使用的方法；OTC 入金创建属于资金写操作，只允许 POST 并在无可信协议时失败关闭。"
+    },
+    "user/deposit_return": {
+        "accepted_current_methods": ["GET"],
+        "reason": "旧 Route::any 暴露了未使用的方法；默认支付同步返回只允许 GET，不能直接修改订单状态。"
+    },
+    "user/deposit_return2": {
+        "accepted_current_methods": ["GET"],
+        "reason": "旧 Route::any 暴露了未使用的方法；第二支付同步返回只允许 GET，不能直接修改订单状态。"
+    },
+    "user/deposit_switch_notify": {
+        "accepted_current_methods": ["POST"],
+        "reason": "旧 Route::any 暴露了未使用的方法；Switch 异步通知只允许 POST 并统一执行验签和状态机。"
+    },
+    "user/deposit_tigerpay_notify": {
+        "accepted_current_methods": ["POST"],
+        "reason": "旧 Route::any 暴露了未使用的方法；TigerPay 异步通知只允许 POST 并统一执行 RSA 验签和状态机。"
+    },
+    "user/deposit_wppay_notify": {
+        "accepted_current_methods": ["POST"],
+        "reason": "旧 Route::any 暴露了未使用的方法；WPPay 异步通知只允许 POST 并统一执行验签和状态机。"
+    },
+    "user/deposit_wppay_return": {
+        "accepted_current_methods": ["GET"],
+        "reason": "旧 Route::any 暴露了未使用的方法；WPPay 同步返回只允许 GET，不能直接修改订单状态。"
+    },
+    "user/withdraw_notfiy_otc": {
+        "accepted_current_methods": ["POST"],
+        "reason": "旧 Route::any 暴露了未使用的方法；OTC 出金异步通知只允许 POST，配置或验签不完整时失败关闭。"
+    },
+    "user/withdraw_verify_otc": {
+        "accepted_current_methods": ["POST"],
+        "reason": "旧 Route::any 暴露了未使用的方法；OTC 出金验证回调只允许 POST，配置或验签不完整时失败关闭。"
+    }
+}

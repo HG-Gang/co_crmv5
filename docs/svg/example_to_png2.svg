@@ -1,0 +1,322 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1820" viewBox="0 0 1800 1820" role="img" aria-label="會議紀要思維導圖">
+  <style>
+    svg {
+      background: #FFFFFF;
+      font-family: "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", "Heiti TC", sans-serif;
+      shape-rendering: geometricPrecision;
+      text-rendering: geometricPrecision;
+    }
+    .connector {
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+    .halo {
+      fill: none;
+      stroke-width: 10;
+      opacity: 0.78;
+    }
+    .card {
+      stroke-width: 1.5;
+    }
+    .t-center {
+      font-size: 20px;
+      font-weight: 700;
+      fill: #111111;
+    }
+    .t-l1 {
+      font-size: 18px;
+      font-weight: 700;
+      fill: #111111;
+    }
+    .t-body {
+      font-size: 16px;
+      font-weight: 400;
+      fill: #111111;
+    }
+  </style>
+
+  <rect x="0" y="0" width="1800" height="1820" fill="#FFFFFF"/>
+
+  <g id="connectors">
+    <!-- center to level-1 -->
+    <path class="connector" stroke="#E9B8CF" d="M400 910 C455 910, 490 134, 540 134"/>
+    <path class="connector" stroke="#BDD3FB" d="M400 910 C455 910, 490 614, 540 614"/>
+    <path class="connector" stroke="#B8EBE8" d="M400 910 C455 910, 490 1098, 540 1098"/>
+    <path class="connector" stroke="#F2D7BC" d="M400 910 C455 910, 490 1496, 540 1496"/>
+
+    <!-- background -->
+    <path class="connector" stroke="#E9B8CF" d="M700 134 C775 134, 840 134, 910 134"/>
+
+    <!-- key points -->
+    <path class="connector" stroke="#BDD3FB" d="M700 614 C780 614, 830 278, 910 278"/>
+    <path class="connector" stroke="#BDD3FB" d="M700 614 C780 614, 830 370, 910 370"/>
+    <path class="connector" stroke="#BDD3FB" d="M700 614 C780 614, 830 462, 910 462"/>
+    <path class="connector" stroke="#BDD3FB" d="M700 614 C780 614, 830 554, 910 554"/>
+    <path class="connector" stroke="#BDD3FB" d="M700 614 C780 614, 830 638, 910 638"/>
+    <path class="connector" stroke="#BDD3FB" d="M700 614 C780 614, 830 714, 910 714"/>
+    <path class="connector" stroke="#BDD3FB" d="M700 614 C780 614, 830 798, 910 798"/>
+    <path class="connector" stroke="#BDD3FB" d="M700 614 C780 614, 830 882, 910 882"/>
+    <path class="connector" stroke="#BDD3FB" d="M700 614 C780 614, 830 958, 910 958"/>
+
+    <path class="connector" stroke="#BDD3FB" d="M1162 278 C1198 278, 1210 278, 1240 278"/>
+    <path class="connector" stroke="#BDD3FB" d="M1162 370 C1198 370, 1210 370, 1240 370"/>
+    <path class="connector" stroke="#BDD3FB" d="M1162 462 C1198 462, 1210 462, 1240 462"/>
+    <path class="connector" stroke="#BDD3FB" d="M1162 554 C1198 554, 1210 554, 1240 554"/>
+    <path class="connector" stroke="#BDD3FB" d="M1162 638 C1198 638, 1210 638, 1240 638"/>
+    <path class="connector" stroke="#BDD3FB" d="M1162 714 C1198 714, 1210 714, 1240 714"/>
+    <path class="connector" stroke="#BDD3FB" d="M1162 798 C1198 798, 1210 798, 1240 798"/>
+    <path class="connector" stroke="#BDD3FB" d="M1162 882 C1198 882, 1210 882, 1240 882"/>
+    <path class="connector" stroke="#BDD3FB" d="M1162 958 C1198 958, 1210 958, 1240 958"/>
+
+    <!-- conclusion -->
+    <path class="connector" stroke="#B8EBE8" d="M700 1098 C775 1098, 840 1098, 910 1098"/>
+
+    <!-- todo -->
+    <path class="connector" stroke="#F2D7BC" d="M700 1496 C780 1496, 830 1298, 910 1298"/>
+    <path class="connector" stroke="#F2D7BC" d="M700 1496 C780 1496, 830 1374, 910 1374"/>
+    <path class="connector" stroke="#F2D7BC" d="M700 1496 C780 1496, 830 1458, 910 1458"/>
+    <path class="connector" stroke="#F2D7BC" d="M700 1496 C780 1496, 830 1542, 910 1542"/>
+    <path class="connector" stroke="#F2D7BC" d="M700 1496 C780 1496, 830 1618, 910 1618"/>
+    <path class="connector" stroke="#F2D7BC" d="M700 1496 C780 1496, 830 1694, 910 1694"/>
+  </g>
+
+  <g id="nodes">
+    <!-- center -->
+    <g id="center-node">
+      <rect class="halo" x="40" y="862" width="360" height="96" rx="22" stroke="#E6DFFF"/>
+      <rect class="card" x="40" y="862" width="360" height="96" rx="22" fill="#FCFAFF" stroke="#D4C8FF"/>
+      <text class="t-center" x="66" y="888" dominant-baseline="hanging">
+        <tspan x="66" dy="0">集中式視頻監控系統升級為</tspan>
+        <tspan x="66" dy="32">邊緣計算+AI智能預警方案評審</tspan>
+      </text>
+    </g>
+
+    <!-- level-1 -->
+    <g id="l1-background">
+      <rect class="halo" x="540" y="103" width="160" height="62" rx="18" stroke="#F3D9E7"/>
+      <rect class="card" x="540" y="103" width="160" height="62" rx="18" fill="#FFF8FC" stroke="#E9B8CF"/>
+      <text class="t-l1" x="564" y="124" dominant-baseline="hanging">會議背景</text>
+    </g>
+
+    <g id="l1-keypoints">
+      <rect class="halo" x="540" y="583" width="160" height="62" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="540" y="583" width="160" height="62" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-l1" x="564" y="604" dominant-baseline="hanging">會議要點</text>
+    </g>
+
+    <g id="l1-conclusion">
+      <rect class="halo" x="540" y="1067" width="160" height="62" rx="18" stroke="#D4F4F2"/>
+      <rect class="card" x="540" y="1067" width="160" height="62" rx="18" fill="#F7FFFF" stroke="#B8EBE8"/>
+      <text class="t-l1" x="564" y="1088" dominant-baseline="hanging">會議結論</text>
+    </g>
+
+    <g id="l1-todo">
+      <rect class="halo" x="540" y="1465" width="160" height="62" rx="18" stroke="#FAEADC"/>
+      <rect class="card" x="540" y="1465" width="160" height="62" rx="18" fill="#FFFBF7" stroke="#F2D7BC"/>
+      <text class="t-l1" x="564" y="1486" dominant-baseline="hanging">待辦事項</text>
+    </g>
+
+    <!-- background leaf -->
+    <g id="background-detail">
+      <rect class="halo" x="910" y="84" width="520" height="100" rx="20" stroke="#F3D9E7"/>
+      <rect class="card" x="910" y="84" width="520" height="100" rx="20" fill="#FFF8FC" stroke="#E9B8CF"/>
+      <text class="t-body" x="934" y="102" dominant-baseline="hanging">
+        <tspan x="934" dy="0">現有集中式視頻監控系統計畫升級為邊緣計算加AI</tspan>
+        <tspan x="934" dy="26">智能預警架構，需要滿足即時分析、資料留存和事後</tspan>
+        <tspan x="934" dy="26">追查要求，並針對園區、倉庫、辦公區進行差異化部署。</tspan>
+      </text>
+    </g>
+
+    <!-- key point titles -->
+    <g id="kp-1-title">
+      <rect class="halo" x="910" y="248" width="252" height="60" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="910" y="248" width="252" height="60" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="934" y="266" dominant-baseline="hanging">邊緣計算架構與視頻儲存方案</text>
+    </g>
+    <g id="kp-2-title">
+      <rect class="halo" x="910" y="340" width="252" height="60" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="910" y="340" width="252" height="60" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="934" y="358" dominant-baseline="hanging">前端晶片與AI模型性能優化</text>
+    </g>
+    <g id="kp-3-title">
+      <rect class="halo" x="910" y="432" width="252" height="60" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="910" y="432" width="252" height="60" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="934" y="450" dominant-baseline="hanging">模型更新與版本管理機制</text>
+    </g>
+    <g id="kp-4-title">
+      <rect class="halo" x="910" y="524" width="252" height="60" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="910" y="524" width="252" height="60" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="934" y="542" dominant-baseline="hanging">報警準確率優化與多模型協同</text>
+    </g>
+    <g id="kp-5-title">
+      <rect class="halo" x="910" y="608" width="252" height="60" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="910" y="608" width="252" height="60" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="934" y="626" dominant-baseline="hanging">資料隱私與安全管理</text>
+    </g>
+    <g id="kp-6-title">
+      <rect class="halo" x="910" y="684" width="252" height="60" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="910" y="684" width="252" height="60" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="934" y="702" dominant-baseline="hanging">智能告警與處置流程優化</text>
+    </g>
+    <g id="kp-7-title">
+      <rect class="halo" x="910" y="768" width="252" height="60" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="910" y="768" width="252" height="60" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="934" y="786" dominant-baseline="hanging">斷網自治與邊緣智能能力</text>
+    </g>
+    <g id="kp-8-title">
+      <rect class="halo" x="910" y="852" width="252" height="60" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="910" y="852" width="252" height="60" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="934" y="870" dominant-baseline="hanging">部署計畫與資源規劃</text>
+    </g>
+    <g id="kp-9-title">
+      <rect class="halo" x="910" y="928" width="252" height="60" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="910" y="928" width="252" height="60" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="934" y="946" dominant-baseline="hanging">儲存、成本與設備選型</text>
+    </g>
+
+    <!-- key point details -->
+    <g id="kp-1-detail">
+      <rect class="halo" x="1240" y="240" width="500" height="76" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="1240" y="240" width="500" height="76" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="1264" y="258" dominant-baseline="hanging">
+        <tspan x="1264" dy="0">採用即時分析流和全量儲存流雙架構，在降低頻寬佔用的</tspan>
+        <tspan x="1264" dy="26">同時保留完整原始視頻證據。</tspan>
+      </text>
+    </g>
+    <g id="kp-2-detail">
+      <rect class="halo" x="1240" y="332" width="500" height="76" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="1240" y="332" width="500" height="76" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="1264" y="350" dominant-baseline="hanging">
+        <tspan x="1264" dy="0">使用YOLOv5n結合TensorRT量化提升邊緣推理性能，</tspan>
+        <tspan x="1264" dy="26">並透過時序分析降低精度損失。</tspan>
+      </text>
+    </g>
+    <g id="kp-3-detail">
+      <rect class="halo" x="1240" y="424" width="500" height="76" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="1240" y="424" width="500" height="76" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="1264" y="442" dominant-baseline="hanging">
+        <tspan x="1264" dy="0">採用雙分區OTA和雲端版本管理，實現低風險模型升級</tspan>
+        <tspan x="1264" dy="26">和緊急補丁發佈。</tspan>
+      </text>
+    </g>
+    <g id="kp-4-detail">
+      <rect class="halo" x="1240" y="516" width="500" height="76" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="1240" y="516" width="500" height="76" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="1264" y="534" dominant-baseline="hanging">
+        <tspan x="1264" dy="0">邊緣YOLO初篩結合雲端EfficientFormer複核，</tspan>
+        <tspan x="1264" dy="26">透過軌跡分析和行為特徵降低誤報。</tspan>
+      </text>
+    </g>
+    <g id="kp-5-detail">
+      <rect class="halo" x="1240" y="608" width="500" height="60" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="1240" y="608" width="500" height="60" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="1264" y="626" dominant-baseline="hanging">採用人臉模糊、加密儲存和哈希模板保護個人資訊。</text>
+    </g>
+    <g id="kp-6-detail">
+      <rect class="halo" x="1240" y="684" width="500" height="60" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="1240" y="684" width="500" height="60" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="1264" y="702" dominant-baseline="hanging">引入智能工單和分級升級機制，提高報警回應效率。</text>
+    </g>
+    <g id="kp-7-detail">
+      <rect class="halo" x="1240" y="760" width="500" height="76" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="1240" y="760" width="500" height="76" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="1264" y="778" dominant-baseline="hanging">
+        <tspan x="1264" dy="0">支援在線、降級和離線自治模式，</tspan>
+        <tspan x="1264" dy="26">保障網路異常情況下持續運行。</tspan>
+      </text>
+    </g>
+    <g id="kp-8-detail">
+      <rect class="halo" x="1240" y="852" width="500" height="60" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="1240" y="852" width="500" height="60" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="1264" y="870" dominant-baseline="hanging">八百六十二路攝像頭分三期升級，總工期約四個月。</text>
+    </g>
+    <g id="kp-9-detail">
+      <rect class="halo" x="1240" y="928" width="500" height="60" rx="18" stroke="#DCE9FF"/>
+      <rect class="card" x="1240" y="928" width="500" height="60" rx="18" fill="#F9FBFF" stroke="#BDD3FB"/>
+      <text class="t-body" x="1264" y="946" dominant-baseline="hanging">確定A品牌邊緣計算盒子，總預算四百一十萬。</text>
+    </g>
+
+    <!-- conclusion leaf -->
+    <g id="conclusion-detail">
+      <rect class="halo" x="910" y="1048" width="520" height="100" rx="20" stroke="#D4F4F2"/>
+      <rect class="card" x="910" y="1048" width="520" height="100" rx="20" fill="#F7FFFF" stroke="#B8EBE8"/>
+      <text class="t-body" x="934" y="1066" dominant-baseline="hanging">
+        <tspan x="934" dy="0">確定採用邊緣加雲端兩級AI預警架構，完成視頻儲存、</tspan>
+        <tspan x="934" dy="26">模型更新、隱私保護、告警聯動和斷網自治能力建設，</tspan>
+        <tspan x="934" dy="26">計畫四個月內完成升級並開展紅藍對抗演練。</tspan>
+      </text>
+    </g>
+
+    <!-- todo items -->
+    <g id="todo-1">
+      <rect class="halo" x="910" y="1268" width="420" height="60" rx="18" stroke="#FAEADC"/>
+      <rect class="card" x="910" y="1268" width="420" height="60" rx="18" fill="#FFFBF7" stroke="#F2D7BC"/>
+      <text class="t-body" x="934" y="1286" dominant-baseline="hanging">王工簽訂A品牌設備採購合同。</text>
+    </g>
+    <g id="todo-2">
+      <rect class="halo" x="910" y="1344" width="440" height="60" rx="18" stroke="#FAEADC"/>
+      <rect class="card" x="910" y="1344" width="440" height="60" rx="18" fill="#FFFBF7" stroke="#F2D7BC"/>
+      <text class="t-body" x="934" y="1362" dominant-baseline="hanging">王工團隊推進系統升級和模型部署。</text>
+    </g>
+    <g id="todo-3">
+      <rect class="halo" x="910" y="1420" width="500" height="76" rx="18" stroke="#FAEADC"/>
+      <rect class="card" x="910" y="1420" width="500" height="76" rx="18" fill="#FFFBF7" stroke="#F2D7BC"/>
+      <text class="t-body" x="934" y="1438" dominant-baseline="hanging">
+        <tspan x="934" dy="0">王工安排灰度上線後兩週內開展</tspan>
+        <tspan x="934" dy="26">紅藍對抗演練。</tspan>
+      </text>
+    </g>
+    <g id="todo-4">
+      <rect class="halo" x="910" y="1512" width="430" height="60" rx="18" stroke="#FAEADC"/>
+      <rect class="card" x="910" y="1512" width="430" height="60" rx="18" fill="#FFFBF7" stroke="#F2D7BC"/>
+      <text class="t-body" x="934" y="1530" dominant-baseline="hanging">各模組負責人每週匯報專案進度。</text>
+    </g>
+    <g id="todo-5">
+      <rect class="halo" x="910" y="1588" width="450" height="60" rx="18" stroke="#FAEADC"/>
+      <rect class="card" x="910" y="1588" width="450" height="60" rx="18" fill="#FFFBF7" stroke="#F2D7BC"/>
+      <text class="t-body" x="934" y="1606" dominant-baseline="hanging">Mike定期參加技術評審並提供指導。</text>
+    </g>
+    <g id="todo-6">
+      <rect class="halo" x="910" y="1664" width="390" height="60" rx="18" stroke="#FAEADC"/>
+      <rect class="card" x="910" y="1664" width="390" height="60" rx="18" fill="#FFFBF7" stroke="#F2D7BC"/>
+      <text class="t-body" x="934" y="1682" dominant-baseline="hanging">王工明天發送會議紀要。</text>
+    </g>
+  </g>
+
+  <g id="dots">
+    <!-- level-1 left dots -->
+    <circle cx="540" cy="134" r="4" fill="#D78CB3"/>
+    <circle cx="540" cy="614" r="4" fill="#7FA9EA"/>
+    <circle cx="540" cy="1098" r="4" fill="#65C9C5"/>
+    <circle cx="540" cy="1496" r="4" fill="#D3A173"/>
+
+    <!-- level-1 right dots -->
+    <circle cx="700" cy="134" r="4" fill="#D78CB3"/>
+    <circle cx="700" cy="614" r="4" fill="#7FA9EA"/>
+    <circle cx="700" cy="1098" r="4" fill="#65C9C5"/>
+    <circle cx="700" cy="1496" r="4" fill="#D3A173"/>
+
+    <!-- key point second-level left dots -->
+    <circle cx="910" cy="278" r="4" fill="#7FA9EA"/>
+    <circle cx="910" cy="370" r="4" fill="#7FA9EA"/>
+    <circle cx="910" cy="462" r="4" fill="#7FA9EA"/>
+    <circle cx="910" cy="554" r="4" fill="#7FA9EA"/>
+    <circle cx="910" cy="638" r="4" fill="#7FA9EA"/>
+    <circle cx="910" cy="714" r="4" fill="#7FA9EA"/>
+    <circle cx="910" cy="798" r="4" fill="#7FA9EA"/>
+    <circle cx="910" cy="882" r="4" fill="#7FA9EA"/>
+    <circle cx="910" cy="958" r="4" fill="#7FA9EA"/>
+
+    <!-- key point second-level right dots -->
+    <circle cx="1162" cy="278" r="4" fill="#7FA9EA"/>
+    <circle cx="1162" cy="370" r="4" fill="#7FA9EA"/>
+    <circle cx="1162" cy="462" r="4" fill="#7FA9EA"/>
+    <circle cx="1162" cy="554" r="4" fill="#7FA9EA"/>
+    <circle cx="1162" cy="638" r="4" fill="#7FA9EA"/>
+    <circle cx="1162" cy="714" r="4" fill="#7FA9EA"/>
+    <circle cx="1162" cy="798" r="4" fill="#7FA9EA"/>
+    <circle cx="1162" cy="882" r="4" fill="#7FA9EA"/>
+    <circle cx="1162" cy="958" r="4" fill="#7FA9EA"/>
+  </g>
+</svg>

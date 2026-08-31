@@ -75,7 +75,7 @@ return [
             'port' => env('DB_PORT', '3307'), // 端口（本地默认 3307）。
             'database' => env('DB_DATABASE', 'co_crmv5'), // 数据库名。
             'username' => env('DB_USERNAME', 'root'), // 用户名（生产必须注入）。
-            'password' => env('DB_PASSWORD', '123456'), // 密码（生产必须注入）。
+            'password' => env('DB_PASSWORD'), // 密码：不设兜底值，漏配时连接直接失败而非静默使用弱口令。
             'unix_socket' => env('DB_SOCKET', ''), // Unix Socket 路径（默认走 TCP）。
             'charset' => 'utf8mb4', // 字符集（支持 emoji 与中文）。
             'collation' => 'utf8mb4_unicode_ci', // 排序规则（不区分大小写）。
@@ -96,7 +96,7 @@ return [
             'port' => env('OLD_DB_PORT', env('DB_PORT', '3307')), // 旧库端口。
             'database' => env('OLD_DB_DATABASE', 'crm_db'), // 旧库名（默认 crm_db）。
             'username' => env('OLD_DB_USERNAME', env('DB_USERNAME', 'root')), // 旧库用户名。
-            'password' => env('OLD_DB_PASSWORD', env('DB_PASSWORD', '123456')), // 旧库密码。
+            'password' => env('OLD_DB_PASSWORD', env('DB_PASSWORD')), // 旧库密码（默认沿用主库，同样不设弱口令兜底）。
             'unix_socket' => env('DB_SOCKET', ''), // Unix Socket 路径（默认走 TCP）。
             'charset' => 'utf8mb4', // 字符集（与主库保持一致，避免迁移乱码）。
             'collation' => 'utf8mb4_unicode_ci', // 排序规则（与主库保持一致）。

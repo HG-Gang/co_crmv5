@@ -80,7 +80,8 @@ class InitialPasswordContractTest extends TestCase
             '固定邀请代理迁移' => ['database/migrations/2026_08_01_000002_ensure_front_inviter_test_agent.php'],
             '调试数据生成命令' => ['app/Console/Commands/GenerateDebugData.php'],
             '根目录兼容播种脚本' => ['_seed.php'],
-            '公开诊断脚本' => ['public/diag.php'],
+            // public/diag.php 已删除：它是 public 下的无鉴权端点，会对外返回管理员账号名、
+            // 客户邮箱与表结构，本机诊断价值不足以抵消部署后的泄露风险。
         ];
     }
 }

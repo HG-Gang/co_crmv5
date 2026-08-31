@@ -1,0 +1,253 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1125" height="1936" viewBox="0 0 1125 1936">
+  <defs>
+    <linearGradient id="gBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#171A24"/>
+      <stop offset="100%" stop-color="#5976FF"/>
+    </linearGradient>
+    <linearGradient id="gGreen" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#171A24"/>
+      <stop offset="100%" stop-color="#44E0C4"/>
+    </linearGradient>
+    <linearGradient id="gPurple" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#171A24"/>
+      <stop offset="100%" stop-color="#8B5CFF"/>
+    </linearGradient>
+    <linearGradient id="gOrange" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#171A24"/>
+      <stop offset="100%" stop-color="#F3AF60"/>
+    </linearGradient>
+    <linearGradient id="gMagenta" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#171A24"/>
+      <stop offset="100%" stop-color="#FF5A9E"/>
+    </linearGradient>
+    <linearGradient id="gBlue2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#171A24"/>
+      <stop offset="100%" stop-color="#4E7EFF"/>
+    </linearGradient>
+    <linearGradient id="gTeal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#171A24"/>
+      <stop offset="100%" stop-color="#49D9E3"/>
+    </linearGradient>
+    <linearGradient id="gViolet" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#171A24"/>
+      <stop offset="100%" stop-color="#7B77FF"/>
+    </linearGradient>
+    <linearGradient id="gTable" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4D6CFF"/>
+      <stop offset="100%" stop-color="#5679FF"/>
+    </linearGradient>
+    <style><![CDATA[
+      text { font-family: Inter, Arial, sans-serif; }
+      .title { fill:#FFFFFF; font-size:34px; font-weight:700; letter-spacing:-0.4px; }
+      .section { fill:#FFFFFF; font-size:16px; font-weight:700; }
+      .body { fill:#F3F5FB; font-size:15px; font-weight:400; }
+      .bodyLg { fill:#F3F5FB; font-size:15.5px; font-weight:400; }
+      .tableHead { fill:#FFFFFF; font-size:16px; font-weight:700; }
+      .tableBody { fill:#F3F5FB; font-size:15px; font-weight:400; }
+      .iconStroke { fill:none; stroke:#FFFFFF; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+    ]]></style>
+  </defs>
+
+  <rect width="1125" height="1936" fill="#171A24"/>
+
+  <g id="topic">
+    <text class="title" x="40" y="80">
+      <tspan x="40" y="80">Review Meeting on the Upgrade Plan</tspan>
+      <tspan x="40" dy="44">for Version 3.0 of the Yuntu</tspan>
+      <tspan x="40" dy="44">Smart Logistics Management Platform</tspan>
+    </text>
+    <rect x="40" y="202" width="1045" height="2" rx="1" fill="#273355"/>
+  </g>
+
+  <g id="background-header">
+    <rect x="70" y="252" width="168" height="8" rx="4" fill="url(#gBlue)" opacity="0.98"/>
+    <circle cx="52" cy="248" r="12" fill="#5976FF"/>
+    <line class="iconStroke" x1="48.5" y1="248" x2="52" y2="244"/>
+    <line class="iconStroke" x1="52" y1="244" x2="56" y2="248"/>
+    <line class="iconStroke" x1="52" y1="244" x2="52" y2="252"/>
+    <circle cx="48.5" cy="248" r="1.6" fill="#FFFFFF"/>
+    <circle cx="52" cy="244" r="1.6" fill="#FFFFFF"/>
+    <circle cx="56" cy="248" r="1.6" fill="#FFFFFF"/>
+    <circle cx="52" cy="252" r="1.6" fill="#FFFFFF"/>
+    <text class="section" x="70" y="254">Meeting Background</text>
+  </g>
+
+  <g id="background-card">
+    <rect x="40" y="276" width="1045" height="154" rx="20" fill="#1E2747"/>
+    <rect x="56" y="292" width="1013" height="122" rx="16" fill="#1A223A"/>
+    <text class="bodyLg" x="76" y="332">•</text>
+    <text class="bodyLg" x="94" y="332">
+      <tspan x="94" y="332">Review the Version 3.0 upgrade plan across system architecture, performance, security, and data.</tspan>
+    </text>
+    <text class="bodyLg" x="76" y="368">•</text>
+    <text class="bodyLg" x="94" y="368">
+      <tspan x="94" y="368">Confirm the testing, deployment, and go-live strategy for the release.</tspan>
+    </text>
+  </g>
+
+  <g id="kp-1">
+    <rect x="70" y="464" width="336" height="8" rx="4" fill="url(#gGreen)" opacity="0.98"/>
+    <circle cx="52" cy="460" r="12" fill="#44E0C4"/>
+    <rect x="48.5" y="456.5" width="7" height="7" rx="1.2" class="iconStroke"/>
+    <line class="iconStroke" x1="46.5" y1="458.5" x2="48.5" y2="458.5"/>
+    <line class="iconStroke" x1="46.5" y1="461.5" x2="48.5" y2="461.5"/>
+    <line class="iconStroke" x1="55.5" y1="458.5" x2="57.5" y2="458.5"/>
+    <line class="iconStroke" x1="55.5" y1="461.5" x2="57.5" y2="461.5"/>
+    <line class="iconStroke" x1="50.5" y1="454.5" x2="50.5" y2="456.5"/>
+    <line class="iconStroke" x1="53.5" y1="454.5" x2="53.5" y2="456.5"/>
+    <line class="iconStroke" x1="50.5" y1="463.5" x2="50.5" y2="465.5"/>
+    <line class="iconStroke" x1="53.5" y1="463.5" x2="53.5" y2="465.5"/>
+    <text class="section" x="70" y="466">Core Architecture &amp; Performance Optimization</text>
+    <rect x="40" y="490" width="512" height="170" rx="20" fill="#204840"/>
+    <rect x="56" y="506" width="480" height="138" rx="16" fill="#173833"/>
+    <text class="body" x="80" y="542">•</text>
+    <text class="body" x="98" y="542">
+      <tspan x="98" y="542">Optimize the microservice call chain and adopt</tspan>
+      <tspan x="98" dy="23">adaptive rate limiting to reduce the</tspan>
+      <tspan x="98" dy="23">response-time target to under 400 ms.</tspan>
+    </text>
+  </g>
+
+  <g id="kp-2">
+    <rect x="603" y="464" width="326" height="8" rx="4" fill="url(#gPurple)" opacity="0.98"/>
+    <circle cx="585" cy="460" r="12" fill="#8B5CFF"/>
+    <path class="iconStroke" d="M580 458 L585 455 L590 458 L585 461 Z"/>
+    <path class="iconStroke" d="M580 462 L585 459 L590 462"/>
+    <path class="iconStroke" d="M580 466 L585 463 L590 466"/>
+    <text class="section" x="603" y="466">Real-Time Computing &amp; Query Optimization</text>
+    <rect x="573" y="490" width="512" height="170" rx="20" fill="#302650"/>
+    <rect x="589" y="506" width="480" height="138" rx="16" fill="#231D3B"/>
+    <text class="body" x="613" y="542">•</text>
+    <text class="body" x="631" y="542">
+      <tspan x="631" y="542">Introduce Flink and Redis pre-aggregation</tspan>
+      <tspan x="631" dy="23">caching to reduce latency in multi-source queries.</tspan>
+    </text>
+  </g>
+
+  <g id="kp-3">
+    <rect x="70" y="694" width="292" height="8" rx="4" fill="url(#gOrange)" opacity="0.98"/>
+    <circle cx="52" cy="690" r="12" fill="#F3AF60"/>
+    <rect x="47.2" y="688.2" width="2.8" height="6.2" rx="1" fill="#FFFFFF"/>
+    <rect x="51.3" y="685.2" width="2.8" height="9.2" rx="1" fill="#FFFFFF"/>
+    <rect x="55.4" y="682.2" width="2.8" height="12.2" rx="1" fill="#FFFFFF"/>
+    <text class="section" x="70" y="696">Inventory Forecasting Model Upgrade</text>
+    <rect x="40" y="720" width="512" height="170" rx="20" fill="#3A302C"/>
+    <rect x="56" y="736" width="480" height="138" rx="16" fill="#2B2522"/>
+    <text class="body" x="80" y="772">•</text>
+    <text class="body" x="98" y="772">
+      <tspan x="98" y="772">Replace ARIMA with LightGBM and add external</tspan>
+      <tspan x="98" dy="23">features to improve forecasting accuracy.</tspan>
+    </text>
+  </g>
+
+  <g id="kp-4">
+    <rect x="603" y="694" width="264" height="8" rx="4" fill="url(#gMagenta)" opacity="0.98"/>
+    <circle cx="585" cy="690" r="12" fill="#FF5A9E"/>
+    <path class="iconStroke" d="M585 684 L589 686.5 V690.5 C589 693.5 587.2 695.2 585 696.4 C582.8 695.2 581 693.5 581 690.5 V686.5 Z"/>
+    <text class="section" x="603" y="696">Security &amp; Compliance Enhancement</text>
+    <rect x="573" y="720" width="512" height="170" rx="20" fill="#40233A"/>
+    <rect x="589" y="736" width="480" height="138" rx="16" fill="#301A2B"/>
+    <text class="body" x="613" y="772">•</text>
+    <text class="body" x="631" y="772">
+      <tspan x="631" y="772">Strengthen log auditing, sensitive-data masking,</tspan>
+      <tspan x="631" dy="23">and security isolation.</tspan>
+    </text>
+  </g>
+
+  <g id="kp-5">
+    <rect x="70" y="924" width="318" height="8" rx="4" fill="url(#gBlue2)" opacity="0.98"/>
+    <circle cx="52" cy="920" r="12" fill="#4E7EFF"/>
+    <circle class="iconStroke" cx="50.5" cy="918.5" r="3.5"/>
+    <line class="iconStroke" x1="53.5" y1="921.5" x2="57.5" y2="925.5"/>
+    <text class="section" x="70" y="926">International Search Capability Upgrade</text>
+    <rect x="40" y="950" width="512" height="170" rx="20" fill="#22365C"/>
+    <rect x="56" y="966" width="480" height="138" rx="16" fill="#1B2742"/>
+    <text class="body" x="80" y="1002">•</text>
+    <text class="body" x="98" y="1002">
+      <tspan x="98" y="1002">Rebuild the search module with Elasticsearch to</tspan>
+      <tspan x="98" dy="23">support Thai tokenization and large-scale</tspan>
+      <tspan x="98" dy="23">query workloads.</tspan>
+    </text>
+  </g>
+
+  <g id="kp-6">
+    <rect x="603" y="924" width="248" height="8" rx="4" fill="url(#gTeal)" opacity="0.98"/>
+    <circle cx="585" cy="920" r="12" fill="#49D9E3"/>
+    <path class="iconStroke" d="M583 919.5 V917.5 A2 2 0 0 1 587 917.5 V919.5"/>
+    <rect x="581.5" y="919.5" width="7.5" height="6.5" rx="1.4" class="iconStroke"/>
+    <text class="section" x="603" y="926">Access Control System Upgrade</text>
+    <rect x="573" y="950" width="512" height="170" rx="20" fill="#1E444A"/>
+    <rect x="589" y="966" width="480" height="138" rx="16" fill="#17353A"/>
+    <text class="body" x="613" y="1002">•</text>
+    <text class="body" x="631" y="1002">
+      <tspan x="631" y="1002">Extend RBAC with ABAC to enable data-level and</tspan>
+      <tspan x="631" dy="23">field-level permission control.</tspan>
+    </text>
+  </g>
+
+  <g id="kp-7">
+    <rect x="70" y="1154" width="198" height="8" rx="4" fill="url(#gViolet)" opacity="0.98"/>
+    <circle cx="52" cy="1150" r="12" fill="#7B77FF"/>
+    <path d="M47.5 1151 L57 1146.5 L54 1155.5 L52 1151.5 Z" fill="#FFFFFF"/>
+    <text class="section" x="70" y="1156">Canary Release Strategy</text>
+    <rect x="40" y="1180" width="512" height="170" rx="20" fill="#2D2A55"/>
+    <rect x="56" y="1196" width="480" height="138" rx="16" fill="#201E3F"/>
+    <text class="body" x="80" y="1232">•</text>
+    <text class="body" x="98" y="1232">
+      <tspan x="98" y="1232">Adopt tenant-based canary rollout and define</tspan>
+      <tspan x="98" dy="23">a rapid rollback plan.</tspan>
+    </text>
+  </g>
+
+  <g id="todo-header">
+    <rect x="70" y="1388" width="118" height="8" rx="4" fill="url(#gBlue)" opacity="0.98"/>
+    <circle cx="52" cy="1384" r="12" fill="#5976FF"/>
+    <rect x="48.5" y="1379.5" width="7.5" height="9" rx="1.5" class="iconStroke"/>
+    <path class="iconStroke" d="M50.5 1378.5 H54"/>
+    <path class="iconStroke" d="M50 1384.5 L51.8 1386.3 L54.8 1383.3"/>
+    <text class="section" x="70" y="1390">Action Items</text>
+  </g>
+
+  <g id="todo-card">
+    <rect x="40" y="1414" width="1045" height="238" rx="20" fill="#1E2747"/>
+    <rect x="56" y="1430" width="1013" height="206" rx="16" fill="#1A223A"/>
+    <path d="M72 1430 H1053 A16 16 0 0 1 1069 1446 V1474 H56 V1446 A16 16 0 0 1 72 1430 Z" fill="url(#gTable)"/>
+    <text class="tableHead" x="76" y="1458">Action Items</text>
+    <line x1="76" y1="1528" x2="1049" y2="1528" stroke="#2D3961" stroke-width="1"/>
+    <line x1="76" y1="1582" x2="1049" y2="1582" stroke="#2D3961" stroke-width="1"/>
+    <text class="tableBody" x="76" y="1508">
+      <tspan x="76" y="1508">Product &amp; Architecture Group: deliver the initial draft of the data-permission matrix by next Wednesday.</tspan>
+    </text>
+    <text class="tableBody" x="76" y="1562">
+      <tspan x="76" y="1562">DBA Team: implement the cross-region database backup plan.</tspan>
+    </text>
+    <text class="tableBody" x="76" y="1616">
+      <tspan x="76" y="1616">Module Owners: update the design documents by 3:00 PM tomorrow.</tspan>
+    </text>
+  </g>
+
+  <g id="conclusion-header">
+    <rect x="70" y="1688" width="104" height="8" rx="4" fill="url(#gBlue)" opacity="0.98"/>
+    <circle cx="52" cy="1684" r="12" fill="#5976FF"/>
+    <circle class="iconStroke" cx="52" cy="1684" r="5.2"/>
+    <path class="iconStroke" d="M49.3 1684 L51.4 1686.1 L55 1682.2"/>
+    <text class="section" x="70" y="1690">Conclusion</text>
+  </g>
+
+  <g id="conclusion-card">
+    <rect x="40" y="1714" width="1045" height="176" rx="20" fill="#1E2747"/>
+    <rect x="56" y="1730" width="1013" height="144" rx="16" fill="#1A223A"/>
+    <text class="bodyLg" x="76" y="1768">•</text>
+    <text class="bodyLg" x="94" y="1768">
+      <tspan x="94" y="1768">The search module rebuild is included in the 3.0 scope; lower-priority requirements are deferred.</tspan>
+    </text>
+    <text class="bodyLg" x="76" y="1804">•</text>
+    <text class="bodyLg" x="94" y="1804">
+      <tspan x="94" y="1804">Application-layer active-active will not be implemented at this stage.</tspan>
+    </text>
+    <text class="bodyLg" x="76" y="1840">•</text>
+    <text class="bodyLg" x="94" y="1840">
+      <tspan x="94" y="1840">Cross-region database backup will be executed, and go-live will follow a tenant-based canary rollout.</tspan>
+    </text>
+  </g>
+</svg>

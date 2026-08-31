@@ -2,7 +2,7 @@
 
 前后端不分离的 Laravel CRM 项目，由旧项目 `new_co_gmtk_crmv3` 全量等价迁移而来。后台与前台各提供 **Layui** 与 **CrmUI** 两套视觉家族，业务逻辑共用同一批现代 API 与数据表。
 
-> 旧项目目录 `new_co_gmtk_crmv3` 与旧库 `hank_zl_data` 仅作只读参照，禁止任何写入。
+> 旧项目目录 `DB1` 与旧库 `DB2` 仅作只读参照，禁止任何写入。
 
 ## 技术栈
 
@@ -101,7 +101,7 @@ php artisan view:cache / view:clear          # Blade 编译缓存
 
 ## 安全红线
 
-1. 旧库 `hank_zl_data` 永久只读。
+1. 旧库 `DB1` 永久只读。
 2. PHPUnit 只写 `co_crmv5_test`；正式库禁写测试数据。
 3. `database/sql/full_reset_and_migrate.sql` 会清空 `co_crmv5` 全部业务表，执行前必须备份并获用户明确授权。
 4. 不伪造测试通过或浏览器验收结论；被安全策略阻塞的验收如实标注 `BLOCKED_BY_BROWSER_POLICY`。

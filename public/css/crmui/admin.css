@@ -1,0 +1,1202 @@
+/**
+ * CrmUI Admin Shell 样式表 | CrmUI Admin Shell Stylesheet
+ *
+ * 文件功能：
+ * - 后台 CrmUI 家族的页面级样式，导入 front.css 基础样式后进行后台专属覆盖。
+ * - 对标 Awwwards/FWA/CSS Design Awards 每日最佳网站的设计品质。
+ * - 追求先锋视觉风格、流畅物理动效、极具冲击力的文字版式。
+ *
+ * 适用场景：
+ * - 所有 /admin-crmui/* 路径下的后台管理页面。
+ * - 包含仪表盘、用户列表、审核页面、表单、表格、模态框等完整后台交互。
+ *
+ * 设计规范：
+ * - 统一使用 Lucide 图标，禁止表情符号。
+ * - CSS 自定义属性驱动主题色，支持深色模式。
+ * - 响应式断点：1199px（折叠侧栏）、767px（移动端全宽）。
+ */
+@import url("./front.css");
+
+/* ============================================================
+   1. 设计令牌 | Design Tokens —— 后台主题色定义
+   ============================================================ */
+:root {
+    /* 主色调：深蓝紫系，代表后台的权威感与专业感 */
+    --crmui-primary: oklch(48% 0.12 260);
+    --crmui-accent: oklch(60% 0.14 190);
+    --crmui-danger: oklch(55% 0.22 20);
+
+    /* 后台侧栏配色：深邃暗色调 */
+    --crmui-admin-sidebar-bg: oklch(22% 0.04 260);
+    --crmui-admin-sidebar-text: oklch(90% 0.02 260);
+    --crmui-admin-sidebar-hover: oklch(32% 0.07 260);
+    --crmui-admin-sidebar-active: oklch(38% 0.09 260);
+
+    /* 后台顶栏 */
+    --crmui-admin-topbar-bg: oklch(100% 0 0);
+    --crmui-admin-topbar-border: oklch(90% 0.01 260);
+
+    /* 卡片与面板 */
+    --crmui-admin-card-bg: oklch(100% 0 0);
+    --crmui-admin-card-shadow: 0 1px 3px oklch(0% 0 0 / 0.06), 0 1px 2px oklch(0% 0 0 / 0.04);
+
+    /* 暗色模式覆盖 */
+    --crmui-admin-sidebar-bg-dark: oklch(16% 0.03 260);
+    --crmui-admin-topbar-bg-dark: oklch(18% 0.02 260);
+    --crmui-admin-card-bg-dark: oklch(20% 0.02 260);
+    --crmui-admin-card-shadow-dark: 0 1px 3px oklch(0% 0 0 / 0.3);
+}
+
+/* ============================================================
+   2. 后台全局 Shell | Admin Global Shell
+   ============================================================ */
+
+/* 后台 body —— 背景色渐变带来深度感 */
+.crmui-admin-body {
+    background: linear-gradient(135deg, oklch(97% 0.01 260) 0%, oklch(99% 0.005 260) 100%);
+    min-height: 100vh;
+}
+
+/* 后台 Shell 网格布局 —— 侧栏固定宽 + 主区域弹性 */
+.crmui-admin-body .crmui-shell {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+    transition: grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================
+   3. 后台侧栏 | Admin Sidebar
+   ============================================================ */
+
+.crmui-admin-body .crmui-sidebar {
+    background: var(--crmui-admin-sidebar-bg);
+    color: var(--crmui-admin-sidebar-text);
+    grid-row: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid oklch(100% 0 0 / 0.06);
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    scrollbar-width: thin;
+    scrollbar-color: oklch(50% 0.04 260) transparent;
+}
+
+/* 侧栏自定义滚动条（WebKit） */
+.crmui-admin-body .crmui-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.crmui-admin-body .crmui-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.crmui-admin-body .crmui-sidebar::-webkit-scrollbar-thumb {
+    background: oklch(50% 0.04 260);
+    border-radius: 2px;
+}
+
+/* 后台品牌标识 */
+.crmui-admin-body .crmui-brand {
+    padding: 1.5rem 1.25rem;
+    border-bottom: 1px solid oklch(100% 0 0 / 0.08);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s ease;
+    position: sticky;
+    top: 0;
+    background: var(--crmui-admin-sidebar-bg);
+    z-index: 10;
+}
+
+.crmui-admin-body .crmui-brand:hover {
+    background: oklch(100% 0 0 / 0.04);
+}
+
+.crmui-admin-body .crmui-brand-mark {
+    background: var(--crmui-accent);
+    color: oklch(20% 0.05 260);
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.crmui-admin-body .crmui-brand:hover .crmui-brand-mark {
+    transform: scale(1.08) rotate(-3deg);
+    box-shadow: 0 4px 12px oklch(60% 0.14 190 / 0.4);
+}
+
+.crmui-admin-body .crmui-brand strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+.crmui-admin-body .crmui-brand small,
+.crmui-admin-body .crmui-nav-title {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: oklch(70% 0.03 260);
+}
+
+/* 导航分组 */
+.crmui-admin-body .crmui-nav-group {
+    padding: 1rem 0;
+    border-bottom: 1px solid oklch(100% 0 0 / 0.04);
+}
+
+.crmui-admin-body .crmui-nav-group:last-child {
+    border-bottom: none;
+}
+
+.crmui-admin-body .crmui-nav-title {
+    padding: 0.25rem 1.25rem 0.5rem;
+}
+
+/* 导航链接 —— 带流畅过渡和指示器 */
+.crmui-admin-body .crmui-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.55rem 1.25rem;
+    color: oklch(78% 0.02 260);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 450;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    border-left: 3px solid transparent;
+    margin: 1px 0;
+}
+
+/* 导航链接内的 Lucide 图标 —— 与文字垂直居中对齐，并随激活态着色 */
+.crmui-admin-body .crmui-nav-link .crm-lucide-icon,
+.crmui-admin-body .crmui-nav-link svg.lucide {
+    width: 1.05rem;
+    height: 1.05rem;
+    flex: none;
+    color: inherit;
+    opacity: 0.85;
+    transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.crmui-admin-body .crmui-nav-link:hover .crm-lucide-icon,
+.crmui-admin-body .crmui-nav-link.is-active .crm-lucide-icon {
+    opacity: 1;
+}
+
+.crmui-admin-body .crmui-nav-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, oklch(100% 0 0 / 0.08) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.crmui-admin-body .crmui-nav-link:hover {
+    color: oklch(97% 0.01 260);
+}
+
+.crmui-admin-body .crmui-nav-link:hover::before {
+    opacity: 1;
+}
+
+/* 当前激活的导航链接 —— 左侧彩色指示条 + 高亮背景 */
+.crmui-admin-body .crmui-nav-link.is-active {
+    color: oklch(98% 0.005 260);
+    background: oklch(100% 0 0 / 0.06);
+    border-left-color: var(--crmui-accent);
+    font-weight: 550;
+}
+
+.crmui-admin-body .crmui-nav-link.is-active::before {
+    opacity: 1;
+    background: linear-gradient(90deg, var(--crmui-accent) 0%, transparent 100%);
+    mask-image: linear-gradient(90deg, oklch(0% 0 0 / 0.15) 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, oklch(0% 0 0 / 0.15) 0%, transparent 100%);
+}
+
+/* ============================================================
+   4. 后台顶栏 | Admin Topbar
+   ============================================================ */
+
+.crmui-admin-body .crmui-topbar {
+    background: var(--crmui-admin-topbar-bg);
+    border-bottom: 1px solid var(--crmui-admin-topbar-border);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: oklch(100% 0 0 / 0.85);
+}
+
+/* 顶栏标题 */
+.crmui-admin-body .crmui-topbar-title strong {
+    font-size: 1.05rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    color: oklch(20% 0.03 260);
+}
+
+.crmui-admin-body .crmui-topbar-title span {
+    font-size: 0.75rem;
+    color: oklch(55% 0.03 260);
+    margin-left: 0.5rem;
+}
+
+/* 顶栏操作按钮组 */
+.crmui-admin-body .crmui-topbar-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ============================================================
+   5. 后台主内容区 | Admin Main Content Area
+   ============================================================ */
+
+.crmui-admin-body .crmui-main {
+    padding: 2rem;
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* 页面头 —— 左右布局 + 底部渐变分割线 */
+.crmui-admin-body .crmui-page-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(90deg, var(--crmui-accent) 0%, transparent 80%) 1;
+}
+
+.crmui-admin-body .crmui-page-scope {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--crmui-accent);
+    margin-bottom: 0.25rem;
+}
+
+.crmui-admin-body .crmui-page-head h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: oklch(18% 0.04 260);
+    margin: 0 0 0.25rem;
+}
+
+/* ============================================================
+   6. 后台卡片样式 | Admin Card Styles
+   ============================================================ */
+
+.crmui-admin-body .crmui-panel {
+    background: var(--crmui-admin-card-bg);
+    border-radius: 14px;
+    box-shadow: var(--crmui-admin-card-shadow);
+    border: 1px solid oklch(92% 0.01 260);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.crmui-admin-body .crmui-panel:hover {
+    box-shadow: 0 4px 12px oklch(0% 0 0 / 0.08), 0 2px 4px oklch(0% 0 0 / 0.04);
+}
+
+/* 卡片头部 */
+.crmui-admin-body .crmui-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid oklch(94% 0.01 260);
+}
+
+.crmui-admin-body .crmui-panel-head strong {
+    font-size: 1rem;
+    font-weight: 650;
+    color: oklch(22% 0.04 260);
+    letter-spacing: -0.01em;
+}
+
+.crmui-admin-body .crmui-panel-head span {
+    font-size: 0.8rem;
+    color: oklch(55% 0.03 260);
+}
+
+/* ============================================================
+   7. 后台指标卡片 | Admin Metric Cards
+   ============================================================ */
+
+/* 需求 9：统计指标区是独立于表格的区块，默认靠左对齐。
+   auto-fill + justify-content:start 让卡片从左侧开始排列，最后一行不再被拉伸铺满整行；
+   min-content 宽度仍由 minmax 保底，窄屏时 1145 行的响应式规则会切回单列。 */
+.crmui-admin-body .crmui-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 200px));
+    justify-content: start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.crmui-admin-body .crmui-metric {
+    background: var(--crmui-admin-card-bg);
+    border: 1px solid oklch(94% 0.01 260);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 指标卡片悬停微动效 */
+.crmui-admin-body .crmui-metric:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px oklch(0% 0 0 / 0.08);
+    border-color: var(--crmui-accent);
+}
+
+/* 指标卡片左侧装饰线 */
+.crmui-admin-body .crmui-metric::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20%;
+    height: 60%;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: var(--crmui-accent);
+    opacity: 0;
+    transform: scaleY(0);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.crmui-admin-body .crmui-metric:hover::before {
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+.crmui-admin-body .crmui-metric span {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: oklch(55% 0.03 260);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.crmui-admin-body .crmui-metric strong {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: oklch(20% 0.04 260);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   8. 后台表格增强 | Admin Table Enhancements
+   ============================================================ */
+
+.crmui-admin-body .crmui-table-wrap {
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid oklch(94% 0.01 260);
+}
+
+.crmui-admin-body .crmui-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+}
+
+/* 表头 —— 粘性定位 + 微背景 */
+.crmui-admin-body .crmui-table thead th {
+    background: oklch(98% 0.005 260);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: oklch(40% 0.03 260);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 2px solid oklch(90% 0.02 260);
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+/* 表格行 —— 微妙的悬停反馈 */
+.crmui-admin-body .crmui-table tbody tr {
+    transition: background 0.15s ease;
+    border-bottom: 1px solid oklch(95% 0.01 260);
+}
+
+.crmui-admin-body .crmui-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.crmui-admin-body .crmui-table tbody tr:hover {
+    background: oklch(97% 0.015 260);
+}
+
+.crmui-admin-body .crmui-table tbody td {
+    padding: 0.7rem 1rem;
+    color: oklch(30% 0.03 260);
+    vertical-align: middle;
+}
+
+/* 操作列右对齐 */
+.crmui-admin-body .crmui-table th[data-crmui-action-column],
+.crmui-admin-body .crmui-table td[data-crmui-action-column] {
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* ============================================================
+   9. 后台按钮与操作 | Admin Buttons & Actions
+   ============================================================ */
+
+.crmui-admin-body .crmui-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 550;
+    letter-spacing: 0.01em;
+    border: 1px solid oklch(90% 0.02 260);
+    background: oklch(100% 0 0);
+    color: oklch(30% 0.04 260);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.crmui-admin-body .crmui-button:hover {
+    border-color: var(--crmui-accent);
+    color: var(--crmui-accent);
+    box-shadow: 0 2px 8px oklch(60% 0.14 190 / 0.15);
+}
+
+.crmui-admin-body .crmui-button.is-primary {
+    background: var(--crmui-accent);
+    color: oklch(20% 0.05 260);
+    border-color: var(--crmui-accent);
+    font-weight: 600;
+}
+
+.crmui-admin-body .crmui-button.is-primary:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 4px 16px oklch(60% 0.14 190 / 0.35);
+    transform: translateY(-1px);
+}
+
+.crmui-admin-body .crmui-button.is-danger {
+    color: var(--crmui-danger);
+    border-color: oklch(85% 0.08 20);
+}
+
+.crmui-admin-body .crmui-button.is-danger:hover {
+    background: var(--crmui-danger);
+    color: white;
+    border-color: var(--crmui-danger);
+}
+
+/* 行操作按钮 */
+.crmui-admin-body .crmui-row-actions {
+    display: flex;
+    gap: 0.35rem;
+    justify-content: flex-end;
+}
+
+.crmui-admin-body [data-crmui-page="admin.cancel_applies"] .crmui-row-actions {
+    min-width: 132px;
+}
+
+.crmui-admin-body .crmui-status-badge {
+    display: inline-flex;
+    min-height: 26px;
+    align-items: center;
+    padding: 2px 9px;
+    border: 1px solid currentColor;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.crmui-admin-body .crmui-status-badge.is-pending {
+    color: var(--crmui-warning);
+    background: var(--crmui-warning-soft);
+}
+
+.crmui-admin-body .crmui-status-badge.is-approved {
+    color: var(--crmui-success);
+    background: color-mix(in srgb, var(--crmui-success) 10%, var(--crmui-surface));
+}
+
+.crmui-admin-body .crmui-status-badge.is-rejected,
+.crmui-admin-body .crmui-money.is-negative {
+    color: var(--crmui-danger);
+}
+
+.crmui-admin-body .crmui-money.is-negative {
+    font-weight: 800;
+}
+
+.crmui-admin-body .crmui-row-button {
+    padding: 0.3rem 0.65rem;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid oklch(92% 0.01 260);
+    background: oklch(100% 0 0);
+    color: oklch(35% 0.04 260);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.crmui-admin-body .crmui-row-button:hover {
+    border-color: var(--crmui-accent);
+    color: var(--crmui-accent);
+    background: oklch(97% 0.02 260);
+}
+
+.crmui-admin-body .crmui-row-button.is-danger {
+    color: var(--crmui-danger);
+}
+
+.crmui-admin-body .crmui-row-button.is-danger:hover {
+    background: var(--crmui-danger);
+    color: white;
+}
+
+/* ============================================================
+   10. 后台表单 | Admin Forms
+   ============================================================ */
+
+.crmui-admin-body .crmui-form-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.crmui-admin-body .crmui-input {
+    width: 100%;
+    padding: 0.6rem 0.85rem;
+    border: 1.5px solid oklch(90% 0.02 260);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: oklch(25% 0.04 260);
+    background: oklch(100% 0 0);
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.crmui-admin-body .crmui-input:focus {
+    border-color: var(--crmui-accent);
+    box-shadow: 0 0 0 3px oklch(60% 0.14 190 / 0.12);
+}
+
+.crmui-admin-body .crmui-input::placeholder {
+    color: oklch(65% 0.02 260);
+}
+
+/* 筛选表单 */
+.crmui-admin-body .crmui-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: flex-end;
+    margin-bottom: 1.25rem;
+}
+
+.crmui-admin-body .crmui-filter .crmui-input {
+    width: auto;
+    min-width: 160px;
+}
+
+/* ============================================================
+   11. 后台模态框 | Admin Modal
+   ============================================================ */
+
+.crmui-admin-body .crmui-modal[hidden] {
+    display: none;
+}
+
+.crmui-admin-body .crmui-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.crmui-admin-body .crmui-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: oklch(0% 0 0 / 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: crmui-admin-fadeIn 0.2s ease;
+}
+
+.crmui-admin-body .crmui-modal-panel {
+    position: relative;
+    background: oklch(100% 0 0);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px oklch(0% 0 0 / 0.2);
+    max-width: 520px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: crmui-admin-modalSlideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.crmui-admin-body .crmui-modal-panel--wide {
+    max-width: 1120px;
+}
+
+.crmui-admin-body .crmui-ip-detail-content {
+    padding: 1rem;
+}
+
+.crmui-admin-body .crmui-ip-detail-content .crmui-table-wrap {
+    max-height: calc(85vh - 86px);
+    overflow: auto;
+}
+
+.crmui-admin-body .crmui-modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid oklch(94% 0.01 260);
+}
+
+.crmui-admin-body .crmui-modal-head strong {
+    font-size: 1.05rem;
+    font-weight: 650;
+    color: oklch(20% 0.04 260);
+}
+
+.crmui-admin-body .crmui-modal-panel .crmui-form {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* ============================================================
+   12. 后台认证页面 | Admin Auth Page
+   ============================================================ */
+
+.crmui-admin-auth-body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, oklch(22% 0.06 260) 0%, oklch(16% 0.04 260) 100%);
+}
+
+.crmui-admin-body .crmui-auth-brand {
+    background: oklch(28% 0.09 260);
+}
+
+/* ============================================================
+   13. 后台动效关键帧 | Admin Keyframes
+   ============================================================ */
+
+@keyframes crmui-admin-fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes crmui-admin-modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 加载骨架屏动画 */
+@keyframes crmui-admin-shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes crmui-auth-detail-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 实名认证详情的加载、资料与组件审核状态。 */
+.crmui-admin-body .crmui-auth-state {
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.75rem;
+    color: oklch(48% 0.03 260);
+}
+
+.crmui-admin-body .crmui-auth-state[hidden],
+.crmui-admin-body [data-crmui-auth-state="content"][hidden],
+.crmui-admin-body [data-crmui-auth-review-form][hidden],
+.crmui-admin-body [data-crmui-auth-review-component][hidden],
+.crmui-admin-body [data-crmui-auth-review-empty][hidden],
+.crmui-admin-body [data-crmui-auth-image][hidden],
+.crmui-admin-body [data-crmui-auth-image-empty][hidden] {
+    display: none;
+}
+
+.crmui-admin-body .crmui-auth-state svg,
+.crmui-admin-body .crmui-auth-state .crmui-auth-loading-icon {
+    width: 28px;
+    height: 28px;
+}
+
+.crmui-admin-body .crmui-auth-loading-icon {
+    animation: crmui-auth-detail-spin 0.8s linear infinite;
+}
+
+.crmui-admin-body .crmui-auth-state.is-error {
+    color: var(--crmui-danger);
+}
+
+.crmui-admin-body .crmui-auth-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    margin: 0;
+    background: oklch(91% 0.015 260);
+    border: 1px solid oklch(91% 0.015 260);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.crmui-admin-body .crmui-auth-detail-grid > div {
+    min-width: 0;
+    padding: 0.9rem;
+    background: var(--crmui-admin-card-bg);
+}
+
+.crmui-admin-body .crmui-auth-detail-grid dt,
+.crmui-admin-body .crmui-auth-image-grid figcaption {
+    margin-bottom: 0.35rem;
+    font-size: 0.75rem;
+    color: oklch(52% 0.03 260);
+}
+
+.crmui-admin-body .crmui-auth-detail-grid dd {
+    margin: 0;
+    color: oklch(24% 0.035 260);
+    overflow-wrap: anywhere;
+}
+
+.crmui-admin-body .crmui-auth-image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.crmui-admin-body .crmui-auth-image-grid figure {
+    min-width: 0;
+    margin: 0;
+}
+
+.crmui-admin-body .crmui-auth-image-grid img,
+.crmui-admin-body .crmui-auth-image-grid [data-crmui-auth-image-empty] {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border: 1px solid oklch(90% 0.02 260);
+    border-radius: 8px;
+}
+
+.crmui-admin-body .crmui-auth-image-grid img {
+    display: block;
+    object-fit: contain;
+    background: oklch(97% 0.01 260);
+}
+
+.crmui-admin-body .crmui-auth-image-grid [data-crmui-auth-image-empty] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: oklch(58% 0.025 260);
+    background: oklch(97% 0.01 260);
+}
+
+.crmui-admin-body .crmui-auth-review fieldset {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    min-width: 0;
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid oklch(90% 0.02 260);
+    border-radius: 8px;
+}
+
+.crmui-admin-body .crmui-auth-review legend {
+    padding: 0 0.4rem;
+    font-weight: 650;
+}
+
+.crmui-admin-body .crmui-auth-review label > span {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.8rem;
+    color: oklch(42% 0.03 260);
+}
+
+.crmui-admin-body .crmui-auth-review .crmui-textarea {
+    min-height: 84px;
+    resize: vertical;
+}
+
+.crmui-admin-body .crmui-auth-review .crmui-button[type="submit"] {
+    justify-self: start;
+}
+
+.crmui-admin-body .crmui-auth-review-empty {
+    margin: 0;
+    color: oklch(52% 0.03 260);
+}
+
+/* ============================================================
+   14. 后台空状态 | Admin Empty State
+   ============================================================ */
+
+.crmui-admin-body .crmui-table tbody td[colspan] {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: oklch(55% 0.03 260);
+    font-size: 0.9rem;
+}
+
+/* ============================================================
+   15. 后台标签页 | Admin Tabs
+   ============================================================ */
+
+.crmui-admin-body .crmui-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid oklch(92% 0.02 260);
+    margin-bottom: 1.5rem;
+}
+
+.crmui-admin-body .crmui-tab {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: oklch(50% 0.03 260);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.crmui-admin-body .crmui-tab:hover {
+    color: oklch(30% 0.04 260);
+}
+
+.crmui-admin-body .crmui-tab.is-active {
+    color: var(--crmui-accent);
+    border-bottom-color: var(--crmui-accent);
+    font-weight: 600;
+}
+
+/* ============================================================
+   16. 暗色模式覆盖 | Dark Mode Overrides
+   ============================================================ */
+
+[data-theme="dark"] .crmui-admin-body {
+    background: linear-gradient(135deg, oklch(14% 0.03 260) 0%, oklch(12% 0.02 260) 100%);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-sidebar {
+    background: var(--crmui-admin-sidebar-bg-dark);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-topbar {
+    background: oklch(18% 0.02 260 / 0.88);
+    border-bottom-color: oklch(28% 0.03 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-main {
+    color: oklch(90% 0.01 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-panel {
+    background: var(--crmui-admin-card-bg-dark);
+    border-color: oklch(28% 0.03 260);
+    box-shadow: var(--crmui-admin-card-shadow-dark);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-panel-head {
+    border-bottom-color: oklch(28% 0.03 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-panel-head strong {
+    color: oklch(92% 0.01 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-page-head h1 {
+    color: oklch(92% 0.01 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-table thead th {
+    background: oklch(16% 0.02 260);
+    color: oklch(70% 0.02 260);
+    border-bottom-color: oklch(28% 0.03 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-table tbody tr {
+    border-bottom-color: oklch(24% 0.02 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-table tbody tr:hover {
+    background: oklch(24% 0.03 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-table tbody td {
+    color: oklch(85% 0.01 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-input {
+    background: oklch(18% 0.02 260);
+    border-color: oklch(30% 0.03 260);
+    color: oklch(90% 0.01 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-input:focus {
+    border-color: var(--crmui-accent);
+    box-shadow: 0 0 0 3px oklch(60% 0.14 190 / 0.2);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-button {
+    background: oklch(22% 0.03 260);
+    border-color: oklch(30% 0.03 260);
+    color: oklch(85% 0.01 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-metric {
+    background: var(--crmui-admin-card-bg-dark);
+    border-color: oklch(28% 0.03 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-metric:hover {
+    border-color: var(--crmui-accent);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-metric strong {
+    color: oklch(92% 0.01 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-tabs {
+    border-bottom-color: oklch(28% 0.03 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-modal-panel {
+    background: oklch(20% 0.03 260);
+    box-shadow: 0 20px 60px oklch(0% 0 0 / 0.5);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-modal-head {
+    border-bottom-color: oklch(28% 0.03 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-modal-head strong {
+    color: oklch(92% 0.01 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-auth-detail-grid {
+    background: oklch(28% 0.03 260);
+    border-color: oklch(28% 0.03 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-auth-detail-grid > div {
+    background: var(--crmui-admin-card-bg-dark);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-auth-detail-grid dd,
+[data-theme="dark"] .crmui-admin-body .crmui-auth-review legend {
+    color: oklch(90% 0.01 260);
+}
+
+[data-theme="dark"] .crmui-admin-body .crmui-auth-image-grid img,
+[data-theme="dark"] .crmui-admin-body .crmui-auth-image-grid [data-crmui-auth-image-empty],
+[data-theme="dark"] .crmui-admin-body .crmui-auth-review fieldset {
+    border-color: oklch(30% 0.03 260);
+    background: oklch(20% 0.025 260);
+}
+
+/* ============================================================
+   17. 响应式 | Responsive Breakpoints
+   ============================================================ */
+
+/* 1199px：折叠侧栏为图标模式 */
+@media (max-width: 1199px) {
+    .crmui-admin-body .crmui-shell {
+        grid-template-columns: 240px minmax(0, 1fr);
+    }
+
+    .crmui-admin-body .crmui-main {
+        padding: 1.5rem;
+    }
+}
+
+/* 767px：移动端全宽布局，侧栏变为抽屉式 */
+@media (max-width: 767px) {
+    .crmui-admin-body .crmui-shell {
+        display: block;
+    }
+
+    .crmui-admin-body .crmui-sidebar {
+        position: fixed;
+        left: -280px;
+        top: 0;
+        bottom: 0;
+        width: 280px;
+        z-index: 100;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 4px 0 24px oklch(0% 0 0 / 0.2);
+    }
+
+    .crmui-admin-body .crmui-sidebar.is-open {
+        left: 0;
+    }
+
+    .crmui-admin-body .crmui-main {
+        padding: 1rem;
+    }
+
+    .crmui-admin-body .crmui-page-head {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .crmui-admin-body .crmui-metrics {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 0.75rem;
+    }
+
+    .crmui-admin-body .crmui-filter {
+        flex-direction: column;
+    }
+
+    .crmui-admin-body .crmui-filter .crmui-input {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .crmui-admin-body .crmui-table-wrap {
+        border-radius: 8px;
+    }
+
+    .crmui-admin-body .crmui-modal-panel {
+        width: 95%;
+        max-width: none;
+        border-radius: 12px;
+        max-height: 90vh;
+    }
+
+    .crmui-admin-body .crmui-auth-detail-grid,
+    .crmui-admin-body .crmui-auth-image-grid,
+    .crmui-admin-body .crmui-auth-review fieldset {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* ============================================================
+   18. 打印优化 | Print Styles
+   ============================================================ */
+
+@media print {
+    .crmui-admin-body .crmui-sidebar,
+    .crmui-admin-body .crmui-topbar,
+    .crmui-admin-body .crmui-row-actions,
+    .crmui-admin-body .crmui-page-actions {
+        display: none !important;
+    }
+
+    .crmui-admin-body .crmui-shell {
+        display: block;
+    }
+
+    .crmui-admin-body .crmui-main {
+        padding: 0;
+        max-width: none;
+    }
+}
+
+/* 统一上传组件：体积文案与行内错误提示的后台 CrmUI 家族外观。 */
+.crmui-upload-size:empty {
+    display: none;
+}
+
+.crmui-upload .crm-field-error {
+    color: var(--crmui-danger);
+}
+
+.crmui-upload.has-file span {
+    color: var(--crmui-primary);
+}

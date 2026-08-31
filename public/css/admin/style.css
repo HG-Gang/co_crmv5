@@ -1,0 +1,1457 @@
+:root {
+    --admin-bg: #f4f6f8;
+    --admin-panel: #ffffff;
+    --admin-line: #dde4ec;
+    --admin-text: #1f2933;
+    --admin-muted: #667085;
+    --admin-strong: #111827;
+    --admin-side: #151b23;
+    --admin-side-soft: #202a35;
+    --admin-accent: #18a058;
+    --admin-blue: #2080f0;
+    --admin-warn: #d97706;
+    --admin-danger: #d03050;
+    --admin-hover: #f8fbff;
+    --admin-input: #ffffff;
+    --admin-radius: 8px;
+    --admin-radius-sm: 6px;
+    --admin-sidebar-width: 224px;
+    --admin-header-height: 60px;
+    --admin-footer-height: 38px;
+    --admin-content-gap: 16px;
+    --admin-panel-padding: 18px;
+    --admin-toolbar-height: 38px;
+    --admin-shadow: 0 14px 34px rgba(15, 23, 42, .08);
+    --admin-shadow-soft: 0 8px 22px rgba(15, 23, 42, .05);
+}
+
+html[data-front-theme="dark"] {
+    --admin-bg: #101418;
+    --admin-panel: #181f26;
+    --admin-line: #2b3742;
+    --admin-text: #d7dee8;
+    --admin-muted: #94a3b8;
+    --admin-strong: #f8fafc;
+    --admin-side: #0b1015;
+    --admin-side-soft: #151d26;
+    --admin-accent: #2dd4bf;
+    --admin-blue: #60a5fa;
+    --admin-warn: #f59e0b;
+    --admin-danger: #fb7185;
+    --admin-hover: #202b36;
+    --admin-input: #111820;
+}
+
+html[data-front-theme="sea"] {
+    --admin-bg: #eef7fb;
+    --admin-panel: #ffffff;
+    --admin-line: #bfd8e6;
+    --admin-text: #153443;
+    --admin-muted: #55707d;
+    --admin-strong: #082f49;
+    --admin-side: #073447;
+    --admin-side-soft: #0d4f68;
+    --admin-accent: #0891b2;
+    --admin-blue: #2563eb;
+    --admin-warn: #b45309;
+    --admin-danger: #be123c;
+    --admin-hover: #e8f7ff;
+}
+
+html[data-front-theme="warm"] {
+    --admin-bg: #f8f3ed;
+    --admin-panel: #fffdf9;
+    --admin-line: #e4d5c4;
+    --admin-text: #34261d;
+    --admin-muted: #7a685a;
+    --admin-strong: #24170f;
+    --admin-side: #30251e;
+    --admin-side-soft: #44342a;
+    --admin-accent: #b45309;
+    --admin-blue: #1d4ed8;
+    --admin-warn: #d97706;
+    --admin-danger: #dc2626;
+    --admin-hover: #fff4e6;
+    --admin-input: #fffaf3;
+}
+
+html[data-front-theme="contrast"] {
+    --admin-bg: #000000;
+    --admin-panel: #ffffff;
+    --admin-line: #000000;
+    --admin-text: #000000;
+    --admin-muted: #1f2937;
+    --admin-strong: #000000;
+    --admin-side: #000000;
+    --admin-side-soft: #111111;
+    --admin-accent: #ffcc00;
+    --admin-blue: #005fcc;
+    --admin-warn: #b45309;
+    --admin-danger: #b00020;
+    --admin-hover: #fff7cc;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+    color: var(--admin-text);
+    background: var(--admin-bg);
+    letter-spacing: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+    letter-spacing: 0;
+}
+
+.crm-ajax-mask {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, .28);
+    backdrop-filter: blur(1px);
+}
+
+.crm-ajax-mask.is-visible {
+    display: flex;
+}
+
+.crm-ajax-mask-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 132px;
+    min-height: 44px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, .54);
+    border-radius: 6px;
+    color: #fff;
+    background: rgba(15, 23, 42, .72);
+    box-shadow: 0 12px 32px rgba(15, 23, 42, .18);
+}
+
+.crm-ajax-mask-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, .42);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: crmAjaxSpin .72s linear infinite;
+}
+
+.crm-ajax-mask-gif {
+    display: none;
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.crm-ajax-mask-text {
+    font-style: normal;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.crm-ajax-mask-style-gif.has-gif .crm-ajax-mask-spinner {
+    display: none;
+}
+
+.crm-ajax-mask-style-gif.has-gif .crm-ajax-mask-gif[src] {
+    display: block;
+}
+
+.crm-ajax-mask-style-minimal .crm-ajax-mask-box {
+    background: rgba(15, 23, 42, .56);
+    box-shadow: none;
+}
+
+.crm-ajax-mask-style-dots .crm-ajax-mask-spinner {
+    position: relative;
+    width: 34px;
+    height: 8px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    animation: none;
+}
+
+.crm-ajax-mask-style-dots .crm-ajax-mask-spinner::before,
+.crm-ajax-mask-style-dots .crm-ajax-mask-spinner::after,
+.crm-ajax-mask-style-dots .crm-ajax-mask-spinner {
+    box-shadow: none;
+}
+
+.crm-ajax-mask-style-dots .crm-ajax-mask-spinner::before,
+.crm-ajax-mask-style-dots .crm-ajax-mask-spinner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #fff;
+    animation: crmAjaxDots .8s ease-in-out infinite;
+}
+
+.crm-ajax-mask-style-dots .crm-ajax-mask-spinner::before {
+    left: 0;
+}
+
+.crm-ajax-mask-style-dots .crm-ajax-mask-spinner::after {
+    right: 0;
+    animation-delay: .16s;
+}
+
+.crm-ajax-mask-style-bar .crm-ajax-mask-box {
+    min-width: 188px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+}
+
+.crm-ajax-mask-style-bar .crm-ajax-mask-spinner {
+    width: 100%;
+    height: 4px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .24);
+    overflow: hidden;
+    animation: none;
+}
+
+.crm-ajax-mask-style-bar .crm-ajax-mask-spinner::before {
+    content: '';
+    display: block;
+    width: 42%;
+    height: 100%;
+    border-radius: inherit;
+    background: #fff;
+    animation: crmAjaxBar 1s ease-in-out infinite;
+}
+
+.crm-ajax-mask-style-card .crm-ajax-mask-box {
+    min-width: 172px;
+    min-height: 64px;
+    padding: 16px 18px;
+    border-color: rgba(32, 128, 240, .16);
+    color: var(--admin-text);
+    background: var(--admin-panel);
+    box-shadow: 0 18px 42px rgba(15, 23, 42, .18);
+}
+
+.crm-ajax-mask-style-card .crm-ajax-mask-spinner {
+    border-color: rgba(32, 128, 240, .22);
+    border-top-color: var(--admin-blue);
+}
+
+@keyframes crmAjaxSpin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes crmAjaxDots {
+    0%, 100% { transform: translateY(0); opacity: .45; }
+    50% { transform: translateY(-4px); opacity: 1; }
+}
+
+@keyframes crmAjaxBar {
+    0% { transform: translateX(-110%); }
+    100% { transform: translateX(240%); }
+}
+
+.layui-layout-admin .layui-header {
+    height: 60px;
+    background: var(--admin-panel);
+    border-bottom: 1px solid var(--admin-line);
+    box-shadow: 0 8px 20px rgba(17, 24, 39, .04);
+}
+
+.crm-admin-topbar {
+    backdrop-filter: blur(12px);
+}
+
+.layui-layout-admin .layui-logo {
+    width: 220px;
+    height: 60px;
+    line-height: 60px;
+    color: #ffffff !important;
+    background: var(--admin-side) !important;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.crm-admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 16px;
+    line-height: 1;
+    text-align: left;
+}
+
+.crm-admin-brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    color: #0f172a;
+    background: #ffffff;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.crm-admin-brand-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item {
+    line-height: 60px;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item > a {
+    color: var(--admin-text);
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item > a:hover {
+    color: var(--admin-accent);
+}
+
+.layui-layout-admin .layui-header .layui-nav-child {
+    background: var(--admin-panel);
+    border-color: var(--admin-line);
+}
+
+.layui-layout-admin .layui-header .layui-nav-child a {
+    color: var(--admin-text);
+}
+
+.layui-layout-admin .layui-nav-child dd.layui-this > a,
+.layui-layout-admin .layui-nav-child a.is-current {
+    color: var(--admin-blue) !important;
+    background: var(--admin-hover);
+    font-weight: 700;
+}
+
+.layui-layout-admin .layui-nav-child a.crm-theme-switch.is-current,
+.layui-layout-admin .layui-nav-child a.crm-style-switch.is-current {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.layui-layout-admin .layui-nav-child a.crm-theme-switch.is-current::after,
+.layui-layout-admin .layui-nav-child a.crm-style-switch.is-current::after {
+    content: "";
+    min-width: 18px;
+    height: 18px;
+    padding: 0 6px;
+    border-radius: 999px;
+    color: #ffffff;
+    background: var(--admin-blue);
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+}
+
+.layui-layout-left {
+    left: 220px;
+}
+
+.layui-side-menu,
+.layui-layout-admin .layui-side {
+    top: 60px;
+    width: 220px;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0) 180px),
+        var(--admin-side) !important;
+    color: #eef2f6 !important;
+}
+
+.layui-side-scroll {
+    width: 240px;
+}
+
+.layui-nav-tree {
+    width: 220px;
+    padding: 10px 8px;
+    background: transparent !important;
+}
+
+.layui-nav-tree .layui-nav-item a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 42px;
+    line-height: 42px;
+    border-radius: 6px;
+    color: rgba(255,255,255,.78);
+}
+
+.layui-nav-tree .layui-nav-item i {
+    width: 18px;
+    text-align: center;
+    font-size: 16px;
+    opacity: .9;
+}
+
+.layui-nav-tree .layui-nav-item a:hover {
+    color: #ffffff;
+    background: rgba(255,255,255,.08) !important;
+}
+
+.layui-nav-tree .layui-this > a,
+.layui-nav-tree .layui-this > a:hover {
+    color: #ffffff !important;
+    background: var(--admin-accent) !important;
+}
+
+.layui-nav-tree .layui-nav-child {
+    padding: 4px 0 6px;
+    background: transparent !important;
+}
+
+.layui-nav-tree .layui-nav-child a {
+    padding-left: 34px !important;
+    font-size: 13px;
+}
+
+.layui-body {
+    top: 60px;
+    left: 220px;
+    bottom: 38px;
+    padding: 0;
+    overflow: auto;
+    background: var(--admin-bg);
+}
+
+.admin-page-shell,
+.layui-body > div[style*="padding"] {
+    padding: 18px !important;
+}
+
+.crm-admin-main {
+    max-width: 1680px;
+    margin: 0 auto;
+}
+
+.crm-admin-page-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding: 14px 16px;
+    border: 1px solid var(--admin-line);
+    border-radius: 8px;
+    background: var(--admin-panel);
+    box-shadow: 0 10px 26px rgba(31, 35, 40, .04);
+}
+
+.crm-admin-page-kicker {
+    margin-bottom: 5px;
+    color: var(--admin-muted);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.crm-admin-page-title {
+    margin: 0;
+    color: var(--admin-strong);
+    font-size: 20px;
+    line-height: 1.25;
+    font-weight: 800;
+}
+
+.layui-footer {
+    left: 220px;
+    height: 38px;
+    line-height: 38px;
+    color: var(--admin-muted);
+    background: var(--admin-panel);
+    border-top: 1px solid var(--admin-line);
+}
+
+.layui-breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0 12px;
+    border: 1px solid var(--admin-line);
+    border-radius: 6px;
+    background: var(--admin-panel);
+}
+
+.crm-admin-breadcrumb {
+    flex: 0 0 auto;
+    background: var(--admin-hover);
+}
+
+.layui-body hr {
+    margin: 14px 0;
+    border-color: transparent;
+}
+
+.layui-card {
+    border: 1px solid var(--admin-line);
+    border-radius: 8px;
+    background: var(--admin-panel);
+    box-shadow: 0 10px 26px rgba(31, 35, 40, .04);
+}
+
+.layui-card-header {
+    min-height: 46px;
+    line-height: 46px;
+    border-bottom-color: var(--admin-line);
+    color: var(--admin-strong);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.layui-card-body {
+    padding: 16px;
+}
+
+.layui-btn {
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.layui-btn:not(.layui-btn-primary) {
+    background-color: var(--admin-accent);
+}
+
+.layui-bg-blue,
+.layui-btn-normal {
+    background-color: var(--admin-blue) !important;
+}
+
+.layui-bg-green {
+    background-color: var(--admin-accent) !important;
+}
+
+.layui-bg-orange,
+.layui-btn-warm {
+    background-color: var(--admin-warn) !important;
+}
+
+.layui-btn-danger {
+    background-color: var(--admin-danger) !important;
+}
+
+.layui-badge {
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.layui-btn-primary:hover {
+    border-color: var(--admin-blue);
+    color: var(--admin-blue);
+}
+
+.layui-input,
+.layui-select,
+.layui-textarea {
+    border-radius: 6px;
+    border-color: var(--admin-line);
+    background: var(--admin-input);
+    color: var(--admin-text);
+}
+
+.layui-input:focus,
+.layui-textarea:focus {
+    border-color: rgba(24,160,88,.7) !important;
+    box-shadow: 0 0 0 3px rgba(24,160,88,.1);
+}
+
+.layui-form-label {
+    color: var(--admin-text);
+}
+
+.layui-form-pane .layui-form-label {
+    background: var(--admin-hover);
+    border-color: var(--admin-line);
+}
+
+.layui-table,
+.layui-table-view {
+    color: var(--admin-text);
+    background: var(--admin-panel);
+}
+
+.layui-table-view {
+    border-color: var(--admin-line);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.layui-table th {
+    color: var(--admin-strong);
+    background: var(--admin-hover);
+    font-weight: 700;
+}
+
+.layui-table td,
+.layui-table th {
+    border-color: var(--admin-line);
+    white-space: nowrap;
+}
+
+.layui-table td {
+    color: var(--admin-text);
+    background: var(--admin-panel);
+}
+
+.layui-table tbody tr:hover,
+.layui-table tbody tr:hover td {
+    background: var(--admin-hover);
+}
+
+.admin-voucher-image-links {
+    max-width: 220px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    overflow-wrap: anywhere;
+}
+
+.admin-voucher-image-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 0 8px;
+    border: 1px solid color-mix(in srgb, var(--admin-blue) 28%, var(--admin-line));
+    border-radius: 6px;
+    color: var(--admin-blue);
+    background: color-mix(in srgb, var(--admin-blue) 8%, var(--admin-panel));
+    line-height: 22px;
+}
+
+.admin-voucher-image-links a:focus-visible {
+    outline: 2px solid var(--admin-blue);
+    outline-offset: 2px;
+}
+
+.admin-voucher-preview-layer {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: color-mix(in srgb, var(--admin-strong) 86%, transparent);
+}
+
+.admin-voucher-preview-image {
+    display: block;
+    max-width: 100%;
+    max-height: calc(88vh - 90px);
+    border-radius: 6px;
+    background: var(--admin-panel);
+    object-fit: contain;
+}
+
+.card-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.stat-item {
+    position: relative;
+    min-height: 118px;
+    padding: 18px;
+    border: 1px solid var(--admin-line);
+    border-radius: 8px;
+    background: var(--admin-panel);
+    box-shadow: 0 10px 24px rgba(31, 35, 40, .04);
+    text-align: left;
+    overflow: hidden;
+}
+
+.stat-item::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: var(--admin-accent);
+}
+
+.stat-item:nth-child(2n)::before {
+    background: var(--admin-blue);
+}
+
+.stat-item:nth-child(3n)::before {
+    background: #0e7a83;
+}
+
+.stat-item .stat-icon {
+    float: right;
+    color: var(--admin-accent);
+    font-size: 28px;
+    opacity: .22;
+}
+
+.stat-item .stat-number {
+    margin-top: 18px;
+    color: var(--admin-strong);
+    font-size: 26px;
+    line-height: 1.15;
+    font-weight: 800;
+}
+
+.stat-item .stat-label {
+    color: var(--admin-muted);
+    font-size: 13px;
+}
+
+.login-container {
+    width: min(420px, calc(100vw - 36px)) !important;
+    margin: 9vh auto !important;
+    padding: 34px !important;
+    border: 1px solid var(--admin-line) !important;
+    border-radius: 8px !important;
+    background: var(--admin-panel) !important;
+    box-shadow: 0 24px 70px rgba(17, 24, 39, .16) !important;
+}
+
+.login-logo {
+    color: var(--admin-strong) !important;
+    font-size: 24px !important;
+    font-weight: 800 !important;
+}
+
+body.admin-login-body,
+body:has(.login-container) {
+    min-height: 100vh;
+    background:
+        linear-gradient(90deg, rgba(255,255,255,.7) 1px, transparent 1px) 0 0 / 26px 26px,
+        linear-gradient(rgba(255,255,255,.7) 1px, transparent 1px) 0 0 / 26px 26px,
+        var(--admin-bg);
+}
+
+.login-language {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.lang-switch {
+    color: var(--admin-blue);
+    cursor: pointer;
+}
+
+.lang-active {
+    color: var(--admin-accent);
+    font-weight: 700;
+}
+
+.admin-form-actions {
+    margin-top: 20px;
+}
+
+.admin-dialog-body {
+    padding: 20px;
+}
+
+@media screen and (max-width: 1100px) {
+    .card-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* 权益汇总统计卡片：用于后台财务统计页面展示当前筛选条件下的账户数、余额、净值和保证金汇总。 */
+.crm-metric-card {
+    min-height: 78px;
+    padding: 14px 16px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: var(--admin-radius-sm, 8px);
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    box-shadow: var(--admin-shadow-soft, 0 6px 18px rgba(15, 23, 42, 0.06));
+}
+
+.crm-metric-label {
+    margin-bottom: 8px;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.crm-metric-value {
+    color: #0f172a;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    word-break: break-all;
+}
+
+@media screen and (max-width: 768px) {
+    .layui-layout-admin .layui-logo {
+        width: 150px;
+        font-size: 14px;
+    }
+
+    .crm-admin-brand {
+        padding: 0 10px;
+    }
+
+    .crm-admin-brand-mark {
+        width: 28px;
+        height: 28px;
+    }
+
+    .crm-admin-brand-text {
+        display: none;
+    }
+
+    .layui-layout-left {
+        left: 150px;
+    }
+
+    .layui-layout-admin .layui-side {
+        left: -220px;
+    }
+
+    .layui-body,
+    .layui-footer {
+        left: 0;
+    }
+
+    .layui-footer {
+        display: none;
+    }
+
+    .admin-page-shell,
+    .layui-body > div[style*="padding"] {
+        padding: 12px !important;
+    }
+
+    .layui-card-body {
+        padding: 12px;
+    }
+
+    .crm-admin-page-head {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .card-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .layui-layout-right .layui-nav-item > a {
+        padding: 0 10px;
+    }
+
+    .layui-form-pane .layui-form-label {
+        float: none;
+        display: block;
+        width: auto;
+        padding: 0 0 6px;
+        border: 0;
+        background: transparent;
+        text-align: left;
+    }
+
+    .layui-form-pane .layui-input-block {
+        margin-left: 0;
+    }
+}
+
+/* 后台 UI 参考层：在 Laravel Blade + Layui 约束下吸收 Vben Admin、Vue Naive Admin、Naive UI Admin、Ant Design Pro、Arco Design Pro 的中后台信息密度与组件秩序。 */
+.crm-admin-workbench {
+    min-width: 320px;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,0) 220px),
+        var(--admin-bg);
+}
+
+/* .crm-admin-shell：后台总外壳，负责统一顶部栏、侧栏、内容区和页脚的空间基准。 */
+.crm-admin-shell {
+    --layui-side-width: var(--admin-sidebar-width);
+    color: var(--admin-text);
+    background: var(--admin-bg);
+}
+
+.layui-layout-admin .crm-admin-topbar {
+    height: var(--admin-header-height);
+    border-bottom: 1px solid rgba(148, 163, 184, .22);
+    background: color-mix(in srgb, var(--admin-panel) 92%, transparent);
+    box-shadow: var(--admin-shadow-soft);
+}
+
+/* .crm-admin-brand：后台品牌区域，固定宽度与侧栏一致，避免页面切换时导航抖动。 */
+.layui-layout-admin .crm-admin-brand {
+    width: var(--admin-sidebar-width);
+    height: var(--admin-header-height);
+    padding: 0 18px;
+    border-right: 1px solid rgba(255,255,255,.08);
+    background:
+        linear-gradient(135deg, rgba(32,128,240,.18), rgba(24,160,88,.16)),
+        var(--admin-side) !important;
+}
+
+.crm-admin-brand-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--admin-radius);
+    box-shadow: 0 10px 22px rgba(15, 23, 42, .18);
+}
+
+.layui-layout-left {
+    left: var(--admin-sidebar-width);
+}
+
+/* .crm-admin-sidebar：权限菜单侧栏，菜单数据来自 /api/admin/menus，样式只负责呈现层。 */
+.layui-layout-admin .crm-admin-sidebar {
+    top: var(--admin-header-height);
+    width: var(--admin-sidebar-width);
+    border-right: 1px solid rgba(255,255,255,.08);
+    background:
+        linear-gradient(180deg, rgba(32,128,240,.13), rgba(24,160,88,.08) 260px, rgba(255,255,255,0)),
+        var(--admin-side) !important;
+    box-shadow: 12px 0 28px rgba(15, 23, 42, .08);
+}
+
+.crm-admin-sidebar .layui-side-scroll {
+    width: calc(var(--admin-sidebar-width) + 18px);
+}
+
+.crm-admin-sidebar .layui-nav-tree {
+    width: var(--admin-sidebar-width);
+    padding: 12px 10px 20px;
+}
+
+.crm-admin-sidebar .layui-nav-tree .layui-nav-item a {
+    min-height: 40px;
+    margin: 2px 0;
+    padding: 0 14px;
+    border-radius: var(--admin-radius-sm);
+    font-size: 13px;
+    transition: background .16s ease, color .16s ease, transform .16s ease;
+}
+
+.crm-admin-sidebar .layui-nav-tree .layui-nav-item a:hover {
+    transform: translateX(2px);
+}
+
+.crm-admin-sidebar .layui-nav-tree .layui-this > a,
+.crm-admin-sidebar .layui-nav-tree .layui-this > a:hover {
+    background: linear-gradient(135deg, var(--admin-blue), var(--admin-accent)) !important;
+    box-shadow: 0 10px 24px rgba(32,128,240,.24);
+}
+
+.crm-admin-body {
+    top: var(--admin-header-height);
+    left: var(--admin-sidebar-width);
+    bottom: var(--admin-footer-height);
+}
+
+/* .crm-admin-main：后台业务页面内容容器，统一页面留白和最大阅读宽度。 */
+.crm-admin-main {
+    width: min(100%, 1680px);
+    padding: 20px !important;
+}
+
+.crm-admin-page-head {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    align-items: center;
+    min-height: 76px;
+    margin-bottom: var(--admin-content-gap);
+    padding: 16px var(--admin-panel-padding);
+    border-color: rgba(148, 163, 184, .22);
+    border-radius: var(--admin-radius);
+    background: color-mix(in srgb, var(--admin-panel) 94%, transparent);
+    box-shadow: var(--admin-shadow-soft);
+    backdrop-filter: blur(10px);
+}
+
+.crm-admin-page-head-main {
+    min-width: 0;
+}
+
+.crm-admin-page-head-tools {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    min-height: var(--admin-toolbar-height);
+    flex: 0 0 auto;
+}
+
+.crm-admin-page-kicker {
+    color: var(--admin-accent);
+    font-size: 12px;
+}
+
+.crm-admin-page-title {
+    font-size: 21px;
+    line-height: 28px;
+}
+
+.crm-admin-breadcrumb {
+    border-radius: var(--admin-radius-sm);
+    color: var(--admin-muted);
+}
+
+.crm-theme-switch {
+    gap: 8px;
+}
+
+.crm-theme-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: .58;
+}
+
+.crm-admin-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: var(--admin-toolbar-height);
+    margin-bottom: var(--admin-content-gap);
+}
+
+.crm-admin-density-compact {
+    --admin-content-gap: 12px;
+    --admin-panel-padding: 14px;
+    --admin-toolbar-height: 34px;
+}
+
+.crm-admin-density-comfortable {
+    --admin-content-gap: 20px;
+    --admin-panel-padding: 22px;
+    --admin-toolbar-height: 42px;
+}
+
+.layui-layout-admin .layui-footer {
+    left: var(--admin-sidebar-width);
+    height: var(--admin-footer-height);
+    line-height: var(--admin-footer-height);
+    border-top-color: rgba(148, 163, 184, .22);
+}
+
+/* Layui 卡片：用于列表筛选区、表格区和详情区，保持 8px 以内圆角和轻阴影。 */
+.layui-card {
+    border-color: rgba(148, 163, 184, .22);
+    border-radius: var(--admin-radius);
+    box-shadow: var(--admin-shadow-soft);
+}
+
+/* 业务面板：后台 Blade 列表、表单和双表格模块统一使用该类，便于按 Vben/Ant Design Pro 类中后台密度维护边框、阴影和溢出边界。 */
+.crm-admin-panel {
+    overflow: hidden;
+    background: var(--admin-panel);
+}
+
+.cancel-apply-filter-grid .layui-form-item {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.cancel-apply-filter-grid .layui-inline {
+    margin: 0;
+}
+
+.cancel-apply-status-badge {
+    display: inline-flex;
+    min-height: 26px;
+    align-items: center;
+    padding: 2px 9px;
+    border: 1px solid currentColor;
+    border-radius: var(--admin-radius-sm);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.cancel-apply-status-badge.is-pending {
+    color: var(--admin-warning);
+    background: color-mix(in srgb, var(--admin-warning) 10%, var(--admin-panel));
+}
+
+.cancel-apply-status-badge.is-approved {
+    color: var(--admin-success);
+    background: color-mix(in srgb, var(--admin-success) 10%, var(--admin-panel));
+}
+
+.cancel-apply-status-badge.is-rejected,
+.cancel-apply-balance.is-negative {
+    color: var(--admin-danger);
+}
+
+.cancel-apply-balance.is-negative {
+    font-weight: 800;
+}
+
+@media (max-width: 720px) {
+    .cancel-apply-filter-grid .layui-inline,
+    .cancel-apply-filter-grid .layui-input-inline {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+.layui-card + .layui-card,
+.layui-card + .layui-table-view,
+.layui-form + .layui-table-view {
+    margin-top: var(--admin-content-gap);
+}
+
+.layui-card-header {
+    padding: 0 18px;
+    color: var(--admin-strong);
+}
+
+.layui-card-body {
+    padding: var(--admin-panel-padding);
+}
+
+/* Layui 表单：统一输入框、选择框、日期框的高度、圆角和聚焦反馈。 */
+.layui-form-pane .layui-form-label {
+    min-height: 38px;
+    border-color: rgba(148, 163, 184, .28);
+    border-radius: var(--admin-radius-sm) 0 0 var(--admin-radius-sm);
+    background: color-mix(in srgb, var(--admin-hover) 82%, var(--admin-panel));
+    color: var(--admin-muted);
+    font-weight: 600;
+}
+
+.layui-input,
+.layui-select,
+.layui-textarea {
+    min-height: 38px;
+    border-color: rgba(148, 163, 184, .34);
+    border-radius: var(--admin-radius-sm);
+    transition: border-color .16s ease, box-shadow .16s ease, background .16s ease;
+}
+
+.layui-form-pane .layui-input,
+.layui-form-pane .layui-select {
+    border-radius: 0 var(--admin-radius-sm) var(--admin-radius-sm) 0;
+}
+
+form[id$="SearchForm"] .layui-input,
+form[id$="SearchForm"] .layui-select,
+form[id$="SearchForm"] .layui-form-select .layui-input {
+    border-radius: var(--admin-radius-sm);
+}
+
+.layui-input:hover,
+.layui-select:hover,
+.layui-textarea:hover {
+    border-color: rgba(32,128,240,.48);
+}
+
+.layui-input:focus,
+.layui-textarea:focus {
+    border-color: var(--admin-blue) !important;
+    box-shadow: 0 0 0 3px rgba(32,128,240,.12);
+}
+
+.layui-btn {
+    height: 34px;
+    line-height: 34px;
+    border-radius: var(--admin-radius-sm);
+    box-shadow: none;
+    transition: filter .16s ease, transform .16s ease, box-shadow .16s ease;
+}
+
+.layui-btn:hover {
+    filter: brightness(1.03);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, .1);
+}
+
+.layui-btn-primary {
+    border-color: rgba(148, 163, 184, .42);
+    background: var(--admin-panel);
+}
+
+/* Layui 表格：后台核心列表组件，统一表头、边框、分页和滚动区域。 */
+.layui-table-view {
+    border-color: rgba(148, 163, 184, .24);
+    border-radius: var(--admin-radius);
+    box-shadow: var(--admin-shadow-soft);
+}
+
+.layui-table-header,
+.layui-table-tool,
+.layui-table-page {
+    background: color-mix(in srgb, var(--admin-hover) 72%, var(--admin-panel));
+}
+
+.layui-table th {
+    height: 42px;
+    font-size: 13px;
+}
+
+.layui-table td {
+    height: 42px;
+}
+
+.layui-table-cell {
+    padding: 0 12px;
+}
+
+.layui-laypage a,
+.layui-laypage span {
+    border-radius: var(--admin-radius-sm);
+}
+
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+    border-radius: var(--admin-radius-sm);
+    background: var(--admin-blue);
+}
+
+/* Layui 弹窗：用于新增、编辑、确认等后台操作，统一标题栏、内容区和阴影。 */
+.layui-layer {
+    border-radius: var(--admin-radius) !important;
+    overflow: hidden;
+    box-shadow: var(--admin-shadow) !important;
+}
+
+.layui-layer-title {
+    height: 48px !important;
+    line-height: 48px !important;
+    border-bottom-color: rgba(148, 163, 184, .24) !important;
+    background: var(--admin-panel) !important;
+    color: var(--admin-strong) !important;
+    font-weight: 700;
+}
+
+.admin-dialog-body {
+    padding: 20px 22px;
+    background: var(--admin-panel);
+}
+
+.login-container {
+    border-radius: var(--admin-radius) !important;
+    box-shadow: var(--admin-shadow) !important;
+}
+
+@media screen and (max-width: 768px) {
+    .layui-layout-admin .crm-admin-brand {
+        width: 150px;
+    }
+
+    .layui-layout-left {
+        left: 150px;
+    }
+
+    .crm-admin-body,
+    .layui-layout-admin .layui-footer {
+        left: 0;
+    }
+
+    .crm-admin-main {
+        padding: 12px !important;
+    }
+
+    .crm-admin-page-head {
+        min-height: auto;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+        padding: 14px;
+    }
+
+    .crm-admin-page-head-tools,
+    .crm-admin-toolbar {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .layui-card-body,
+    .admin-dialog-body {
+        padding: 14px;
+    }
+}
+
+
+/* ============================================================
+ * 后台界面精美增强（登录页玻璃拟态 / 渐变按钮 / 聚焦光环）
+ * 说明：仅叠加样式，不改变结构；沿用 --admin-* 变量，深浅色自适应。
+ * ============================================================ */
+body.admin-login-body,
+body:has(.login-container) {
+    background:
+        radial-gradient(820px 480px at 14% -6%, rgba(32, 128, 240, 0.16), transparent 62%),
+        radial-gradient(700px 440px at 92% 110%, rgba(24, 160, 88, 0.13), transparent 58%),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.6) 1px, transparent 1px) 0 0 / 26px 26px,
+        linear-gradient(rgba(255, 255, 255, 0.6) 1px, transparent 1px) 0 0 / 26px 26px,
+        var(--admin-bg);
+}
+
+.login-container {
+    border-radius: 16px !important;
+    background: color-mix(in srgb, var(--admin-panel) 88%, transparent) !important;
+    backdrop-filter: blur(16px);
+    border: 1px solid color-mix(in srgb, var(--admin-line) 68%, transparent) !important;
+    box-shadow: 0 28px 80px rgba(17, 24, 39, 0.18) !important;
+    animation: crmLoginIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes crmLoginIn {
+    from { opacity: 0; transform: translateY(14px) scale(0.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.admin-login-body .layui-input,
+body:has(.login-container) .layui-input {
+    border-radius: 10px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.admin-login-body .layui-input:focus,
+body:has(.login-container) .layui-input:focus {
+    border-color: var(--admin-blue) !important;
+    box-shadow: 0 0 0 3px rgba(32, 128, 240, 0.15);
+}
+
+.admin-login-body .layui-btn,
+body:has(.login-container) .layui-btn {
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--admin-blue), color-mix(in srgb, var(--admin-blue) 72%, var(--admin-accent)));
+    box-shadow: 0 10px 24px rgba(32, 128, 240, 0.32);
+    transition: transform 0.16s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.22s ease, filter 0.22s ease;
+}
+.admin-login-body .layui-btn:hover,
+body:has(.login-container) .layui-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    box-shadow: 0 14px 30px rgba(32, 128, 240, 0.4);
+}
+.admin-login-body .layui-btn:active,
+body:has(.login-container) .layui-btn:active {
+    transform: scale(0.98);
+}
+
+/* 后台统计卡：渐变数字 + hover 浮起 */
+.crm-ui-admin-shell .crm-metric-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.22s ease;
+}
+.crm-ui-admin-shell .crm-metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(17, 24, 39, 0.12);
+}
+.crm-ui-admin-shell .crm-metric-card .metric-value {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+/* 后台侧边栏菜单 hover 微动 */
+.crm-ui-admin-shell .layui-side .layui-nav-item a {
+    transition: background-color 0.18s ease, color 0.18s ease, padding-left 0.22s ease;
+}
+.crm-ui-admin-shell .layui-side .layui-nav-item a:hover {
+    padding-left: 22px;
+}
+
+/* ---------- 后台统计卡（stat-item）精美增强 ---------- */
+.crm-ui-admin-shell .stat-item {
+    border-radius: 12px;
+    background: linear-gradient(150deg, var(--admin-panel) 0%, color-mix(in srgb, var(--admin-panel) 82%, var(--admin-hover)) 100%);
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.crm-ui-admin-shell .stat-item:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--admin-blue) 36%, var(--admin-line));
+    box-shadow: 0 16px 34px rgba(31, 35, 40, 0.1);
+}
+.crm-ui-admin-shell .stat-item::before {
+    border-radius: 0 6px 6px 0;
+    background: linear-gradient(180deg, var(--admin-blue), var(--admin-accent));
+}
+.crm-ui-admin-shell .stat-item:nth-child(2n)::before {
+    background: linear-gradient(180deg, #2080f0, #7a5af8);
+}
+.crm-ui-admin-shell .stat-item:nth-child(3n)::before {
+    background: linear-gradient(180deg, #0e7a83, #0ea5a4);
+}
+.crm-ui-admin-shell .stat-item:nth-child(4n)::before {
+    background: linear-gradient(180deg, #d97706, #f59e0b);
+}
+.crm-ui-admin-shell .stat-item .stat-icon {
+    opacity: 0.3;
+    transition: transform 0.24s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.24s ease;
+}
+.crm-ui-admin-shell .stat-item:hover .stat-icon {
+    transform: translateY(-3px) scale(1.08);
+    opacity: 0.5;
+}
+.crm-ui-admin-shell .stat-item .stat-number {
+    background: linear-gradient(120deg, var(--admin-strong), var(--admin-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes admin-auth-detail-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.auth-detail-loading-icon {
+    animation: admin-auth-detail-spin 0.8s linear infinite;
+}
+
+/* 旧后台登录页的图形验证码行。
+   容器内是「文本输入框 + 132x44 验证码图片」两个块级元素，
+   未定义样式时图片会掉到输入框下方独占一行，登录表单被拉高且左右不对齐。
+   这里改为一行两栏：输入框自适应剩余宽度，图片按其固有 132px 宽固定不压缩。 */
+.admin-legacy-captcha-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-legacy-captcha-field .layui-input {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+/* 验证码图片容器不参与收缩，避免窄屏下图片被挤压变形导致字符无法辨认。
+   图片自身给 cursor:pointer 提示可点击刷新（JS 已绑定点击换图）。 */
+.admin-legacy-captcha-field .code {
+    flex: 0 0 auto;
+    line-height: 0;
+}
+
+.admin-legacy-captcha-field .code img {
+    display: block;
+    border: 1px solid var(--crm-line, #dce4ef);
+    border-radius: var(--crm-radius-sm, 4px);
+    cursor: pointer;
+}

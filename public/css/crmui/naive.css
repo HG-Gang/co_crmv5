@@ -1,0 +1,131 @@
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] {
+    --crmui-radius: 6px;
+    --crmui-sidebar: 232px;
+    --crmui-topbar: 58px;
+    --crmui-shadow: 0 1px 3px color-mix(in srgb, var(--crmui-ink) 7%, transparent);
+    --crmui-focus: 0 0 0 3px color-mix(in srgb, var(--crmui-primary) 18%, transparent);
+    min-height: 100vh;
+    color: var(--crmui-ink);
+    background: var(--crmui-bg);
+}
+
+/* 清爽化：去掉顶部渐变洗色，改为纯净底色，让内容区更透气。 */
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-shell {
+    grid-template-columns: var(--crmui-sidebar) minmax(0, 1fr);
+    background: var(--crmui-bg);
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-sidebar {
+    padding: 12px 10px;
+    border-right: 1px solid var(--crmui-border);
+    background: var(--crmui-surface);
+    box-shadow: none;
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-brand {
+    min-height: 44px;
+    margin-bottom: 12px;
+    padding: 0 4px 10px;
+    border-bottom: 1px solid var(--crmui-border);
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-brand-mark {
+    border-radius: 10px;
+    background: var(--crmui-primary);
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-nav-title {
+    padding: 4px 10px;
+    color: var(--crmui-subtle);
+    font-weight: 700;
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-nav-link {
+    min-height: 40px;
+    border-radius: 6px;
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-nav-link:hover,
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-nav-link.is-active {
+    color: var(--crmui-primary);
+    background: color-mix(in srgb, var(--crmui-primary) 12%, var(--crmui-surface));
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-topbar {
+    min-height: var(--crmui-topbar);
+    border-bottom: 1px solid var(--crmui-border);
+    background: var(--crmui-surface);
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-main,
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-frame-main {
+    width: min(1360px, 100%);
+    padding: 16px;
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-page-head {
+    align-items: flex-end;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--crmui-border);
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-page-head h1 {
+    font-size: 21px;
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-panel,
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-metric,
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-auth-card {
+    border-color: var(--crmui-border);
+    box-shadow: var(--crmui-shadow);
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-panel-head {
+    min-height: 38px;
+    padding: 6px 12px;
+    background: var(--crmui-surface);
+    border-bottom: 1px solid var(--crmui-border);
+}
+
+/* 面板正文紧凑化，与 Layui 家族保持同一密度。 */
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-panel-body {
+    padding: 10px 12px;
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-button,
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-tool-button,
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-icon-button,
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-row-button,
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-tab,
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-input,
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-upload {
+    border-radius: 6px;
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-button.is-primary,
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-tool-button.is-primary,
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-tab.is-active {
+    border-color: var(--crmui-primary);
+    color: var(--crmui-primary-ink);
+    background: var(--crmui-primary);
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-table th {
+    color: var(--crmui-muted);
+    background: var(--crmui-surface-2);
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-table td {
+    background: var(--crmui-surface);
+}
+
+body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crm-ajax-mask-box {
+    border-radius: 8px;
+}
+
+@media (max-width: 900px) {
+    body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-main,
+    body[data-ui-family="crmui"][data-crmui-render-family="naive"][data-visual-direction="c"] .crmui-frame-main {
+        padding: 14px;
+    }
+}

@@ -1,0 +1,824 @@
+/*
+ * front-v3.css — 前台内容页统一视觉系统（impeccable / craft 重做）。
+ *
+ * 设计基调：浅色、清爽、专业的商业后台（参照成熟 SaaS 后台的克制美学）。
+ * 用法：在内容页根节点加 class="crm-v3 crm-v3-<page>"，并引入本文件。
+ * 原则：
+ *   - 不改动任何 HTML 结构与 JS 钩子，纯视觉层覆盖。
+ *   - 所有规则限定在 .crm-v3 作用域内，避免污染全局与其它 UI。
+ *   - 用足够高的作用域特异性覆盖 style.css 里的旧全局规则。
+ *   - 固定浅色，不跟随暗色主题（内容页保持一致清爽观感）。
+ */
+
+/* ============================================================
+ * 1. 设计令牌
+ * ============================================================ */
+.crm-v3 {
+    --v3-bg: #eef2f7;
+    --v3-surface: #ffffff;
+    --v3-surface-soft: #f7f9fc;
+    --v3-surface-tint: #f0f5ff;
+    --v3-ink: #18213a;
+    --v3-ink-soft: #3c4663;
+    --v3-muted: #6b7689;
+    --v3-faint: #98a2b3;
+    --v3-line: #e6ebf3;
+    --v3-line-strong: #d6deea;
+    --v3-primary: #2f5fe0;
+    --v3-primary-strong: #1f49c0;
+    --v3-primary-soft: #eaf0fd;
+    --v3-primary-ink: #ffffff;
+    --v3-ring: rgba(47, 95, 224, 0.16);
+    --v3-success: #1f9d6b;
+    --v3-success-soft: #e6f6ee;
+    --v3-warning: #b7791f;
+    --v3-warning-soft: #fdf3e2;
+    --v3-danger: #d6453d;
+    --v3-danger-soft: #fdeceb;
+    --v3-info: #2f5fe0;
+
+    /* 深墨 hero（克制，仅顶部用一次） */
+    --v3-hero-bg: #141d33;
+    --v3-hero-bg2: #1f2c4d;
+    --v3-hero-ink: #ffffff;
+    --v3-hero-soft: #aeb9d2;
+
+    --v3-radius-lg: 14px;
+    --v3-radius: 10px;
+    --v3-radius-sm: 8px;
+    --v3-shadow-sm: 0 1px 2px rgba(20, 29, 51, 0.05), 0 1px 3px rgba(20, 29, 51, 0.04);
+    --v3-shadow: 0 4px 16px rgba(20, 29, 51, 0.07), 0 1px 4px rgba(20, 29, 51, 0.04);
+
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+        "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    color: var(--v3-ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+
+.crm-v3, .crm-v3 * { box-sizing: border-box; }
+
+/* 页面外层间距：iframe 内容区 */
+.front-frame-page .crm-v3,
+.front-page-content .crm-v3 { color: var(--v3-ink); }
+
+/* 让 iframe body 背景统一为浅灰底 */
+body.front-frame-body { background: var(--v3-bg); }
+
+/* ============================================================
+ * 2. 卡片（覆盖 layui-card / style.css 旧规则）
+ * ============================================================ */
+.crm-v3 .layui-card {
+    margin-bottom: 16px;
+    background: var(--v3-surface);
+    border: 1px solid var(--v3-line);
+    border-radius: var(--v3-radius-lg);
+    box-shadow: var(--v3-shadow-sm);
+    overflow: hidden;
+    transition: box-shadow .18s ease, border-color .18s ease;
+}
+.crm-v3 .layui-card:hover { box-shadow: var(--v3-shadow); }
+
+.crm-v3 .layui-card-header {
+    height: auto;
+    min-height: 52px;
+    padding: 15px 20px;
+    line-height: 1.4;
+    color: var(--v3-ink);
+    background: var(--v3-surface);
+    border-bottom: 1px solid var(--v3-line);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+.crm-v3 .layui-card-body { padding: 20px; }
+
+/* ============================================================
+ * 3. 区块标题
+ * ============================================================ */
+.crm-v3 .profile-section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--v3-line);
+    color: var(--v3-ink);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+.crm-v3 .profile-section-title::before {
+    content: "";
+    width: 3px;
+    height: 15px;
+    border-radius: 2px;
+    background: var(--v3-primary);
+}
+
+/* ============================================================
+ * 4. 表单控件（覆盖 layui-input / 旧 max-width 规则）
+ * ============================================================ */
+.crm-v3 .layui-form-label {
+    width: 110px;
+    padding: 9px 12px 9px 0;
+    color: var(--v3-ink-soft);
+    background: transparent;
+    border: 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    text-align: right;
+    line-height: 1.4;
+}
+.crm-v3 .layui-form-pane .layui-form-label {
+    background: var(--v3-surface-soft);
+    border: 1px solid var(--v3-line);
+    border-right: 0;
+    border-radius: var(--v3-radius-sm) 0 0 var(--v3-radius-sm);
+    text-align: left;
+    padding-left: 12px;
+}
+.crm-v3 .layui-form-pane .layui-input-block { margin-left: 110px; }
+
+/* 输入框：覆盖 style.css 的 max-width:260px 限制 */
+.crm-v3 .layui-input,
+.crm-v3 .layui-textarea,
+.crm-v3 .layui-form select,
+.layui-body .crm-v3 .layui-form .layui-input,
+.layui-body .crm-v3 .layui-form select {
+    max-width: none;
+    min-height: 42px;
+    padding: 9px 13px;
+    color: var(--v3-ink);
+    background: var(--v3-surface);
+    border: 1px solid var(--v3-line-strong);
+    border-radius: var(--v3-radius-sm);
+    font-size: 14px;
+    line-height: 1.4;
+    transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.crm-v3 .layui-textarea { min-height: 84px; padding: 10px 13px; line-height: 1.55; }
+
+/* form-pane 模式下输入框与 label 拼接，左边去圆角 */
+.crm-v3 .layui-form-pane .layui-input,
+.crm-v3 .layui-form-pane .layui-textarea,
+.crm-v3 .layui-form-pane select {
+    border-radius: 0 var(--v3-radius-sm) var(--v3-radius-sm) 0;
+}
+
+.crm-v3 .layui-input::placeholder,
+.crm-v3 .layui-textarea::placeholder { color: var(--v3-faint); }
+
+.crm-v3 .layui-input:hover,
+.crm-v3 .layui-textarea:hover,
+.crm-v3 .layui-form select:hover { border-color: #c0c9d9; }
+
+.crm-v3 .layui-input:focus,
+.crm-v3 .layui-textarea:focus,
+.crm-v3 .layui-form select:focus {
+    border-color: var(--v3-primary);
+    background: #fff;
+    box-shadow: 0 0 0 3px var(--v3-ring);
+    outline: none;
+}
+
+/* readonly 输入：弱化为只读观感 */
+.crm-v3 .layui-input[readonly] {
+    color: var(--v3-ink-soft);
+    background: var(--v3-surface-soft);
+    border-color: var(--v3-line);
+    cursor: default;
+}
+.crm-v3 .layui-input[readonly]:focus { box-shadow: none; border-color: var(--v3-line); }
+
+/* layui select 容器（lay-render 后的下拉） */
+.crm-v3 .layui-form-select .layui-input { padding-right: 30px; }
+
+/* radio/checkbox 渲染后 */
+.crm-v3 .layui-form-radio { line-height: 30px; margin: 6px 12px 6px 0; }
+
+/* ============================================================
+ * 5. 按钮（覆盖 layui-btn / layui-bg-blue）
+ * ============================================================ */
+.crm-v3 .layui-btn {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 18px;
+    border: 1px solid transparent;
+    border-radius: var(--v3-radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    transition: background .15s ease, border-color .15s ease, color .15s ease, transform .05s ease, box-shadow .15s ease;
+}
+.crm-v3 .layui-btn:active { transform: translateY(1px); }
+
+/* 主按钮：lay-submit 保存/提交（含 layui-bg-blue） */
+.crm-v3 .layui-btn.layui-bg-blue,
+.crm-v3 button.layui-btn[lay-submit]:not(.layui-btn-primary) {
+    background: var(--v3-primary);
+    color: var(--v3-primary-ink);
+    box-shadow: 0 4px 12px rgba(47, 95, 224, 0.2);
+}
+.crm-v3 .layui-btn.layui-bg-blue:hover,
+.crm-v3 button.layui-btn[lay-submit]:not(.layui-btn-primary):hover {
+    background: var(--v3-primary-strong);
+    color: #fff;
+}
+
+/* 次按钮：reset / primary */
+.crm-v3 .layui-btn.layui-btn-primary {
+    background: var(--v3-surface);
+    border-color: var(--v3-line-strong);
+    color: var(--v3-ink-soft);
+    box-shadow: none;
+}
+.crm-v3 .layui-btn.layui-btn-primary:hover {
+    border-color: var(--v3-primary);
+    color: var(--v3-primary);
+    background: var(--v3-primary-soft);
+}
+
+.crm-v3 .layui-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--v3-ring);
+}
+
+/* 表单底部操作区 */
+.crm-v3 .profile-actions {
+    margin-top: 4px;
+    padding-top: 16px;
+    border-top: 1px solid var(--v3-line);
+    display: flex;
+    gap: 10px;
+}
+
+/* ============================================================
+ * 6. 徽标 / 状态 badge
+ * ============================================================ */
+.crm-v3 .layui-badge,
+.crm-v3 .layui-badge.layui-bg-gray {
+    height: 22px;
+    padding: 0 9px;
+    line-height: 22px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--v3-muted);
+    background: var(--v3-surface-soft);
+    border: 1px solid var(--v3-line);
+}
+.crm-v3 .layui-badge.layui-bg-green {
+    color: var(--v3-success);
+    background: var(--v3-success-soft);
+    border-color: transparent;
+}
+
+/* ============================================================
+ * 7. 表格（覆盖 layui-table）
+ * ============================================================ */
+.crm-v3 .layui-table { color: var(--v3-ink); margin: 0; }
+.crm-v3 .layui-table thead th,
+.crm-v3 .layui-table th {
+    color: var(--v3-ink-soft);
+    background: var(--v3-surface-soft);
+    border-color: var(--v3-line);
+    font-weight: 600;
+    font-size: 13px;
+}
+.crm-v3 .layui-table td { border-color: var(--v3-line); font-size: 13.5px; }
+.crm-v3 .layui-table tbody tr:hover { background: var(--v3-surface-tint); }
+.crm-v3 .layui-table-view { border-radius: var(--v3-radius); border-color: var(--v3-line); }
+
+/* 表格汇总条 */
+.crm-v3 .crm-table-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 12px;
+}
+.crm-v3 .crm-table-summary-item {
+    padding: 6px 12px;
+    background: var(--v3-surface-soft);
+    border: 1px solid var(--v3-line);
+    border-radius: 999px;
+    font-size: 12.5px;
+    color: var(--v3-ink-soft);
+}
+
+/* ============================================================
+ * 8. tab（payment channel）
+ * ============================================================ */
+.crm-v3 .layui-tab-brief > .layui-tab-title .layui-this {
+    color: var(--v3-primary);
+}
+.crm-v3 .layui-tab-brief > .layui-tab-title .layui-this::after {
+    border-bottom-color: var(--v3-primary);
+    border-radius: 2px;
+}
+
+/* ============================================================
+ * 9. 内联提示
+ * ============================================================ */
+.crm-v3 .front-inline-notice {
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    color: var(--v3-warning);
+    background: var(--v3-warning-soft);
+    border: 1px solid #f0d9a8;
+    border-radius: var(--v3-radius-sm);
+    font-size: 13.5px;
+}
+
+/* ============================================================
+ * 10. Dashboard 专用
+ * ============================================================ */
+.crm-v3-dashboard { display: grid; gap: 16px; }
+
+/* 顶部 hero（克制深墨） */
+.crm-v3-hero {
+    position: relative;
+    padding: 26px 28px;
+    border-radius: var(--v3-radius-lg);
+    color: var(--v3-hero-ink);
+    background: linear-gradient(150deg, var(--v3-hero-bg) 0%, var(--v3-hero-bg2) 100%);
+    overflow: hidden;
+}
+.crm-v3-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+    background-size: 30px 30px;
+    -webkit-mask-image: radial-gradient(110% 90% at 80% 0%, #000 30%, transparent 78%);
+    mask-image: radial-gradient(110% 90% at 80% 0%, #000 30%, transparent 78%);
+    pointer-events: none;
+}
+.crm-v3-hero > * { position: relative; }
+.crm-v3-hero h1 {
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.crm-v3-hero h1 .layui-badge { color: #fff; background: rgba(255,255,255,.16); border: 0; }
+.crm-v3-hero p { margin: 0; color: var(--v3-hero-soft); font-size: 13.5px; }
+
+/* 统计卡片网格 */
+.crm-v3-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+    gap: 14px;
+}
+.crm-v3-stat {
+    margin: 0;
+    padding: 16px 18px;
+    background: var(--v3-surface);
+    border: 1px solid var(--v3-line);
+    border-radius: var(--v3-radius);
+    box-shadow: var(--v3-shadow-sm);
+    transition: box-shadow .18s ease, transform .12s ease;
+}
+.crm-v3-stat:hover { box-shadow: var(--v3-shadow); transform: translateY(-1px); }
+.crm-v3-stat dt {
+    margin: 0 0 8px;
+    color: var(--v3-muted);
+    font-size: 12.5px;
+    font-weight: 500;
+}
+.crm-v3-stat dd {
+    margin: 0;
+    color: var(--v3-ink);
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.2;
+}
+
+/* hero 内嵌的小统计（welcome 区） */
+.crm-v3-hero .crm-v3-stats { margin-top: 18px; }
+.crm-v3-hero .crm-v3-stat {
+    background: rgba(255,255,255,.07);
+    border-color: rgba(255,255,255,.12);
+    box-shadow: none;
+}
+.crm-v3-hero .crm-v3-stat:hover { background: rgba(255,255,255,.1); transform: none; }
+.crm-v3-hero .crm-v3-stat dt { color: var(--v3-hero-soft); }
+.crm-v3-hero .crm-v3-stat dd { color: #fff; }
+
+/* 图表网格 */
+.crm-v3-charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+}
+.crm-v3-chart { width: 100%; height: 260px; }
+
+/* 两列布局 */
+.crm-v3-two-col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+/* 空状态 */
+.crm-v3 .front-v2-empty-state,
+.crm-v3 .crm-v3-empty {
+    padding: 28px 16px;
+    text-align: center;
+    color: var(--v3-muted);
+}
+.crm-v3 .front-v2-empty-icon,
+.crm-v3 .crm-v3-empty-icon { font-size: 30px; opacity: .7; }
+.crm-v3 .front-v2-empty-title,
+.crm-v3 .crm-v3-empty-title { margin: 8px 0 4px; color: var(--v3-ink-soft); font-weight: 600; font-size: 14px; }
+.crm-v3 .front-v2-empty-text,
+.crm-v3 .crm-v3-empty-text { margin: 0; font-size: 12.5px; color: var(--v3-faint); }
+
+/* dashboard 控制区按钮组 */
+.crm-v3 .dashboard-switch-control {
+    position: relative;
+    min-width: 104px;
+    height: 38px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--v3-line-strong);
+    border-radius: var(--v3-radius-sm);
+    background: var(--v3-surface);
+    color: var(--v3-ink-soft);
+    cursor: pointer;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+.crm-v3 .dashboard-switch-control:hover { border-color: var(--v3-primary); }
+.crm-v3 .dashboard-switch-control.is-open { border-color: var(--v3-primary); box-shadow: 0 0 0 3px var(--v3-ring); }
+.crm-v3 .dashboard-switch-current { font-size: 12.5px; font-weight: 600; }
+.crm-v3 .dashboard-option-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    z-index: 30;
+    display: none;
+    min-width: 150px;
+    padding: 6px;
+    background: var(--v3-surface);
+    border: 1px solid var(--v3-line);
+    border-radius: var(--v3-radius);
+    box-shadow: var(--v3-shadow);
+}
+.crm-v3 .dashboard-switch-control.is-open .dashboard-option-menu { display: grid; gap: 2px; }
+.crm-v3 .dashboard-option-menu button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    min-height: 34px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: var(--v3-radius-sm);
+    background: transparent;
+    color: var(--v3-ink-soft);
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+}
+.crm-v3 .dashboard-option-menu button:hover,
+.crm-v3 .dashboard-option-menu button.is-active { background: var(--v3-primary-soft); color: var(--v3-primary); }
+.crm-v3 .dashboard-actions-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+.crm-v3 .dashboard-chart-type {
+    height: 32px;
+    min-width: 110px;
+    padding: 0 10px;
+    border: 1px solid var(--v3-line-strong);
+    border-radius: var(--v3-radius-sm);
+    background: var(--v3-surface);
+    color: var(--v3-ink-soft);
+    font-size: 12.5px;
+}
+
+/* 分享链接列表 */
+.crm-v3 .dashboard-share-list { display: grid; gap: 10px; }
+.crm-v3 .dashboard-share-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: center;
+    padding: 14px;
+    background: var(--v3-surface-soft);
+    border: 1px solid var(--v3-line);
+    border-radius: var(--v3-radius);
+}
+.crm-v3 .dashboard-share-label { margin-bottom: 4px; color: var(--v3-ink); font-weight: 600; font-size: 13px; }
+.crm-v3 .dashboard-share-url { color: var(--v3-primary); word-break: break-all; font-size: 12.5px; }
+
+/* 新闻时间线 */
+.crm-v3 .dashboard-news-link { color: var(--v3-ink); font-weight: 600; }
+.crm-v3 .dashboard-news-link:hover { color: var(--v3-primary); }
+
+/* ============================================================
+ * 11. Profile 专用
+ * ============================================================ */
+.crm-v3-profile { display: grid; gap: 16px; }
+
+/* 顶部用户 hero */
+.crm-v3 .crm-profile-hero,
+.crm-v3 .profile-head {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.crm-v3 .avatar-preview,
+.crm-v3 .crm-profile-avatar {
+    width: 76px;
+    height: 76px;
+    border-radius: 16px;
+    object-fit: cover;
+    border: 1px solid var(--v3-line);
+    background: var(--v3-surface-soft);
+    margin: 0;
+}
+.crm-v3 .profile-head-main { flex: 1; min-width: 200px; }
+.crm-v3 .profile-name {
+    margin: 0 0 8px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--v3-ink);
+}
+.crm-v3 .profile-sensitive {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    font-size: 13px;
+    color: var(--v3-muted);
+}
+.crm-v3 .profile-sensitive strong { color: var(--v3-ink-soft); font-weight: 600; }
+
+/* 上传控件 */
+.crm-v3 .profile-upload-field { display: inline-flex; flex-direction: column; gap: 8px; }
+.crm-v3 .profile-upload-card {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 130px;
+    min-height: 84px;
+    padding: 14px;
+    color: var(--v3-muted);
+    background: var(--v3-surface-soft);
+    border: 1px dashed var(--v3-line-strong);
+    border-radius: var(--v3-radius);
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease, background .15s ease;
+}
+.crm-v3 .profile-upload-card:hover {
+    border-color: var(--v3-primary);
+    color: var(--v3-primary);
+    background: var(--v3-primary-soft);
+}
+/* 上传占位元素会被替换为 Lucide SVG，因此尺寸绑定共享图标 class。 */
+.crm-v3 .profile-upload-card .crm-lucide-icon { font-size: 22px; }
+.crm-v3 .profile-upload-preview {
+    max-width: 130px;
+    max-height: 84px;
+    border-radius: var(--v3-radius-sm);
+    border: 1px solid var(--v3-line);
+    object-fit: cover;
+}
+.crm-v3 .profile-upload-clear {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--v3-line);
+    border-radius: 50%;
+    background: var(--v3-surface);
+    color: var(--v3-muted);
+    cursor: pointer;
+}
+.crm-v3 .profile-upload-clear:hover { border-color: var(--v3-danger); color: var(--v3-danger); }
+.crm-v3 .profile-upload-meta {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 12px;
+    color: var(--v3-faint);
+}
+.crm-v3 .profile-upload-meta b { color: var(--v3-ink-soft); font-weight: 600; }
+.crm-v3 .crm-profile-upload-field.is-card-upload {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* ============================================================
+ * 12. Deposit 专用
+ * ============================================================ */
+.crm-v3-deposit { display: grid; gap: 16px; }
+.crm-v3 .deposit-form-row .layui-input { max-width: none; }
+.crm-v3.is-disabled .deposit-form-area,
+.crm-v3 .deposit-form-area.is-disabled { opacity: .55; pointer-events: none; }
+.crm-v3 .payment-channel-layui-tabs {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+.crm-v3 .payment-channel-layui-tabs .layui-tab-title {
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 6px;
+    border: 1px solid var(--v3-line);
+    border-radius: var(--v3-radius);
+    background: var(--v3-surface-soft);
+}
+.crm-v3 .payment-channel-layui-tabs .layui-tab-title li {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: auto;
+    min-height: 38px;
+    line-height: 18px;
+    margin: 0;
+    padding: 0 15px;
+    border: 1px solid var(--v3-line);
+    border-radius: var(--v3-radius-sm);
+    background: var(--v3-surface);
+    color: var(--v3-ink-soft);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color .16s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+.crm-v3 .payment-channel-layui-tabs .layui-tab-title li:hover {
+    color: var(--v3-primary);
+    border-color: var(--v3-primary);
+    background: var(--v3-primary-soft);
+}
+.crm-v3 .payment-channel-layui-tabs .layui-tab-title li.layui-this {
+    color: var(--v3-primary-ink);
+    border-color: var(--v3-primary);
+    background: var(--v3-primary);
+    box-shadow: 0 6px 16px var(--v3-ring);
+}
+.crm-v3 .payment-channel-layui-tabs .layui-tab-title .layui-this::after {
+    display: none;
+}
+.crm-v3 .payment-channel-layui-tabs .layui-tab-content {
+    padding: 10px 0 0;
+}
+.crm-v3 .payment-channel-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid var(--v3-line);
+    border-left: 3px solid var(--v3-primary);
+    border-radius: var(--v3-radius);
+    background: linear-gradient(180deg, var(--v3-surface) 0%, var(--v3-surface-soft) 100%);
+    box-shadow: var(--v3-shadow-sm);
+}
+.crm-v3 .payment-channel-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+.crm-v3 .payment-channel-head > .crm-lucide-icon {
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    flex: 0 0 34px;
+    border-radius: var(--v3-radius-sm);
+    text-align: center;
+    color: var(--v3-primary-ink);
+    background: var(--v3-primary);
+    box-shadow: 0 0 0 4px var(--v3-primary-soft);
+}
+.crm-v3 .payment-channel-head strong {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--v3-ink);
+    font-size: 15px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.crm-v3 .payment-channel-head small {
+    display: block;
+    margin-top: 2px;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--v3-muted);
+    font-size: 12px;
+    line-height: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.crm-v3 .channel-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 10px;
+    min-width: 0;
+}
+.crm-v3 .channel-meta-item {
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--v3-line);
+    border-radius: var(--v3-radius-sm);
+    background: var(--v3-surface);
+}
+.crm-v3 .channel-meta-item span {
+    display: block;
+    color: var(--v3-muted);
+    font-size: 12px;
+    line-height: 16px;
+}
+.crm-v3 .channel-meta-item strong {
+    display: block;
+    margin-top: 3px;
+    overflow-wrap: anywhere;
+    color: var(--v3-ink);
+    font-size: 14px;
+    line-height: 20px;
+}
+.crm-v3 .payment-channel-panel .channel-meta,
+.crm-v3 .payment-channel-panel .channel-remark-list {
+    max-width: 100%;
+    margin: 0;
+    padding: 10px 12px;
+    border: 1px dashed var(--v3-line-strong);
+    border-radius: var(--v3-radius-sm);
+    color: var(--v3-muted);
+    background: var(--v3-surface);
+    font-size: 12.5px;
+    line-height: 18px;
+    overflow-wrap: anywhere;
+}
+.crm-v3 .payment-channel-panel .channel-remark-list {
+    padding-left: 28px;
+}
+.crm-v3 .payment-channel-panel .channel-remark-list li {
+    margin: 2px 0;
+}
+.crm-v3 .payment-channel-panel .channel-remark-list li::marker {
+    color: var(--v3-primary);
+}
+.crm-v3 .deposit-history-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    padding: 12px;
+    border: 1px solid var(--v3-line);
+    border-radius: var(--v3-radius);
+    background: var(--v3-surface);
+}
+.crm-v3 .deposit-history-table-wrap .layui-table-view { min-width: 980px; border: 0; border-radius: 0; }
+.crm-v3 #depositHistorySummary {
+    width: 100%;
+    justify-content: flex-start;
+    margin: 0 0 10px;
+    padding-left: 0;
+}
+.crm-v3 #depositHistorySummary .crm-table-summary-item { margin-left: 0; }
+.crm-v3 .deposit-retry { display: none; margin-left: 10px; }
+
+/* ============================================================
+ * 13. 响应式
+ * ============================================================ */
+@media (max-width: 768px) {
+    .crm-v3 .layui-card-body { padding: 16px; }
+    .crm-v3 .layui-form-pane .layui-form-label { width: 92px; }
+    .crm-v3 .layui-form-pane .layui-input-block { margin-left: 92px; }
+    .crm-v3 .payment-channel-layui-tabs .layui-tab-title li { flex: 1 1 calc(50% - 8px); padding: 0 10px; }
+    .crm-v3 .payment-channel-panel { padding: 12px; }
+    .crm-v3 .channel-meta-grid { grid-template-columns: 1fr; }
+    .crm-v3-hero { padding: 20px; }
+    .crm-v3-hero h1 { font-size: 19px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .crm-v3 *, .crm-v3 *::before, .crm-v3 *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+    }
+}

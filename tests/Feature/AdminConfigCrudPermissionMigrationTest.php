@@ -1,0 +1,105 @@
+<?php
+
+/**
+ Created by PhpStorm.
+ * Project name co_crmv5.
+ * User: Huang Gang
+ * Date: 2026/06/06
+ * Time: 23:49
+ */
+
+/**
+ * AdminConfigCrudPermissionMigrationTest
+ *
+ * 文件功能：
+ * - 验证配置类按钮/API 权限由迁移类写入 permissions 表，且对应命名路由接受 id 参数。
+ * - 输入：权限/结构迁移类与测试数据库；输出：PHPUnit 断言结果。
+ * - 明确不负责：不验证 check.permission 中间件的运行时鉴权与按钮渲染（由模块契约测试锁定）。
+ */
+
+namespace Tests\Feature;
+
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+use Tests\TestCase;
+
+/**
+ * 后台配置类 CRUD 权限与路由覆盖测试。
+ *
+ * 测试目标：
+ * - 代理等级、分组配置这类配置模块的新增/更新/删除权限必须写入 permissions 表。
+ * - 需要记录 ID 的更新/删除接口必须在命名路由中声明 {id} 参数，方便 JS 通过 routeParams.id 生成正确 URL。
+ */
+class AdminConfigCrudPermissionMigrationTest extends TestCase
+{
+    use DatabaseTransactions;
+
+    /**
+     * 配置类 CRUD 权限迁移必须写入按钮/API 权限。
+     *
+     * @return void
+     */
+    public function test_config_crud_permissions_are_seeded_by_migration(): void
+    {
+        $migrationPath = database_path('migrations/2026_06_06_000007_add_admin_config_crud_permissions.php');
+
+        $this->assertFileExists($migrationPath, '配置类 CRUD 权限迁移文件不存在。');
+
+        require_once $migrationPath;
+
+        $slugs = collect($this->expectedPermissions())->pluck('slug')->all();
+        DB::table('permissions')->whereIn('slug', $slugs)->delete();
+
+        (new \AddAdminConfigCrudPermissions())->up();
+
+        foreach ($this->expectedPermissions() as $permission) {
+            $record = DB::table('permissions')->where('slug', $permission['slug'])->first();
+
+            $this->assertNotNull($record, $permission['slug'] . ' 权限未写入 permissions 表。');
+            $this->assertSame('admin', $record->guard_type);
+            $this->assertSame(3, (int) $record->type);
+            $this->assertSame($permission['api_route'], (string) $record->api_route);
+            $this->assertSame(1, (int) $record->status);
+        }
+    }
+
+    /**
+     * 更新和删除接口必须具备路由 ID 参数。
+     *
+     * @return void
+     */
+    public function test_config_crud_named_routes_accept_id_parameter(): void
+    {
+        $expectedUris = [
+            'admin_api_updateAgentLevel2' => 'api/admin/updateAgentLevel2/{id}',
+            'admin_api_deleteAgentLevel' => 'api/admin/deleteAgentLevel/{id}',
+            'admin_api_updateGroupConfig' => 'api/admin/updateGroupConfig/{id}',
+            'admin_api_deleteGroupConfig' => 'api/admin/deleteGroupConfig/{id}',
+        ];
+
+        foreach ($expectedUris as $routeName => $uri) {
+            $route = Route::getRoutes()->getByName($routeName);
+
+            $this->assertNotNull($route, $routeName . ' 命名路由不存在。');
+            $this->assertSame($uri, $route->uri(), $routeName . ' 未声明正确的 {id} 路由参数。');
+        }
+    }
+
+    /**
+     * 本迁移必须写入的配置类按钮/API 权限。
+     *
+     * @return array<int, array{slug:string, api_route:string}>
+     */
+    private function expectedPermissions(): array
+    {
+        return [
+            ['slug' => 'admin_agent_level_create', 'api_route' => 'admin_api_createAgentLevel'],
+            ['slug' => 'admin_agent_level_update', 'api_route' => 'admin_api_updateAgentLevel2'],
+            ['slug' => 'admin_agent_level_delete', 'api_route' => 'admin_api_deleteAgentLevel'],
+            ['slug' => 'admin_group_config_create', 'api_route' => 'admin_api_createGroupConfig'],
+            ['slug' => 'admin_group_config_update', 'api_route' => 'admin_api_updateGroupConfig'],
+            ['slug' => 'admin_group_config_delete', 'api_route' => 'admin_api_deleteGroupConfig'],
+        ];
+    }
+}

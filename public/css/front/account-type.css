@@ -1,0 +1,412 @@
+/**
+ * 前台交易账户类型切换样式。
+ *
+ * 文件功能：在 Blade 账户综合页中组织 STP/ECN 分段选择、资格状态和提交动作。
+ * 适用场景：桌面与移动端 iframe 页面；颜色和主题只引用项目既有 --front-* 变量。
+ * 失败边界：长中英文文案允许换行，窄屏改为单列，禁用与加载状态不会改变控件尺寸。
+ */
+.account-type-switch {
+    margin: 0 0 15px;
+    overflow: hidden;
+    border: 1px solid var(--front-line);
+    border-radius: 8px;
+    background: var(--front-panel);
+    color: var(--front-text);
+    letter-spacing: 0;
+}
+
+.account-type-switch *,
+.account-type-switch *::before,
+.account-type-switch *::after {
+    box-sizing: border-box;
+}
+
+.account-type-switch__header {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) minmax(132px, auto);
+    gap: 12px;
+    align-items: center;
+    min-width: 0;
+    padding: 14px 16px;
+}
+
+.account-type-switch__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--front-blue) 12%, var(--front-panel));
+    color: var(--front-blue);
+}
+
+.account-type-switch__icon .lucide {
+    width: 20px;
+    height: 20px;
+}
+
+.account-type-switch__heading,
+.account-type-switch__current {
+    display: grid;
+    min-width: 0;
+    gap: 3px;
+}
+
+.account-type-switch__heading > strong {
+    color: var(--front-strong);
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 700;
+}
+
+.account-type-switch__heading > small,
+.account-type-switch__current > small {
+    color: var(--front-muted);
+    font-size: 12px;
+    line-height: 18px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.account-type-switch__current {
+    justify-items: end;
+    text-align: right;
+}
+
+.account-type-switch__current > strong {
+    max-width: 100%;
+    color: var(--front-strong);
+    font-size: 15px;
+    line-height: 20px;
+    overflow-wrap: anywhere;
+}
+
+.account-type-switch__workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 320px);
+    min-width: 0;
+    border-top: 1px solid var(--front-line);
+}
+
+.account-type-selector {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-width: 0;
+    margin: 16px;
+    overflow: hidden;
+    border: 1px solid var(--front-line);
+    border-radius: 8px;
+    background: var(--front-table-head);
+}
+
+.account-type-option {
+    position: relative;
+    display: block;
+    min-width: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.account-type-option + .account-type-option {
+    border-left: 1px solid var(--front-line);
+}
+
+.account-type-option > input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.account-type-option__body {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    min-height: 226px;
+    padding: 15px;
+    background: var(--front-panel);
+    transition: background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.account-type-option.is-target:hover .account-type-option__body,
+.account-type-option.is-selected .account-type-option__body {
+    background: color-mix(in srgb, var(--front-blue) 7%, var(--front-panel));
+}
+
+.account-type-option.is-selected .account-type-option__body {
+    box-shadow: inset 0 0 0 2px var(--front-blue);
+}
+
+.account-type-option > input:focus-visible + .account-type-option__body {
+    outline: 3px solid var(--front-focus-ring);
+    outline-offset: -3px;
+}
+
+.account-type-option.is-current {
+    cursor: default;
+}
+
+/* 净值不足时保留 ECN 条件说明，但明确阻止点击，避免用户误以为仍可提交申请。 */
+.account-type-option.is-unavailable {
+    cursor: not-allowed;
+}
+
+.account-type-option.is-unavailable .account-type-option__body {
+    opacity: 0.72;
+}
+
+.account-type-option.is-unavailable:hover .account-type-option__body {
+    background: var(--front-panel);
+}
+
+.account-type-option__head,
+.account-type-option__name {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+.account-type-option__head {
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.account-type-option__name {
+    gap: 8px;
+    color: var(--front-strong);
+}
+
+.account-type-option__name .lucide {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    color: var(--front-blue);
+}
+
+.account-type-option__name strong {
+    min-width: 0;
+    font-size: 15px;
+    line-height: 21px;
+    overflow-wrap: anywhere;
+}
+
+.account-type-option__state {
+    display: none;
+    flex: 0 0 auto;
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--front-accent) 14%, var(--front-panel));
+    color: var(--front-accent);
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 700;
+}
+
+.account-type-option.is-current .account-type-option__state {
+    display: inline-flex;
+}
+
+.account-type-option__facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 12px;
+    min-width: 0;
+}
+
+.account-type-option__facts > span {
+    display: grid;
+    align-content: start;
+    min-width: 0;
+    gap: 3px;
+}
+
+.account-type-option__facts > .is-wide {
+    grid-column: 1 / -1;
+}
+
+.account-type-option__facts small {
+    color: var(--front-muted);
+    font-size: 11px;
+    line-height: 16px;
+}
+
+.account-type-option__facts strong {
+    color: var(--front-strong);
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 600;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.account-type-action {
+    display: grid;
+    align-content: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 16px;
+    border-left: 1px solid var(--front-line);
+    background: var(--front-table-head);
+}
+
+.account-type-action__metric {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+}
+
+.account-type-action__metric span {
+    color: var(--front-muted);
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.account-type-action__metric strong {
+    min-width: 0;
+    color: var(--front-strong);
+    font-size: 15px;
+    line-height: 20px;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.account-type-status {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr);
+    gap: 8px;
+    align-items: start;
+    min-width: 0;
+    padding: 10px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--front-blue) 9%, var(--front-panel));
+    color: var(--front-text);
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.account-type-status.is-ready {
+    background: color-mix(in srgb, var(--front-accent) 11%, var(--front-panel));
+    color: var(--front-strong);
+}
+
+.account-type-status.is-error {
+    background: color-mix(in srgb, var(--front-danger) 10%, var(--front-panel));
+    color: var(--front-danger);
+}
+
+.account-type-status__icon,
+.account-type-status__icon .lucide {
+    width: 18px;
+    height: 18px;
+}
+
+.account-type-status.is-loading .account-type-status__icon {
+    animation: account-type-spin 900ms linear infinite;
+}
+
+.account-type-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 40px;
+    height: auto;
+    margin: 0;
+    padding: 9px 14px;
+    white-space: normal;
+    line-height: 20px;
+}
+
+.account-type-submit .lucide {
+    flex: 0 0 auto;
+    width: 17px;
+    height: 17px;
+}
+
+.account-type-submit.is-loading .lucide {
+    animation: account-type-spin 900ms linear infinite;
+}
+
+@keyframes account-type-spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 900px) {
+    .account-type-switch__workspace {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .account-type-action {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        border-top: 1px solid var(--front-line);
+        border-left: 0;
+    }
+
+    .account-type-status,
+    .account-type-submit {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 640px) {
+    .account-type-switch__header {
+        grid-template-columns: 36px minmax(0, 1fr);
+        padding: 12px;
+    }
+
+    .account-type-switch__icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .account-type-switch__current {
+        grid-column: 1 / -1;
+        justify-items: start;
+        padding-top: 9px;
+        border-top: 1px solid var(--front-line);
+        text-align: left;
+    }
+
+    .account-type-selector {
+        grid-template-columns: minmax(0, 1fr);
+        margin: 12px;
+    }
+
+    .account-type-option + .account-type-option {
+        border-top: 1px solid var(--front-line);
+        border-left: 0;
+    }
+
+    .account-type-option__body {
+        min-height: 0;
+        padding: 13px;
+    }
+
+    .account-type-action {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 12px;
+    }
+
+    .account-type-status,
+    .account-type-submit {
+        grid-column: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .account-type-option__body {
+        transition: none;
+    }
+
+    .account-type-status.is-loading .account-type-status__icon,
+    .account-type-submit.is-loading .lucide {
+        animation: none;
+    }
+}

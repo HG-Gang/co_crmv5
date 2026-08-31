@@ -1,0 +1,43 @@
+{
+  "config": {
+    "gateway_code": "exlink_bb",
+    "merchant_id": "exlink-crypto-fixture",
+    "gateway_url": "https://provider.example.test/exlink/crypto",
+    "secret_reference": "env:PAYMENT_EXLINK_REQUEST_KEY",
+    "callback_key_reference": "env:PAYMENT_EXLINK_CALLBACK_KEY",
+    "currency": "USDT",
+    "amount_unit": "decimal",
+    "notify_route": "front_api_payment_notify",
+    "return_route": "front_api_payment_return",
+    "protocol": "TRC20",
+    "coin_name": "USDT"
+  },
+  "order": {
+    "local_order_no": "DEP-EXLINK-CRYPTO-1001",
+    "gateway_code": "exlink_bb",
+    "user_id": 410004,
+    "user_name": "exlink-crypto-user",
+    "amount": "50.00",
+    "actual_amount": "75.00",
+    "exchange_rate": "1.50000000",
+    "currency": "USDT"
+  },
+  "create_response": {
+    "success": true,
+    "code": 1,
+    "data": "https://checkout.example.test/exlink/crypto/1001"
+  },
+  "callback": {
+    "tradeId": "EXLINK-CRYPTO-PROVIDER-1001",
+    "apiOrderNo": "DEP-EXLINK-CRYPTO-1001",
+    "tradeStatus": "1",
+    "amount": "50.00",
+    "orderAmount": "50.00",
+    "currency": "USDT",
+    "uniqueCode": "410004",
+    "uid": "exlink-crypto-fixture",
+    "protocol": "TRC20",
+    "coinName": "USDT",
+    "txId": "fixture-chain-tx-1001"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "config": {
+    "gateway_code": "otc",
+    "merchant_id": "otc-merchant-fixture",
+    "gateway_url": "https://provider.example.test/otc/unsupported",
+    "secret_reference": "env:PAYMENT_OTC_FIXTURE_KEY",
+    "currency": "USDT",
+    "amount_unit": "decimal",
+    "notify_route": "front_api_payment_notify",
+    "return_route": "front_api_payment_return"
+  },
+  "order": {
+    "local_order_no": "DEP-OTC-1001",
+    "gateway_code": "otc",
+    "user_id": 410008,
+    "user_name": "otc-fixture-user",
+    "amount": "50.00",
+    "actual_amount": "50.00",
+    "currency": "USDT"
+  },
+  "callback": {
+    "merchant_id": "otc-merchant-fixture",
+    "order_no": "DEP-OTC-1001",
+    "amount": "50.00",
+    "currency": "USDT",
+    "status": "success",
+    "sign": "unproven-fixture-signature"
+  }
+}

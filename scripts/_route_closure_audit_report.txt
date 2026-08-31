@@ -1,0 +1,694 @@
+旧路由总数: 393
+新路由总数: 816
+
+==== A. URI+方法精确未命中 (323) ====
+POST /user/proxy/proxySearch | Admin\BigNumberController@bigNumberListSearch | prefix=user
+POST /user/proxy/proxySearchBySub | Admin\BigNumberController@bigNumberListSearchBySubAgents | prefix=user
+POST /user/position/subAgentsListSearch | Admin\BigNumberController@bigSubPositionSummaryStats | prefix=user
+POST /user/changePassword | Admin\BigNumberController@changePasswordSave | prefix=user
+GET /flow/main | User\CustomerFlowController@main_browse | prefix=flow
+POST /flow/depositFlowSearch | User\CustomerFlowController@depositFlowSearch | prefix=flow
+POST /flow/withdrawalFlowSearch | User\CustomerFlowController@withdrawalFlowSearch | prefix=flow
+POST /flow/withdrawApplyFlowSearch | User\CustomerFlowController@withdrawApplyFlowSearch | prefix=flow
+POST /flow/directDepositFlowSearch | User\CustomerFlowController@directDepositFlowSearch | prefix=flow
+POST /flow/depositExport | User\CustomerFlowController@depositExport | prefix=flow
+GET /flow/downloadfile/{file}/{role} | User\CustomerFlowController@DownloadFile | prefix=flow
+POST /flow/directWithdrawalFlowSearch | User\CustomerFlowController@directWithdrawalFlowSearch | prefix=flow
+POST /flow/directAgentsDepositFlowSearch | User\CustomerFlowController@directDepositFlowSearch | prefix=flow
+POST /flow/directAgentsWithdrawalFlowSearch | User\CustomerFlowController@directWithdrawalFlowSearch | prefix=flow
+GET /center | User\UserCenterController@user_info_browse | prefix=
+GET /center/uploadIdCard | User\UserCenterController@uploadIdCard_browse | prefix=
+GET /center/uploadBank | User\UserCenterController@uploadBank_browse | prefix=
+GET /center/uploadChangeBank/{type} | User\UserCenterController@uploadChangeBank_browse | prefix=
+GET /center/uploadHead_browse | User\UserCenterController@uploadHead_browse | prefix=
+GET /center/updPhoneEmail/{type} | User\UserCenterController@updPhoneEmail_browse | prefix=
+GET /center/cancelAccount | User\UserCenterController@cancelAccount_browse | prefix=
+POST /center/cancelVerifyInfo | User\UserCenterController@cancelVerifyInfo | prefix=
+POST /center/cancelVerifyPassSendCode | User\UserCenterController@cancelVerifyPassSendCode | prefix=
+POST /center/uploadIdCard | User\UserCenterController@uploadIdCard | prefix=
+POST /center/uploadBankCard | User\UserCenterController@uploadBankCard | prefix=
+POST /center/uploadChangeBankCard | User\UserCenterController@uploadChangeBankCard | prefix=
+POST /center/updateVerifyInfo | User\UserCenterController@updateVerifyInfo | prefix=
+POST /center/changeBankCardVerifyCode | User\UserCenterController@changeBankCardVerifyCode | prefix=
+POST /center/updVerifyPassSendCode | User\UserCenterController@updVerifyPassSendCode | prefix=
+POST /center/changeBankCardSendCode | User\UserCenterController@changeBankCardSendCode | prefix=
+POST /center/updatePhoneEmailInfo | User\UserCenterController@updatePhoneEmailInfo | prefix=
+POST /center/ajaxCancelAccount | User\UserCenterController@ajaxCancelAccount | prefix=
+POST /center/uploadHeadImg | User\UserCenterController@uploadHeadImg | prefix=
+GET /editpsw | User\UserCenterController@user_editpsw_browse | prefix=
+GET /agents/editpsw | Admin\BigNumberController@agents_editpsw_browse | prefix=
+POST /editpsw_save | User\UserCenterController@user_editpsw_save | prefix=
+POST /agents/editpsw_save | User\UserCenterController@agents_editpsw_save | prefix=
+GET /voucher | User\UserCenterController@user_voucher_browse | prefix=
+GET /account | User\UserCenterController@user_account_browse | prefix=
+POST /change_account_save | User\UserCenterController@change_account_save | prefix=
+POST /user_voucher_save | User\UserCenterController@user_voucher_save | prefix=
+GET /deposit | User\UserDepositController@deposit_browse | prefix=
+ANY /deposit_request | User\UserDepositController@deposit_request | prefix=
+ANY /deposit_request_otc | User\UserDepositController@deposit_request_otc | prefix=
+ANY /deposit_notfiy | PayController\PayCallBackController@deposit_notify_response_success | prefix=
+ANY /deposit_notfiy2 | PayController\PayCallBackController@deposit_notify_response_success2 | prefix=
+ANY /deposit_tigerpay_notify | PayController\PayCallBackController@deposit_tigerpay_notify | prefix=
+ANY /deposit_wppay_notify | PayController\PayCallBackController@deposit_wppay_notify | prefix=
+ANY /deposit_wppay_return | PayController\PayCallBackController@deposit_wppay_return | prefix=
+ANY /deposit_exlink_bbnotify | PayController\PayCallBackController@deposit_exlink_bbnotify | prefix=
+ANY /deposit_exlink_bbreturn | PayController\PayCallBackController@deposit_exlink_bbreturn | prefix=
+ANY /deposit_exlink_fbnotify | PayController\PayCallBackController@deposit_exlink_fbnotify | prefix=
+ANY /deposit_exlink_fbreturn | PayController\PayCallBackController@deposit_exlink_fbreturn | prefix=
+ANY /deposit_btb_notify | PayController\PayCallBackController@deposit_btb_notify | prefix=
+ANY /deposit_btb_return | PayController\PayCallBackController@deposit_btb_return | prefix=
+ANY /deposit_passto_notify | PayController\PayCallBackController@deposit_passto_notify | prefix=
+ANY /deposit_switch_notify | PayController\PayCallBackController@deposit_switch_notify | prefix=
+ANY /deposit_notfiy_otc | PayController\PayCallBackController@deposit_notify_response_success_otc | prefix=
+ANY /withdraw_notfiy_otc | Admin\WithdrawAmountController@withdraw_notify_response_success_otc | prefix=
+ANY /withdraw_verify_otc | Admin\WithdrawAmountController@withdraw_verify_success_otc | prefix=
+ANY /deposit_return | PayController\PayCallBackController@deposit_return_response_success | prefix=
+ANY /deposit_return2 | PayController\PayCallBackController@deposit_return_response_success2 | prefix=
+GET /withdraw | User\UserWithdrawController@withdraw_browse | prefix=
+POST /withdraw_request | User\UserWithdrawController@withdraw_request | prefix=
+POST /withdraw_request_OTC | User\UserWithdrawController@withdraw_request_OTC | prefix=
+GET /proxy/list | User\ProxyListController@proxy_list_browse | prefix=
+GET /proxy/confirm | User\ProxyListController@proxy_confirm_browse | prefix=
+GET /proxy/direct_cust_detail/{puid} | User\ProxyListController@proxy_direct_cust_detail | prefix=
+POST /proxy/proxyListSearch | User\ProxyListController@proxyListSearch | prefix=
+POST /proxy/proxyConfirmSearch | User\ProxyListController@proxyConfirmSearch | prefix=
+POST /proxy/confirmLevelChange | User\ProxyListController@confirmLevelChange | prefix=
+POST /proxy/direct_cust_detail_list | User\ProxyListController@direct_cust_detail_list | prefix=
+POST /proxy/getSubAgentsGrpIdList | User\ProxyListController@getSubAgentsGrpIdList | prefix=
+POST /proxy/parentPath | User\ProxyListController@getParentPath | prefix=
+GET /proxy/direct_user_commTrans_browse/{uid} | User\ProxyListController@direct_user_commTrans_browse | prefix=
+POST /proxy/directUserCommTrans | User\ProxyListController@directUserCommTrans | prefix=
+GET /position/summary | User\PositionSummaryController@position_summary_browse | prefix=
+GET /position/comm_summary | User\PositionSummaryController@_exte_mt4_sync_comm_summary | prefix=
+GET /position/comm_summaryv2 | User\PositionSummaryController@realTimerealTimeV2 | prefix=
+GET /position/summary/deatil/{id} | User\PositionSummaryController@position_summary_detail | prefix=
+POST /position/positionSummarySearch | User\PositionSummaryController@positionSummarySearch | prefix=
+POST /position/v2/subAgentsListSearchV2 | User\PositionSummaryController@subPositionSummarySearch | prefix=
+POST /position/v2/positionSummaryClickSearch | User\PositionSummaryController@positionSummaryClickSearch | prefix=
+GET /close/order | User\CloseOrderController@close_order_browse | prefix=
+POST /close/closeOrderSearch | User\CloseOrderController@closeOrderSearch | prefix=
+GET /open/order | User\OpenOrderController@open_order_browse | prefix=
+POST /open/openOrderSearch | User\OpenOrderController@openOrderSearch | prefix=
+GET /position/summary2 | User\PositionSummary2Controller@position_summary2_browse | prefix=
+POST /position/positionSummary2Search | User\PositionSummary2Controller@positionSummary2Search | prefix=
+GET /close/order2 | User\CloseOrder2Controller@close_order2_browse | prefix=
+POST /close/closeOrder2Search | User\CloseOrder2Controller@closeOrder2Search | prefix=
+GET /open/order2 | User\OpenOrder2Controller@open_order2_browse | prefix=
+POST /open/openOrder2Search | User\OpenOrder2Controller@openOrder2Search | prefix=
+GET /realtime/rebate | User\RealCommissionController@realtime_rebate_browse | prefix=
+GET /realtime/rebate_detail/{orderNo}/{role} | User\RealCommissionController@realtime_rebate_detail | prefix=
+POST /realtime/realtimeRebateSearch | User\RealCommissionController@realtimeRebateSearch | prefix=
+GET /cust/list | User\DirectCustomerController@cust_list_browse | prefix=
+GET /change/list | User\DirectCustomerController@cust_list_chang_group_browse | prefix=
+GET /cust/change/group/{uid} | User\DirectCustomerController@changeDirectCustGroupInfo | prefix=
+POST /cust/change/group_edit | User\DirectCustomerController@changeDirectCustGroupEdit | prefix=
+POST /cust/directCustListSearch | User\DirectCustomerController@directCustListSearch | prefix=
+POST /cust/directCustChangeListSearch | User\DirectCustomerController@directCustChangeListSearch | prefix=
+GET /address/list | User\AddressController@address_list_browse | prefix=
+GET /address/add | User\AddressController@address_add_browse | prefix=
+GET /address/info/{recId} | User\AddressController@address_edit_browse | prefix=
+POST /address/search | User\AddressController@addressSearch | prefix=
+POST /address/update | User\AddressController@addressUpdate | prefix=
+GET /gift/list | User\AddressController@gift_list_browse | prefix=
+POST /gift/search | User\AddressController@giftSearch | prefix=
+GET /cust/show_direct_cust_info/{role}/{uid} | User\DirectCustomerController@show_direct_cust_info | prefix=
+POST /cust/loginHistorySearch/{uid} | User\DirectCustomerController@loginHistorySearch | prefix=
+GET /news_list_browse | User\NewsListController@news_list_browse | prefix=
+GET /news/news_detail/{newsId} | User\NewsListController@news_detail | prefix=
+POST /newsListSearch | User\NewsListController@newsListSearch | prefix=
+GET /voucher/voucher_browse | User\UserVoucherController@voucher_browse | prefix=
+POST /voucher/voucherSearch | User\UserVoucherController@voucherSearch | prefix=
+GET /login | Admin\LoginController@index | prefix=
+GET /captcha | Admin\LoginController@captcha | prefix=
+POST /logon | Admin\LoginController@logon | prefix=
+GET /logout | Admin\LoginController@logout | prefix=
+GET /index | Admin\AdminController@index | prefix=
+GET /welcome | Admin\AdminController@create | prefix=
+GET /role | Admin\RoleController@index | prefix=
+GET /role/add | Admin\RoleController@create | prefix=
+POST /role/addsave | Admin\RoleController@store | prefix=
+GET /role/edit/{id?} | Admin\RoleController@show | prefix=
+POST /role/editsave | Admin\RoleController@editsave | prefix=
+GET /role/del | Admin\RoleController@del | prefix=
+GET /Administrators | Admin\AdministratorsController@index | prefix=
+GET /Administrators/stop | Admin\AdministratorsController@stop | prefix=
+GET /Administrators/start | Admin\AdministratorsController@start | prefix=
+GET /Administrators/edit/{id?} | Admin\AdministratorsController@show | prefix=
+POST /Administrators/editsave | Admin\AdministratorsController@save | prefix=
+GET /Administrators/add | Admin\AdministratorsController@add | prefix=
+POST /Administrators/addsave | Admin\AdministratorsController@addsave | prefix=
+GET /Administrators/del | Admin\AdministratorsController@del | prefix=
+GET /userinfo | Admin\AdminController@UserInfo | prefix=
+POST /userinfo/save | Admin\AdminController@UserIfoSave | prefix=
+GET /userpwd | Admin\AdminController@UserPwd | prefix=
+POST /userpwd/save | Admin\AdminController@UserPewdSave | prefix=
+GET /bigAgents | Admin\BigAgentController@index | prefix=
+GET /bigAgents/add | Admin\BigAgentController@add | prefix=
+POST /bigAgents/save | Admin\BigAgentController@save | prefix=
+GET /bigAgents/show/{id?} | Admin\BigAgentController@show | prefix=
+POST /bigAgents/updateInfo | Admin\BigAgentController@updateInfo | prefix=
+GET /bigAgents/del | Admin\BigAgentController@del | prefix=
+GET /bigAgents/stop | Admin\BigAgentController@stop | prefix=
+GET /bigAgents/start | Admin\BigAgentController@start | prefix=
+GET /big_agents_list | Admin\BigAgentController@big_agents_list_browse | prefix=
+POST /bigAgents/agentsListSearch | Admin\BigAgentController@bigAgentsListSearch | prefix=
+POST /bigAgents/subAgentsListSearch | Admin\BigAgentController@getSubAgentsStats | prefix=
+GET /agent/{user_id?} | Admin\AgentControllerV3@index | prefix=
+GET /agents_list | Admin\AgentControllerV3@agents_list_browse | prefix=
+GET /agents_examine | Admin\AgentControllerV3@agents_examine_browse | prefix=
+GET /agents/agents_edit_info/{uid} | Admin\AgentControllerV3@agents_edit_info | prefix=
+POST /agents/agents_edit_save | Admin\AgentControllerV3@agents_edit_save | prefix=
+POST /agents/agentsListSearch | Admin\AgentControllerV3@agentsListSearch | prefix=
+POST /agents/agentsExamineListSearch | Admin\AgentControllerV3@agentsExamineListSearch | prefix=
+POST /send/againSendSms | Admin\AgentControllerV3@againSendSms | prefix=
+GET /big_agents_list | Admin\BigAgentController@big_agents_list_browse | prefix=
+GET /customer/{user_id?} | Admin\AgentControllerV3@CustomerList | prefix=
+GET /agent/edit/{user_id?} | Admin\AgentControllerV3@AgentEdir | prefix=
+POST /agent/update | Admin\AgentControllerV3@AgentUpdate | prefix=
+GET /agents_add | Admin\AgentControllerV3@agents_add_browse | prefix=
+POST /agents_save | Admin\AgentControllerV3@agents_save | prefix=
+GET /order/position_summary_list | Admin\PositionSummaryController@position_summary_list | prefix=
+POST /order/positionSummarySearch | Admin\PositionSummaryController@positionSummarySearch | prefix=
+POST /order/v2/positionSummarySearchV2 | Admin\PositionSummaryController@positionSummarySearchV2 | prefix=
+POST /order/v2/subAgentsListSearchV2 | Admin\PositionSummaryController@subAgentsListSearchV2 | prefix=
+GET /order/close_list | Admin\AdminCloseOrderController@close_list | prefix=
+POST /order/closeListSearch | Admin\AdminCloseOrderController@closeListSearch | prefix=
+GET /order/open_list | Admin\AdminOpenOrderController@open_list | prefix=
+POST /order/openlistSearch | Admin\AdminOpenOrderController@openlistSearch | prefix=
+GET /order/real_commission_list | Admin\AdminRealCommissionController@real_commission_list | prefix=
+POST /order/realCommissionListSearch | Admin\AdminRealCommissionController@realCommissionListSearch | prefix=
+GET /order/whs_exp_zero_list | Admin\AdminWhsExpZeroController@whs_exp_zero_list | prefix=
+POST /order/oneKeyZero | Admin\AdminWhsExpZeroController@oneKeyZero | prefix=
+POST /order/oneKeySearch | Admin\AdminWhsExpZeroController@oneKeySearch | prefix=
+POST /order/whsExpZeroListSearch | Admin\AdminWhsExpZeroController@whsExpZeroListSearch | prefix=
+GET /order/production_list | Admin\AdminProductionController@production_list | prefix=
+POST /order/productionListSearch | Admin\AdminProductionController@productionListSearchV2 | prefix=
+GET /cust/list | Admin\CustomerController@user_list | prefix=
+GET /cust/add | Admin\CustomerController@cust_add_browse | prefix=
+GET /cust/cust_detail/{acc_uid} | Admin\CustomerController@cust_detail | prefix=
+GET /cust/change_list | Admin\CustomerController@change_list | prefix=
+POST /cust/custListSearch | Admin\CustomerController@custListSearch | prefix=
+POST /cust/custChangeListSearch | Admin\CustomerController@custChangeListSearch | prefix=
+POST /cust/cust_apply_pass | Admin\CustomerController@cust_apply_pass | prefix=
+POST /cust/cust_apply_nopass | Admin\CustomerController@cust_apply_nopass | prefix=
+POST /cust/cust_save_info | Admin\CustomerController@cust_save_info | prefix=
+POST /cust/cust_save_add | Admin\CustomerController@cust_save_add | prefix=
+GET /amount/withdraw_apply | Admin\WithdrawAmountController@withdraw_apply | prefix=
+GET /amount/orderId_detail/{orderId} | Admin\WithdrawAmountController@withdrawOrderIdDetail | prefix=
+POST /amount/order_status | Admin\WithdrawAmountController@withdrawOrderStaus | prefix=
+POST /amount/order_status_OTC | Admin\WithdrawAmountController@withdrawOrderStaus_OTC | prefix=
+POST /amount/OTCwithdrawOrderIdDetail | Admin\WithdrawAmountController@OTCwithdrawOrderIdDetail | prefix=
+POST /amount/withdrawApplySearch | Admin\WithdrawAmountController@withdrawApplySearch | prefix=
+POST /amount/withdrawExport | Admin\WithdrawAmountController@withdrawExport | prefix=
+GET /amount/withdraw_downloadfile/{file}/{role} | Admin\WithdrawAmountController@withdraw_downloadfile | prefix=
+POST /amount/generate_OTCorder | Admin\WithdrawAmountController@generateOTCorder | prefix=
+POST /amount/updateCurrOrderId | Admin\WithdrawAmountController@updateCurrOrderId | prefix=
+GET /amount/deposit_flow | Admin\DepositAmountController@deposit_flow | prefix=
+POST /amount/depositFlowSearch | Admin\DepositAmountController@depositFlowSearch | prefix=
+POST /amount/depositExport | Admin\DepositAmountController@depositExport | prefix=
+GET /amount/depositDownloadfile/{file}/{role} | Admin\DepositAmountController@DownloadFile | prefix=
+GET /amount/withdraw_flow | Admin\WithdrawFlowController@withdraw_flow | prefix=
+POST /amount/withdrawFlowSearch | Admin\WithdrawFlowController@withdrawFlowSearch | prefix=
+POST /amount/withdrawFlowExport | Admin\WithdrawFlowController@withdrawFlowExport | prefix=
+GET /amount/withdrawDownloadfile/{file}/{role} | Admin\WithdrawFlowController@DownloadFile | prefix=
+GET /amount/undeposit_flow | Admin\UnDepositAmountController@undeposit_flow | prefix=
+POST /amount/undepositFlowSearch | Admin\UnDepositAmountController@undepositFlowSearch | prefix=
+GET /amount/rights_summary | Admin\RightsSummaryController@rights_summary_browse | prefix=
+GET /amount/rightsSummarySearchDetail/{uid}/{status}/{sumdata} | Admin\RightsSummaryController@RightsSummarySearchDetail | prefix=
+POST /amount/rightsSummarySearch | Admin\RightsSummaryController@RightsSummarySearch | prefix=
+POST /amount/confirm_options | Admin\RightsSummaryController@ConfirmWithdrawOrdeposit | prefix=
+POST /amount/manual_confirm_options | Admin\RightsSummaryController@ManualConfirmWithdrawOrdeposit | prefix=
+POST /amount/rightsSumExport | Admin\RightsSummaryController@rightsSumExport | prefix=
+GET /amount/rights_downloadfile/{file}/{role} | Admin\RightsSummaryController@DownloadFile | prefix=
+GET /amount/batch_operation | Admin\BatchAmountController@batch_operation_browse | prefix=
+GET /amount/batch_operation_withdraw | Admin\BatchAmountController@batch_operation_withdraw_browse | prefix=
+POST /amount/batchOperation | Admin\BatchAmountController@batchOperation | prefix=
+POST /amount/batchOperationWithdraw | Admin\BatchAmountController@batchOperationWithdraw | prefix=
+GET /amount/deposit_import_index | Admin\BatchAmountController@deposit_import_index | prefix=
+POST /amount/depositImportExcel | Admin\BatchAmountController@depositImportExcel | prefix=
+POST /amount/depositImportSearch | Admin\BatchAmountController@depositImportSearch | prefix=
+POST /amount/againDepositAmount | Admin\BatchAmountController@againDepositAmount | prefix=
+GET /credit/credit_import_index | Admin\BatchCreditController@credit_import_index | prefix=
+POST /credit/creditImportExcel | Admin\BatchCreditController@creditImportExcel | prefix=
+POST /credit/creditImportSearch | Admin\BatchCreditController@creditImportSearch | prefix=
+POST /credit/againCreditAmount | Admin\BatchCreditController@againCreditAmount | prefix=
+GET /amount/withdraw_import_index | Admin\BatchAmountController@withdraw_import_index | prefix=
+POST /amount/withdrawImportExcel | Admin\BatchAmountController@withdrawImportExcel | prefix=
+POST /amount/withdrawImportSearch | Admin\BatchAmountController@withdrawImportSearch | prefix=
+POST /amount/againWithdrawAmount | Admin\BatchAmountController@againWithdrawAmount | prefix=
+GET /fengXian/profit_list | Admin\FengXianManageController@fengXian_profit_browse | prefix=
+GET /fengXian/position_list | Admin\FengXianManageController@fengXian_position_browse | prefix=
+GET /fengXian/Ipaddress_list | Admin\FengXianManageController@fengXian_Ipaddress_browse | prefix=
+GET /fengXian/IpaddressDeatail/{idaddr} | Admin\FengXianManageController@fengXian_Ipaddress_detail | prefix=
+POST /fengXian/profitSearch | Admin\FengXianManageController@fengXian_profit_list | prefix=
+POST /fengXian/positionSearch | Admin\FengXianManageController@fengXian_position_list | prefix=
+POST /fengXian/IpaddressSearch | Admin\FengXianManageController@fengXian_Ipaddress_list | prefix=
+GET /amount/whpj_rate | Admin\ExchangeRateController@whpj_rate_browse | prefix=
+POST /amount/whpj_rate_save | Admin\ExchangeRateController@whpj_rate_save | prefix=
+GET /amount/show_channel_browse | Admin\PayChannelController@show_channel_browse | prefix=
+POST /amount/channel_enable | Admin\PayChannelController@channel_enable | prefix=
+POST /amount/channel_enableV2 | Admin\PayChannelController@channel_enableV2 | prefix=
+GET /auth/user_examine | Admin\AuthenticationController@user_examine | prefix=
+GET /auth/user_examine/detail/{mode}/{uid} | Admin\AuthenticationController@user_examine_detail | prefix=
+POST /auth/userExaminSearch | Admin\AuthenticationController@userExaminSearch | prefix=
+POST /auth/user_idcard_bank | Admin\AuthenticationController@user_idcard_bank | prefix=
+GET /auth/user_certified | Admin\AuthenticationController@user_certified | prefix=
+GET /auth/user_certified_detail/{uid} | Admin\AuthenticationController@userCertifiedDetail | prefix=
+POST /auth/userCertifiedSearch | Admin\AuthenticationController@userCertifiedSearch | prefix=
+GET /auth/voucher_info_browse | Admin\AuthenticationController@voucher_info_browse | prefix=
+POST /auth/voucherInfoSearch | Admin\AuthenticationController@voucherInfoSearch | prefix=
+GET /auth/user_voucher/detail/{recId}/{uid} | Admin\AuthenticationController@voucherInfoDetail | prefix=
+POST /auth/voucherReviewSave | Admin\AuthenticationController@voucherReviewSave | prefix=
+GET /cancel/user_list | Admin\CancellationController@cancel_user_list | prefix=
+POST /cancel/userlistSearch | Admin\CancellationController@userlistSearch | prefix=
+POST /cancel/cancel_apply_pass | Admin\CancellationController@cancel_apply_pass | prefix=
+POST /cancel/cancel_apply_nopass | Admin\CancellationController@cancel_apply_nopass | prefix=
+POST /cancel/update_cancel | Admin\CancellationController@update_cancel | prefix=
+GET /news/news_list_browse | Admin\NewsInfoController@news_list_browse | prefix=
+GET /news/news_add_browse | Admin\NewsInfoController@new_add_browse | prefix=
+GET /news/news_edit/{newsid} | Admin\NewsInfoController@news_edit | prefix=
+POST /news/newsListSearch | Admin\NewsInfoController@newsListSearch | prefix=
+POST /news/news_save | Admin\NewsInfoController@news_save | prefix=
+POST /news/news_update | Admin\NewsInfoController@news_update | prefix=
+POST /news/del | Admin\NewsInfoController@newDel | prefix=
+GET /group/user_group_browse | Admin\UserGroupController@user_group_browse | prefix=
+GET /group/user_group_add | Admin\UserGroupController@user_group_add | prefix=
+GET /group/user_group_edit/{recId} | Admin\UserGroupController@user_group_edit | prefix=
+POST /group/user_group_search | Admin\UserGroupController@user_group_search | prefix=
+POST /group/user_group_store | Admin\UserGroupController@user_group_store | prefix=
+POST /group/user_group_update | Admin\UserGroupController@user_group_update | prefix=
+POST /group/user_group_delete | Admin\UserGroupController@user_group_delete | prefix=
+GET /online | Admin\UserLoginOnlineController@index | prefix=
+POST /online/search | Admin\UserLoginOnlineController@search | prefix=
+POST /agent/v2/agentsListSearchV2 | AgentControllerV3@agentsListSearchV2 | prefix=agent
+POST /cust/custListSearchV2 | CustomerController@custListSearchV2 | prefix=cust
+POST /cust/custChangeListSearchV2 | CustomerController@custChangeListSearchV2 | prefix=cust
+POST /amount/withdrawFlowSearchV2 | WithdrawFlowController@withdrawFlowSearchV2 | prefix=amount
+POST /amount/withdrawApplySearchV2 | WithdrawAmountController@withdrawApplySearchV2 | prefix=amount
+POST /amount/batchWithdrawApply | WithdrawAmountController@batchWithdrawApply | prefix=amount
+POST /amount/undepositFlowSearchV2 | UnDepositAmountController@undepositFlowSearchV2 | prefix=amount
+POST /amount/depositFlowSearchV2 | DepositAmountController@depositFlowSearchV2 | prefix=amount
+POST /order/closeListSearchV2 | AdminCloseOrderController@closeListSearchV2 | prefix=order
+POST /order/openlistSearchV2 | AdminOpenOrderController@openlistSearchV2 | prefix=order
+POST /order/realCommissionListSearchV2 | AdminRealCommissionController@realCommissionListSearchV2 | prefix=order
+POST /order/productionListSearchV2 | AdminProductionController@productionListSearchV3 | prefix=order
+POST /order/positionSummarySearch | PositionSummaryController@positionSummarySearch | prefix=order
+POST /order/v2/subAgentsListSearchV2 | PositionSummaryController@subAgentsListSearchV2 | prefix=order
+POST /order/v2/parentPath | PositionSummaryController@parentPathV2 | prefix=order
+GET /withdraw/pending | WithdrawStatusController@pending | prefix=withdraw
+POST /withdraw/pendingSearch | WithdrawStatusController@pendingSearch | prefix=withdraw
+POST /withdraw/pendingExport | WithdrawStatusController@pendingExport | prefix=withdraw
+GET /withdraw/processing | WithdrawStatusController@processing | prefix=withdraw
+POST /withdraw/processingSearch | WithdrawStatusController@processingSearch | prefix=withdraw
+POST /withdraw/processingExport | WithdrawStatusController@processingExport | prefix=withdraw
+GET /withdraw/completed | WithdrawStatusController@completed | prefix=withdraw
+POST /withdraw/completedSearch | WithdrawStatusController@completedSearch | prefix=withdraw
+POST /withdraw/completedExport | WithdrawStatusController@completedExport | prefix=withdraw
+GET /withdraw/failed | WithdrawStatusController@failed | prefix=withdraw
+POST /withdraw/failedSearch | WithdrawStatusController@failedSearch | prefix=withdraw
+POST /withdraw/failedExport | WithdrawStatusController@failedExport | prefix=withdraw
+GET /group/add | GroupConfigController@group_add_index | prefix=group
+POST /group/store | GroupConfigController@store | prefix=group
+POST /group/update | GroupConfigController@update | prefix=group
+GET /group/pairSelect | GroupConfigController@pairSelect | prefix=group
+POST /cancel/userlistSearchV2 | CancellationController@userlistSearchV2 | prefix=cancel
+POST /fengXian/profitSearchV2 | FengXianManageController@fengXian_profit_listV2 | prefix=fengXian
+POST /fengXian/positionSearchv2 | FengXianManageController@fengXian_position_listV2 | prefix=fengXian
+POST /group/user_group_searchV2 | UserGroupController@user_group_searchV2 | prefix=group
+POST /auth/voucherInfoSearchV2 | AuthenticationController@voucherInfoSearchV2 | prefix=auth
+POST /auth/userExaminSearchV2 | AuthenticationController@userExaminSearchV2 | prefix=auth
+POST /auth/userCertifiedSearchV2 | AuthenticationController@userCertifiedSearchV2 | prefix=auth
+POST /order/whsExpZeroListSearchV2 | AdminWhsExpZeroController@whsExpZeroListSearchV2 | prefix=order
+GET /gift/send_gift_browse | GiftController@send_gift_browse | prefix=gift
+GET /gift/shipment_list_browse | GiftController@shipment_list_browse | prefix=gift
+POST /gift/addressList | GiftController@getUserAddressList | prefix=gift
+POST /gift/send_gift | GiftController@send_gift | prefix=gift
+POST /gift/shipment_list | GiftController@shipment_list_search | prefix=gift
+POST /gift/shipment_list_export | GiftController@shipment_list_export | prefix=gift
+
+==== B. 动作完全未映射（类短名与方法名均无） (277) ====
+HelloWordController@helloRegisterUser
+HelloWordController@getAccountInfo
+User\RegisterController@indexGmtk
+User\RegisterController@enIndex
+User\LoginController@signIn
+User\LoginController@mainHome
+User\CustomerFlowController@main_browse
+User\CustomerFlowController@DownloadFile
+User\RegisterController@registerinto
+User\RegisterController@registercaptcha
+User\RegisterController@testemail
+User\RegisterController@hotnews
+User\RegisterController@demandFeedback
+User\CloseOrderController@close_order_detail
+User\OpenOrderController@open_order_detail
+User\LoginController@show_user_detail
+User\UserForgetPswController@forget_password_browse
+User\UserForgetPswController@forgetpswSendCode
+User\UserCenterController@user_info_browse
+User\UserCenterController@uploadIdCard_browse
+User\UserCenterController@uploadBank_browse
+User\UserCenterController@uploadChangeBank_browse
+User\UserCenterController@uploadHead_browse
+User\UserCenterController@updPhoneEmail_browse
+User\UserCenterController@cancelAccount_browse
+User\UserCenterController@user_editpsw_browse
+User\UserCenterController@agents_editpsw_save
+User\UserCenterController@user_voucher_browse
+User\UserCenterController@user_account_browse
+User\UserCenterController@change_account_save
+User\UserCenterController@user_voucher_save
+User\UserDepositController@deposit_browse
+PayController\PayCallBackController@deposit_notify_response_success
+PayController\PayCallBackController@deposit_notify_response_success2
+PayController\PayCallBackController@deposit_tigerpay_notify
+PayController\PayCallBackController@deposit_wppay_notify
+PayController\PayCallBackController@deposit_wppay_return
+PayController\PayCallBackController@deposit_exlink_bbnotify
+PayController\PayCallBackController@deposit_exlink_bbreturn
+PayController\PayCallBackController@deposit_exlink_fbnotify
+PayController\PayCallBackController@deposit_exlink_fbreturn
+PayController\PayCallBackController@deposit_btb_notify
+PayController\PayCallBackController@deposit_btb_return
+PayController\PayCallBackController@deposit_passto_notify
+PayController\PayCallBackController@deposit_switch_notify
+PayController\PayCallBackController@deposit_notify_response_success_otc
+Admin\WithdrawAmountController@withdraw_notify_response_success_otc
+Admin\WithdrawAmountController@withdraw_verify_success_otc
+PayController\PayCallBackController@deposit_return_response_success
+PayController\PayCallBackController@deposit_return_response_success2
+User\UserWithdrawController@withdraw_browse
+User\ProxyListController@proxy_list_browse
+User\ProxyListController@proxy_confirm_browse
+User\ProxyListController@proxy_direct_cust_detail
+User\ProxyListController@direct_cust_detail_list
+User\ProxyListController@direct_user_commTrans_browse
+User\PositionSummaryController@position_summary_browse
+User\PositionSummaryController@_exte_mt4_sync_comm_summary
+User\PositionSummaryController@realTimerealTimeV2
+User\PositionSummaryController@position_summary_detail
+User\PositionSummaryController@positionSummarySearch
+User\PositionSummaryController@subPositionSummarySearch
+User\PositionSummaryController@positionSummaryClickSearch
+User\CloseOrderController@close_order_browse
+User\OpenOrderController@open_order_browse
+User\PositionSummary2Controller@position_summary2_browse
+User\CloseOrder2Controller@close_order2_browse
+User\OpenOrder2Controller@open_order2_browse
+User\RealCommissionController@realtime_rebate_browse
+User\RealCommissionController@realtime_rebate_detail
+User\DirectCustomerController@cust_list_browse
+User\DirectCustomerController@cust_list_chang_group_browse
+User\DirectCustomerController@changeDirectCustGroupInfo
+User\AddressController@address_list_browse
+User\AddressController@address_add_browse
+User\AddressController@address_edit_browse
+User\AddressController@gift_list_browse
+User\DirectCustomerController@show_direct_cust_info
+User\DirectCustomerController@loginHistorySearch
+User\NewsListController@news_list_browse
+User\NewsListController@news_detail
+User\UserVoucherController@voucher_browse
+User\UserVoucherController@voucherSearch
+Admin\RightsSummaryController@sum_agents_online_settlement_amount
+admin\AgentController@test_info
+User\LoginController@test_register
+User\PositionSummaryController@test_serach_id
+User\PositionSummaryController@position_summary_export
+Admin\WithdrawAmountController@OTCwithdrawOrderIdDetail
+Admin\AdminWhsExpZeroController@trades_whs_exp_zero
+Admin\AdminWhsExpZeroController@whsCustListSearch
+Admin\LoginController@logon
+Admin\AdminController@create
+Admin\RoleController@create
+Admin\RoleController@editsave
+Admin\RoleController@del
+Admin\AdministratorsController@stop
+Admin\AdministratorsController@start
+Admin\AdministratorsController@save
+Admin\AdministratorsController@add
+Admin\AdministratorsController@addsave
+Admin\AdministratorsController@del
+Admin\AdminController@UserInfo
+Admin\AdminController@UserIfoSave
+Admin\AdminController@UserPwd
+Admin\AdminController@UserPewdSave
+Admin\BigAgentController@add
+Admin\BigAgentController@save
+Admin\BigAgentController@updateInfo
+Admin\BigAgentController@del
+Admin\BigAgentController@stop
+Admin\BigAgentController@start
+Admin\BigAgentController@big_agents_list_browse
+Admin\BigAgentController@bigAgentsListSearch
+Admin\BigAgentController@getSubAgentsStats
+Admin\AgentControllerV3@agents_list_browse
+Admin\AgentControllerV3@agents_examine_browse
+Admin\AgentControllerV3@agents_edit_info
+Admin\AgentControllerV3@agents_edit_save
+Admin\AgentControllerV3@agentsListSearch
+Admin\AgentControllerV3@agentsExamineListSearch
+Admin\AgentControllerV3@againSendSms
+Admin\AgentControllerV3@CustomerList
+Admin\AgentControllerV3@AgentEdir
+Admin\AgentControllerV3@AgentUpdate
+Admin\AgentControllerV3@agents_add_browse
+Admin\AgentControllerV3@agents_save
+Admin\PositionSummaryController@position_summary_list
+Admin\PositionSummaryController@positionSummarySearch
+Admin\PositionSummaryController@positionSummarySearchV2
+Admin\PositionSummaryController@subAgentsListSearchV2
+Admin\AdminCloseOrderController@close_list
+Admin\AdminCloseOrderController@closeListSearch
+Admin\AdminOpenOrderController@open_list
+Admin\AdminOpenOrderController@openlistSearch
+Admin\AdminRealCommissionController@real_commission_list
+Admin\AdminRealCommissionController@realCommissionListSearch
+Admin\AdminWhsExpZeroController@whs_exp_zero_list
+Admin\AdminWhsExpZeroController@oneKeySearch
+Admin\AdminWhsExpZeroController@whsExpZeroListSearch
+Admin\AdminProductionController@production_list
+Admin\AdminProductionController@productionListSearchV2
+Admin\CustomerController@user_list
+Admin\CustomerController@cust_add_browse
+Admin\CustomerController@cust_detail
+Admin\CustomerController@change_list
+Admin\CustomerController@custListSearch
+Admin\CustomerController@custChangeListSearch
+Admin\CustomerController@cust_apply_pass
+Admin\CustomerController@cust_apply_nopass
+Admin\CustomerController@cust_save_info
+Admin\CustomerController@cust_save_add
+Admin\WithdrawAmountController@withdraw_apply
+Admin\WithdrawAmountController@withdrawOrderIdDetail
+Admin\WithdrawAmountController@withdrawOrderStaus
+Admin\WithdrawAmountController@withdrawOrderStaus_OTC
+Admin\WithdrawAmountController@withdrawApplySearch
+Admin\WithdrawAmountController@withdrawExport
+Admin\WithdrawAmountController@withdraw_downloadfile
+Admin\WithdrawAmountController@generateOTCorder
+Admin\WithdrawAmountController@updateCurrOrderId
+Admin\DepositAmountController@deposit_flow
+Admin\DepositAmountController@DownloadFile
+Admin\WithdrawFlowController@withdraw_flow
+Admin\WithdrawFlowController@withdrawFlowSearch
+Admin\WithdrawFlowController@withdrawFlowExport
+Admin\WithdrawFlowController@DownloadFile
+Admin\UnDepositAmountController@undeposit_flow
+Admin\UnDepositAmountController@undepositFlowSearch
+Admin\RightsSummaryController@rights_summary_browse
+Admin\RightsSummaryController@RightsSummarySearchDetail
+Admin\RightsSummaryController@RightsSummarySearch
+Admin\RightsSummaryController@ConfirmWithdrawOrdeposit
+Admin\RightsSummaryController@ManualConfirmWithdrawOrdeposit
+Admin\RightsSummaryController@rightsSumExport
+Admin\RightsSummaryController@DownloadFile
+Admin\BatchAmountController@batch_operation_browse
+Admin\BatchAmountController@batch_operation_withdraw_browse
+Admin\BatchAmountController@batchOperation
+Admin\BatchAmountController@batchOperationWithdraw
+Admin\BatchAmountController@deposit_import_index
+Admin\BatchAmountController@depositImportExcel
+Admin\BatchAmountController@depositImportSearch
+Admin\BatchAmountController@againDepositAmount
+Admin\BatchCreditController@credit_import_index
+Admin\BatchCreditController@creditImportExcel
+Admin\BatchCreditController@creditImportSearch
+Admin\BatchCreditController@againCreditAmount
+Admin\BatchAmountController@withdraw_import_index
+Admin\BatchAmountController@withdrawImportExcel
+Admin\BatchAmountController@withdrawImportSearch
+Admin\BatchAmountController@againWithdrawAmount
+Admin\FengXianManageController@fengXian_profit_browse
+Admin\FengXianManageController@fengXian_position_browse
+Admin\FengXianManageController@fengXian_Ipaddress_browse
+Admin\FengXianManageController@fengXian_Ipaddress_detail
+Admin\FengXianManageController@fengXian_profit_list
+Admin\FengXianManageController@fengXian_position_list
+Admin\FengXianManageController@fengXian_Ipaddress_list
+Admin\ExchangeRateController@whpj_rate_browse
+Admin\ExchangeRateController@whpj_rate_save
+Admin\PayChannelController@show_channel_browse
+Admin\PayChannelController@channel_enable
+Admin\PayChannelController@channel_enableV2
+Admin\AuthenticationController@user_examine
+Admin\AuthenticationController@user_examine_detail
+Admin\AuthenticationController@userExaminSearch
+Admin\AuthenticationController@user_idcard_bank
+Admin\AuthenticationController@user_certified
+Admin\AuthenticationController@userCertifiedDetail
+Admin\AuthenticationController@userCertifiedSearch
+Admin\AuthenticationController@voucher_info_browse
+Admin\AuthenticationController@voucherInfoSearch
+Admin\AuthenticationController@voucherInfoDetail
+Admin\AuthenticationController@voucherReviewSave
+Admin\CancellationController@cancel_user_list
+Admin\CancellationController@userlistSearch
+Admin\CancellationController@cancel_apply_pass
+Admin\CancellationController@cancel_apply_nopass
+Admin\CancellationController@update_cancel
+Admin\NewsInfoController@news_list_browse
+Admin\NewsInfoController@new_add_browse
+Admin\NewsInfoController@news_edit
+Admin\NewsInfoController@news_save
+Admin\NewsInfoController@news_update
+Admin\NewsInfoController@newDel
+Admin\UserGroupController@user_group_browse
+Admin\UserGroupController@user_group_add
+Admin\UserGroupController@user_group_edit
+Admin\UserGroupController@user_group_search
+Admin\UserGroupController@user_group_store
+Admin\UserGroupController@user_group_update
+Admin\UserGroupController@user_group_delete
+Admin\UserLoginOnlineController@search
+AgentControllerV3@agentsListSearchV2
+CustomerController@custListSearchV2
+CustomerController@custChangeListSearchV2
+WithdrawFlowController@withdrawFlowSearchV2
+WithdrawAmountController@withdrawApplySearchV2
+WithdrawAmountController@batchWithdrawApply
+UnDepositAmountController@undepositFlowSearchV2
+DepositAmountController@depositFlowSearchV2
+AdminCloseOrderController@closeListSearchV2
+AdminOpenOrderController@openlistSearchV2
+AdminRealCommissionController@realCommissionListSearchV2
+AdminProductionController@productionListSearchV3
+PositionSummaryController@positionSummarySearch
+PositionSummaryController@subAgentsListSearchV2
+PositionSummaryController@parentPathV2
+WithdrawStatusController@pending
+WithdrawStatusController@pendingSearch
+WithdrawStatusController@pendingExport
+WithdrawStatusController@processing
+WithdrawStatusController@processingSearch
+WithdrawStatusController@processingExport
+WithdrawStatusController@completed
+WithdrawStatusController@completedSearch
+WithdrawStatusController@completedExport
+WithdrawStatusController@failed
+WithdrawStatusController@failedSearch
+WithdrawStatusController@failedExport
+GroupConfigController@group_add_index
+GroupConfigController@pairSelect
+CancellationController@userlistSearchV2
+FengXianManageController@fengXian_profit_listV2
+FengXianManageController@fengXian_position_listV2
+UserGroupController@user_group_searchV2
+AuthenticationController@voucherInfoSearchV2
+AuthenticationController@userExaminSearchV2
+AuthenticationController@userCertifiedSearchV2
+AdminWhsExpZeroController@whsExpZeroListSearchV2
+GiftController@send_gift_browse
+GiftController@shipment_list_browse
+GiftController@getUserAddressList
+GiftController@send_gift
+GiftController@shipment_list_search
+GiftController@shipment_list_export
+
+==== C. 方法名已存在但类名不同 (86) ====
+HelloWordController@deposit
+HelloWordController@withdraw
+User\LoginController@captcha
+User\LoginController@index
+User\LoginController@loginOut
+User\LoginController@frontMsg
+User\LoginController@hotNews
+User\LoginController@hotNewsV2
+User\LoginController@hasShowGiftTips
+User\UploadFileController@singleFileUpload
+User\UploadFileController@multipleFileUpload
+User\CustomerFlowController@depositFlowSearch
+User\CustomerFlowController@withdrawalFlowSearch
+User\CustomerFlowController@withdrawApplyFlowSearch
+User\CustomerFlowController@directDepositFlowSearch
+User\CustomerFlowController@depositExport
+User\CustomerFlowController@directWithdrawalFlowSearch
+User\RegisterController@importUser
+User\RegisterController@importAgents
+User\RegisterController@syncToT4ByLocalAgents
+User\RegisterController@syncToT4ByLocalUser
+User\RegisterController@localRegisterNotifyByAgents
+User\RegisterController@syncAgents
+User\RegisterController@syncUser
+User\RegisterController@syncDisableUserToT4
+User\RegisterController@importLang
+User\RegisterController@registerVerifyInfo
+User\RegisterController@registerSendCode
+User\RegisterController@testmodel
+User\RegisterController@orderRebateDeposit
+User\UserCenterController@relationShip
+User\UserCenterController@relationShipHtml
+User\UserCenterController@relationShipHtmlV2
+User\UserForgetPswController@checkUserInfo
+User\UserForgetPswController@forgetPasswordInfoVerification
+User\UserForgetPswController@saveChangePassword
+User\UserCenterController@cancelVerifyInfo
+User\UserCenterController@cancelVerifyPassSendCode
+User\UserCenterController@uploadIdCard
+User\UserCenterController@uploadBankCard
+User\UserCenterController@uploadChangeBankCard
+User\UserCenterController@updateVerifyInfo
+User\UserCenterController@changeBankCardVerifyCode
+User\UserCenterController@updVerifyPassSendCode
+User\UserCenterController@changeBankCardSendCode
+User\UserCenterController@updatePhoneEmailInfo
+User\UserCenterController@ajaxCancelAccount
+User\UserCenterController@uploadHeadImg
+User\UserCenterController@user_editpsw_save
+User\UserDepositController@deposit_request
+User\UserDepositController@deposit_request_otc
+User\UserWithdrawController@withdraw_request
+User\UserWithdrawController@withdraw_request_OTC
+User\ProxyListController@proxyListSearch
+User\ProxyListController@proxyConfirmSearch
+User\ProxyListController@confirmLevelChange
+User\ProxyListController@getSubAgentsGrpIdList
+User\ProxyListController@getParentPath
+User\ProxyListController@directUserCommTrans
+User\CloseOrderController@closeOrderSearch
+User\OpenOrderController@openOrderSearch
+User\PositionSummary2Controller@positionSummary2Search
+User\CloseOrder2Controller@closeOrder2Search
+User\OpenOrder2Controller@openOrder2Search
+User\RealCommissionController@realtimeRebateSearch
+User\DirectCustomerController@changeDirectCustGroupEdit
+User\DirectCustomerController@directCustListSearch
+User\DirectCustomerController@directCustChangeListSearch
+User\AddressController@addressSearch
+User\AddressController@addressUpdate
+User\AddressController@giftSearch
+User\NewsListController@newsListSearch
+Admin\LoginController@index
+Admin\LoginController@captcha
+Admin\LoginController@logout
+Admin\RoleController@index
+Admin\RoleController@store
+Admin\RoleController@show
+Admin\AdministratorsController@index
+Admin\AdministratorsController@show
+Admin\BigAgentController@show
+Admin\AgentControllerV3@index
+Admin\DepositAmountController@depositFlowSearch
+Admin\DepositAmountController@depositExport
+Admin\NewsInfoController@newsListSearch
+Admin\UserLoginOnlineController@index

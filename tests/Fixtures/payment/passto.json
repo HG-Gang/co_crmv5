@@ -1,0 +1,41 @@
+{
+  "config": {
+    "gateway_code": "passto",
+    "merchant_id": "merchant-fixture",
+    "app_id": "app-fixture",
+    "gateway_url": "https://provider.example.test/api/pay/cashierOrder",
+    "secret_reference": "env:PAYMENT_FIXTURE_SECRET",
+    "currency": "CNY",
+    "amount_unit": "cent",
+    "notify_route": "front_api_payment_notify",
+    "return_route": "front_api_payment_return",
+    "version": "1.2",
+    "expired_time": 900
+  },
+  "order": {
+    "local_order_no": "DEP-FIXTURE-1001",
+    "gateway_code": "passto",
+    "user_id": 410001,
+    "user_name": "fixture-user",
+    "amount": "12.35",
+    "actual_amount": "123.45",
+    "currency": "CNY"
+  },
+  "create_response": {
+    "code": 0,
+    "msg": "success",
+    "data": {
+      "payOrderId": "PASS-PROVIDER-1001",
+      "payData": "https://checkout.example.test/passto/1001"
+    }
+  },
+  "callback": {
+    "mchNo": "merchant-fixture",
+    "mchOrderNo": "DEP-FIXTURE-1001",
+    "payOrderId": "PASS-PROVIDER-1001",
+    "state": "2",
+    "amount": "12345",
+    "currency": "CNY"
+  },
+  "expected_callback_sign": "F5DD77A16EC468C7A7C3D73763DED6F7"
+}

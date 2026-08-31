@@ -1,0 +1,38 @@
+{
+  "config": {
+    "gateway_code": "switch",
+    "merchant_id": "switch-merchant-fixture",
+    "gateway_url": "https://provider.example.test/coin/pay/order/pay/checkout/counter",
+    "secret_reference": "env:PAYMENT_SWITCH_REQUEST_KEY",
+    "callback_key_reference": "env:PAYMENT_SWITCH_CALLBACK_KEY",
+    "currency": "CNY",
+    "amount_unit": "decimal",
+    "notify_route": "front_api_payment_notify",
+    "return_route": "front_api_payment_return",
+    "pay_type": 2
+  },
+  "order": {
+    "local_order_no": "DEP-SWITCH-1001",
+    "gateway_code": "switch",
+    "user_id": 410002,
+    "user_name": "switch-fixture-user",
+    "amount": "10.00",
+    "actual_amount": "72.35",
+    "currency": "CNY"
+  },
+  "create_response": {
+    "code": 1,
+    "success": true,
+    "message": "success",
+    "data": "https://checkout.example.test/switch/1001"
+  },
+  "callback": {
+    "tradeId": "SWITCH-PROVIDER-1001",
+    "apiOrderNo": "DEP-SWITCH-1001",
+    "mchNo": "switch-merchant-fixture",
+    "tradeStatus": "1",
+    "money": "72.35",
+    "currency": "CNY",
+    "uniqueCode": "410002"
+  }
+}

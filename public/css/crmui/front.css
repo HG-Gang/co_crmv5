@@ -1,0 +1,1107 @@
+.crmui-body {
+    min-height: 100vh;
+}
+
+.crmui-shell {
+    display: grid;
+    grid-template-columns: var(--crmui-sidebar) minmax(0, 1fr);
+    min-height: 100vh;
+}
+
+.crmui-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 1px solid var(--crmui-border);
+    background: var(--crmui-surface);
+    padding: var(--crmui-space-5);
+    z-index: 30;
+}
+
+.crmui-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--crmui-space-3);
+    min-height: 44px;
+    margin-bottom: var(--crmui-space-6);
+}
+
+.crmui-brand-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--crmui-radius);
+    color: var(--crmui-primary-ink);
+    background: var(--crmui-primary);
+    font-weight: 800;
+}
+
+.crmui-brand strong,
+.crmui-brand small {
+    display: block;
+}
+
+.crmui-brand small,
+.crmui-topbar-title span,
+.crmui-page-head span,
+.crmui-panel-head span,
+.crmui-metric span {
+    color: var(--crmui-muted);
+}
+
+.crmui-nav-group + .crmui-nav-group {
+    margin-top: var(--crmui-space-5);
+}
+
+.crmui-nav-title {
+    margin-bottom: var(--crmui-space-2);
+    color: var(--crmui-subtle);
+    font-size: 12px;
+}
+
+.crmui-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 38px;
+    padding: 0 var(--crmui-space-3);
+    border-radius: var(--crmui-radius);
+    color: var(--crmui-muted);
+    transition: background-color 180ms ease, color 180ms ease;
+}
+
+/* 导航链接内的 Lucide 图标 —— 统一尺寸并随链接文字着色 */
+.crmui-nav-link .crm-lucide-icon,
+.crmui-nav-link svg.lucide {
+    width: 1rem;
+    height: 1rem;
+    flex: none;
+    color: inherit;
+    opacity: 0.8;
+    transition: opacity 180ms ease;
+}
+
+.crmui-nav-link:hover .crm-lucide-icon,
+.crmui-nav-link.is-active .crm-lucide-icon {
+    opacity: 1;
+}
+
+.crmui-nav-link:hover,
+.crmui-nav-link.is-active {
+    color: var(--crmui-ink);
+    background: var(--crmui-surface-2);
+}
+
+.crmui-workspace {
+    min-width: 0;
+}
+
+.crmui-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: var(--crmui-space-4);
+    min-height: var(--crmui-topbar);
+    padding: 0 var(--crmui-space-6);
+    border-bottom: 1px solid var(--crmui-border);
+    background: color-mix(in oklch, var(--crmui-surface) 94%, transparent);
+    backdrop-filter: blur(12px);
+}
+
+.crmui-topbar-title {
+    min-width: 0;
+    margin-right: auto;
+}
+
+.crmui-topbar-title strong,
+.crmui-topbar-title span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.crmui-topbar-actions,
+.crmui-page-actions,
+.crmui-auth-links,
+.crmui-tabs,
+.crmui-row-actions,
+.crmui-inline-action {
+    display: flex;
+    align-items: center;
+    gap: var(--crmui-space-2);
+    flex-wrap: wrap;
+}
+
+.crmui-ui-switch {
+    display: inline-grid;
+    grid-auto-flow: column;
+    gap: 2px;
+    align-items: center;
+    min-height: 40px;
+    border: 1px solid var(--crmui-border);
+    border-radius: var(--crmui-radius);
+    background: var(--crmui-surface-2);
+    padding: 3px;
+}
+
+.crmui-ui-switch-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 44px;
+    min-height: 34px;
+    border: 0;
+    border-radius: calc(var(--crmui-radius) - 2px);
+    color: var(--crmui-muted);
+    background: transparent;
+    padding: 0 var(--crmui-space-3);
+    font-weight: 700;
+    transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+.crmui-ui-switch-button:hover,
+.crmui-ui-switch-button:focus-visible {
+    color: var(--crmui-ink);
+    background: color-mix(in oklch, var(--crmui-primary) 8%, var(--crmui-surface));
+    outline: 0;
+}
+
+.crmui-ui-switch-button.is-active {
+    color: var(--crmui-primary-ink);
+    background: var(--crmui-primary);
+    box-shadow: 0 6px 16px color-mix(in oklch, var(--crmui-primary) 22%, transparent);
+}
+
+.crmui-ui-switch-button .crm-lucide-icon,
+.crmui-ui-switch-button svg.lucide {
+    width: 16px;
+    height: 16px;
+    flex: none;
+}
+
+.crmui-main,
+.crmui-frame-main {
+    width: min(1440px, 100%);
+    margin: 0 auto;
+    padding: var(--crmui-space-6);
+}
+
+.crmui-page-head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--crmui-space-5);
+    align-items: flex-start;
+    margin-bottom: var(--crmui-space-5);
+}
+
+.crmui-page-scope {
+    margin: 0 0 var(--crmui-space-1);
+    color: var(--crmui-primary);
+    font-weight: 700;
+}
+
+.crmui-page-head h1 {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.2;
+    text-wrap: balance;
+}
+
+.crmui-page-head span {
+    display: block;
+    max-width: 68ch;
+    margin-top: var(--crmui-space-2);
+    text-wrap: pretty;
+}
+
+.crmui-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--crmui-space-3);
+    margin-bottom: var(--crmui-space-5);
+}
+
+.crmui-metric,
+.crmui-panel,
+.crmui-auth-card {
+    border: 1px solid var(--crmui-border);
+    border-radius: var(--crmui-radius);
+    background: var(--crmui-surface);
+}
+
+.crmui-metric {
+    padding: var(--crmui-space-4);
+}
+
+.crmui-metric strong {
+    display: block;
+    margin-top: var(--crmui-space-2);
+    font-size: 22px;
+}
+
+.crmui-panel {
+    margin-bottom: var(--crmui-space-5);
+    overflow: hidden;
+}
+
+.crmui-tabs {
+    margin-bottom: var(--crmui-space-5);
+}
+
+.crmui-tab {
+    min-height: 38px;
+    border: 1px solid var(--crmui-border);
+    border-radius: var(--crmui-radius);
+    color: var(--crmui-muted);
+    background: var(--crmui-surface);
+    padding: 0 var(--crmui-space-4);
+}
+
+.crmui-tab.is-active {
+    border-color: var(--crmui-primary);
+    color: var(--crmui-primary);
+    background: color-mix(in oklch, var(--crmui-primary) 10%, var(--crmui-surface));
+}
+
+.crmui-panel-head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--crmui-space-4);
+    padding: var(--crmui-space-4);
+    border-bottom: 1px solid var(--crmui-border);
+}
+
+.crmui-filter,
+.crmui-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--crmui-space-3);
+    padding: var(--crmui-space-4);
+}
+
+.crmui-form {
+    display: grid;
+    gap: var(--crmui-space-3);
+}
+
+.crmui-choice-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--crmui-space-4);
+    padding: var(--crmui-space-2) 0;
+}
+
+/* 批量操作弹窗里的单选分组容器。
+   浏览器对 <fieldset> 默认给 2px inset 边框与不可预测的内边距，
+   直接使用会在弹窗里出现一圈与设计体系无关的粗边框；这里清零默认样式，
+   改用与 .crmui-form 一致的 grid 间距，并让 <legend> 承担小标题角色。 */
+.crmui-fieldset {
+    display: grid;
+    gap: var(--crmui-space-2);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+}
+
+.crmui-fieldset > legend {
+    padding: 0;
+    margin-bottom: var(--crmui-space-1);
+    color: var(--crmui-muted);
+    font-size: 12px;
+}
+
+.crmui-input {
+    width: 100%;
+    min-height: 40px;
+    border: 1px solid var(--crmui-border);
+    border-radius: var(--crmui-radius);
+    color: var(--crmui-ink);
+    background: var(--crmui-surface);
+    padding: 0 var(--crmui-space-3);
+}
+
+.crmui-input::placeholder {
+    color: var(--crmui-muted);
+    opacity: 1;
+}
+
+.crmui-textarea {
+    min-height: 96px;
+    padding-top: var(--crmui-space-3);
+    resize: vertical;
+}
+
+.crmui-readonly-field {
+    display: grid;
+    gap: var(--crmui-space-1);
+    min-height: 44px;
+    border: 1px solid var(--crmui-border);
+    border-radius: var(--crmui-radius);
+    background: var(--crmui-surface-2);
+    padding: var(--crmui-space-2) var(--crmui-space-3);
+}
+
+.crmui-readonly-field span {
+    color: var(--crmui-muted);
+    font-size: 12px;
+}
+
+.crmui-readonly-field strong {
+    color: var(--crmui-ink);
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.crmui-upload {
+    display: grid;
+    align-content: center;
+    min-height: 88px;
+    border: 1px dashed color-mix(in oklch, var(--crmui-primary) 46%, var(--crmui-border));
+    border-radius: var(--crmui-radius);
+    background: color-mix(in oklch, var(--crmui-primary) 6%, var(--crmui-surface));
+    padding: var(--crmui-space-3);
+}
+
+.crmui-upload span {
+    color: var(--crmui-ink);
+    font-weight: 700;
+}
+
+.crmui-upload em,
+.crmui-money-preview {
+    color: var(--crmui-muted);
+    font-style: normal;
+}
+
+/* 统一上传组件：体积文案与行内错误提示的 CrmUI 家族外观。 */
+.crmui-upload-size:empty {
+    display: none;
+}
+
+.crmui-upload .crm-field-error {
+    color: var(--crmui-danger, var(--crmui-muted));
+}
+
+.crmui-upload.has-file span {
+    color: var(--crmui-primary);
+}
+
+.crmui-channel-remarks {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: var(--crmui-space-2);
+    border: 1px solid color-mix(in oklch, var(--crmui-primary) 26%, var(--crmui-border));
+    border-radius: var(--crmui-radius);
+    color: var(--crmui-muted);
+    background: color-mix(in oklch, var(--crmui-primary) 7%, var(--crmui-surface));
+    padding: var(--crmui-space-3);
+}
+
+.crmui-channel-remarks.is-empty {
+    display: none;
+}
+
+.crmui-channel-remarks ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.crmui-channel-remarks p {
+    margin: 0;
+}
+
+.crmui-upload input {
+    width: 100%;
+    margin-top: var(--crmui-space-2);
+}
+
+.crmui-upload-preview {
+    width: 100%;
+    max-width: 168px;
+    max-height: 132px;
+    margin-top: var(--crmui-space-2);
+    object-fit: contain;
+    border: 1px solid var(--crmui-border);
+    border-radius: var(--crmui-radius);
+    background: var(--crmui-surface-2);
+    cursor: zoom-in;
+}
+
+.crmui-upload-preview[hidden] {
+    display: none;
+}
+
+.crmui-upload[data-crmui-avatar-upload] {
+    position: relative;
+    width: 112px;
+    min-height: 112px;
+    place-items: center;
+    overflow: hidden;
+    border-style: solid;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.crmui-upload[data-crmui-avatar-upload]::after {
+    content: attr(data-upload-text);
+    position: absolute;
+    inset: auto 0 0;
+    padding: var(--crmui-space-2);
+    color: var(--crmui-primary-ink);
+    background: oklch(22% 0.03 250 / 0.82);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.crmui-upload[data-crmui-avatar-upload]:hover::after,
+.crmui-upload[data-crmui-avatar-upload]:focus-within::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.crmui-upload[data-crmui-avatar-upload] input {
+    max-width: 92px;
+}
+
+.crmui-button,
+.crmui-tool-button,
+.crmui-icon-button {
+    min-height: 40px;
+    border: 1px solid var(--crmui-border);
+    border-radius: var(--crmui-radius);
+    color: var(--crmui-ink);
+    background: var(--crmui-surface);
+    padding: 0 var(--crmui-space-4);
+    transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.crmui-button:hover,
+.crmui-tool-button:hover,
+.crmui-icon-button:hover {
+    border-color: color-mix(in oklch, var(--crmui-primary) 40%, var(--crmui-border));
+}
+
+.crmui-button.is-primary,
+.crmui-tool-button.is-primary {
+    border-color: var(--crmui-primary);
+    color: var(--crmui-primary-ink);
+    background: var(--crmui-primary);
+}
+
+.crmui-button.is-block {
+    width: 100%;
+}
+
+.crmui-row-button {
+    min-height: 30px;
+    border: 1px solid var(--crmui-border);
+    border-radius: var(--crmui-radius);
+    color: var(--crmui-ink);
+    background: var(--crmui-surface);
+    padding: 0 var(--crmui-space-2);
+}
+
+.crmui-row-button.is-danger {
+    border-color: color-mix(in oklch, var(--crmui-danger) 60%, var(--crmui-border));
+    color: var(--crmui-danger);
+}
+
+.crmui-icon-button {
+    display: none;
+    width: 42px;
+    padding: 0;
+    place-items: center;
+}
+
+.crmui-icon-button span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    margin: 3px auto;
+    background: currentColor;
+}
+
+.crmui-table-wrap {
+    overflow-x: auto;
+}
+
+.crmui-table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+}
+
+.crmui-table th,
+.crmui-table td {
+    padding: 13px var(--crmui-space-4);
+    border-bottom: 1px solid var(--crmui-border);
+    text-align: left;
+    vertical-align: middle;
+}
+
+.crmui-chart-panel {
+    background: var(--crmui-surface);
+}
+
+.crmui-chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--crmui-space-4);
+    padding: var(--crmui-space-4);
+}
+
+.crmui-chart-card {
+    min-width: 0;
+    border: 1px solid var(--crmui-border);
+    border-radius: var(--crmui-radius);
+    background: var(--crmui-surface-2);
+    overflow: hidden;
+}
+
+.crmui-chart-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(116px, 140px);
+    gap: var(--crmui-space-3);
+    align-items: center;
+    padding: var(--crmui-space-3);
+    border-bottom: 1px solid var(--crmui-border);
+}
+
+.crmui-chart-head strong {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.crmui-chart-head .crmui-input {
+    min-height: 34px;
+}
+
+.crmui-chart-canvas {
+    width: 100%;
+    height: 280px;
+    min-height: 280px;
+    color: var(--crmui-muted);
+}
+
+.crmui-timeline-panel {
+    overflow: visible;
+}
+
+.crmui-news-timeline {
+    position: relative;
+    display: grid;
+    gap: var(--crmui-space-4);
+    padding: var(--crmui-space-4) var(--crmui-space-4) var(--crmui-space-5);
+}
+
+.crmui-news-timeline::before {
+    content: "";
+    position: absolute;
+    inset: var(--crmui-space-4) auto var(--crmui-space-5) calc(var(--crmui-space-4) + 7px);
+    width: 2px;
+    border-radius: 999px;
+    background: color-mix(in oklch, var(--crmui-primary) 28%, var(--crmui-border));
+}
+
+.crmui-news-item {
+    position: relative;
+    padding-left: 32px;
+}
+
+.crmui-news-item::before {
+    content: "";
+    position: absolute;
+    left: 1px;
+    top: 18px;
+    width: 14px;
+    height: 14px;
+    border: 3px solid var(--crmui-surface);
+    border-radius: 50%;
+    background: var(--crmui-primary);
+    box-shadow: 0 0 0 1px color-mix(in oklch, var(--crmui-primary) 36%, var(--crmui-border));
+}
+
+.crmui-news-card {
+    display: grid;
+    width: 100%;
+    gap: var(--crmui-space-2);
+    border: 1px solid var(--crmui-border);
+    border-radius: var(--crmui-radius);
+    color: var(--crmui-ink);
+    background: var(--crmui-surface);
+    padding: var(--crmui-space-4);
+    text-align: left;
+    cursor: default;
+}
+
+.crmui-news-date {
+    color: var(--crmui-primary);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.crmui-news-title {
+    min-width: 0;
+    font-size: 16px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.crmui-news-meta {
+    color: var(--crmui-muted);
+    font-size: 12px;
+}
+
+.crmui-news-excerpt {
+    color: var(--crmui-muted);
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.crmui-news-empty {
+    position: relative;
+    z-index: 1;
+    border: 1px dashed var(--crmui-border);
+    border-radius: var(--crmui-radius);
+    color: var(--crmui-muted);
+    background: var(--crmui-surface);
+    padding: var(--crmui-space-4);
+}
+
+.crmui-modal[hidden] {
+    display: none;
+}
+
+.crmui-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: grid;
+    place-items: center;
+    padding: var(--crmui-space-4);
+}
+
+.crmui-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: oklch(16% 0.02 255 / 0.48);
+}
+
+.crmui-modal-panel {
+    position: relative;
+    z-index: 1;
+    width: min(560px, 100%);
+    max-height: min(760px, 90vh);
+    overflow: auto;
+    border: 1px solid var(--crmui-border);
+    border-radius: var(--crmui-radius);
+    background: var(--crmui-surface);
+    box-shadow: var(--crmui-shadow);
+}
+
+.crmui-modal-head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--crmui-space-3);
+    align-items: center;
+    padding: var(--crmui-space-4);
+    border-bottom: 1px solid var(--crmui-border);
+}
+
+.crmui-modal-panel .crmui-form {
+    padding: var(--crmui-space-4);
+}
+
+.crmui-icon-close {
+    border: 0;
+    color: var(--crmui-muted);
+    background: transparent;
+}
+
+.crmui-record-preview {
+    max-height: 220px;
+    overflow: auto;
+    border-radius: var(--crmui-radius);
+    color: var(--crmui-muted);
+    background: var(--crmui-surface-2);
+    padding: var(--crmui-space-3);
+    white-space: pre-wrap;
+}
+
+.crmui-image-preview {
+    display: grid;
+    place-items: center;
+    padding: var(--crmui-space-4);
+    background: var(--crmui-surface);
+}
+
+.crmui-image-preview img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(88vh - 48px);
+    object-fit: contain;
+}
+
+.crmui-table th {
+    color: var(--crmui-muted);
+    font-weight: 700;
+    background: var(--crmui-surface-2);
+}
+
+.crmui-table tfoot td {
+    border-top: 1px solid var(--crmui-border-strong);
+    color: var(--crmui-ink);
+    font-weight: 700;
+    background: var(--crmui-surface-2);
+}
+
+.crmui-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--crmui-space-3);
+    min-height: 64px;
+    padding: var(--crmui-space-3) var(--crmui-space-4);
+    border-top: 1px solid var(--crmui-border);
+}
+
+.crmui-pagination .crmui-icon-button {
+    width: 40px;
+    min-width: 40px;
+    padding: 0;
+}
+
+.crmui-page-status {
+    min-width: 64px;
+    text-align: center;
+}
+
+.crmui-page-size {
+    display: flex;
+    align-items: center;
+    gap: var(--crmui-space-2);
+    color: var(--crmui-muted);
+}
+
+.crmui-page-size .crmui-input {
+    width: 80px;
+}
+
+.crmui-auth-shell {
+    display: grid;
+    grid-template-columns: minmax(320px, 0.95fr) minmax(320px, 1.05fr);
+    min-height: 100vh;
+}
+
+.crmui-auth-brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--crmui-space-8);
+    padding: clamp(28px, 5vw, 64px);
+    color: var(--crmui-primary-ink);
+    background: oklch(33% 0.12 248);
+}
+
+.crmui-auth-copy h1 {
+    margin: 0 0 var(--crmui-space-4);
+    max-width: 14ch;
+    font-size: 42px;
+    line-height: 1.08;
+}
+
+.crmui-auth-copy p {
+    max-width: 58ch;
+    margin: 0;
+    color: oklch(90% 0.03 248);
+}
+
+.crmui-auth-points {
+    display: flex;
+    gap: var(--crmui-space-3);
+    flex-wrap: wrap;
+}
+
+.crmui-auth-points span {
+    border: 1px solid oklch(88% 0.03 248 / 0.32);
+    border-radius: var(--crmui-radius);
+    padding: var(--crmui-space-2) var(--crmui-space-3);
+}
+
+.crmui-auth-panel {
+    display: grid;
+    place-items: center;
+    padding: clamp(24px, 5vw, 64px);
+}
+
+.crmui-auth-card {
+    width: min(440px, 100%);
+    padding: var(--crmui-space-6);
+    box-shadow: var(--crmui-shadow);
+}
+
+.crmui-auth-head h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.crmui-auth-head p {
+    margin: var(--crmui-space-2) 0 var(--crmui-space-5);
+    color: var(--crmui-muted);
+}
+
+.crmui-auth-links {
+    margin-top: var(--crmui-space-4);
+    color: var(--crmui-primary);
+}
+
+.crmui-captcha-image {
+    width: 132px;
+    height: 44px;
+    border: 1px solid var(--crmui-border);
+    border-radius: var(--crmui-radius);
+    background: var(--crmui-surface-2);
+    object-fit: cover;
+}
+
+.crmui-check {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--crmui-space-2);
+    color: var(--crmui-muted);
+}
+
+.crmui-check input {
+    width: 16px;
+    height: 16px;
+    margin-top: 3px;
+    accent-color: var(--crmui-primary);
+}
+
+.crmui-sidebar.is-open {
+    transform: translateX(0);
+}
+
+@media (max-width: 1199px) {
+    .crmui-shell {
+        grid-template-columns: 228px minmax(0, 1fr);
+    }
+
+    .crmui-main,
+    .crmui-frame-main {
+        padding: var(--crmui-space-5);
+    }
+}
+
+@media (max-width: 767px) {
+    .crmui-shell {
+        display: block;
+    }
+
+    .crmui-sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        width: min(82vw, 288px);
+        transform: translateX(-105%);
+        transition: transform 220ms ease;
+        box-shadow: var(--crmui-shadow);
+    }
+
+    .crmui-icon-button {
+        display: inline-grid;
+    }
+
+    .crmui-topbar {
+        padding: 0 var(--crmui-space-4);
+    }
+
+    .crmui-topbar-actions {
+        justify-content: flex-end;
+    }
+
+    .crmui-ui-switch {
+        grid-auto-flow: row;
+        grid-template-columns: repeat(3, minmax(44px, 1fr));
+        width: 100%;
+    }
+
+    .crmui-ui-switch-button {
+        padding: 0 var(--crmui-space-2);
+    }
+
+    .crmui-tool-button {
+        min-height: 34px;
+        padding: 0 var(--crmui-space-2);
+    }
+
+    .crmui-main,
+    .crmui-frame-main {
+        padding: var(--crmui-space-4);
+    }
+
+    .crmui-page-head,
+    .crmui-panel-head {
+        display: grid;
+    }
+
+    .crmui-page-head h1 {
+        font-size: 22px;
+    }
+
+    .crmui-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .crmui-filter,
+    .crmui-form-grid,
+    .crmui-inline-action {
+        grid-template-columns: 1fr;
+    }
+
+    .crmui-inline-action {
+        display: grid;
+    }
+
+    .crmui-captcha-image {
+        width: 100%;
+        max-width: 180px;
+    }
+
+    .crmui-row-actions {
+        min-width: 180px;
+    }
+
+    .crmui-chart-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .crmui-chart-head {
+        grid-template-columns: 1fr;
+    }
+
+    .crmui-chart-canvas {
+        height: 260px;
+        min-height: 260px;
+    }
+
+    .crmui-news-timeline {
+        padding-inline: var(--crmui-space-3);
+    }
+
+    .crmui-news-timeline::before {
+        left: calc(var(--crmui-space-3) + 7px);
+    }
+
+    .crmui-news-item {
+        padding-left: 28px;
+    }
+
+    .crmui-auth-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .crmui-auth-brand {
+        min-height: 38vh;
+    }
+
+    .crmui-auth-copy h1 {
+        max-width: 12ch;
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 640px) {
+    .crmui-table-wrap {
+        overflow-x: visible;
+    }
+
+    .crmui-table {
+        min-width: 0;
+    }
+
+    .crmui-table thead {
+        display: none;
+    }
+
+    .crmui-table,
+    .crmui-table tbody,
+    .crmui-table tfoot,
+    .crmui-table tr,
+    .crmui-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .crmui-table tr {
+        border-bottom: 1px solid var(--crmui-border);
+        padding: var(--crmui-space-3) var(--crmui-space-4);
+    }
+
+    .crmui-table td {
+        display: grid;
+        grid-template-columns: minmax(96px, 34%) minmax(0, 1fr);
+        gap: var(--crmui-space-3);
+        align-items: start;
+        border-bottom: 0;
+        padding: var(--crmui-space-2) 0;
+        word-break: break-word;
+    }
+
+    .crmui-table td::before {
+        content: attr(data-label);
+        color: var(--crmui-muted);
+        font-weight: 700;
+    }
+
+    .crmui-table td:not([data-label]) {
+        display: block;
+    }
+
+    .crmui-table td:not([data-label])::before {
+        content: none;
+    }
+
+    .crmui-pagination {
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 479px) {
+    .crmui-topbar {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: var(--crmui-space-2);
+        min-height: auto;
+        padding-block: var(--crmui-space-3);
+    }
+
+    .crmui-topbar-title {
+        flex: 1 1 calc(100% - 52px);
+        margin-right: 0;
+    }
+
+    .crmui-topbar-actions {
+        flex: 1 0 100%;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .crmui-ui-switch-button span {
+        display: none;
+    }
+
+    .crmui-auth-panel,
+    .crmui-auth-brand {
+        padding: var(--crmui-space-5);
+    }
+}

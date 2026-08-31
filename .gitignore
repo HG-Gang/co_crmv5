@@ -1,0 +1,74 @@
+# 编译产物
+*.exe
+*.dll
+*.so
+*.dylib
+*.exe~
+server_debug.exe
+server_debug.exe~
+
+# 本地临时目录和构建缓存
+.tmp/
+.gocache/
+/vendor
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+package-lock.json
+.phpunit.result.cache
+npm-debug.log
+yarn-error.log
+
+# 编辑器和系统文件
+.idea/
+.vscode/
+/.claude
+.DS_Store
+Thumbs.db
+
+# 本地 AI/自动化工具产物，仅本机有意义，不入库
+/.superpowers/
+/.playwright-mcp/
+/.tmp-phpunit-list.txt
+# reasonix.toml 内含本机数据库口令，且仅为本地工具白名单
+/reasonix.toml
+
+# 环境变量和密钥
+.env
+.env.*
+.env.backup
+# 例外：.env.example 是不含密钥的配置模板，需随仓库分发
+!.env.example
+docker-compose.override.yml
+Homestead.json
+Homestead.yaml
+
+# 本地数据库与后台测试进程产物不得进入版本库
+# SQL 转储/备份一律不入库：含真实业务数据，且单文件可达数百 MB，超出远端限制
+*.sql
+sf_proc_*.err
+sf_proc_*.err.lock
+sf_proc_*.out
+sf_proc_*.out.lock
+
+# 本地设计、审计与验收文档不提交到远端
+docs/
+
+# 日志文件只保留目录占位，不提交实际日志内容
+*.log
+logs/**/*.log
+
+# ===== 2026-08-31 GitHub 同步追加排除（用户指令）=====
+# 所有 SQL 文件全量排除：含巨型库备份（289MB/210MB/101MB，超 GitHub 100MB 单文件上限）与结构/数据脚本
+*.sql
+
+# 运行日志不入库（laravel.log 达 2GB，属本机运行产物）
+/storage/logs/
+
+# 根目录本地 AI/自动化工具产物（含无点变体，双保险）
+/superpowers/
+/playwright-mcp/
+/tmp-phpunit-list*
+/storage/**/psysh_history
+/storage/*-output.txt

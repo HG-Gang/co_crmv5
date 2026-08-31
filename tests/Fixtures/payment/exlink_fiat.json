@@ -1,0 +1,37 @@
+{
+  "config": {
+    "gateway_code": "exlink_fb",
+    "merchant_id": "exlink-fiat-fixture",
+    "gateway_url": "https://provider.example.test/exlink/fiat",
+    "secret_reference": "env:PAYMENT_EXLINK_REQUEST_KEY",
+    "callback_key_reference": "env:PAYMENT_EXLINK_CALLBACK_KEY",
+    "currency": "CNY",
+    "amount_unit": "decimal",
+    "notify_route": "front_api_payment_notify",
+    "return_route": "front_api_payment_return",
+    "pay_type": 3
+  },
+  "order": {
+    "local_order_no": "DEP-EXLINK-FIAT-1001",
+    "gateway_code": "exlink_fb",
+    "user_id": 410003,
+    "user_name": "exlink-fiat-user",
+    "amount": "20.00",
+    "actual_amount": "145.20",
+    "currency": "CNY"
+  },
+  "create_response": {
+    "success": true,
+    "code": 1,
+    "data": "https://checkout.example.test/exlink/fiat/1001"
+  },
+  "callback": {
+    "tradeId": "EXLINK-FIAT-PROVIDER-1001",
+    "apiOrderNo": "DEP-EXLINK-FIAT-1001",
+    "tradeStatus": "1",
+    "money": "145.20",
+    "currency": "CNY",
+    "uniqueCode": "410003",
+    "uid": "exlink-fiat-fixture"
+  }
+}

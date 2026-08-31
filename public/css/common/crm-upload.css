@@ -1,0 +1,280 @@
+/*
+ * 共享上传组件样式（Layui 2.13.5 风格）。
+ *
+ * 使用说明：
+ * - 与 public/js/shared/layui-upload.js 成对使用，前台和后台的所有上传入口共用这一份视觉。
+ * - 颜色全部走 crm 语义令牌，跟随全局皮肤切换，不写死任何颜色字面量。
+ * - 触控目标统一保持 44px 下限，满足移动端可点击面积要求。
+ */
+
+.crm-upload {
+    display: grid;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius, 8px);
+    background: var(--crm-surface);
+}
+
+.crm-upload-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.crm-upload-title {
+    color: var(--crm-ink);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.crm-upload-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 96px;
+    gap: 12px;
+    align-items: start;
+}
+
+/* 拖拽区：Layui 原生 layui-upload-drag 的语义保留，视觉由这里统一接管。 */
+.crm-upload .layui-upload-drag,
+.crm-upload-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    min-height: 96px;
+    padding: 14px 12px;
+    border: 1px dashed var(--crm-line-strong);
+    border-radius: var(--crm-radius-sm, 6px);
+    background: var(--crm-surface-soft);
+    color: var(--crm-muted);
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .18s ease, background .18s ease, color .18s ease;
+}
+
+.crm-upload .layui-upload-drag:hover,
+.crm-upload-action:hover,
+.crm-upload .layui-upload-drag:focus-visible,
+.crm-upload-action:focus-visible {
+    border-color: var(--crm-primary);
+    background: var(--crm-surface);
+    color: var(--crm-primary);
+    outline: none;
+}
+
+.crm-upload .layui-upload-drag:focus-visible,
+.crm-upload-action:focus-visible {
+    box-shadow: 0 0 0 3px var(--crm-focus);
+}
+
+.crm-upload .layui-upload-drag .crm-lucide-icon,
+.crm-upload-action .crm-lucide-icon,
+.crm-upload .layui-upload-drag svg,
+.crm-upload-action svg {
+    width: 22px;
+    height: 22px;
+}
+
+.crm-upload-drag-text {
+    font-size: 13px;
+    line-height: 18px;
+}
+
+.crm-upload-drag-hint {
+    color: var(--crm-muted);
+    font-size: 12px;
+    line-height: 16px;
+}
+
+/* 缩略图槽位：未选择文件时保持占位高度，避免选择后布局跳动。 */
+.crm-upload-thumb-slot {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    min-height: 96px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius-sm, 6px);
+    background: var(--crm-surface-soft);
+    overflow: hidden;
+}
+
+.crm-upload-thumb-slot img {
+    display: none;
+    width: 100%;
+    height: 96px;
+    object-fit: cover;
+    cursor: zoom-in;
+}
+
+.crm-upload-thumb-slot img.is-visible {
+    display: block;
+}
+
+.crm-upload-thumb-empty {
+    color: var(--crm-line-strong);
+    font-size: 12px;
+    text-align: center;
+    padding: 0 6px;
+}
+
+.crm-upload.has-file .crm-upload-thumb-empty {
+    display: none;
+}
+
+/* 移除/重选按钮：默认隐藏，选中文件后才出现，保证 44px 触控面积。 */
+.crm-upload-clear {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius-sm, 6px);
+    background: var(--crm-surface);
+    color: var(--crm-muted);
+    cursor: pointer;
+}
+
+.crm-upload-clear.is-visible {
+    display: inline-flex;
+}
+
+.crm-upload-clear:hover {
+    border-color: var(--crm-danger);
+    color: var(--crm-danger);
+}
+
+.crm-upload-clear:focus-visible {
+    outline: 2px solid var(--crm-primary);
+    outline-offset: -2px;
+}
+
+/* 进度条：仅在上传中显示，用宽度百分比表达真实上传进度。 */
+.crm-upload-progress {
+    display: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--crm-surface-strong);
+    overflow: hidden;
+}
+
+.crm-upload-progress.is-visible {
+    display: block;
+}
+
+.crm-upload-progress-bar {
+    width: 0;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--crm-primary);
+    transition: width .2s ease;
+}
+
+.crm-upload-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    min-width: 0;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.crm-upload-meta b {
+    max-width: 100%;
+    overflow: hidden;
+    color: var(--crm-ink-soft);
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.crm-upload-meta em {
+    color: var(--crm-muted);
+    font-style: normal;
+}
+
+.crm-upload-status {
+    color: var(--crm-muted);
+}
+
+.crm-upload-status.has-file {
+    color: var(--crm-accent);
+}
+
+.crm-upload-status.is-uploading {
+    color: var(--crm-primary);
+}
+
+.crm-upload-status.is-error {
+    color: var(--crm-danger);
+}
+
+/* 正反面成对上传：两个槽位等宽并列，窄屏自动堆叠。 */
+.crm-upload-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.crm-upload-pair::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.crm-upload-pair-slot {
+    min-width: 0;
+}
+
+/* 成对槽位内的 Layui 标签改为块级，避免 float 布局把两个槽位挤到同一行。 */
+.crm-upload-pair-slot > .layui-form-label {
+    float: none;
+    display: block;
+    width: auto;
+    padding: 0 0 6px;
+    text-align: left;
+    line-height: 20px;
+}
+
+.crm-upload-pair-slot > .layui-input-block {
+    margin-left: 0;
+}
+
+/* 行内错误提示占满槽位宽度，位于缩略图与文件信息之下。 */
+.crm-upload-shell > .crm-field-error {
+    grid-column: 1 / -1;
+    width: 100%;
+}
+
+.crm-upload-shell > .crm-upload-progress {
+    grid-column: 1 / -1;
+}
+
+@media screen and (max-width: 768px) {
+    .crm-upload-pair {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .crm-upload-body {
+        grid-template-columns: 1fr;
+    }
+
+    .crm-upload-thumb-slot {
+        width: 100%;
+    }
+
+    .crm-upload-thumb-slot img {
+        height: 140px;
+    }
+}

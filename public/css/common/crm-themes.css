@@ -1,0 +1,1028 @@
+/* Global theme mapping for both Layui and CrmUI Blade surfaces. */
+html[data-crm-theme] {
+    color-scheme: light;
+    background: var(--crm-bg);
+}
+
+html[data-crm-theme="dark"] {
+    color-scheme: dark;
+}
+
+html[data-crm-theme] body {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-width: 0;
+    background: var(--crm-bg) !important;
+    color: var(--crm-ink) !important;
+}
+
+html[data-crm-theme] .crmui-workspace,
+html[data-crm-theme] .crmui-main,
+html[data-crm-theme] .layui-body,
+html[data-crm-theme] .crm-ui-main {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-width: 0;
+}
+
+html[data-crm-theme] {
+    scrollbar-color: var(--crm-line-strong) var(--crm-surface-soft);
+    scrollbar-width: thin;
+}
+
+html[data-crm-theme] ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+html[data-crm-theme] ::-webkit-scrollbar-track {
+    background: var(--crm-surface-soft);
+}
+
+html[data-crm-theme] ::-webkit-scrollbar-thumb {
+    border: 2px solid var(--crm-surface-soft);
+    border-radius: var(--crm-radius-sm);
+    background: var(--crm-line-strong);
+}
+
+html[data-crm-theme] body,
+html[data-crm-theme] .crmui-sidebar,
+html[data-crm-theme] .crmui-topbar,
+html[data-crm-theme] .crmui-panel,
+html[data-crm-theme] .crmui-metric,
+html[data-crm-theme] .layui-card,
+html[data-crm-theme] .layui-side,
+html[data-crm-theme] input,
+html[data-crm-theme] textarea,
+html[data-crm-theme] select {
+    transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+/* Shared picker */
+.crm-theme-picker {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    max-width: 100%;
+    color: var(--crm-ink);
+}
+
+.crm-preference-menu {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* 语言与主题切换入口在 Layui 顶栏里的外层包装。
+   两个 <li> 上写了 .crm-preference-nav-item / .crm-theme-picker-nav-item 作为布局钩子，
+   但 CSS 从未定义 —— 于是图标触发器落在 layui-nav-item 为文字链接设计的默认盒子里：
+   左右各 20px 的 padding 与 60px 行高会把 44px 的方形按钮挤偏，且与相邻文字项不对齐。
+   这里把包装项改为居中的 flex，并清掉为文字准备的横向内边距。 */
+.crm-preference-nav-item,
+.crm-theme-picker-nav-item {
+    display: inline-flex !important;
+    align-items: center;
+    padding: 0 6px !important;
+    line-height: normal !important;
+}
+
+/* 语言与主题切换的图标触发器。
+   尺寸取 44px 而非视觉上更紧凑的 38px：这是纯图标按钮，没有文字扩大可点区域，
+   38px 在移动端会低于最小触控目标要求，导致手指点击频繁落空。
+   图标本身仍保持 18px（见下方 svg/i 规则），因此视觉重量不随触控区放大而变化。 */
+.crm-preference-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    border: 1px solid var(--crm-line-strong);
+    border-radius: var(--crm-radius-sm);
+    background: var(--crm-surface);
+    color: var(--crm-primary);
+    cursor: pointer;
+}
+
+.crm-preference-trigger:hover,
+.crm-preference-trigger:focus-visible,
+.crm-preference-menu.is-open .crm-preference-trigger {
+    border-color: var(--crm-primary);
+    background: var(--crm-surface-soft);
+    outline: 0;
+    box-shadow: 0 0 0 3px var(--crm-focus);
+}
+
+.crm-preference-trigger svg,
+.crm-preference-trigger i {
+    width: 18px;
+    height: 18px;
+}
+
+.crm-preference-popover {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 1300;
+    display: grid;
+    width: max-content;
+    min-width: 188px;
+    max-height: min(420px, calc(100vh - 80px));
+    padding: 6px;
+    overflow-y: auto;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: var(--crm-surface);
+    box-shadow: var(--crm-shadow-raised);
+}
+
+.crm-preference-popover[hidden] {
+    display: none !important;
+}
+
+.crm-preference-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 18px;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    min-height: 38px;
+    padding: 7px 9px;
+    border: 0;
+    border-radius: var(--crm-radius-sm);
+    background: transparent;
+    color: var(--crm-ink);
+    text-align: left;
+    cursor: pointer;
+}
+
+.crm-preference-item:hover,
+.crm-preference-item:focus-visible {
+    background: var(--crm-surface-soft);
+    color: var(--crm-primary);
+    outline: 0;
+}
+
+.crm-preference-item svg,
+.crm-preference-item i {
+    width: 16px;
+    height: 16px;
+    opacity: 0;
+}
+
+.crm-preference-item.is-current {
+    background: var(--crm-surface-soft);
+    color: var(--crm-primary);
+    font-weight: 700;
+}
+
+.crm-preference-item.is-current svg,
+.crm-preference-item.is-current i {
+    opacity: 1;
+}
+
+.crm-theme-picker label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 36px;
+    margin: 0;
+    color: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.crm-theme-picker label svg,
+.crm-theme-picker label i {
+    width: 17px;
+    height: 17px;
+    color: var(--crm-primary);
+}
+
+.crm-theme-picker select {
+    width: 148px;
+    min-width: 0;
+    max-width: 100%;
+    height: 36px;
+    padding: 0 30px 0 10px;
+    border: 1px solid var(--crm-line-strong);
+    border-radius: var(--crm-radius-sm);
+    outline: 0;
+    background: var(--crm-surface);
+    color: var(--crm-ink);
+    cursor: pointer;
+}
+
+.crm-theme-picker select:hover {
+    border-color: var(--crm-primary);
+}
+
+.crm-theme-picker select:focus-visible {
+    border-color: var(--crm-primary);
+    box-shadow: 0 0 0 3px var(--crm-focus);
+}
+
+.crm-theme-picker.is-compact {
+    gap: 5px;
+}
+
+.crm-theme-picker.is-compact label {
+    min-height: 34px;
+}
+
+.crm-theme-picker.is-compact select {
+    width: 132px;
+    height: 34px;
+}
+
+.crm-theme-picker-sr-only,
+.crm-sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.crm-theme-picker-host {
+    position: fixed;
+    top: 16px;
+    right: 18px;
+    z-index: 1000;
+    box-sizing: border-box;
+    max-width: calc(100% - 16px);
+    padding: 6px 8px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: color-mix(in srgb, var(--crm-surface) 94%, transparent);
+    box-shadow: var(--crm-shadow);
+    backdrop-filter: blur(10px);
+}
+
+/* CrmUI shell and components */
+html[data-crm-theme] .crmui-body,
+html[data-crm-theme] .crmui-workspace,
+html[data-crm-theme] .crmui-main,
+html[data-crm-theme] .crmui-auth-body {
+    background: var(--crmui-bg) !important;
+    color: var(--crmui-ink) !important;
+}
+
+html[data-crm-theme] .crmui-sidebar {
+    background: var(--crm-sidebar) !important;
+    color: var(--crm-sidebar-ink) !important;
+    border-color: var(--crm-line) !important;
+}
+
+html[data-crm-theme] .crmui-sidebar .crmui-brand,
+html[data-crm-theme] .crmui-sidebar .crmui-brand strong,
+html[data-crm-theme] .crmui-sidebar .crmui-nav-link {
+    color: var(--crm-sidebar-ink) !important;
+}
+
+html[data-crm-theme] .crmui-sidebar .crmui-brand small,
+html[data-crm-theme] .crmui-sidebar .crmui-nav-title {
+    color: var(--crm-sidebar-muted) !important;
+}
+
+html[data-crm-theme] .crmui-sidebar .crmui-nav-link:hover,
+html[data-crm-theme] .crmui-sidebar .crmui-nav-link.is-active {
+    background: var(--crm-sidebar-soft) !important;
+    color: var(--crm-sidebar-ink) !important;
+}
+
+html[data-crm-theme] .crmui-auth-brand {
+    background: var(--crm-sidebar) !important;
+    color: var(--crm-sidebar-ink) !important;
+}
+
+html[data-crm-theme] .crmui-auth-brand .crmui-brand,
+html[data-crm-theme] .crmui-auth-brand .crmui-brand strong,
+html[data-crm-theme] .crmui-auth-brand .crmui-auth-copy h1,
+html[data-crm-theme] .crmui-auth-brand .crmui-auth-points span {
+    color: var(--crm-sidebar-ink) !important;
+}
+
+html[data-crm-theme] .crmui-auth-brand .crmui-brand small,
+html[data-crm-theme] .crmui-auth-brand .crmui-auth-copy p {
+    color: var(--crm-sidebar-muted) !important;
+}
+
+html[data-crm-theme] .crmui-auth-brand .crmui-auth-points span {
+    border-color: var(--crm-sidebar-muted) !important;
+    background: var(--crm-sidebar-soft) !important;
+}
+
+html[data-crm-theme] .crmui-topbar,
+html[data-crm-theme] .crmui-panel,
+html[data-crm-theme] .crmui-metric,
+html[data-crm-theme] .crmui-auth-card,
+html[data-crm-theme] .crmui-modal-card,
+html[data-crm-theme] .crmui-modal-panel,
+html[data-crm-theme] .crmui-table-wrap {
+    border-color: var(--crmui-border) !important;
+    border-radius: var(--crmui-radius) !important;
+    background: var(--crmui-surface) !important;
+    color: var(--crmui-ink) !important;
+    box-shadow: var(--crmui-shadow) !important;
+}
+
+html[data-crm-theme] .crmui-topbar-title strong,
+html[data-crm-theme] .crmui-page-head h1,
+html[data-crm-theme] .crmui-page-head h2,
+html[data-crm-theme] .crmui-panel-head strong,
+html[data-crm-theme] .crmui-metric strong {
+    color: var(--crmui-ink) !important;
+}
+
+html[data-crm-theme] .crmui-topbar-title span,
+html[data-crm-theme] .crmui-page-head span,
+html[data-crm-theme] .crmui-panel-head span,
+html[data-crm-theme] .crmui-metric span,
+html[data-crm-theme] .crmui-empty {
+    color: var(--crmui-muted) !important;
+}
+
+html[data-crm-theme] .crmui-tool-button,
+html[data-crm-theme] .crmui-icon-button,
+html[data-crm-theme] .crmui-button,
+html[data-crm-theme] .crmui-input,
+html[data-crm-theme] .crmui-select,
+html[data-crm-theme] .crmui-textarea,
+html[data-crm-theme] .crmui-field input,
+html[data-crm-theme] .crmui-field select,
+html[data-crm-theme] .crmui-field textarea {
+    border-color: var(--crmui-border) !important;
+    border-radius: var(--crmui-radius) !important;
+    background: var(--crmui-surface) !important;
+    color: var(--crmui-ink) !important;
+}
+
+html[data-crm-theme] .crmui-input,
+html[data-crm-theme] .crmui-select,
+html[data-crm-theme] .crmui-textarea,
+html[data-crm-theme] .crmui-upload,
+html[data-crm-theme] .crmui-code-field,
+html[data-crm-theme] .crmui-field input,
+html[data-crm-theme] .crmui-field select,
+html[data-crm-theme] .crmui-field textarea {
+    border-color: var(--crmui-border-strong) !important;
+}
+
+html[data-crm-theme] .crmui-tool-button:hover,
+html[data-crm-theme] .crmui-icon-button:hover,
+html[data-crm-theme] .crmui-button:hover {
+    border-color: var(--crmui-primary) !important;
+    background: var(--crmui-surface-2) !important;
+    color: var(--crmui-primary) !important;
+}
+
+html[data-crm-theme] .crmui-tool-button.is-primary,
+html[data-crm-theme] .crmui-button.is-primary,
+html[data-crm-theme] .crmui-btn-primary {
+    border-color: var(--crmui-primary) !important;
+    background: var(--crmui-primary) !important;
+    color: var(--crmui-primary-ink) !important;
+}
+
+html[data-crm-theme] .crmui-table,
+html[data-crm-theme] .crmui-table thead th,
+html[data-crm-theme] .crmui-table tbody td {
+    border-color: var(--crmui-border) !important;
+    color: var(--crmui-ink) !important;
+}
+
+html[data-crm-theme] .crmui-table thead th {
+    height: var(--crm-table-row-height);
+    background: var(--crmui-surface-2) !important;
+}
+
+html[data-crm-theme] .crmui-table tbody td {
+    height: var(--crm-table-row-height);
+}
+
+html[data-crm-theme] .crmui-table tbody tr:hover {
+    background: var(--crmui-surface-2) !important;
+}
+
+html[data-crm-theme] .crmui-table-wrap,
+html[data-crm-theme] .module-table-wrap,
+html[data-crm-theme] .front-v2-table-wrap,
+html[data-crm-theme] .deposit-history-table-wrap,
+html[data-crm-theme] .flow-table-wrap,
+html[data-crm-theme] .layui-table-view {
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+}
+
+html[data-crm-theme] .crmui-table-wrap > table,
+html[data-crm-theme] .module-table-wrap table,
+html[data-crm-theme] .front-v2-table-wrap table,
+html[data-crm-theme] .deposit-history-table-wrap table,
+html[data-crm-theme] .flow-table-wrap table {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    html[data-crm-theme] .crmui-admin-body .crmui-shell {
+        grid-template-columns: var(--crmui-sidebar) minmax(0, 1fr) !important;
+    }
+}
+
+/* Layui shell and components */
+html[data-crm-theme] .crm-ui-front-shell .layui-header,
+html[data-crm-theme] .crm-ui-admin-shell .layui-header,
+html[data-crm-theme] .crm-ui-front-shell .layui-card,
+html[data-crm-theme] .crm-ui-admin-shell .layui-card,
+html[data-crm-theme] .crm-ui-auth-body .login-card,
+html[data-crm-theme] .legacy-big-agent-shell .layui-card,
+html[data-crm-theme] .layui-layer,
+html[data-crm-theme] .layui-dropdown {
+    border-color: var(--crm-line) !important;
+    background: var(--crm-surface) !important;
+    color: var(--crm-ink) !important;
+}
+
+html[data-crm-theme] .crm-ui-auth-body .auth-brand {
+    background: var(--crm-sidebar) !important;
+    color: var(--crm-sidebar-ink) !important;
+}
+
+html[data-crm-theme] .crm-ui-auth-body .auth-brand-mark,
+html[data-crm-theme] .crm-ui-auth-body .auth-brand-copy h1 {
+    color: var(--crm-sidebar-ink) !important;
+}
+
+html[data-crm-theme] .crm-ui-auth-body .auth-brand-copy p,
+html[data-crm-theme] .crm-ui-auth-body .auth-brand-points li {
+    color: var(--crm-sidebar-muted) !important;
+}
+
+html[data-crm-theme] .crm-ui-auth-body .auth-brand-points i {
+    background: var(--crm-sidebar-soft) !important;
+    color: var(--crm-sidebar-ink) !important;
+}
+
+html[data-crm-theme] .crm-ui-front-shell .layui-side,
+html[data-crm-theme] .crm-ui-admin-shell .layui-side,
+html[data-crm-theme] .crm-ui-admin-shell .admin-sidebar {
+    background: var(--crm-sidebar) !important;
+    color: var(--crm-sidebar-ink) !important;
+}
+
+html[data-crm-theme] .crm-ui-front-shell .layui-side .layui-nav-item a,
+html[data-crm-theme] .crm-ui-admin-shell .layui-side .layui-nav-item a,
+html[data-crm-theme] .crm-ui-admin-shell .admin-sidebar .layui-nav-item a {
+    color: var(--crm-sidebar-ink) !important;
+}
+
+html[data-crm-theme] .crm-ui-front-shell .layui-side .layui-nav-item a:hover,
+html[data-crm-theme] .crm-ui-admin-shell .layui-side .layui-nav-item a:hover,
+html[data-crm-theme] .crm-ui-front-shell .layui-side .layui-nav-item.layui-this > a,
+html[data-crm-theme] .crm-ui-admin-shell .layui-side .layui-nav-item.layui-this > a,
+html[data-crm-theme] .crm-ui-front-shell .layui-side .layui-nav-child dd.layui-this > a,
+html[data-crm-theme] .crm-ui-admin-shell .layui-side .layui-nav-child dd.layui-this > a {
+    background: var(--crm-sidebar-soft) !important;
+    color: var(--crm-sidebar-ink) !important;
+}
+
+html[data-crm-theme] .layui-card,
+html[data-crm-theme] .layui-table-view,
+html[data-crm-theme] .module-table-wrap,
+html[data-crm-theme] .content-card,
+html[data-crm-theme] .stat-box {
+    border-color: var(--crm-line) !important;
+    border-radius: var(--crm-radius) !important;
+    background: var(--crm-surface) !important;
+    color: var(--crm-ink) !important;
+    box-shadow: var(--crm-shadow) !important;
+}
+
+html[data-crm-theme] .layui-card-header,
+html[data-crm-theme] .layui-table-header,
+html[data-crm-theme] .layui-table-tool,
+html[data-crm-theme] .layui-table-page,
+html[data-crm-theme] .layui-form-select dl,
+html[data-crm-theme] .layui-dropdown-menu {
+    border-color: var(--crm-line) !important;
+    background: var(--crm-surface-soft) !important;
+    color: var(--crm-ink) !important;
+}
+
+html[data-crm-theme] .crmui-dropdown,
+html[data-crm-theme] .dropdown-menu,
+html[data-crm-theme] .layui-dropdown,
+html[data-crm-theme] .layui-dropdown-menu,
+html[data-crm-theme] .layui-form-select dl {
+    border-color: var(--crm-line) !important;
+    border-radius: var(--crm-radius-sm) !important;
+    background: var(--crm-surface) !important;
+    color: var(--crm-ink) !important;
+    box-shadow: var(--crm-shadow-raised) !important;
+}
+
+html[data-crm-theme] .crmui-dropdown a:hover,
+html[data-crm-theme] .dropdown-item:hover,
+html[data-crm-theme] .dropdown-item:focus,
+html[data-crm-theme] .layui-dropdown-menu a:hover {
+    background: var(--crm-surface-soft) !important;
+    color: var(--crm-primary) !important;
+}
+
+html[data-crm-theme] .layui-card-header,
+html[data-crm-theme] .layui-card-body,
+html[data-crm-theme] .layui-table,
+html[data-crm-theme] .layui-table th,
+html[data-crm-theme] .layui-table td,
+html[data-crm-theme] .layui-form-label,
+html[data-crm-theme] .layui-form-mid,
+html[data-crm-theme] .layui-form-select dl dd {
+    border-color: var(--crm-line) !important;
+    color: var(--crm-ink) !important;
+}
+
+html[data-crm-theme] .layui-table th,
+html[data-crm-theme] .layui-table td,
+html[data-crm-theme] .layui-table-cell {
+    min-height: var(--crm-table-row-height);
+}
+
+html[data-crm-theme] .layui-table tbody tr:hover td,
+html[data-crm-theme] .layui-form-select dl dd:hover,
+html[data-crm-theme] .layui-form-select dl dd.layui-this {
+    background: var(--crm-surface-soft) !important;
+    color: var(--crm-primary) !important;
+}
+
+html[data-crm-theme] .layui-input,
+html[data-crm-theme] .layui-textarea,
+html[data-crm-theme] .layui-select,
+html[data-crm-theme] input,
+html[data-crm-theme] textarea,
+html[data-crm-theme] select {
+    border-color: var(--crm-line-strong) !important;
+    border-radius: var(--crm-radius-sm) !important;
+    background: var(--crm-surface) !important;
+    color: var(--crm-ink) !important;
+}
+
+html[data-crm-theme] .layui-input:focus,
+html[data-crm-theme] .layui-textarea:focus,
+html[data-crm-theme] .layui-select:focus,
+html[data-crm-theme] input:focus-visible,
+html[data-crm-theme] textarea:focus-visible,
+html[data-crm-theme] select:focus-visible,
+html[data-crm-theme] button:focus-visible,
+html[data-crm-theme] a:focus-visible {
+    border-color: var(--crm-primary) !important;
+    outline: 2px solid var(--crm-primary) !important;
+    outline-offset: 2px;
+    box-shadow: none !important;
+}
+
+html[data-crm-theme] .layui-btn:not(.layui-btn-danger):not(.layui-btn-warm),
+html[data-crm-theme] .layui-laypage .layui-laypage-curr .layui-laypage-em {
+    border-color: var(--crm-primary) !important;
+    background: var(--crm-primary) !important;
+    color: var(--crmui-primary-ink) !important;
+}
+
+html[data-crm-theme] .crmui-pagination a,
+html[data-crm-theme] .crmui-pagination span,
+html[data-crm-theme] .pagination a,
+html[data-crm-theme] .pagination span,
+html[data-crm-theme] .layui-laypage a,
+html[data-crm-theme] .layui-laypage span,
+html[data-crm-theme] .layui-laypage input,
+html[data-crm-theme] .layui-laypage button {
+    border-color: var(--crm-line-strong) !important;
+    border-radius: var(--crm-radius-sm) !important;
+    background: var(--crm-surface) !important;
+    color: var(--crm-ink) !important;
+}
+
+html[data-crm-theme] .crmui-pagination .is-active,
+html[data-crm-theme] .pagination .active > a,
+html[data-crm-theme] .pagination .active > span,
+html[data-crm-theme] .layui-laypage .layui-laypage-curr .layui-laypage-em {
+    border-color: var(--crm-primary) !important;
+    background: var(--crm-primary) !important;
+    color: var(--crm-on-accent) !important;
+}
+
+html[data-crm-theme] .crmui-tag,
+html[data-crm-theme] .crmui-badge,
+html[data-crm-theme] .layui-badge,
+html[data-crm-theme] .layui-badge-rim {
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius-sm);
+    background: var(--crm-surface-soft);
+    color: var(--crm-ink);
+    font-weight: 600;
+}
+
+html[data-crm-theme] .crm-relationship-node {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    max-width: 100%;
+    padding: 0 8px;
+    border: 1px solid var(--crm-line-strong);
+    border-radius: var(--crm-radius-sm);
+    background: var(--crm-surface-soft);
+    color: var(--crm-ink);
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+html[data-crm-theme] .crm-relationship-node a {
+    color: inherit;
+    text-decoration: none;
+}
+
+html[data-crm-theme] .crm-relationship-node a:hover,
+html[data-crm-theme] .crm-relationship-node a:focus-visible {
+    color: var(--crm-primary);
+}
+
+html[data-crm-theme] .crm-relationship-node-level-1 {
+    border-inline-start: 3px solid var(--crm-primary);
+}
+
+html[data-crm-theme] .crm-relationship-node-level-2,
+html[data-crm-theme] .crm-relationship-node-level-3,
+html[data-crm-theme] .crm-relationship-node-level-4,
+html[data-crm-theme] .crm-relationship-node-level-7 {
+    border-inline-start: 3px double var(--crm-primary);
+}
+
+html[data-crm-theme] .crmui-modal-backdrop,
+html[data-crm-theme] .modal-backdrop {
+    background: var(--crm-scrim) !important;
+}
+
+html[data-crm-theme] .crmui-modal-panel,
+html[data-crm-theme] .modal-content,
+html[data-crm-theme] .layui-layer,
+html[data-crm-theme] .layui-layer-title,
+html[data-crm-theme] .layui-layer-btn {
+    border-color: var(--crm-line) !important;
+    background: var(--crm-surface) !important;
+    color: var(--crm-ink) !important;
+}
+
+html[data-crm-theme] a,
+html[data-crm-theme] .layui-table-link {
+    color: var(--crm-primary);
+}
+
+/* Shared async and permission states use shape, weight and cursor in addition to color. */
+html[data-crm-theme] [data-ui-state] {
+    border-inline-start: 4px solid var(--crm-line-strong);
+    border-radius: var(--crm-radius-sm);
+    padding: 10px 12px;
+}
+
+html[data-crm-theme] [data-ui-state="loading"] {
+    border-inline-start-style: dashed;
+    background: var(--crm-surface-soft);
+    color: var(--crm-muted);
+    cursor: progress;
+}
+
+html[data-crm-theme] [data-ui-state="empty"] {
+    border-inline-start-style: dotted;
+    background: var(--crm-surface-soft);
+    color: var(--crm-muted);
+}
+
+html[data-crm-theme] [data-ui-state="error"],
+html[data-crm-theme] [data-ui-state="unauthorized"] {
+    border-inline-start-color: var(--crm-danger);
+    border-inline-start-style: double;
+    background: var(--crm-danger-soft);
+    color: var(--crm-danger);
+    font-weight: 600;
+}
+
+html[data-crm-theme] [data-ui-state="success"],
+html[data-crm-theme] [data-ui-state="info"],
+html[data-crm-theme] [data-ui-state="online"] {
+    border-inline-start-color: var(--crm-success);
+    border-inline-start-style: double;
+    background: var(--crm-success-soft);
+    color: var(--crm-success);
+    font-weight: 700;
+}
+
+html[data-crm-theme] :disabled,
+html[data-crm-theme] [aria-disabled="true"],
+html[data-crm-theme] .layui-disabled,
+html[data-crm-theme] .is-disabled {
+    cursor: not-allowed !important;
+    opacity: .58;
+}
+
+/* Semantic states: red is danger, amber is pending/warning, theme accent is normal success/info. */
+html[data-crm-theme] .layui-bg-red,
+html[data-crm-theme] .layui-badge-danger,
+html[data-crm-theme] .layui-btn-danger,
+html[data-crm-theme] .crmui-badge.is-danger {
+    border-color: var(--crm-danger) !important;
+    background: var(--crm-danger) !important;
+    color: var(--crm-on-danger) !important;
+}
+
+html[data-crm-theme] .layui-bg-orange,
+html[data-crm-theme] .layui-bg-yellow,
+html[data-crm-theme] .layui-badge-orange,
+html[data-crm-theme] .layui-badge-warm,
+html[data-crm-theme] .layui-btn-warm,
+html[data-crm-theme] .crmui-badge.is-warning {
+    border-color: var(--crm-warning) !important;
+    background: var(--crm-warning) !important;
+    color: var(--crm-on-warning) !important;
+}
+
+html[data-crm-theme] .layui-bg-green,
+html[data-crm-theme] .layui-bg-blue,
+html[data-crm-theme] .layui-bg-cyan,
+html[data-crm-theme] .layui-badge-green,
+html[data-crm-theme] .layui-badge-blue,
+html[data-crm-theme] .layui-badge-primary,
+html[data-crm-theme] .crmui-badge.is-success,
+html[data-crm-theme] .crmui-badge.is-info,
+html[data-crm-theme] .crmui-badge.is-online {
+    border-color: var(--crm-primary) !important;
+    background: var(--crm-primary) !important;
+    color: var(--crm-on-accent) !important;
+    border-style: double !important;
+    font-weight: 700;
+}
+
+html[data-crm-theme] .crm-dashboard-page .dashboard-value {
+    background: transparent !important;
+    border-color: transparent !important;
+    border-style: none !important;
+}
+
+html[data-crm-theme] .crm-dashboard-page .dashboard-value.green,
+html[data-crm-theme] .crm-dashboard-page .dashboard-value.blue,
+html[data-crm-theme] .crm-dashboard-page .dashboard-value.cyan {
+    color: var(--crm-primary) !important;
+}
+
+html[data-crm-theme] .crm-dashboard-page .dashboard-value.orange {
+    color: var(--crm-warning) !important;
+}
+
+html[data-crm-theme] .crm-dashboard-page .dashboard-value.red {
+    color: var(--crm-danger) !important;
+}
+
+/* Existing themes retain their established geometry while consuming the same catalog. */
+html[data-crm-theme="light"] .crm-theme-picker select,
+html[data-crm-theme="dark"] .crm-theme-picker select,
+html[data-crm-theme="sea"] .crm-theme-picker select,
+html[data-crm-theme="warm"] .crm-theme-picker select,
+html[data-crm-theme="contrast"] .crm-theme-picker select {
+    border-width: 1px;
+}
+
+/* 01 Clear Blue: left navigation rail and KPI top rule. */
+html[data-crm-theme="clear-blue"] .crmui-nav-link.is-active,
+html[data-crm-theme="clear-blue"] .layui-side .layui-nav-item.layui-this > a,
+html[data-crm-theme="clear-blue"] .layui-side .layui-nav-child dd.layui-this > a {
+    border-left: 3px solid var(--crm-primary) !important;
+}
+
+html[data-crm-theme="clear-blue"] .crmui-panel,
+html[data-crm-theme="clear-blue"] .layui-card,
+html[data-crm-theme="clear-blue"] .crmui-metric,
+html[data-crm-theme="clear-blue"] .dashboard-metric-card {
+    border-top: 2px solid var(--crm-primary) !important;
+}
+
+/* 02 Mint Ledger: filled navigation and quiet elevation. */
+html[data-crm-theme="mint-ledger"] .crmui-nav-link.is-active,
+html[data-crm-theme="mint-ledger"] .layui-side .layui-nav-item.layui-this > a,
+html[data-crm-theme="mint-ledger"] .layui-side .layui-nav-child dd.layui-this > a {
+    box-shadow: inset 0 0 0 1px var(--crm-primary);
+}
+
+html[data-crm-theme="mint-ledger"] .crmui-panel,
+html[data-crm-theme="mint-ledger"] .layui-card {
+    box-shadow: var(--crm-shadow) !important;
+}
+
+/* 03 Cloud Minimal: compact, square and shadow-free. */
+html[data-crm-theme="cloud-minimal"] .crmui-panel,
+html[data-crm-theme="cloud-minimal"] .crmui-metric,
+html[data-crm-theme="cloud-minimal"] .layui-card,
+html[data-crm-theme="cloud-minimal"] .layui-table-view {
+    box-shadow: none !important;
+}
+
+html[data-crm-theme="cloud-minimal"] .crmui-nav-link,
+html[data-crm-theme="cloud-minimal"] .layui-side .layui-nav-item a {
+    min-height: 36px;
+}
+
+html[data-crm-theme="cloud-minimal"] .crmui-nav-link.is-active,
+html[data-crm-theme="cloud-minimal"] .layui-side .layui-nav-item.layui-this > a,
+html[data-crm-theme="cloud-minimal"] .layui-side .layui-nav-child dd.layui-this > a {
+    border-inline-end: 2px solid var(--crm-primary) !important;
+    background: transparent !important;
+    font-weight: 600;
+}
+
+/* 04 Sea Salt: a slim topbar accent line. */
+html[data-crm-theme="sea-salt"] .crmui-nav-link.is-active,
+html[data-crm-theme="sea-salt"] .layui-side .layui-nav-item.layui-this > a,
+html[data-crm-theme="sea-salt"] .layui-side .layui-nav-child dd.layui-this > a {
+    border-bottom: 2px solid var(--crm-primary) !important;
+}
+
+html[data-crm-theme="sea-salt"] .crmui-topbar,
+html[data-crm-theme="sea-salt"] .layui-header,
+html[data-crm-theme="sea-salt"] .crmui-panel,
+html[data-crm-theme="sea-salt"] .layui-card {
+    border-top: 3px solid var(--crm-primary) !important;
+}
+
+/* 05 Indigo Order: left-framed panels establish hierarchy. */
+html[data-crm-theme="indigo-order"] .crmui-nav-link.is-active,
+html[data-crm-theme="indigo-order"] .layui-side .layui-nav-item.layui-this > a,
+html[data-crm-theme="indigo-order"] .layui-side .layui-nav-child dd.layui-this > a {
+    border-color: var(--crm-primary) !important;
+    background: var(--crm-primary) !important;
+    color: var(--crm-on-accent) !important;
+}
+
+html[data-crm-theme="indigo-order"] .crmui-panel,
+html[data-crm-theme="indigo-order"] .layui-card {
+    border-left: 3px solid var(--crm-primary) !important;
+}
+
+/* 06 Coral Note: headings carry the accent, data remains neutral. */
+html[data-crm-theme="coral-note"] .crmui-nav-link.is-active,
+html[data-crm-theme="coral-note"] .layui-side .layui-nav-item.layui-this > a,
+html[data-crm-theme="coral-note"] .layui-side .layui-nav-child dd.layui-this > a {
+    background: transparent !important;
+    text-decoration: underline;
+    text-decoration-color: var(--crm-primary);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+}
+
+html[data-crm-theme="coral-note"] .crmui-panel-head,
+html[data-crm-theme="coral-note"] .layui-card-header {
+    border-bottom: 2px solid var(--crm-primary) !important;
+}
+
+/* 07 Celadon Ops: strong boundaries for operational scanning. */
+html[data-crm-theme="celadon-ops"] .crmui-nav-link.is-active,
+html[data-crm-theme="celadon-ops"] .layui-side .layui-nav-item.layui-this > a,
+html[data-crm-theme="celadon-ops"] .layui-side .layui-nav-child dd.layui-this > a {
+    border: 1px solid var(--crm-primary) !important;
+    background: transparent !important;
+    font-weight: 700;
+}
+
+html[data-crm-theme="celadon-ops"] .crmui-panel,
+html[data-crm-theme="celadon-ops"] .crmui-table-wrap,
+html[data-crm-theme="celadon-ops"] .layui-card,
+html[data-crm-theme="celadon-ops"] .layui-table-view {
+    border-width: 2px !important;
+    box-shadow: none !important;
+}
+
+/* 08 Sunlit Mark: active navigation is marked, not flooded with color. */
+html[data-crm-theme="sunlit-mark"] .crmui-nav-link.is-active,
+html[data-crm-theme="sunlit-mark"] .layui-side .layui-nav-item.layui-this > a,
+html[data-crm-theme="sunlit-mark"] .layui-side .layui-nav-child dd.layui-this > a {
+    box-shadow: inset 4px 0 0 var(--crm-primary);
+    font-weight: 700;
+}
+
+html[data-crm-theme="sunlit-mark"] .crmui-panel,
+html[data-crm-theme="sunlit-mark"] .layui-card {
+    border-inline-start: 4px double var(--crm-primary) !important;
+}
+
+/* 09 Steel Table: rectangular, dense, table-first treatment. */
+html[data-crm-theme="steel-table"] .crmui-nav-link.is-active,
+html[data-crm-theme="steel-table"] .layui-side .layui-nav-item.layui-this > a,
+html[data-crm-theme="steel-table"] .layui-side .layui-nav-child dd.layui-this > a {
+    border: 1px solid var(--crm-primary) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+html[data-crm-theme="steel-table"] .crmui-panel,
+html[data-crm-theme="steel-table"] .crmui-table-wrap,
+html[data-crm-theme="steel-table"] .layui-card,
+html[data-crm-theme="steel-table"] .layui-table-view,
+html[data-crm-theme="steel-table"] input,
+html[data-crm-theme="steel-table"] select,
+html[data-crm-theme="steel-table"] button {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+html[data-crm-theme="steel-table"] .crmui-table th,
+html[data-crm-theme="steel-table"] .crmui-table td,
+html[data-crm-theme="steel-table"] .layui-table th,
+html[data-crm-theme="steel-table"] .layui-table td {
+    border-right: 1px solid var(--crm-line) !important;
+}
+
+/* 10 Ink Sidebar: deep ink navigation against a light workspace. */
+html[data-crm-theme="ink-sidebar"] .crmui-nav-link.is-active,
+html[data-crm-theme="ink-sidebar"] .layui-side .layui-nav-item.layui-this > a,
+html[data-crm-theme="ink-sidebar"] .layui-side .layui-nav-child dd.layui-this > a {
+    background: var(--crm-primary) !important;
+    color: var(--crm-on-accent) !important;
+    font-weight: 700;
+}
+
+html[data-crm-theme="ink-sidebar"] .crmui-panel,
+html[data-crm-theme="ink-sidebar"] .layui-card {
+    border-top: 2px solid var(--crm-sidebar) !important;
+}
+
+html[data-crm-theme="ink-sidebar"] .crmui-sidebar,
+html[data-crm-theme="ink-sidebar"] .crm-ui-front-shell .layui-side,
+html[data-crm-theme="ink-sidebar"] .crm-ui-admin-shell .layui-side,
+html[data-crm-theme="ink-sidebar"] .crm-ui-admin-shell .admin-sidebar {
+    box-shadow: var(--crm-shadow-raised) !important;
+}
+
+@media (pointer: coarse) {
+    .crm-theme-picker label,
+    .crm-theme-picker select {
+        min-height: 44px;
+    }
+}
+
+@media (max-width: 900px) {
+    .crm-theme-picker label span:not(.crm-theme-picker-sr-only) {
+        display: none;
+    }
+
+    .crm-theme-picker select {
+        width: 128px;
+    }
+}
+
+@media (max-width: 560px) {
+    .crm-theme-picker select {
+        height: 44px;
+        min-height: 44px;
+    }
+
+    .crm-theme-picker-host {
+        top: 8px;
+        right: 8px;
+        padding: 4px;
+    }
+
+    .crm-theme-picker-host .crm-theme-picker label {
+        display: none;
+    }
+
+    .crm-theme-picker-host .crm-theme-picker select {
+        width: 118px;
+        height: 44px;
+        font-size: 12px;
+    }
+
+    .crmui-topbar-actions .crm-theme-picker label {
+        display: none;
+    }
+
+    .crmui-topbar-actions .crm-theme-picker select {
+        width: 112px;
+        height: 44px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html[data-crm-theme] *,
+    html[data-crm-theme] *::before,
+    html[data-crm-theme] *::after {
+        animation: none !important;
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}

@@ -1,0 +1,2535 @@
+/* Unified CRM design system for Laravel Blade + Layui screens. */
+:root {
+    --crm-bg: #f5f7fb;
+    --crm-surface: #ffffff;
+    --crm-surface-soft: #f0f4f8;
+    --crm-surface-strong: #e8eef6;
+    --crm-ink: #172033;
+    --crm-ink-soft: #334155;
+    --crm-muted: #637083;
+    --crm-line: #dbe4ef;
+    --crm-line-strong: #c8d4e3;
+    --crm-primary: #255fd8;
+    --crm-primary-hover: #1d4fb8;
+    --crm-accent: #0f8f82;
+    --crm-accent-hover: #0b7369;
+    --crm-warning: #a86512;
+    --crm-danger: #c33d4d;
+    --crm-danger-ring: rgba(195, 61, 77, .18);
+    --crm-info: #0c7894;
+    --crm-sidebar: #142033;
+    --crm-sidebar-soft: #21314b;
+    --crm-sidebar-ink: #eaf1fb;
+    --crm-sidebar-muted: #9aaac0;
+    --crm-radius: 8px;
+    --crm-radius-sm: 6px;
+    --crm-shadow: 0 2px 8px rgba(15, 23, 42, .08);
+    --crm-shadow-raised: 0 6px 14px rgba(15, 23, 42, .10);
+    --crm-focus: rgba(37, 95, 216, .18);
+    --crm-sidebar-width: 232px;
+    --crm-header-height: 62px;
+    --crm-footer-height: 38px;
+    --crm-page-gap: 18px;
+    --crm-page-pad: 22px;
+}
+
+html[data-front-theme="dark"] {
+    --crm-bg: #101820;
+    --crm-surface: #17212c;
+    --crm-surface-soft: #1f2d3b;
+    --crm-surface-strong: #2c3b4b;
+    --crm-ink: #eef4fb;
+    --crm-ink-soft: #d6e0ea;
+    --crm-muted: #9dadbf;
+    --crm-line: #314153;
+    --crm-line-strong: #42546a;
+    --crm-primary: #72a7ff;
+    --crm-primary-hover: #9bc0ff;
+    --crm-accent: #35c7b7;
+    --crm-accent-hover: #5ddccd;
+    --crm-warning: #f0b64d;
+    --crm-danger: #ff7d90;
+    --crm-danger-ring: rgba(255, 125, 144, .24);
+    --crm-info: #5fd5f0;
+    --crm-sidebar: #0b1118;
+    --crm-sidebar-soft: #142033;
+    --crm-sidebar-ink: #eef4fb;
+    --crm-sidebar-muted: #93a5bb;
+    --crm-shadow: 0 2px 8px rgba(0, 0, 0, .22);
+    --crm-shadow-raised: 0 6px 14px rgba(0, 0, 0, .28);
+}
+
+html[data-front-theme="sea"] {
+    --crm-bg: #f1f8fb;
+    --crm-surface-soft: #e6f2f7;
+    --crm-surface-strong: #d6e9f0;
+    --crm-ink: #143241;
+    --crm-muted: #557283;
+    --crm-line: #c6dce7;
+    --crm-primary: #2266d5;
+    --crm-accent: #0b8c86;
+    --crm-sidebar: #103346;
+    --crm-sidebar-soft: #17465d;
+}
+
+html[data-front-theme="warm"] {
+    --crm-bg: #f4f8f5;
+    --crm-surface-soft: #eaf3ee;
+    --crm-surface-strong: #dbe9e2;
+    --crm-ink: #183225;
+    --crm-muted: #5f7669;
+    --crm-line: #cadbcf;
+    --crm-primary: #255fd8;
+    --crm-accent: #23805a;
+    --crm-sidebar: #183225;
+    --crm-sidebar-soft: #28483a;
+}
+
+html[data-front-theme="contrast"] {
+    --crm-bg: #f7f8fa;
+    --crm-surface: #ffffff;
+    --crm-surface-soft: #eef1f5;
+    --crm-ink: #0b1220;
+    --crm-muted: #334155;
+    --crm-line: #b7c2d1;
+    --crm-primary: #174ea6;
+    --crm-accent: #0b6f64;
+    --crm-sidebar: #111827;
+    --crm-sidebar-soft: #1f2937;
+}
+
+.crm-ui-front-shell,
+.crm-ui-admin-shell,
+.crm-ui-auth-body {
+    color: var(--crm-ink);
+    background: var(--crm-bg);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    letter-spacing: 0;
+}
+
+.crm-ui-front-shell *,
+.crm-ui-admin-shell *,
+.crm-ui-auth-body * {
+    box-sizing: border-box;
+    letter-spacing: 0;
+}
+
+.crm-ui-front-shell .layui-layout-admin .layui-header,
+.crm-ui-admin-shell .layui-layout-admin .layui-header {
+    height: var(--crm-header-height);
+    background: color-mix(in srgb, var(--crm-surface) 94%, transparent);
+    border-bottom: 1px solid rgba(148, 163, 184, .24);
+    box-shadow: var(--crm-shadow);
+}
+
+.crm-ui-front-shell .layui-layout-admin .layui-logo,
+.crm-ui-admin-shell .layui-layout-admin .layui-logo,
+.crm-ui-admin-shell .layui-layout-admin .crm-admin-brand {
+    width: var(--crm-sidebar-width);
+    height: var(--crm-header-height);
+    line-height: var(--crm-header-height);
+    color: var(--crm-sidebar-ink) !important;
+    background: linear-gradient(135deg, var(--crm-sidebar), var(--crm-sidebar-soft)) !important;
+    border-right: 1px solid rgba(255, 255, 255, .08);
+    font-size: 16px;
+    font-weight: 760;
+}
+
+.crm-ui-admin-shell .crm-admin-brand-mark {
+    border-radius: var(--crm-radius);
+    background: #ffffff;
+    color: var(--crm-sidebar);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+}
+
+.crm-ui-front-shell .layui-layout-left,
+.crm-ui-admin-shell .layui-layout-left {
+    left: var(--crm-sidebar-width);
+}
+
+.crm-ui-front-shell .layui-layout-admin .layui-header .layui-nav .layui-nav-item,
+.crm-ui-admin-shell .layui-layout-admin .layui-header .layui-nav .layui-nav-item {
+    line-height: var(--crm-header-height);
+}
+
+.crm-ui-front-shell .layui-layout-admin .layui-header .layui-nav .layui-nav-item > a,
+.crm-ui-admin-shell .layui-layout-admin .layui-header .layui-nav .layui-nav-item > a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    margin: 0 3px;
+    padding: 0 12px;
+    border-radius: var(--crm-radius-sm);
+    color: var(--crm-ink-soft);
+    transition: background .16s ease, color .16s ease;
+}
+
+.crm-ui-front-shell .layui-layout-admin .layui-header .layui-nav .layui-nav-item > a:hover,
+.crm-ui-admin-shell .layui-layout-admin .layui-header .layui-nav .layui-nav-item > a:hover {
+    color: var(--crm-primary);
+    background: var(--crm-surface-soft);
+}
+
+.crm-ui-front-shell .layui-layout-admin .layui-side,
+.crm-ui-admin-shell .layui-layout-admin .layui-side,
+.crm-ui-admin-shell .layui-layout-admin .crm-admin-sidebar {
+    top: var(--crm-header-height);
+    width: var(--crm-sidebar-width);
+    background: linear-gradient(180deg, var(--crm-sidebar), var(--crm-sidebar-soft)) !important;
+    border-right: 1px solid rgba(255, 255, 255, .08);
+    box-shadow: 6px 0 14px rgba(15, 23, 42, .08);
+}
+
+.crm-ui-front-shell .layui-side-scroll,
+.crm-ui-admin-shell .layui-side-scroll,
+.crm-ui-admin-shell .crm-admin-sidebar .layui-side-scroll {
+    width: calc(var(--crm-sidebar-width) + 18px);
+}
+
+.crm-ui-front-shell .layui-side .layui-nav-tree,
+.crm-ui-admin-shell .layui-side .layui-nav-tree,
+.crm-ui-admin-shell .crm-admin-sidebar .layui-nav-tree {
+    width: var(--crm-sidebar-width);
+    padding: 12px 10px 18px;
+    background: transparent;
+}
+
+.crm-ui-front-shell .layui-side .layui-nav-item a,
+.crm-ui-admin-shell .layui-side .layui-nav-item a,
+.crm-ui-admin-shell .crm-admin-sidebar .layui-nav-tree .layui-nav-item a {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    margin: 2px 0;
+    padding: 0 14px;
+    border-radius: var(--crm-radius-sm);
+    color: var(--crm-sidebar-muted);
+    font-size: 13px;
+    transition: background .16s ease, color .16s ease;
+}
+
+.crm-ui-front-shell .layui-side .layui-nav-item a:hover,
+.crm-ui-admin-shell .layui-side .layui-nav-item a:hover,
+.crm-ui-admin-shell .crm-admin-sidebar .layui-nav-tree .layui-nav-item a:hover {
+    color: var(--crm-sidebar-ink);
+    background: rgba(255, 255, 255, .08);
+}
+
+.crm-ui-front-shell .layui-nav-tree .layui-this > a,
+.crm-ui-front-shell .layui-nav-tree .layui-this > a:hover,
+.crm-ui-admin-shell .layui-nav-tree .layui-this > a,
+.crm-ui-admin-shell .layui-nav-tree .layui-this > a:hover,
+.crm-ui-admin-shell .crm-admin-sidebar .layui-nav-tree .layui-this > a,
+.crm-ui-admin-shell .crm-admin-sidebar .layui-nav-tree .layui-this > a:hover {
+    color: #ffffff !important;
+    background: var(--crm-primary) !important;
+    box-shadow: none;
+}
+
+.crm-ui-front-shell .layui-body,
+.crm-ui-admin-shell .layui-body,
+.crm-ui-admin-shell .crm-admin-body {
+    top: var(--crm-header-height);
+    left: var(--crm-sidebar-width);
+    bottom: var(--crm-footer-height);
+    background: var(--crm-bg);
+}
+
+.crm-ui-front-shell .front-frame-page,
+.crm-ui-admin-shell .crm-admin-main,
+.crm-ui-admin-shell .admin-page-shell {
+    padding: var(--crm-page-pad) !important;
+}
+
+.crm-ui-front-shell .front-page-content,
+.crm-ui-admin-shell .crm-admin-main {
+    min-width: 0;
+}
+
+.crm-ui-admin-shell .crm-admin-main {
+    width: min(100%, 1720px);
+}
+
+.crm-ui-front-shell .layui-footer,
+.crm-ui-admin-shell .layui-footer {
+    left: var(--crm-sidebar-width);
+    height: var(--crm-footer-height);
+    line-height: var(--crm-footer-height);
+    color: var(--crm-muted);
+    background: var(--crm-surface);
+    border-top: 1px solid var(--crm-line);
+}
+
+.crm-ui-admin-shell .crm-admin-page-head {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 72px;
+    margin-bottom: var(--crm-page-gap);
+    padding: 15px 18px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: color-mix(in srgb, var(--crm-surface) 96%, transparent);
+    box-shadow: var(--crm-shadow);
+}
+
+.crm-ui-admin-shell .crm-admin-page-kicker {
+    color: var(--crm-accent);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.crm-ui-admin-shell .crm-admin-page-title {
+    margin: 2px 0 0;
+    color: var(--crm-ink);
+    font-size: 21px;
+    line-height: 28px;
+    font-weight: 760;
+}
+
+.crm-ui-admin-shell .crm-admin-breadcrumb {
+    color: var(--crm-muted);
+}
+
+.crm-ui-front-shell .layui-card,
+.crm-ui-admin-shell .layui-card,
+.crm-ui-front-shell .module-table-wrap,
+.crm-ui-admin-shell .layui-table-view,
+.crm-ui-front-shell .layui-table-view {
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: var(--crm-surface);
+    box-shadow: var(--crm-shadow);
+}
+
+.crm-ui-front-shell .layui-card,
+.crm-ui-admin-shell .layui-card {
+    overflow: hidden;
+}
+
+.crm-ui-front-shell .layui-card-header,
+.crm-ui-admin-shell .layui-card-header {
+    min-height: 46px;
+    padding: 0 18px;
+    border-bottom: 1px solid var(--crm-line);
+    color: var(--crm-ink);
+    background: var(--crm-surface);
+    font-size: 15px;
+    font-weight: 760;
+    line-height: 46px;
+}
+
+.crm-ui-front-shell .layui-card-body,
+.crm-ui-admin-shell .layui-card-body {
+    padding: 18px;
+}
+
+.crm-ui-front-shell .layui-form-pane,
+.crm-ui-admin-shell .layui-form-pane {
+    padding: 12px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: var(--crm-surface-soft);
+}
+
+.crm-ui-front-shell .layui-form-pane .layui-form-label,
+.crm-ui-admin-shell .layui-form-pane .layui-form-label {
+    min-height: 38px;
+    border-color: var(--crm-line);
+    border-radius: var(--crm-radius-sm) 0 0 var(--crm-radius-sm);
+    color: var(--crm-muted);
+    background: var(--crm-surface-strong);
+    font-weight: 700;
+}
+
+.crm-ui-front-shell .layui-input,
+.crm-ui-front-shell .layui-select,
+.crm-ui-front-shell .layui-textarea,
+.crm-ui-admin-shell .layui-input,
+.crm-ui-admin-shell .layui-select,
+.crm-ui-admin-shell .layui-textarea,
+.crm-ui-auth-body .layui-input,
+.crm-ui-auth-body .layui-select,
+.crm-ui-auth-body .layui-textarea {
+    min-height: 38px;
+    border-color: var(--crm-line-strong);
+    border-radius: var(--crm-radius-sm);
+    color: var(--crm-ink);
+    background: var(--crm-surface);
+    transition: border-color .16s ease, box-shadow .16s ease, background .16s ease;
+}
+
+.crm-ui-front-shell .layui-form-pane .layui-input,
+.crm-ui-front-shell .layui-form-pane .layui-select,
+.crm-ui-admin-shell .layui-form-pane .layui-input,
+.crm-ui-admin-shell .layui-form-pane .layui-select {
+    border-radius: 0 var(--crm-radius-sm) var(--crm-radius-sm) 0;
+}
+
+.crm-ui-front-shell .layui-input:hover,
+.crm-ui-front-shell .layui-textarea:hover,
+.crm-ui-admin-shell .layui-input:hover,
+.crm-ui-admin-shell .layui-textarea:hover,
+.crm-ui-auth-body .layui-input:hover,
+.crm-ui-auth-body .layui-textarea:hover {
+    border-color: color-mix(in srgb, var(--crm-primary) 52%, var(--crm-line-strong));
+}
+
+.crm-ui-front-shell .layui-input:focus,
+.crm-ui-front-shell .layui-textarea:focus,
+.crm-ui-admin-shell .layui-input:focus,
+.crm-ui-admin-shell .layui-textarea:focus,
+.crm-ui-auth-body .layui-input:focus,
+.crm-ui-auth-body .layui-textarea:focus {
+    border-color: var(--crm-primary) !important;
+    box-shadow: 0 0 0 3px var(--crm-focus);
+    outline: none;
+}
+
+.crm-ui-front-shell .layui-btn,
+.crm-ui-admin-shell .layui-btn,
+.crm-ui-auth-body .layui-btn {
+    height: 34px;
+    line-height: 34px;
+    border-radius: var(--crm-radius-sm);
+    font-weight: 700;
+    box-shadow: none;
+    transition: background .16s ease, border-color .16s ease, color .16s ease, box-shadow .16s ease;
+}
+
+.crm-ui-front-shell .layui-btn:hover,
+.crm-ui-admin-shell .layui-btn:hover,
+.crm-ui-auth-body .layui-btn:hover {
+    box-shadow: var(--crm-shadow);
+}
+
+.crm-ui-front-shell .layui-btn:not(.layui-btn-primary),
+.crm-ui-admin-shell .layui-btn:not(.layui-btn-primary),
+.crm-ui-auth-body .layui-btn:not(.layui-btn-primary) {
+    border-color: var(--crm-primary);
+    background: var(--crm-primary);
+}
+
+.crm-ui-front-shell .layui-btn-primary,
+.crm-ui-admin-shell .layui-btn-primary,
+.crm-ui-auth-body .layui-btn-primary {
+    border-color: var(--crm-line-strong);
+    color: var(--crm-ink-soft);
+    background: var(--crm-surface);
+}
+
+.crm-ui-front-shell .layui-bg-blue,
+.crm-ui-front-shell .layui-btn-normal,
+.crm-ui-admin-shell .layui-bg-blue,
+.crm-ui-admin-shell .layui-btn-normal,
+.crm-ui-auth-body .layui-bg-blue,
+.crm-ui-auth-body .layui-btn-normal {
+    background-color: var(--crm-primary) !important;
+}
+
+.crm-ui-front-shell .layui-bg-green,
+.crm-ui-admin-shell .layui-bg-green,
+.crm-ui-auth-body .layui-bg-green {
+    background-color: var(--crm-accent) !important;
+}
+
+.crm-ui-front-shell .layui-btn-danger,
+.crm-ui-admin-shell .layui-btn-danger,
+.crm-ui-auth-body .layui-btn-danger {
+    background-color: var(--crm-danger) !important;
+}
+
+.crm-ui-front-shell .layui-table-view,
+.crm-ui-admin-shell .layui-table-view {
+    overflow: hidden;
+}
+
+.crm-ui-front-shell .layui-table-header,
+.crm-ui-front-shell .layui-table-tool,
+.crm-ui-front-shell .layui-table-page,
+.crm-ui-admin-shell .layui-table-header,
+.crm-ui-admin-shell .layui-table-tool,
+.crm-ui-admin-shell .layui-table-page {
+    background: var(--crm-surface-soft);
+}
+
+.crm-ui-front-shell .layui-table,
+.crm-ui-admin-shell .layui-table {
+    color: var(--crm-ink-soft);
+}
+
+.crm-ui-front-shell .layui-table th,
+.crm-ui-admin-shell .layui-table th {
+    height: 42px;
+    color: var(--crm-ink);
+    background: var(--crm-surface-soft);
+    font-size: 13px;
+    font-weight: 760;
+}
+
+.crm-ui-front-shell .layui-table td,
+.crm-ui-admin-shell .layui-table td {
+    height: 42px;
+}
+
+.crm-ui-front-shell .layui-table-cell,
+.crm-ui-admin-shell .layui-table-cell {
+    padding: 0 12px;
+}
+
+.crm-ui-front-shell .layui-table tbody tr:hover td,
+.crm-ui-admin-shell .layui-table tbody tr:hover td {
+    background: color-mix(in srgb, var(--crm-primary) 7%, var(--crm-surface)) !important;
+}
+
+.crm-ui-front-shell .layui-laypage a,
+.crm-ui-front-shell .layui-laypage span,
+.crm-ui-admin-shell .layui-laypage a,
+.crm-ui-admin-shell .layui-laypage span {
+    border-radius: var(--crm-radius-sm);
+}
+
+.crm-ui-front-shell .layui-laypage .layui-laypage-curr .layui-laypage-em,
+.crm-ui-admin-shell .layui-laypage .layui-laypage-curr .layui-laypage-em {
+    border-radius: var(--crm-radius-sm);
+    background: var(--crm-primary);
+}
+
+.crm-ui-front-shell .layui-layer,
+.crm-ui-admin-shell .layui-layer {
+    overflow: hidden;
+    border-radius: var(--crm-radius) !important;
+    box-shadow: var(--crm-shadow-raised) !important;
+}
+
+.crm-ui-front-shell .layui-layer-title,
+.crm-ui-admin-shell .layui-layer-title {
+    height: 48px !important;
+    line-height: 48px !important;
+    border-bottom-color: var(--crm-line) !important;
+    color: var(--crm-ink) !important;
+    background: var(--crm-surface) !important;
+    font-weight: 760;
+}
+
+.crm-ui-auth-body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+    background:
+        linear-gradient(135deg, rgba(37, 95, 216, .11), transparent 38%),
+        linear-gradient(45deg, transparent 0 64%, rgba(15, 143, 130, .12) 64% 100%),
+        var(--crm-bg);
+}
+
+.crm-ui-auth-body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(23, 32, 51, .045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 32, 51, .045) 1px, transparent 1px);
+    background-size: 34px 34px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, .7), transparent 86%);
+}
+
+.crm-ui-auth-body.auth-wrapper {
+    align-items: center;
+    padding: 28px;
+}
+
+.crm-ui-auth-body .auth-shell,
+.crm-ui-auth-body .auth-card,
+.crm-ui-auth-body .login-container {
+    position: relative;
+    z-index: 1;
+}
+
+.crm-ui-auth-body .auth-shell {
+    width: min(960px, 100%);
+}
+
+.crm-ui-auth-body .auth-card {
+    width: min(440px, calc(100vw - 32px));
+    padding: 34px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: var(--crm-surface);
+    box-shadow: var(--crm-shadow-raised);
+}
+
+.crm-ui-auth-body .auth-shell .auth-card {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: minmax(320px, .92fr) minmax(360px, 1fr);
+    overflow: hidden;
+}
+
+.crm-ui-auth-body .register-card {
+    width: min(760px, calc(100vw - 32px));
+}
+
+.crm-ui-auth-body .auth-brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 520px;
+    padding: 42px 40px;
+    color: var(--crm-sidebar-ink);
+    background: linear-gradient(145deg, var(--crm-sidebar), var(--crm-sidebar-soft));
+}
+
+.crm-ui-auth-body .auth-brand-logo,
+.crm-ui-auth-body .login-logo::before {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: var(--crm-radius);
+    color: var(--crm-sidebar);
+    background: #ffffff;
+}
+
+.crm-ui-auth-body .auth-brand-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 17px;
+    font-weight: 760;
+}
+
+.crm-ui-auth-body .auth-brand-copy h1 {
+    margin: 0 0 12px;
+    max-width: 13em;
+    color: #ffffff;
+    font-size: 28px;
+    line-height: 1.28;
+    font-weight: 760;
+}
+
+.crm-ui-auth-body .auth-brand-copy p,
+.crm-ui-auth-body .auth-brand-points li {
+    color: rgba(234, 241, 251, .78);
+}
+
+.crm-ui-auth-body .auth-brand-points {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.crm-ui-auth-body .auth-brand-points li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+}
+
+.crm-ui-auth-body .auth-brand-points i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--crm-radius-sm);
+    color: #ffffff;
+    background: rgba(255, 255, 255, .10);
+}
+
+.crm-ui-auth-body .auth-form-side {
+    padding: 44px 42px;
+    background: var(--crm-surface);
+}
+
+.crm-ui-auth-body .auth-head h2,
+.crm-ui-auth-body .auth-title,
+.crm-ui-auth-body .auth-logo h1,
+.crm-ui-auth-body .login-logo {
+    margin: 0 0 10px;
+    color: var(--crm-ink);
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 800;
+}
+
+.crm-ui-auth-body .auth-head p,
+.crm-ui-auth-body .auth-logo h2 {
+    margin: 0;
+    color: var(--crm-muted);
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.crm-ui-auth-body .auth-head {
+    margin-bottom: 26px;
+}
+
+.crm-ui-auth-body .auth-field-label,
+.crm-ui-auth-body .layui-form-label {
+    display: block;
+    float: none;
+    width: auto;
+    padding: 0 0 7px;
+    color: var(--crm-ink-soft);
+    text-align: left;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 760;
+}
+
+.crm-ui-auth-body .layui-input-block {
+    margin-left: 0;
+}
+
+.crm-ui-auth-body .layui-form-item {
+    margin-bottom: 16px;
+}
+
+.crm-ui-auth-body .layui-input {
+    height: 44px;
+    padding: 0 13px;
+}
+
+.crm-ui-auth-body .auth-submit,
+.crm-ui-auth-body .layui-btn-fluid {
+    height: 44px;
+    line-height: 44px;
+}
+
+.crm-ui-auth-body .auth-foot,
+.crm-ui-auth-body .auth-footer,
+.crm-ui-auth-body .login-language {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--crm-line);
+    color: var(--crm-muted);
+    text-align: center;
+    font-size: 13px;
+}
+
+.crm-ui-auth-body a {
+    color: var(--crm-primary);
+    font-weight: 700;
+}
+
+.crm-ui-auth-body .auth-lang,
+.crm-ui-auth-body .login-language {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.crm-ui-auth-body .auth-lang a,
+.crm-ui-auth-body .login-language a {
+    padding: 5px 10px;
+    border-radius: var(--crm-radius-sm);
+    text-decoration: none;
+}
+
+.crm-ui-auth-body .auth-lang a:hover,
+.crm-ui-auth-body .login-language a:hover {
+    background: var(--crm-surface-soft);
+}
+
+.crm-ui-auth-body .login-container {
+    width: min(420px, calc(100vw - 32px));
+    padding: 34px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: var(--crm-surface);
+    box-shadow: var(--crm-shadow-raised);
+}
+
+.crm-ui-auth-body .login-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.crm-ui-auth-body .login-logo::before {
+    content: "CO";
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--crm-primary);
+    border: 1px solid var(--crm-line);
+}
+
+.crm-ui-auth-body .register-code-row,
+.crm-ui-auth-body .register-phone-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: center;
+}
+
+.crm-ui-auth-body .register-phone-row {
+    grid-template-columns: 104px minmax(0, 1fr);
+}
+
+.crm-ui-auth-body .register-captcha-img {
+    width: 132px;
+    height: 42px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius-sm);
+    background: var(--crm-surface-soft);
+}
+
+.crm-ui-front-shell .front-header,
+.crm-ui-admin-shell .admin-header {
+    height: var(--crm-header-height) !important;
+    padding: 0 24px !important;
+    color: var(--crm-ink) !important;
+    background: color-mix(in srgb, var(--crm-surface) 96%, transparent) !important;
+    border-bottom: 1px solid var(--crm-line);
+    box-shadow: var(--crm-shadow);
+}
+
+.crm-ui-front-shell .front-header .logo,
+.crm-ui-admin-shell .admin-header .logo {
+    color: var(--crm-primary) !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+}
+
+.crm-ui-front-shell .front-header .nav-links a,
+.crm-ui-front-shell .front-header .user-area a,
+.crm-ui-admin-shell .admin-header .header-right a,
+.crm-ui-admin-shell .admin-header .header-right span {
+    color: var(--crm-muted) !important;
+}
+
+.crm-ui-front-shell .front-header .nav-links a:hover,
+.crm-ui-front-shell .front-header .nav-links a.active,
+.crm-ui-front-shell .front-header .user-area a:hover,
+.crm-ui-admin-shell .admin-header .header-right a:hover {
+    color: var(--crm-primary) !important;
+    background: var(--crm-surface-soft) !important;
+}
+
+.crm-ui-admin-shell .admin-sidebar {
+    top: var(--crm-header-height) !important;
+    width: var(--crm-sidebar-width) !important;
+    background: linear-gradient(180deg, var(--crm-sidebar), var(--crm-sidebar-soft)) !important;
+}
+
+.crm-ui-admin-shell .admin-sidebar .layui-nav .layui-nav-item a {
+    margin: 2px 10px;
+    padding: 0 14px !important;
+    border-radius: var(--crm-radius-sm);
+    color: var(--crm-sidebar-muted) !important;
+}
+
+.crm-ui-admin-shell .admin-sidebar .layui-nav .layui-nav-item a:hover,
+.crm-ui-admin-shell .admin-sidebar .layui-nav .layui-this a {
+    color: #ffffff !important;
+    background: var(--crm-primary) !important;
+}
+
+.crm-ui-front-shell .front-main,
+.crm-ui-admin-shell .admin-main {
+    background: var(--crm-bg) !important;
+}
+
+.crm-ui-front-shell .front-main {
+    margin-top: var(--crm-header-height) !important;
+    max-width: 1280px !important;
+    padding: var(--crm-page-pad) !important;
+}
+
+.crm-ui-admin-shell .admin-main {
+    margin-top: var(--crm-header-height) !important;
+    margin-left: var(--crm-sidebar-width) !important;
+    padding: var(--crm-page-pad) !important;
+}
+
+.crm-ui-front-shell .card,
+.crm-ui-front-shell .stat-box,
+.crm-ui-admin-shell .content-card,
+.crm-ui-admin-shell .stat-item,
+.crm-ui-auth-body .login-card,
+.crm-ui-auth-body .register-card,
+.crm-ui-auth-body .login-box,
+.crm-ui-auth-body .wrap .card {
+    border: 1px solid var(--crm-line) !important;
+    border-radius: var(--crm-radius) !important;
+    background: var(--crm-surface) !important;
+    box-shadow: var(--crm-shadow) !important;
+}
+
+.crm-ui-front-shell .card,
+.crm-ui-admin-shell .content-card {
+    padding: 20px !important;
+}
+
+.crm-ui-front-shell .card h3,
+.crm-ui-admin-shell .page-header h2,
+.crm-ui-auth-body .login-card .logo h1,
+.crm-ui-auth-body .register-card .logo h1,
+.crm-ui-auth-body .login-box h2,
+.crm-ui-auth-body .logo-area h1 {
+    color: var(--crm-ink) !important;
+    font-weight: 800 !important;
+}
+
+.crm-ui-front-shell .stat-box .number,
+.crm-ui-admin-shell .stat-item .stat-number {
+    color: var(--crm-primary) !important;
+}
+
+.crm-ui-auth-body .login-container,
+.crm-ui-auth-body .register-container,
+.crm-ui-auth-body .wrap {
+    width: min(520px, calc(100vw - 32px)) !important;
+}
+
+.crm-ui-auth-body .login-card,
+.crm-ui-auth-body .register-card,
+.crm-ui-auth-body .login-box,
+.crm-ui-auth-body .wrap .card {
+    padding: 34px !important;
+}
+
+.crm-ui-auth-body .form-group label,
+.crm-ui-auth-body .login-card .logo p,
+.crm-ui-auth-body .register-card .logo p,
+.crm-ui-auth-body .card-desc {
+    color: var(--crm-muted) !important;
+}
+
+.crm-ui-auth-body .form-group input,
+.crm-ui-auth-body .form-group select,
+.crm-ui-auth-body .wrap input {
+    height: 42px !important;
+    border-color: var(--crm-line-strong) !important;
+    border-radius: var(--crm-radius-sm) !important;
+    color: var(--crm-ink) !important;
+    background: var(--crm-surface) !important;
+}
+
+.crm-ui-auth-body .form-group input:focus,
+.crm-ui-auth-body .form-group select:focus,
+.crm-ui-auth-body .wrap input:focus {
+    border-color: var(--crm-primary) !important;
+    box-shadow: 0 0 0 3px var(--crm-focus);
+}
+
+.crm-ui-auth-body .btn-login,
+.crm-ui-auth-body .btn-register,
+.crm-ui-auth-body .btn {
+    height: 44px !important;
+    border: 0 !important;
+    border-radius: var(--crm-radius-sm) !important;
+    color: #ffffff !important;
+    background: var(--crm-primary) !important;
+    font-weight: 800 !important;
+}
+
+.crm-ui-auth-body .btn-login:hover,
+.crm-ui-auth-body .btn-register:hover,
+.crm-ui-auth-body .btn:hover {
+    background: var(--crm-primary-hover) !important;
+}
+
+.crm-ui-auth-body .login-footer a,
+.crm-ui-auth-body .register-footer a,
+.crm-ui-auth-body .link-row a,
+.crm-ui-auth-body .lang-switch a,
+.crm-ui-auth-body .lang-switch-container a {
+    color: var(--crm-primary) !important;
+}
+
+@media screen and (max-width: 1100px) {
+    :root {
+        --crm-sidebar-width: 210px;
+        --crm-page-pad: 18px;
+    }
+}
+
+@media screen and (max-width: 860px) {
+    .crm-ui-auth-body {
+        align-items: flex-start;
+        padding: 18px;
+    }
+
+    .crm-ui-auth-body .auth-shell .auth-card {
+        grid-template-columns: 1fr;
+    }
+
+    .crm-ui-auth-body .auth-brand {
+        display: none;
+    }
+
+    .crm-ui-auth-body .auth-form-side {
+        padding: 34px 26px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    :root {
+        --crm-sidebar-width: 0px;
+        --crm-header-height: 58px;
+        --crm-page-pad: 14px;
+    }
+
+    .crm-ui-front-shell .layui-layout-admin .layui-logo,
+    .crm-ui-admin-shell .layui-layout-admin .layui-logo,
+    .crm-ui-admin-shell .layui-layout-admin .crm-admin-brand {
+        width: 150px;
+    }
+
+    .crm-ui-front-shell .layui-layout-left,
+    .crm-ui-admin-shell .layui-layout-left {
+        left: 150px;
+    }
+
+    .crm-ui-front-shell .layui-layout-admin .layui-side,
+    .crm-ui-admin-shell .layui-layout-admin .layui-side,
+    .crm-ui-admin-shell .layui-layout-admin .crm-admin-sidebar {
+        left: -240px;
+        width: 220px;
+    }
+
+    .crm-ui-front-shell .layui-body,
+    .crm-ui-admin-shell .layui-body,
+    .crm-ui-admin-shell .crm-admin-body,
+    .crm-ui-admin-shell .admin-main,
+    .crm-ui-front-shell .layui-footer,
+    .crm-ui-admin-shell .layui-footer {
+        left: 0;
+        margin-left: 0 !important;
+    }
+
+    .crm-ui-admin-shell .crm-admin-page-head {
+        align-items: flex-start;
+        flex-direction: column;
+        min-height: auto;
+        gap: 10px;
+    }
+
+    .crm-ui-front-shell .layui-form-pane,
+    .crm-ui-admin-shell .layui-form-pane {
+        padding: 10px;
+    }
+
+    .crm-ui-front-shell .layui-form-pane .layui-form-label,
+    .crm-ui-admin-shell .layui-form-pane .layui-form-label {
+        float: none;
+        width: auto;
+        padding: 0 0 6px;
+        border: 0;
+        background: transparent;
+        text-align: left;
+    }
+
+    .crm-ui-front-shell .layui-form-pane .layui-input-block,
+    .crm-ui-admin-shell .layui-form-pane .layui-input-block {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .crm-ui-auth-body {
+        padding: 12px;
+    }
+
+    .crm-ui-auth-body .auth-card,
+    .crm-ui-auth-body .login-container {
+        width: 100%;
+        padding: 24px 18px;
+    }
+
+    .crm-ui-auth-body .auth-form-side {
+        padding: 28px 20px;
+    }
+
+    .crm-ui-auth-body .register-phone-row {
+        grid-template-columns: 82px minmax(0, 1fr);
+    }
+}
+
+/* Product surface unification for v2, legacy Blade, and AdminLTE screens. */
+.crm-ui-auth-body.front-v2-page,
+.crm-ui-front-shell .front-v2-page {
+    --v2-bg: var(--crm-bg);
+    --v2-bg-soft: var(--crm-surface-soft);
+    --v2-surface: var(--crm-surface);
+    --v2-surface-soft: var(--crm-surface-soft);
+    --v2-ink: var(--crm-ink);
+    --v2-muted: var(--crm-muted);
+    --v2-line: var(--crm-line-strong);
+    --v2-line-soft: var(--crm-line);
+    --v2-primary: var(--crm-primary);
+    --v2-primary-dark: var(--crm-primary-hover);
+    --v2-success: var(--crm-accent);
+    --v2-warning: var(--crm-warning);
+    --v2-danger: var(--crm-danger);
+    --v2-shadow: var(--crm-shadow);
+    --v2-radius: var(--crm-radius);
+    --v2-radius-sm: var(--crm-radius-sm);
+    --v2-panel-bg: var(--crm-sidebar);
+    --v2-panel-text: var(--crm-sidebar-ink);
+    --v2-panel-text-muted: rgba(234, 241, 251, .78);
+}
+
+.crm-ui-auth-body .front-v2-auth {
+    width: min(1080px, 100%);
+    min-height: 620px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: var(--crm-surface);
+    box-shadow: var(--crm-shadow-raised);
+}
+
+.crm-ui-auth-body .front-v2-auth.is-register {
+    width: min(1180px, 100%);
+}
+
+.crm-ui-auth-body .front-v2-auth-panel {
+    padding: 42px 40px;
+    color: var(--crm-sidebar-ink);
+    background: var(--crm-sidebar);
+}
+
+.crm-ui-auth-body .front-v2-auth-mark,
+.crm-ui-auth-body .front-v2-auth-copy h1,
+.crm-ui-auth-body .front-v2-auth-heading h2 {
+    font-weight: 800;
+}
+
+.crm-ui-auth-body .front-v2-auth-copy h1 {
+    max-width: 12em;
+    font-size: 28px;
+    line-height: 36px;
+}
+
+.crm-ui-auth-body .front-v2-auth-mark i {
+    border-radius: var(--crm-radius);
+    color: var(--crm-primary);
+    background: #ffffff;
+}
+
+.crm-ui-auth-body .front-v2-auth-card {
+    padding: 42px;
+}
+
+.crm-ui-auth-body .front-v2-register-grid {
+    gap: 2px 14px;
+}
+
+.crm-ui-auth-body .front-v2-code-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.crm-ui-auth-body .front-v2-captcha {
+    border-color: var(--crm-line-strong);
+    border-radius: var(--crm-radius-sm);
+    background: var(--crm-surface-soft);
+}
+
+.crm-ui-auth-body #refreshCaptcha {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+}
+
+.crm-ui-auth-body .register-terms-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin-top: 8px;
+    color: var(--crm-muted);
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.crm-ui-auth-body .front-v2-auth-links,
+.crm-ui-auth-body .front-v2-lang-row {
+    color: var(--crm-muted);
+}
+
+.crm-ui-front-shell .front-v2-page-shell,
+.crm-ui-front-shell .crm-visual-page {
+    display: grid;
+    gap: var(--crm-page-gap);
+    min-width: 0;
+}
+
+.crm-ui-front-shell .front-v2-hero,
+.crm-ui-front-shell .front-v2-panel,
+.crm-ui-front-shell .front-v2-card,
+.crm-ui-front-shell .front-v2-stat,
+.crm-ui-front-shell .front-v2-table-wrap,
+.crm-ui-front-shell .module-table-wrap,
+.crm-ui-front-shell .module-chart-card,
+.crm-ui-front-shell .module-comparison-table,
+.crm-ui-front-shell .deposit-history-table-wrap,
+.crm-ui-front-shell .payment-channel-panel,
+.crm-ui-admin-shell .crm-admin-panel,
+.crm-ui-admin-shell .content-card,
+.crm-ui-admin-shell .stat-item {
+    border: 1px solid var(--crm-line) !important;
+    border-radius: var(--crm-radius) !important;
+    background: var(--crm-surface) !important;
+    box-shadow: var(--crm-shadow) !important;
+}
+
+.crm-ui-front-shell .front-v2-panel,
+.crm-ui-front-shell .front-v2-card,
+.crm-ui-admin-shell .crm-admin-panel,
+.crm-ui-admin-shell .content-card {
+    overflow: hidden;
+}
+
+.crm-ui-front-shell .front-v2-hero {
+    padding: 24px;
+    color: var(--crm-sidebar-ink);
+    background: var(--crm-sidebar) !important;
+}
+
+.crm-ui-front-shell .front-v2-hero h1,
+.crm-ui-front-shell .front-v2-panel-title h2,
+.crm-ui-front-shell .card-title,
+.crm-ui-admin-shell .crm-admin-panel .layui-card-header,
+.crm-ui-admin-shell .content-card h3 {
+    color: var(--crm-ink);
+    font-weight: 800;
+    text-wrap: balance;
+}
+
+.crm-ui-front-shell .front-v2-hero h1,
+.crm-ui-front-shell .front-v2-hero p {
+    color: #ffffff;
+}
+
+.crm-ui-front-shell .front-v2-panel-title,
+.crm-ui-front-shell .front-v2-panel .layui-card-header,
+.crm-ui-admin-shell .crm-admin-panel .layui-card-header {
+    min-height: 50px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--crm-line);
+    background: var(--crm-surface);
+}
+
+.crm-ui-front-shell .front-v2-panel-body,
+.crm-ui-front-shell .front-v2-panel .layui-card-body,
+.crm-ui-admin-shell .crm-admin-panel .layui-card-body {
+    padding: 18px;
+}
+
+.crm-ui-front-shell .front-v2-stat,
+.crm-ui-admin-shell .stat-item {
+    position: relative;
+    min-height: 92px;
+    padding: 18px !important;
+}
+
+.crm-ui-front-shell .front-v2-stat dt,
+.crm-ui-admin-shell .stat-label {
+    color: var(--crm-muted) !important;
+    font-size: 13px !important;
+    line-height: 20px;
+}
+
+.crm-ui-front-shell .front-v2-stat dd,
+.crm-ui-admin-shell .stat-number {
+    margin: 6px 0 0;
+    color: var(--crm-primary) !important;
+    font-size: 26px !important;
+    line-height: 34px;
+    font-weight: 800 !important;
+    font-variant-numeric: tabular-nums;
+}
+
+.crm-ui-admin-shell .stat-icon {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    color: color-mix(in srgb, var(--crm-primary) 38%, transparent);
+    font-size: 28px;
+}
+
+.crm-ui-front-shell .module-toolbar,
+.crm-ui-front-shell .J_moduleForm,
+.crm-ui-admin-shell .crm-admin-panel .layui-form-pane,
+.crm-ui-admin-shell .content-card .layui-form-pane {
+    padding: 14px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: var(--crm-surface-soft);
+}
+
+.crm-ui-front-shell .module-toolbar .layui-form-item,
+.crm-ui-front-shell .J_moduleForm .layui-form-item,
+.crm-ui-admin-shell .layui-form-pane .layui-form-item {
+    margin-bottom: 10px;
+}
+
+.crm-ui-front-shell .layui-tab-title,
+.crm-ui-admin-shell .layui-tab-title {
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 6px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: var(--crm-surface-soft);
+}
+
+.crm-ui-front-shell .layui-tab-title li,
+.crm-ui-admin-shell .layui-tab-title li {
+    min-height: 34px;
+    padding: 0 14px;
+    border-radius: var(--crm-radius-sm);
+    color: var(--crm-muted);
+    line-height: 34px;
+}
+
+.crm-ui-front-shell .layui-tab-title .layui-this,
+.crm-ui-admin-shell .layui-tab-title .layui-this {
+    color: var(--crm-primary);
+    background: var(--crm-surface);
+    box-shadow: var(--crm-shadow);
+}
+
+.crm-ui-front-shell .layui-tab-title .layui-this::after,
+.crm-ui-admin-shell .layui-tab-title .layui-this::after {
+    display: none;
+}
+
+.crm-ui-front-shell .layui-badge,
+.crm-ui-admin-shell .layui-badge {
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 999px;
+    line-height: 22px;
+    font-weight: 700;
+}
+
+.crm-ui-front-shell .crm-table-summary,
+.crm-ui-admin-shell .crm-table-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin: 0 0 12px;
+}
+
+.crm-ui-front-shell .crm-table-summary:empty,
+.crm-ui-admin-shell .crm-table-summary:empty {
+    display: none;
+}
+
+.crm-ui-front-shell .crm-table-summary-item,
+.crm-ui-admin-shell .crm-table-summary-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 28px;
+    padding: 4px 9px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius-sm);
+    color: var(--crm-muted);
+    background: var(--crm-surface);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.crm-ui-front-shell .crm-table-summary-item strong,
+.crm-ui-admin-shell .crm-table-summary-item strong {
+    color: var(--crm-ink);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+.crm-ui-front-shell .front-v2-empty-state,
+.crm-ui-admin-shell .front-v2-empty-state,
+.crm-ui-front-shell .crm-empty-state,
+.crm-ui-admin-shell .crm-empty-state,
+.crm-ui-front-shell [data-empty-placeholder],
+.crm-ui-admin-shell [data-empty-placeholder] {
+    min-height: 128px;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 8px;
+    padding: 24px;
+    border: 1px dashed var(--crm-line-strong);
+    border-radius: var(--crm-radius);
+    color: var(--crm-muted);
+    background: var(--crm-surface-soft);
+    text-align: center;
+}
+
+.crm-ui-front-shell .front-v2-empty-icon,
+.crm-ui-admin-shell .front-v2-empty-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.crm-ui-front-shell .front-v2-empty-title,
+.crm-ui-admin-shell .front-v2-empty-title {
+    margin: 0;
+    color: var(--crm-ink);
+    font-weight: 800;
+}
+
+.crm-ui-front-shell .front-v2-empty-text,
+.crm-ui-admin-shell .front-v2-empty-text {
+    margin: 0;
+    max-width: 48ch;
+    color: var(--crm-muted);
+    font-size: 13px;
+    line-height: 20px;
+}
+
+/* ===================================================================
+   后台表格统计独立区块（需求 9）
+   统计从表格卡片里抽出来单独成块，默认靠左对齐，并用左侧强调边和不同底色
+   与表格卡片形成视觉区分。所有颜色走语义 token，跟随全局皮肤切换。
+   =================================================================== */
+.crm-ui-admin-shell .crm-admin-stats-block {
+    display: block;
+    margin: 0 0 14px;
+    padding: 12px 14px;
+    border: 1px solid var(--crm-line);
+    border-left: 3px solid var(--crm-primary);
+    border-radius: var(--crm-radius);
+    background: var(--crm-surface-soft);
+    text-align: left;
+}
+
+.crm-ui-admin-shell .crm-admin-stats-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.crm-ui-admin-shell .crm-admin-stats-title {
+    color: var(--crm-ink);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.crm-ui-admin-shell .crm-admin-stats-desc {
+    color: var(--crm-muted);
+    font-size: 12px;
+}
+
+/* ===================================================================
+   卡片页头标题与副标题
+   多个后台页面（position-summary / risk / whs-exp-zero / authentications /
+   exchange-rates / gifts）在 .layui-card-header 内用这三个类承载页面标题与说明，
+   但此前 CSS 从未定义它们。
+   由于 .crm-admin-panel .layui-card-header 自带 font-weight:800 与 --crm-ink，
+   未定义时副标题会完整继承标题的字重、字号与颜色 —— 渲染出来是「两行一样粗的标题」，
+   没有任何主次层级。这里补齐定义，层级口径与上方 stats-title / stats-desc 一致。
+   =================================================================== */
+.crm-ui-admin-shell .crm-page-head {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.crm-ui-admin-shell .crm-page-title {
+    color: var(--crm-ink);
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+/* 副标题必须显式覆盖继承来的 800 字重：仅改颜色不足以形成层级，
+   在深色主题下 muted 与 ink 的对比差被压缩，字重相同会让两行几乎无法区分。 */
+.crm-ui-admin-shell .crm-page-desc {
+    color: var(--crm-muted);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* 链路节点容器（需求 12）。
+   .crm-chain-node（单数）此前已定义，但承载它们的复数容器没有，
+   导致节点靠默认 inline 排布：多层链路换行后节点之间没有间距、上下行会粘连。 */
+.crm-ui-admin-shell .crm-chain-nodes {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+/* 表单操作区（查询/重置/导出/批量等按钮行）。
+   未定义时按钮靠 .layui-form-item 的默认块级布局排列，
+   在窄屏下会各自独占一行并丢失统一的上边距。 */
+.crm-ui-admin-shell .crm-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+/* 支付通道页签（按启用状态分组切换）。
+   容器负责页签之间的间距与换行，选中态仍由 layui 自身的 .layui-this 承担。 */
+.crm-ui-admin-shell .crm-channel-tab {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+/* 统计条目默认靠左排列；父级 .crm-table-summary 已提供 flex 布局。 */
+.crm-ui-admin-shell .crm-admin-stats-block .crm-table-summary {
+    justify-content: flex-start;
+    margin: 0;
+}
+
+/* 无数据时保留一个占位高度，避免区块塌陷成一条线。 */
+.crm-ui-admin-shell .crm-admin-stats-block .crm-table-summary:empty {
+    display: block;
+    min-height: 28px;
+}
+
+.crm-ui-admin-shell .crm-admin-stats-block .crm-table-summary:empty::after {
+    content: attr(data-empty-text);
+    color: var(--crm-muted);
+    font-size: 12px;
+}
+
+/* ===================================================================
+   链路渐进展开（需求 12）
+   默认隐藏；只有点击表格用户ID后才通过 is-visible 显示，且只显示用户ID。
+   =================================================================== */
+.crm-ui-admin-shell .crm-chain-path {
+    display: none;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 12px;
+    padding: 9px 12px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: var(--crm-surface-soft);
+}
+
+.crm-ui-admin-shell .crm-chain-path.is-visible {
+    display: flex;
+}
+
+.crm-ui-admin-shell .crm-chain-title {
+    margin-right: 4px;
+    color: var(--crm-muted);
+    font-size: 12px;
+}
+
+.crm-ui-admin-shell .crm-chain-node {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 2px 9px;
+    border: 1px solid var(--crm-line-strong);
+    border-radius: 999px;
+    color: var(--crm-ink);
+    background: var(--crm-surface);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+.crm-ui-admin-shell .crm-chain-node.is-current {
+    border-color: var(--crm-primary);
+    color: var(--crm-primary);
+    font-weight: 800;
+}
+
+.crm-ui-admin-shell .crm-chain-arrow {
+    color: var(--crm-muted);
+    font-size: 12px;
+}
+
+.crm-ui-admin-shell .crm-chain-reset {
+    min-height: 24px;
+    margin-left: auto;
+    padding: 0 9px;
+    border: 1px solid var(--crm-line-strong);
+    border-radius: var(--crm-radius-sm);
+    color: var(--crm-muted);
+    background: var(--crm-surface);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.crm-ui-admin-shell .crm-chain-reset:hover {
+    border-color: var(--crm-primary);
+    color: var(--crm-primary);
+}
+
+/* 表格里可点击展开链路的用户ID 单元格。 */
+.crm-ui-admin-shell .crm-chain-trigger {
+    min-height: 24px;
+    padding: 0 6px;
+    border: 1px solid transparent;
+    border-radius: var(--crm-radius-sm);
+    color: var(--crm-primary);
+    background: transparent;
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+}
+
+.crm-ui-admin-shell .crm-chain-trigger:hover,
+.crm-ui-admin-shell .crm-chain-trigger:focus-visible {
+    border-color: var(--crm-primary);
+    background: var(--crm-surface-soft);
+}
+
+/* ===================================================================
+   可折叠统计图表容器（需求 16）
+   默认折叠，点击 》 形箭头展开。纯 CSS 过渡，无 JS 动画。
+   =================================================================== */
+.crm-ui-admin-shell .crm-collapse-panel {
+    margin: 0 0 14px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: var(--crm-surface);
+}
+
+.crm-ui-admin-shell .crm-collapse-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: var(--crm-radius);
+    color: var(--crm-ink);
+    background: transparent;
+    font: inherit;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+}
+
+.crm-ui-admin-shell .crm-collapse-toggle:hover {
+    color: var(--crm-primary);
+    background: var(--crm-surface-soft);
+}
+
+.crm-ui-admin-shell .crm-collapse-toggle:focus-visible {
+    outline: 2px solid var(--crm-primary);
+    outline-offset: -2px;
+}
+
+/* 》 形箭头：折叠时指向右侧，展开后顺时针旋转 90 度指向下方。
+   字形由 CSS content 提供，Blade 只保留语义容器，避免模板里出现数字实体。 */
+.crm-ui-admin-shell .crm-collapse-chevron {
+    flex: 0 0 auto;
+    width: 16px;
+    color: var(--crm-muted);
+    font-size: 13px;
+    line-height: 1;
+    text-align: center;
+    transition: transform .2s ease;
+}
+
+.crm-ui-admin-shell .crm-collapse-chevron::before {
+    content: '\203A';
+}
+
+.crm-ui-admin-shell .crm-collapse-toggle[aria-expanded="true"] .crm-collapse-chevron {
+    color: var(--crm-primary);
+    transform: rotate(90deg);
+}
+
+.crm-ui-admin-shell .crm-collapse-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows .25s ease;
+}
+
+.crm-ui-admin-shell .crm-collapse-body > .crm-collapse-inner {
+    min-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition: visibility .25s ease;
+}
+
+.crm-ui-admin-shell .crm-collapse-panel.is-open .crm-collapse-body {
+    grid-template-rows: 1fr;
+}
+
+.crm-ui-admin-shell .crm-collapse-panel.is-open .crm-collapse-body > .crm-collapse-inner {
+    visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .crm-ui-admin-shell .crm-collapse-chevron,
+    .crm-ui-admin-shell .crm-collapse-body,
+    .crm-ui-admin-shell .crm-collapse-body > .crm-collapse-inner {
+        transition: none;
+    }
+}
+
+/* 统计图表网格与图表类型切换按钮：沿用前台控制台的 44px 触控目标约定。 */
+.crm-ui-admin-shell .crm-chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 12px;
+    padding: 0 12px 14px;
+}
+
+.crm-ui-admin-shell .crm-chart-card {
+    padding: 10px;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: var(--crm-surface-soft);
+}
+
+.crm-ui-admin-shell .crm-chart-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.crm-ui-admin-shell .crm-chart-head > span {
+    color: var(--crm-ink);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.crm-ui-admin-shell .crm-chart-controls {
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 4px;
+}
+
+.crm-ui-admin-shell .crm-chart-type {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius-sm);
+    color: var(--crm-ink);
+    background: var(--crm-surface);
+    cursor: pointer;
+}
+
+.crm-ui-admin-shell .crm-chart-type:hover {
+    border-color: var(--crm-primary);
+    color: var(--crm-primary);
+}
+
+.crm-ui-admin-shell .crm-chart-type.is-active {
+    border-color: var(--crm-primary);
+    color: var(--crm-surface);
+    background: var(--crm-primary);
+}
+
+.crm-ui-admin-shell .crm-chart-type:focus-visible {
+    outline: 2px solid var(--crm-primary);
+    outline-offset: 1px;
+}
+
+.crm-ui-admin-shell .crm-chart-type svg {
+    width: 18px;
+    height: 18px;
+}
+
+.crm-ui-admin-shell .crm-chart-canvas {
+    width: 100%;
+    height: 240px;
+}
+
+@media screen and (max-width: 768px) {
+    .crm-ui-admin-shell .crm-chart-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .crm-ui-admin-shell .crm-chain-reset {
+        margin-left: 0;
+    }
+}
+
+.crm-ui-front-shell .payment-channel-panel {
+    border-left-width: 1px !important;
+}
+
+.crm-ui-front-shell .stats-grid,
+.crm-ui-admin-shell .stat-card,
+.crm-ui-admin-shell .layui-row.layui-col-space15 {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px !important;
+}
+
+.crm-ui-admin-shell .layui-row.layui-col-space15::before,
+.crm-ui-admin-shell .layui-row.layui-col-space15::after {
+    display: none;
+}
+
+.crm-ui-admin-shell .layui-row.layui-col-space15 > [class*="layui-col-"] {
+    width: auto;
+    padding: 0 !important;
+}
+
+.crm-ui-front-shell.wrapper .main-header,
+.crm-ui-front-shell .main-header {
+    border-bottom: 1px solid var(--crm-line) !important;
+    background: var(--crm-surface) !important;
+    box-shadow: var(--crm-shadow);
+}
+
+.crm-ui-front-shell.wrapper .main-sidebar,
+.crm-ui-front-shell .main-sidebar {
+    background: var(--crm-sidebar) !important;
+}
+
+.crm-ui-front-shell .brand-link,
+.crm-ui-front-shell .nav-sidebar .nav-link {
+    color: var(--crm-sidebar-muted) !important;
+}
+
+.crm-ui-front-shell .nav-sidebar .nav-link.active,
+.crm-ui-front-shell .nav-sidebar .nav-link:hover {
+    color: #ffffff !important;
+    background: var(--crm-primary) !important;
+}
+
+.crm-ui-front-shell .content-wrapper {
+    background: var(--crm-bg) !important;
+}
+
+.crm-ui-front-shell .content-wrapper .card,
+.crm-ui-front-shell .small-box {
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: var(--crm-surface);
+    box-shadow: var(--crm-shadow);
+}
+
+@media screen and (max-width: 860px) {
+    .crm-ui-auth-body .front-v2-auth,
+    .crm-ui-auth-body .front-v2-auth.is-register {
+        width: min(620px, 100%);
+        min-height: 0;
+        grid-template-columns: 1fr;
+    }
+
+    .crm-ui-auth-body .front-v2-auth-panel {
+        display: none;
+    }
+
+    .crm-ui-auth-body .front-v2-auth-card {
+        padding: 32px 24px;
+    }
+
+    .crm-ui-auth-body .front-v2-register-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .crm-ui-auth-body .front-v2-code-row {
+        grid-template-columns: 1fr;
+    }
+
+    .crm-ui-auth-body .front-v2-code-row .layui-btn,
+    .crm-ui-auth-body .front-v2-code-row img {
+        width: 100%;
+    }
+
+    .crm-ui-front-shell .stats-grid,
+    .crm-ui-admin-shell .stat-card,
+    .crm-ui-admin-shell .layui-row.layui-col-space15 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 2026 product polish pass: tighter workbench rhythm across Blade shells. */
+.crm-ui-front-shell .front-frame-shell {
+    height: 100%;
+    padding: 18px;
+    background: var(--crm-bg);
+}
+
+.crm-ui-front-shell .front-frame-shell iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: calc(100vh - var(--crm-header-height) - var(--crm-footer-height) - 36px);
+    border: 1px solid var(--crm-line);
+    border-radius: var(--crm-radius);
+    background: var(--crm-surface);
+    box-shadow: none;
+}
+
+.crm-ui-front-shell .front-frame-page {
+    min-height: 100vh;
+    background: var(--crm-bg);
+}
+
+.crm-ui-front-shell .front-page-content,
+.crm-ui-admin-shell .crm-admin-main {
+    display: grid;
+    gap: var(--crm-page-gap);
+}
+
+.crm-ui-admin-shell .crm-admin-page-head {
+    position: relative;
+    top: auto;
+    min-height: 68px;
+    box-shadow: none;
+}
+
+.crm-ui-admin-shell .crm-admin-page-head-tools {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 220px;
+}
+
+.crm-ui-front-shell .layui-card,
+.crm-ui-admin-shell .layui-card,
+.crm-ui-front-shell .module-table-wrap,
+.crm-ui-admin-shell .layui-table-view,
+.crm-ui-front-shell .layui-table-view {
+    box-shadow: none;
+}
+
+.crm-ui-front-shell .layui-table-tool,
+.crm-ui-admin-shell .layui-table-tool {
+    min-height: 48px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--crm-line);
+}
+
+.crm-ui-front-shell .layui-table-page,
+.crm-ui-admin-shell .layui-table-page {
+    min-height: 48px;
+    padding: 8px 12px;
+    border-top: 1px solid var(--crm-line);
+}
+
+.crm-ui-front-shell .layui-form-label,
+.crm-ui-admin-shell .layui-form-label {
+    color: var(--crm-ink-soft);
+    font-weight: 700;
+}
+
+.crm-ui-front-shell .layui-btn + .layui-btn,
+.crm-ui-admin-shell .layui-btn + .layui-btn {
+    margin-left: 6px;
+}
+
+.crm-ui-front-shell .layui-btn[disabled],
+.crm-ui-admin-shell .layui-btn[disabled],
+.crm-ui-auth-body .layui-btn[disabled],
+.crm-ui-front-shell .layui-btn.layui-btn-disabled,
+.crm-ui-admin-shell .layui-btn.layui-btn-disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.crm-ui-auth-body {
+    background: linear-gradient(180deg, var(--crm-bg) 0%, var(--crm-surface-soft) 100%);
+}
+
+.crm-ui-auth-body::before {
+    display: none;
+}
+
+.crm-ui-auth-body .auth-card,
+.crm-ui-auth-body .login-container,
+.crm-ui-auth-body .front-v2-auth {
+    box-shadow: 0 10px 26px rgba(15, 23, 42, .10);
+}
+
+@media screen and (max-width: 768px) {
+    .crm-ui-front-shell .front-frame-shell {
+        padding: 12px;
+    }
+
+    .crm-ui-front-shell .front-frame-shell iframe {
+        min-height: calc(100vh - var(--crm-header-height) - var(--crm-footer-height) - 24px);
+        border-radius: var(--crm-radius-sm);
+    }
+
+    .crm-ui-admin-shell .crm-admin-page-head-tools {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+/* Responsive hardening for aggregated Layui pages. */
+.crm-ui-front-shell .layui-table-view,
+.crm-ui-admin-shell .layui-table-view {
+    max-width: 100%;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+.crm-ui-front-shell .layui-table-box,
+.crm-ui-admin-shell .layui-table-box {
+    min-width: 0;
+}
+
+.crm-ui-front-shell .layui-table-tool-temp,
+.crm-ui-admin-shell .layui-table-tool-temp,
+.crm-ui-front-shell .layui-form-item,
+.crm-ui-admin-shell .layui-form-item {
+    min-width: 0;
+}
+
+.crm-ui-front-shell .layui-layer-page,
+.crm-ui-front-shell .layui-layer-iframe,
+.crm-ui-admin-shell .layui-layer-page,
+.crm-ui-admin-shell .layui-layer-iframe,
+.crm-ui-auth-body .layui-layer-page,
+.crm-ui-auth-body .layui-layer-iframe {
+    max-width: calc(100vw - 24px) !important;
+    max-height: calc(100vh - 24px) !important;
+    max-height: calc(100dvh - 24px) !important;
+}
+
+.crm-ui-front-shell .layui-layer-page .layui-layer-content,
+.crm-ui-admin-shell .layui-layer-page .layui-layer-content,
+.crm-ui-auth-body .layui-layer-page .layui-layer-content {
+    max-width: 100%;
+    max-height: calc(100vh - 96px) !important;
+    max-height: calc(100dvh - 96px) !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media screen and (max-width: 768px) {
+    .crm-ui-front-shell .layui-layer-page,
+    .crm-ui-front-shell .layui-layer-iframe,
+    .crm-ui-admin-shell .layui-layer-page,
+    .crm-ui-admin-shell .layui-layer-iframe,
+    .crm-ui-auth-body .layui-layer-page,
+    .crm-ui-auth-body .layui-layer-iframe {
+        left: 12px !important;
+        right: 12px !important;
+        width: auto !important;
+    }
+
+    .crm-ui-front-shell .layui-layer-dialog,
+    .crm-ui-admin-shell .layui-layer-dialog,
+    .crm-ui-auth-body .layui-layer-dialog {
+        max-width: calc(100vw - 24px) !important;
+    }
+
+    .crm-ui-front-shell .layui-table-tool-temp,
+    .crm-ui-admin-shell .layui-table-tool-temp,
+    .crm-ui-front-shell .layui-form-pane,
+    .crm-ui-admin-shell .layui-form-pane {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .crm-ui-front-shell .layui-form-pane .layui-form-item,
+    .crm-ui-admin-shell .layui-form-pane .layui-form-item {
+        width: 100%;
+    }
+
+    .crm-ui-front-shell .layui-input-inline,
+    .crm-ui-admin-shell .layui-input-inline {
+        display: block;
+        width: 100% !important;
+        max-width: 100%;
+        margin-right: 0;
+    }
+
+    .crm-ui-front-shell .layui-btn + .layui-btn,
+    .crm-ui-admin-shell .layui-btn + .layui-btn {
+        margin-left: 0;
+    }
+}
+
+/* ============================================================
+ * 界面精美增强层（crm-polish）
+ * 定位：在 crm-design-system 基础上追加“色彩丰富 + 微交互丝滑”的组件细节。
+ * 覆盖：状态徽章、统计卡、表格动效、卡片浮起、按钮微交互、输入光环、
+ *       滚动条、分页、入场动画、空状态。全部基于 --crm-* 主题变量，深浅色自动适配。
+ * 约束：不绑定 layui 字体图标类（统一 .crm-lucide-icon）；不引入 emoji。
+ * ============================================================ */
+
+/* ---------- 1. 状态徽章：彩色渐变胶囊 ---------- */
+.crm-ui-front-shell .layui-badge,
+.legacy-big-agent-shell .layui-badge,
+.crm-ui-admin-shell .layui-badge,
+.crm-ui-auth-body .layui-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 22px;
+    padding: 0 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    border: 1px solid transparent;
+    transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.18s ease;
+}
+.crm-ui-front-shell .layui-badge:hover,
+.legacy-big-agent-shell .layui-badge:hover,
+.crm-ui-admin-shell .layui-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.14);
+}
+/* 状态色：成功（绿）/ 警告（琥珀）/ 失败（红）/ 信息（青蓝）/ 中性 */
+.crm-ui-front-shell .layui-badge-green,
+.legacy-big-agent-shell .layui-badge-green,
+.crm-ui-admin-shell .layui-badge-green {
+    color: #0e7a4d;
+    background: linear-gradient(135deg, #e6f7ef, #d1f0e1);
+    border-color: #bfe8d3;
+}
+.crm-ui-front-shell .layui-badge-orange,
+.legacy-big-agent-shell .layui-badge-orange,
+.crm-ui-admin-shell .layui-badge-orange,
+.crm-ui-front-shell .layui-badge-warm,
+.legacy-big-agent-shell .layui-badge-warm,
+.crm-ui-admin-shell .layui-badge-warm {
+    color: #9a5b06;
+    background: linear-gradient(135deg, #fdf3e0, #f8e6c3);
+    border-color: #f0d6a4;
+}
+.crm-ui-front-shell .layui-badge-red,
+.legacy-big-agent-shell .layui-badge-red,
+.crm-ui-admin-shell .layui-badge-red,
+.crm-ui-front-shell .layui-badge-danger,
+.legacy-big-agent-shell .layui-badge-danger,
+.crm-ui-admin-shell .layui-badge-danger {
+    color: #b3263a;
+    background: linear-gradient(135deg, #fdeaea, #f8d6da);
+    border-color: #f0c2c8;
+}
+.crm-ui-front-shell .layui-badge-blue,
+.legacy-big-agent-shell .layui-badge-blue,
+.crm-ui-admin-shell .layui-badge-blue,
+.crm-ui-front-shell .layui-badge-primary,
+.legacy-big-agent-shell .layui-badge-primary,
+.crm-ui-admin-shell .layui-badge-primary {
+    color: #1d52b3;
+    background: linear-gradient(135deg, #e8f0fd, #d6e4fa);
+    border-color: #c3d7f5;
+}
+.crm-ui-front-shell .layui-badge-gray,
+.legacy-big-agent-shell .layui-badge-gray,
+.crm-ui-admin-shell .layui-badge-gray {
+    color: #4b5a6d;
+    background: linear-gradient(135deg, #eef2f6, #e3e9f0);
+    border-color: #d5dde7;
+}
+/* 深色主题自动适配 */
+html[data-front-theme="dark"] .crm-ui-front-shell .layui-badge-green,
+html[data-front-theme="dark"] .legacy-big-agent-shell .layui-badge-green,
+html[data-front-theme="dark"] .crm-ui-admin-shell .layui-badge-green {
+    color: #7fe0b2; background: rgba(14, 122, 77, 0.22); border-color: rgba(14, 122, 77, 0.5);
+}
+html[data-front-theme="dark"] .crm-ui-front-shell .layui-badge-orange,
+html[data-front-theme="dark"] .legacy-big-agent-shell .layui-badge-orange,
+html[data-front-theme="dark"] .crm-ui-admin-shell .layui-badge-orange,
+html[data-front-theme="dark"] .crm-ui-front-shell .layui-badge-warm,
+html[data-front-theme="dark"] .legacy-big-agent-shell .layui-badge-warm,
+html[data-front-theme="dark"] .crm-ui-admin-shell .layui-badge-warm {
+    color: #f5c76e; background: rgba(154, 91, 6, 0.22); border-color: rgba(154, 91, 6, 0.5);
+}
+html[data-front-theme="dark"] .crm-ui-front-shell .layui-badge-red,
+html[data-front-theme="dark"] .legacy-big-agent-shell .layui-badge-red,
+html[data-front-theme="dark"] .crm-ui-admin-shell .layui-badge-red,
+html[data-front-theme="dark"] .crm-ui-front-shell .layui-badge-danger,
+html[data-front-theme="dark"] .legacy-big-agent-shell .layui-badge-danger,
+html[data-front-theme="dark"] .crm-ui-admin-shell .layui-badge-danger {
+    color: #ff9aa8; background: rgba(179, 38, 58, 0.22); border-color: rgba(179, 38, 58, 0.5);
+}
+html[data-front-theme="dark"] .crm-ui-front-shell .layui-badge-blue,
+html[data-front-theme="dark"] .legacy-big-agent-shell .layui-badge-blue,
+html[data-front-theme="dark"] .crm-ui-admin-shell .layui-badge-blue,
+html[data-front-theme="dark"] .crm-ui-front-shell .layui-badge-primary,
+html[data-front-theme="dark"] .legacy-big-agent-shell .layui-badge-primary,
+html[data-front-theme="dark"] .crm-ui-admin-shell .layui-badge-primary {
+    color: #9cc2ff; background: rgba(29, 82, 179, 0.24); border-color: rgba(29, 82, 179, 0.5);
+}
+html[data-front-theme="dark"] .crm-ui-front-shell .layui-badge-gray,
+html[data-front-theme="dark"] .legacy-big-agent-shell .layui-badge-gray,
+html[data-front-theme="dark"] .crm-ui-admin-shell .layui-badge-gray {
+    color: #b9c4d2; background: rgba(75, 90, 109, 0.24); border-color: rgba(75, 90, 109, 0.5);
+}
+
+/* ---------- 2. 统计指标卡：渐变点缀 + 大数字 ---------- */
+.crm-ui-front-shell .module-stat,
+.legacy-big-agent-shell .module-stat,
+.crm-ui-admin-shell .module-stat {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: linear-gradient(145deg, var(--crm-surface), var(--crm-surface-soft));
+    box-shadow: var(--crm-shadow);
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.22s ease;
+}
+.crm-ui-front-shell .module-stat::before,
+.legacy-big-agent-shell .module-stat::before,
+.crm-ui-admin-shell .module-stat::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--crm-primary), var(--crm-accent));
+    opacity: 0.9;
+}
+.crm-ui-front-shell .module-stat:hover,
+.legacy-big-agent-shell .module-stat:hover,
+.crm-ui-admin-shell .module-stat:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--crm-shadow-raised);
+}
+.crm-ui-front-shell .module-stat-value,
+.legacy-big-agent-shell .module-stat-value,
+.crm-ui-admin-shell .module-stat-value {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(120deg, var(--crm-ink), var(--crm-primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.crm-ui-front-shell .module-stat-label,
+.legacy-big-agent-shell .module-stat-label,
+.crm-ui-admin-shell .module-stat-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    color: var(--crm-muted);
+}
+.crm-ui-front-shell .module-stat-label .crm-lucide-icon,
+.legacy-big-agent-shell .module-stat-label .crm-lucide-icon,
+.crm-ui-admin-shell .module-stat-label .crm-lucide-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--crm-primary);
+}
+
+/* ---------- 3. 卡片：hover 浮起 + 柔和描边 ---------- */
+.crm-ui-front-shell .layui-card,
+.legacy-big-agent-shell .layui-card,
+.crm-ui-admin-shell .layui-card {
+    border-radius: 12px;
+    border: 1px solid var(--crm-line);
+    box-shadow: var(--crm-shadow);
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.crm-ui-front-shell .layui-card:hover,
+.legacy-big-agent-shell .layui-card:hover,
+.crm-ui-admin-shell .layui-card:hover {
+    border-color: color-mix(in srgb, var(--crm-primary) 34%, var(--crm-line));
+    box-shadow: var(--crm-shadow-raised);
+}
+.crm-ui-front-shell .layui-card-header,
+.legacy-big-agent-shell .layui-card-header,
+.crm-ui-admin-shell .layui-card-header {
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    border-bottom: 1px solid var(--crm-line);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--crm-surface) 88%, transparent), transparent);
+}
+
+/* ---------- 4. 按钮微交互：渐变主按钮 + 按压缩放 + 聚焦环 ---------- */
+.crm-ui-front-shell .layui-btn,
+.legacy-big-agent-shell .layui-btn,
+.crm-ui-admin-shell .layui-btn,
+.crm-ui-auth-body .layui-btn {
+    border-radius: 9px;
+    transition: transform 0.14s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, filter 0.2s ease, background-color 0.2s ease;
+}
+.crm-ui-front-shell .layui-btn:not(.layui-btn-primary):not(.layui-btn-danger):not(.layui-btn-warm),
+.legacy-big-agent-shell .layui-btn:not(.layui-btn-primary):not(.layui-btn-danger):not(.layui-btn-warm),
+.crm-ui-admin-shell .layui-btn:not(.layui-btn-primary):not(.layui-btn-danger):not(.layui-btn-warm),
+.crm-ui-auth-body .layui-btn:not(.layui-btn-primary):not(.layui-btn-danger):not(.layui-btn-warm) {
+    background-image: linear-gradient(135deg, var(--crm-primary), color-mix(in srgb, var(--crm-primary) 78%, var(--crm-accent)));
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--crm-primary) 28%, transparent);
+}
+.crm-ui-front-shell .layui-btn:hover,
+.legacy-big-agent-shell .layui-btn:hover,
+.crm-ui-admin-shell .layui-btn:hover,
+.crm-ui-auth-body .layui-btn:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--crm-primary) 36%, transparent);
+}
+.crm-ui-front-shell .layui-btn:active,
+.legacy-big-agent-shell .layui-btn:active,
+.crm-ui-admin-shell .layui-btn:active,
+.crm-ui-auth-body .layui-btn:active {
+    transform: scale(0.97);
+    filter: brightness(0.97);
+}
+.crm-ui-front-shell .layui-btn:focus-visible,
+.legacy-big-agent-shell .layui-btn:focus-visible,
+.crm-ui-admin-shell .layui-btn:focus-visible,
+.crm-ui-auth-body .layui-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--crm-focus);
+}
+.crm-ui-front-shell .layui-btn-primary,
+.legacy-big-agent-shell .layui-btn-primary,
+.crm-ui-admin-shell .layui-btn-primary,
+.crm-ui-auth-body .layui-btn-primary {
+    background: color-mix(in srgb, var(--crm-surface) 82%, transparent);
+    border: 1px solid var(--crm-line-strong);
+}
+
+/* ---------- 5. 输入控件：聚焦光环 + 柔和过渡 ---------- */
+.crm-ui-front-shell .layui-input,
+.legacy-big-agent-shell .layui-input,
+.crm-ui-front-shell .layui-select,
+.legacy-big-agent-shell .layui-select,
+.crm-ui-front-shell .layui-textarea,
+.legacy-big-agent-shell .layui-textarea,
+.crm-ui-admin-shell .layui-input,
+.crm-ui-admin-shell .layui-select,
+.crm-ui-admin-shell .layui-textarea,
+.crm-ui-auth-body .layui-input,
+.crm-ui-auth-body .layui-select,
+.crm-ui-auth-body .layui-textarea {
+    border-radius: 8px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.crm-ui-front-shell .layui-input:focus,
+.legacy-big-agent-shell .layui-input:focus,
+.crm-ui-front-shell .layui-textarea:focus,
+.legacy-big-agent-shell .layui-textarea:focus,
+.crm-ui-admin-shell .layui-input:focus,
+.crm-ui-admin-shell .layui-textarea:focus,
+.crm-ui-auth-body .layui-input:focus,
+.crm-ui-auth-body .layui-textarea:focus {
+    border-color: var(--crm-primary);
+    box-shadow: 0 0 0 3px var(--crm-focus);
+}
+
+/* ---------- 6. 表格：斑马纹 + 行 hover 光带 + 表头渐变 ---------- */
+.crm-ui-front-shell .layui-table,
+.legacy-big-agent-shell .layui-table,
+.crm-ui-admin-shell .layui-table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+.crm-ui-front-shell .layui-table th,
+.legacy-big-agent-shell .layui-table th,
+.crm-ui-admin-shell .layui-table th {
+    background: linear-gradient(180deg, var(--crm-surface-soft), color-mix(in srgb, var(--crm-surface-strong) 72%, var(--crm-surface-soft)));
+    font-weight: 700;
+    color: var(--crm-ink-soft);
+}
+.crm-ui-front-shell .layui-table tbody tr,
+.legacy-big-agent-shell .layui-table tbody tr,
+.crm-ui-admin-shell .layui-table tbody tr {
+    transition: background-color 0.16s ease;
+}
+.crm-ui-front-shell .layui-table tbody tr:nth-child(even),
+.legacy-big-agent-shell .layui-table tbody tr:nth-child(even),
+.crm-ui-admin-shell .layui-table tbody tr:nth-child(even) {
+    background: color-mix(in srgb, var(--crm-surface-soft) 46%, var(--crm-surface));
+}
+.crm-ui-front-shell .layui-table tbody tr:hover td,
+.legacy-big-agent-shell .layui-table tbody tr:hover td,
+.crm-ui-admin-shell .layui-table tbody tr:hover td {
+    background: color-mix(in srgb, var(--crm-primary) 7%, var(--crm-surface));
+}
+.crm-ui-front-shell .layui-table-view,
+.legacy-big-agent-shell .layui-table-view,
+.crm-ui-admin-shell .layui-table-view {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* ---------- 7. 分页：胶囊化 ---------- */
+.crm-ui-front-shell .layui-laypage a,
+.legacy-big-agent-shell .layui-laypage a,
+.crm-ui-front-shell .layui-laypage span,
+.legacy-big-agent-shell .layui-laypage span,
+.crm-ui-admin-shell .layui-laypage a,
+.crm-ui-admin-shell .layui-laypage span {
+    border-radius: 7px;
+    margin: 0 2px;
+    transition: transform 0.14s ease, background-color 0.18s ease, color 0.18s ease;
+}
+.crm-ui-front-shell .layui-laypage a:hover,
+.legacy-big-agent-shell .layui-laypage a:hover,
+.crm-ui-admin-shell .layui-laypage a:hover {
+    transform: translateY(-1px);
+}
+.crm-ui-front-shell .layui-laypage .layui-laypage-curr .layui-laypage-em,
+.legacy-big-agent-shell .layui-laypage .layui-laypage-curr .layui-laypage-em,
+.crm-ui-admin-shell .layui-laypage .layui-laypage-curr .layui-laypage-em {
+    background: linear-gradient(135deg, var(--crm-primary), color-mix(in srgb, var(--crm-primary) 78%, var(--crm-accent)));
+    border-radius: 7px;
+}
+
+/* ---------- 8. 滚动条美化 ---------- */
+.crm-ui-front-shell ::-webkit-scrollbar,
+.legacy-big-agent-shell ::-webkit-scrollbar,
+.crm-ui-admin-shell ::-webkit-scrollbar,
+.crm-ui-auth-body ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+.crm-ui-front-shell ::-webkit-scrollbar-track,
+.legacy-big-agent-shell ::-webkit-scrollbar-track,
+.crm-ui-admin-shell ::-webkit-scrollbar-track,
+.crm-ui-auth-body ::-webkit-scrollbar-track {
+    background: color-mix(in srgb, var(--crm-bg) 60%, transparent);
+}
+.crm-ui-front-shell ::-webkit-scrollbar-thumb,
+.legacy-big-agent-shell ::-webkit-scrollbar-thumb,
+.crm-ui-admin-shell ::-webkit-scrollbar-thumb,
+.crm-ui-auth-body ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--crm-line-strong), color-mix(in srgb, var(--crm-line-strong) 70%, var(--crm-primary)));
+    border-radius: 999px;
+    border: 2px solid var(--crm-bg);
+}
+.crm-ui-front-shell ::-webkit-scrollbar-thumb:hover,
+.legacy-big-agent-shell ::-webkit-scrollbar-thumb:hover,
+.crm-ui-admin-shell ::-webkit-scrollbar-thumb:hover,
+.crm-ui-auth-body ::-webkit-scrollbar-thumb:hover {
+    background: var(--crm-primary);
+}
+
+/* ---------- 9. 页面入场动画（尊重 reduced-motion） ---------- */
+@media (prefers-reduced-motion: no-preference) {
+    .crm-ui-front-shell .layui-card,
+    .legacy-big-agent-shell .layui-card,
+    .crm-ui-admin-shell .layui-card {
+        animation: crmCardIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .crm-ui-front-shell .layui-card:nth-child(2),
+    .legacy-big-agent-shell .layui-card:nth-child(2),
+    .crm-ui-admin-shell .layui-card:nth-child(2) { animation-delay: 0.05s; }
+    .crm-ui-front-shell .layui-card:nth-child(3),
+    .legacy-big-agent-shell .layui-card:nth-child(3),
+    .crm-ui-admin-shell .layui-card:nth-child(3) { animation-delay: 0.1s; }
+    @keyframes crmCardIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+}
+
+/* ---------- 10. 空状态：图标 + 文案 ---------- */
+.crm-ui-front-shell .module-empty,
+.legacy-big-agent-shell .module-empty,
+.crm-ui-admin-shell .module-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 40px 16px;
+}
+.crm-ui-front-shell .module-empty .crm-lucide-icon,
+.legacy-big-agent-shell .module-empty .crm-lucide-icon,
+.crm-ui-admin-shell .module-empty .crm-lucide-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--crm-line-strong);
+    opacity: 0.85;
+}
+
+/* ---------- 11. 工具条按钮组：间距与层次 ---------- */
+.crm-ui-front-shell .module-toolbar .layui-btn + .layui-btn,
+.legacy-big-agent-shell .module-toolbar .layui-btn + .layui-btn,
+.crm-ui-admin-shell .module-toolbar .layui-btn + .layui-btn {
+    margin-left: 8px;
+}
+.crm-ui-front-shell .module-toolbar .layui-input-block,
+.legacy-big-agent-shell .module-toolbar .layui-input-block,
+.crm-ui-admin-shell .module-toolbar .layui-input-block {
+    min-width: 180px;
+}
+
+/* ---------- 12. Field-level validation feedback (shared by front and admin) ---------- */
+.crm-field-error {
+    display: none;
+    margin: 6px 0 0;
+    color: var(--crm-danger);
+    font-size: 12px;
+    line-height: 18px;
+    word-break: break-word;
+}
+
+.crm-field-error.is-visible {
+    display: block;
+}
+
+.crm-field-error.is-visible::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 6px;
+    border-radius: 50%;
+    background: var(--crm-danger);
+    vertical-align: middle;
+}
+
+[data-upload-field][aria-invalid="true"] .layui-upload-drag,
+[data-upload-field][aria-invalid="true"] .crm-upload-action {
+    border-color: var(--crm-danger);
+    box-shadow: 0 0 0 3px var(--crm-danger-ring, rgba(195, 61, 77, .18));
+}
+
+.layui-input.layui-form-danger,
+.layui-textarea.layui-form-danger,
+select.layui-form-danger + .layui-form-select .layui-input {
+    border-color: var(--crm-danger) !important;
+}
+
+.layui-input.layui-form-danger:focus,
+.layui-textarea.layui-form-danger:focus {
+    box-shadow: 0 0 0 3px var(--crm-danger-ring, rgba(195, 61, 77, .18));
+}
+
+/* 移动端：错误文案与 44px 触控目标保持间距，避免提示被手指遮挡。 */
+@media screen and (max-width: 560px) {
+    .crm-field-error {
+        margin-top: 8px;
+        font-size: 13px;
+        line-height: 20px;
+    }
+}

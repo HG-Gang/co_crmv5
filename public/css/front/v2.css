@@ -1,0 +1,795 @@
+/* Front v2 surfaces: scoped to newly added Blade pages only. */
+.front-v2-page {
+    --v2-bg: #f3f6fb;
+    --v2-bg-soft: #eef3f9;
+    --v2-surface: #ffffff;
+    --v2-surface-soft: #f8fafd;
+    --v2-ink: #172033;
+    --v2-muted: #667085;
+    --v2-line: #dce3ee;
+    --v2-line-soft: #edf1f6;
+    --v2-primary: #2563eb;
+    --v2-primary-dark: #1d4ed8;
+    --v2-success: #138a5b;
+    --v2-warning: #b7791f;
+    --v2-danger: #c2413a;
+    --v2-shadow: 0 4px 12px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
+    --v2-radius: 10px;
+    --v2-radius-sm: 6px;
+
+    /* Panel tokens for dark sections */
+    --v2-panel-bg: #172033;
+    --v2-panel-text: rgba(255, 255, 255, 0.95);
+    --v2-panel-text-muted: rgba(255, 255, 255, 0.87);
+
+    color: var(--v2-ink);
+    line-height: 1.6;
+}
+
+.front-v2-page,
+.front-v2-page * {
+    box-sizing: border-box;
+}
+
+.front-v2-auth-body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--v2-bg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.front-v2-auth {
+    width: min(100%, 1040px);
+    display: grid;
+    grid-template-columns: minmax(280px, 0.95fr) minmax(360px, 1.05fr);
+    min-height: 620px;
+    border: 1px solid var(--v2-line);
+    border-radius: 12px;
+    background: var(--v2-surface);
+    box-shadow: var(--v2-shadow);
+    overflow: hidden;
+}
+
+.front-v2-auth.is-register {
+    width: min(100%, 1120px);
+}
+
+.front-v2-auth-panel {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--v2-panel-text);
+    background: var(--v2-panel-bg);
+}
+
+.front-v2-auth-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.front-v2-auth-mark i {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: var(--v2-panel-bg);
+    background: var(--v2-surface);
+}
+
+.front-v2-auth-copy h1 {
+    margin: 0 0 12px;
+    font-size: 30px;
+    line-height: 38px;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.front-v2-auth-copy p,
+.front-v2-auth-foot {
+    margin: 0;
+    color: var(--v2-panel-text-muted);
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.front-v2-auth-card {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--v2-surface);
+}
+
+.front-v2-auth-heading {
+    margin-bottom: 28px;
+}
+
+.front-v2-auth-heading h2 {
+    margin: 0;
+    color: var(--v2-ink);
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+}
+
+.front-v2-auth-heading p {
+    margin: 8px 0 0;
+    color: var(--v2-muted);
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.front-v2-auth .layui-input,
+.front-v2-auth .layui-select,
+.front-v2-auth select {
+    height: 42px;
+    border-color: var(--v2-line);
+    border-radius: var(--v2-radius-sm);
+    background: var(--v2-surface);
+}
+
+.front-v2-auth .layui-input:focus {
+    border-color: var(--v2-primary) !important;
+}
+
+.front-v2-auth .layui-input::placeholder,
+.front-v2-auth .layui-textarea::placeholder {
+    color: var(--v2-muted);
+    opacity: 1;
+}
+
+.front-v2-page .layui-input::placeholder,
+.front-v2-page .layui-textarea::placeholder {
+    color: var(--v2-muted);
+    opacity: 1;
+}
+
+.front-v2-auth .layui-form-label {
+    width: 118px;
+    color: var(--v2-muted);
+    background: var(--v2-surface-soft);
+    border-color: var(--v2-line);
+}
+
+.front-v2-auth .layui-input-block {
+    margin-left: 118px;
+}
+
+.front-v2-auth .layui-btn {
+    min-height: 42px;
+    border-radius: 8px;
+}
+
+.front-v2-primary-btn {
+    background: var(--v2-primary) !important;
+}
+
+.front-v2-primary-btn:hover {
+    background: var(--v2-primary-dark) !important;
+}
+
+.front-v2-auth-links,
+.front-v2-lang-row {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    color: var(--v2-muted);
+    font-size: 13px;
+}
+
+.front-v2-auth a {
+    color: var(--v2-primary);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.front-v2-lang-row a {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+}
+
+.front-v2-auth a:hover {
+    color: var(--v2-primary-dark);
+}
+
+.front-v2-auth a:focus-visible,
+.front-v2-auth button:focus-visible,
+.front-v2-auth input:focus-visible,
+.front-v2-auth select:focus-visible {
+    outline: 2px solid var(--v2-primary);
+    outline-offset: 2px;
+}
+
+.front-v2-page a:focus-visible,
+.front-v2-page button:focus-visible,
+.front-v2-page input:focus-visible,
+.front-v2-page select:focus-visible,
+.front-v2-page textarea:focus-visible {
+    outline: 2px solid var(--v2-primary);
+    outline-offset: 2px;
+}
+
+.front-v2-register-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 14px;
+}
+
+.front-v2-register-grid .is-wide {
+    grid-column: 1 / -1;
+}
+
+.front-v2-code-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+}
+
+.front-v2-captcha {
+    width: 118px;
+    height: 42px;
+    border: 1px solid var(--v2-line);
+    border-radius: 8px;
+    object-fit: cover;
+    background: var(--v2-surface-soft);
+    cursor: pointer;
+}
+
+.front-v2-page-shell {
+    display: grid;
+    gap: 18px;
+}
+
+.front-v2-hero,
+.front-v2-panel,
+.front-v2-card {
+    border: 1px solid var(--v2-line);
+    border-radius: var(--v2-radius);
+    background: var(--v2-surface);
+    box-shadow: var(--v2-shadow);
+}
+
+.front-v2-hero {
+    padding: 24px;
+}
+
+.front-v2-hero h1,
+.front-v2-panel-title h2 {
+    margin: 0;
+    color: var(--v2-ink);
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 800;
+    letter-spacing: 0;
+}
+
+.front-v2-hero p,
+.front-v2-panel-title p {
+    margin: 7px 0 0;
+    color: var(--v2-muted);
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.front-v2-panel {
+    overflow: hidden;
+}
+
+.front-v2-panel-title {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--v2-line-soft);
+}
+
+.front-v2-panel-body {
+    padding: 18px 20px;
+}
+
+.front-v2-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+}
+
+.front-v2-stat {
+    min-height: 92px;
+    padding: 16px;
+    border: 1px solid var(--v2-line-soft);
+    border-radius: 10px;
+    background: var(--v2-surface);
+    margin: 0;
+}
+
+.front-v2-stat dt {
+    display: block;
+    color: var(--v2-muted);
+    font-size: 12px;
+    line-height: 18px;
+    margin: 0;
+}
+
+.front-v2-stat dd {
+    display: block;
+    margin: 0;
+    margin-top: 8px;
+    color: var(--v2-ink);
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+.front-v2-dashboard-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+    gap: 16px;
+}
+
+.front-v2-dashboard-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.front-v2-dashboard-charts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.front-v2-chart {
+    width: 100%;
+    height: 250px;
+}
+
+.front-v2-two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
+    gap: 16px;
+}
+
+.front-v2-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 14px;
+}
+
+.front-v2-form-grid .is-wide {
+    grid-column: 1 / -1;
+}
+
+.front-v2-upload-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+}
+
+.front-v2-avatar {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--v2-line);
+    background: var(--v2-surface-soft);
+}
+
+.front-v2-profile .layui-card {
+    margin-bottom: 0;
+    border: 0;
+    box-shadow: none;
+}
+
+.front-v2-profile .layui-card-header {
+    height: auto;
+    min-height: 48px;
+    line-height: 22px;
+    padding: 14px 16px;
+    border-bottom-color: var(--v2-line-soft);
+    font-weight: 800;
+}
+
+.front-v2-profile .layui-card-body {
+    padding: 16px;
+}
+
+.front-v2-profile .layui-btn {
+    border-radius: 8px;
+}
+
+.front-v2-profile .layui-input,
+.front-v2-profile .layui-textarea,
+.front-v2-profile .layui-select,
+.front-v2-profile select {
+    border-color: var(--v2-line);
+    border-radius: 8px;
+}
+
+.front-v2-profile .layui-input:focus,
+.front-v2-profile .layui-textarea:focus {
+    border-color: var(--v2-primary);
+}
+
+.front-v2-profile .layui-form-label {
+    background: var(--v2-surface-soft);
+    border-color: var(--v2-line);
+    color: var(--v2-muted);
+}
+
+.front-v2-profile .profile-actions {
+    margin-top: 18px;
+}
+
+.front-v2-profile .front-v2-profile-hero {
+    grid-template-columns: 120px minmax(0, 1fr);
+    align-items: center;
+}
+
+.front-v2-profile .front-v2-profile-hero-main {
+    min-width: 0;
+}
+
+.front-v2-profile .front-v2-profile-sensitive {
+    margin-top: 8px;
+}
+
+.front-v2-profile .crm-profile-avatar-wrap .front-v2-avatar {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.front-v2-profile .crm-profile-upload-card {
+    border-color: var(--v2-line);
+    background: linear-gradient(180deg, var(--v2-surface) 0%, var(--v2-surface-soft) 100%);
+    color: var(--v2-muted);
+}
+
+.front-v2-profile .crm-profile-upload-card:hover,
+.front-v2-profile .crm-profile-upload-card:focus {
+    border-color: var(--v2-primary);
+    background: #eef6ff;
+    color: var(--v2-primary);
+}
+
+.front-v2-profile .crm-profile-upload-preview {
+    border-color: var(--v2-line);
+    background: var(--v2-surface-soft);
+}
+
+.front-v2-profile .crm-profile-upload-meta {
+    color: var(--v2-muted);
+}
+
+.front-v2-profile .crm-profile-upload-meta b {
+    color: var(--v2-ink);
+}
+
+.front-v2-profile .crm-profile-upload-status.has-file {
+    color: var(--v2-primary);
+}
+
+.front-v2-note {
+    padding: 12px 14px;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    color: #1e3a8a;
+    background: #eff6ff;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.front-v2-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--v2-line-soft);
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.front-v2-table-wrap .layui-table-view {
+    min-width: 980px;
+    margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .front-v2-auth,
+    .front-v2-auth.is-register,
+    .front-v2-dashboard-hero,
+    .front-v2-dashboard-charts,
+    .front-v2-two-col {
+        grid-template-columns: 1fr;
+    }
+
+    .front-v2-auth-panel {
+        min-height: 180px;
+    }
+
+    .front-v2-profile .front-v2-profile-hero {
+        grid-template-columns: 92px minmax(0, 1fr);
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .front-v2-auth-body {
+        padding: 14px;
+    }
+
+    .front-v2-auth-card,
+    .front-v2-auth-panel {
+        padding: 24px;
+    }
+
+    .front-v2-register-grid,
+    .front-v2-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .front-v2-auth .layui-form-label {
+        float: none;
+        width: 100%;
+        border-right: 1px solid var(--v2-line);
+        border-radius: 8px 8px 0 0;
+    }
+
+    .front-v2-auth .layui-input-block {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .front-v2-form-grid,
+    .front-v2-register-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Loading skeleton states */
+.skeleton-pulse {
+    background: linear-gradient(90deg, var(--v2-line-soft) 25%, var(--v2-line) 50%, var(--v2-line-soft) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+    border-radius: 4px;
+    color: transparent !important;
+    user-select: none;
+    pointer-events: none;
+}
+
+@keyframes skeleton-pulse {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.front-v2-stat.is-loading dd {
+    background: linear-gradient(90deg, var(--v2-line-soft) 25%, var(--v2-line) 50%, var(--v2-line-soft) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+    border-radius: 4px;
+    color: transparent !important;
+}
+
+.front-v2-stat.is-loading dd::before {
+    content: "----";
+    visibility: hidden;
+}
+
+/* Loading state for submit buttons */
+.layui-btn[disabled] {
+    position: relative;
+}
+
+.layui-btn[disabled].is-loading {
+    color: transparent !important;
+}
+
+.layui-btn[disabled].is-loading::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin: -8px 0 0 -8px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: v2-spin 0.6s linear infinite;
+}
+
+@keyframes v2-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Empty state (already defined, adding placeholder reminder) */
+.front-v2-empty-state[data-empty-placeholder] {
+    display: block;
+}
+
+.front-v2-empty-state.is-hidden {
+    display: none !important;
+}
+
+/* 禁用功能警告提示：状态由边框和背景表达，不再通过 CSS content 输出表情符号。 */
+.front-v2-notice-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid #fbbf24;
+    border-radius: 8px;
+    background: #fffbeb;
+    color: #92400e;
+    margin-bottom: 16px;
+}
+
+/* Print styles */
+@media print {
+    .front-v2-auth-panel,
+    .front-v2-lang-row,
+    .front-v2-auth-links {
+        display: none;
+    }
+}
+
+
+/* ============================================================
+ * v2 认证页精美增强（渐变面板 / 光晕 / 玻璃卡 / 丝滑过渡）
+ * 说明：仅作用于 front-v2-page 作用域，不改变页面结构与测试契约。
+ * ============================================================ */
+.front-v2-auth-body {
+    background:
+        radial-gradient(900px 520px at 12% -8%, color-mix(in srgb, var(--v2-primary) 14%, transparent), transparent 62%),
+        radial-gradient(760px 460px at 94% 108%, color-mix(in srgb, #0ea5a4 13%, transparent), transparent 58%),
+        var(--v2-bg);
+}
+
+/* 左侧品牌面板：深色渐变 + 光晕纹理 */
+.front-v2-auth-panel {
+    position: relative;
+    background:
+        radial-gradient(560px 360px at 18% 12%, rgba(96, 165, 250, 0.22), transparent 60%),
+        radial-gradient(480px 320px at 88% 92%, rgba(14, 165, 164, 0.20), transparent 60%),
+        linear-gradient(160deg, #1c2a45 0%, #172033 46%, #142438 100%);
+}
+.front-v2-auth-panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 34px 34px;
+    pointer-events: none;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5), transparent 78%);
+}
+.front-v2-auth-mark i {
+    background: linear-gradient(135deg, var(--v2-primary), #0ea5a4);
+    box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35);
+}
+
+/* 右侧表单卡：柔和玻璃拟态 */
+.front-v2-auth {
+    background: color-mix(in srgb, var(--v2-surface) 86%, transparent);
+    backdrop-filter: blur(14px);
+    border-color: color-mix(in srgb, var(--v2-line) 72%, transparent);
+}
+.front-v2-auth-card {
+    background: transparent;
+}
+
+/* 表单控件：更圆润 + 图标化聚焦 */
+.front-v2-auth .layui-input,
+.front-v2-auth .layui-select,
+.front-v2-auth select {
+    border-radius: 10px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.18s ease;
+}
+.front-v2-auth .layui-input:hover,
+.front-v2-auth .layui-select:hover,
+.front-v2-auth select:hover {
+    border-color: color-mix(in srgb, var(--v2-primary) 45%, var(--v2-line));
+}
+.front-v2-auth .layui-input:focus,
+.front-v2-auth .layui-select:focus,
+.front-v2-auth select:focus {
+    border-color: var(--v2-primary) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--v2-primary) 16%, transparent);
+}
+
+/* 主按钮：渐变 + 悬浮上浮 */
+.front-v2-auth .layui-btn {
+    background: linear-gradient(135deg, var(--v2-primary), color-mix(in srgb, var(--v2-primary) 70%, #0ea5a4));
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--v2-primary) 30%, transparent);
+    transition: transform 0.16s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.22s ease, filter 0.22s ease;
+}
+.front-v2-auth .layui-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    box-shadow: 0 12px 26px color-mix(in srgb, var(--v2-primary) 38%, transparent);
+}
+.front-v2-auth .layui-btn:active {
+    transform: scale(0.98);
+}
+
+/* 链接区 hover 微动 */
+.front-v2-auth a {
+    transition: color 0.18s ease, transform 0.18s ease;
+}
+.front-v2-auth-links a:hover,
+.front-v2-lang-row a:hover {
+    transform: translateY(-1px);
+    color: var(--v2-primary);
+}
+
+/* ============================================================
+ * v2 紧凑运营台
+ * ============================================================ */
+.front-v2-dashboard-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(300px, 1fr);
+    gap: 14px;
+    align-items: stretch;
+    margin-bottom: 14px;
+}
+
+/* 欢迎区使用实色主题面板，避免装饰层干扰数据扫描。 */
+.front-v2-dashboard-hero .front-v2-hero {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--v2-line);
+    background: var(--v2-surface);
+}
+
+/* 统计卡仅使用边框和左侧状态线表达层级。 */
+.front-v2-dashboard .front-v2-stat {
+    position: relative;
+    overflow: hidden;
+    border-left: 3px solid var(--v2-primary);
+    transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+.front-v2-dashboard .front-v2-stat:hover {
+    border-color: color-mix(in srgb, var(--v2-primary) 38%, var(--v2-line));
+    background: var(--v2-surface-soft);
+}
+.front-v2-dashboard .front-v2-stat dd {
+    font-weight: 800;
+    letter-spacing: 0;
+    color: var(--v2-ink);
+}
+
+/* 面板标题装饰条 */
+.front-v2-dashboard .front-v2-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.front-v2-dashboard .front-v2-panel-title::before {
+    content: "";
+    width: 4px;
+    height: 18px;
+    border-radius: 2px;
+    background: var(--v2-primary);
+    flex: none;
+}

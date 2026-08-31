@@ -1,0 +1,243 @@
+/*
+ * CRM experience layer.
+ *
+ * 目标：在不改变 Blade/Layui 业务结构的前提下，提供统一 Lucide 图标、
+ * 可感知但不打断任务的空间光照、键盘焦点和微动效。所有装饰都位于壳层，
+ * 业务表格、表单和旧 JS 钩子仍保持原有 DOM 契约。
+ */
+:root {
+    --crm-pointer-x: 50%;
+    --crm-pointer-y: 20%;
+    --crm-motion-fast: 150ms;
+    --crm-motion-base: 220ms;
+    --crm-ease-out: cubic-bezier(.22, 1, .36, 1);
+    --crm-canvas-glow: color-mix(in srgb, var(--crm-primary) 14%, transparent);
+}
+
+.crm-ui-front-shell,
+.crm-ui-admin-shell,
+.crm-ui-auth-body {
+    position: relative;
+    isolation: isolate;
+    overflow-x: hidden;
+}
+
+.crm-ui-front-shell::before,
+.crm-ui-admin-shell::before,
+.crm-ui-auth-body::before {
+    position: fixed;
+    z-index: -2;
+    inset: 0;
+    content: "";
+    pointer-events: none;
+    background:
+        radial-gradient(520px 360px at var(--crm-pointer-x) var(--crm-pointer-y), var(--crm-canvas-glow), transparent 72%),
+        radial-gradient(680px 420px at 100% 0%, color-mix(in srgb, var(--crm-accent) 7%, transparent), transparent 76%);
+    opacity: .8;
+    transition: opacity var(--crm-motion-base) var(--crm-ease-out);
+}
+
+.crm-ui-front-shell::after,
+.crm-ui-admin-shell::after,
+.crm-ui-auth-body::after {
+    position: fixed;
+    z-index: -1;
+    inset: 0;
+    content: "";
+    pointer-events: none;
+    background-image: linear-gradient(115deg, transparent 0 48%, color-mix(in srgb, var(--crm-ink) 2%, transparent) 48.2% 48.35%, transparent 48.55% 100%);
+    background-size: 100% 100%;
+    opacity: .28;
+    mix-blend-mode: multiply;
+}
+
+.crm-lucide-icon,
+.lucide {
+    width: 1em;
+    height: 1em;
+    flex: 0 0 auto;
+    vertical-align: -.14em;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+button .crm-lucide-icon,
+a .crm-lucide-icon,
+.layui-btn .lucide,
+.layui-nav a .lucide {
+    margin-inline-end: .42em;
+}
+
+.layui-nav a > .crm-lucide-icon:first-child,
+.layui-nav a > .lucide:first-child,
+.layui-nav-item > a > .crm-lucide-icon:first-child,
+.layui-nav-item > a > .lucide:first-child {
+    width: 17px;
+    height: 17px;
+    margin-inline-end: 9px;
+    opacity: .86;
+    transition: transform var(--crm-motion-fast) var(--crm-ease-out), opacity var(--crm-motion-fast) ease;
+}
+
+.layui-nav-item > a:hover > .crm-lucide-icon:first-child,
+.layui-nav-item > a:hover > .lucide:first-child {
+    opacity: 1;
+    transform: translateX(2px) rotate(-3deg);
+}
+
+.crm-ui-front-shell .layui-nav-tree .layui-this > a > .lucide,
+.crm-ui-admin-shell .layui-nav-tree .layui-this > a > .lucide {
+    opacity: 1;
+}
+
+.crm-ui-front-shell .layui-layout-admin .layui-header,
+.crm-ui-admin-shell .layui-layout-admin .layui-header {
+    backdrop-filter: blur(12px);
+    transition: background var(--crm-motion-base) ease, box-shadow var(--crm-motion-base) ease;
+}
+
+.crm-ui-front-shell .layui-layout-admin .layui-logo,
+.crm-ui-admin-shell .layui-layout-admin .layui-logo,
+.crm-ui-admin-shell .crm-admin-brand {
+    position: relative;
+    letter-spacing: -.025em;
+    overflow: hidden;
+}
+
+.crm-ui-front-shell .layui-layout-admin .layui-logo::after,
+.crm-ui-admin-shell .layui-layout-admin .layui-logo::after,
+.crm-ui-admin-shell .crm-admin-brand::after {
+    position: absolute;
+    right: 14px;
+    bottom: 10px;
+    width: 34px;
+    height: 1px;
+    content: "";
+    background: color-mix(in srgb, var(--crm-accent) 72%, transparent);
+    transform-origin: right center;
+    transition: transform var(--crm-motion-base) var(--crm-ease-out);
+}
+
+.crm-ui-front-shell .layui-layout-admin .layui-logo:hover::after,
+.crm-ui-admin-shell .layui-layout-admin .layui-logo:hover::after,
+.crm-ui-admin-shell .crm-admin-brand:hover::after {
+    transform: scaleX(1.8);
+}
+
+.crm-ui-admin-shell .crm-admin-brand-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 31px;
+    height: 31px;
+    margin-right: 9px;
+    border: 1px solid color-mix(in srgb, var(--crm-sidebar-ink) 34%, transparent);
+    border-radius: 7px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px;
+    letter-spacing: .08em;
+    transform: skew(-6deg);
+    transition: transform var(--crm-motion-base) var(--crm-ease-out), background var(--crm-motion-base) ease;
+}
+
+.crm-ui-admin-shell .crm-admin-brand:hover .crm-admin-brand-mark {
+    background: var(--crm-accent);
+    transform: skew(-6deg) translateY(-1px) rotate(-2deg);
+}
+
+.crm-ui-admin-shell .crm-admin-page-head {
+    backdrop-filter: blur(10px);
+    transition: border-color var(--crm-motion-base) ease, transform var(--crm-motion-base) var(--crm-ease-out);
+}
+
+.crm-ui-admin-shell .crm-admin-page-head:hover {
+    border-color: color-mix(in srgb, var(--crm-primary) 34%, var(--crm-line));
+}
+
+.crm-ui-front-shell .layui-btn,
+.crm-ui-admin-shell .layui-btn,
+.crm-ui-auth-body .layui-btn {
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(0);
+}
+
+.crm-ui-front-shell .layui-btn::after,
+.crm-ui-admin-shell .layui-btn::after,
+.crm-ui-auth-body .layui-btn::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 0 42%, rgba(255,255,255,.18) 50%, transparent 58% 100%);
+    transform: translateX(-120%);
+    transition: transform 500ms var(--crm-ease-out);
+}
+
+.crm-ui-front-shell .layui-btn:hover::after,
+.crm-ui-admin-shell .layui-btn:hover::after,
+.crm-ui-auth-body .layui-btn:hover::after {
+    transform: translateX(120%);
+}
+
+.crm-ui-front-shell .layui-btn:focus-visible,
+.crm-ui-admin-shell .layui-btn:focus-visible,
+.crm-ui-auth-body .layui-btn:focus-visible,
+.crm-ui-front-shell a:focus-visible,
+.crm-ui-admin-shell a:focus-visible,
+.crm-ui-auth-body a:focus-visible {
+    outline: 2px solid var(--crm-primary);
+    outline-offset: 3px;
+}
+
+.crm-ui-front-shell .layui-card,
+.crm-ui-admin-shell .layui-card,
+.crm-ui-front-shell .layui-table-view,
+.crm-ui-admin-shell .layui-table-view {
+    transition: border-color var(--crm-motion-base) ease, transform var(--crm-motion-base) var(--crm-ease-out), box-shadow var(--crm-motion-base) ease;
+}
+
+.crm-ui-front-shell .layui-card:hover,
+.crm-ui-admin-shell .layui-card:hover,
+.crm-ui-front-shell .layui-table-view:hover,
+.crm-ui-admin-shell .layui-table-view:hover {
+    transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+    .crm-ui-front-shell .layui-layout-admin .layui-logo,
+    .crm-ui-admin-shell .layui-layout-admin .layui-logo,
+    .crm-ui-admin-shell .crm-admin-brand {
+        width: 64px;
+        font-size: 0;
+    }
+
+    .crm-ui-admin-shell .crm-admin-brand-mark {
+        margin-right: 0;
+    }
+
+    .crm-ui-front-shell .layui-layout-left,
+    .crm-ui-admin-shell .layui-layout-left {
+        left: 64px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .crm-ui-front-shell::before,
+    .crm-ui-admin-shell::before,
+    .crm-ui-auth-body::before,
+    .crm-ui-front-shell::after,
+    .crm-ui-admin-shell::after,
+    .crm-ui-auth-body::after {
+        transition: none;
+    }
+
+    .crm-ui-front-shell *,
+    .crm-ui-admin-shell *,
+    .crm-ui-auth-body * {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

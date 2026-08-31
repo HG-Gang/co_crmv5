@@ -1,0 +1,33 @@
+{
+  "config": {
+    "gateway_code": "btb",
+    "merchant_id": "btb-merchant-fixture",
+    "gateway_url": "https://provider.example.test/btb/pay",
+    "secret_reference": "env:PAYMENT_BTB_REQUEST_KEY",
+    "callback_key_reference": "env:PAYMENT_BTB_CALLBACK_KEY",
+    "currency": "USD",
+    "amount_unit": "decimal",
+    "notify_route": "front_api_payment_notify",
+    "return_route": "front_api_payment_return",
+    "order_type": "bank"
+  },
+  "order": {
+    "local_order_no": "DEP-BTB-1001",
+    "gateway_code": "btb",
+    "user_id": 410005,
+    "user_name": "btb-fixture-user",
+    "amount": "88.80",
+    "actual_amount": "88.80",
+    "currency": "USD"
+  },
+  "callback": {
+    "pid": "btb-merchant-fixture",
+    "trade_no": "BTB-PROVIDER-1001",
+    "out_trade_no": "DEP-BTB-1001",
+    "money": "88.80",
+    "currency": "USD",
+    "name": "btb-fixture-user-410005",
+    "type": "bank",
+    "status": "success"
+  }
+}

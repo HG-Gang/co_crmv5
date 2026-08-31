@@ -1,0 +1,41 @@
+{
+  "config": {
+    "gateway_code": "wppay",
+    "app_id": "wp-app-fixture",
+    "gateway_url": "https://provider.example.test/api/merchant/requestTraderBuy",
+    "secret_reference": "env:PAYMENT_WP_REQUEST_KEY",
+    "callback_key_reference": "env:PAYMENT_WP_CALLBACK_KEY",
+    "currency": "CNY",
+    "amount_unit": "decimal",
+    "notify_route": "front_api_payment_notify",
+    "return_route": "front_api_payment_return",
+    "payment_type": "2",
+    "payer_mobile": "13900000001"
+  },
+  "order": {
+    "local_order_no": "DEP-WP-1001",
+    "gateway_code": "wppay",
+    "user_id": 410006,
+    "user_name": "wp-fixture-user",
+    "amount": "30.00",
+    "actual_amount": "216.75",
+    "currency": "CNY"
+  },
+  "create_response": {
+    "status": 1,
+    "data": {
+      "pay_url": "https://checkout.example.test/wp/1001"
+    }
+  },
+  "callback": {
+    "trader_no": "WP-PROVIDER-1001",
+    "order_id": "DEP-WP-1001",
+    "tradeStatus": "success",
+    "side": "buy",
+    "total_price": "216.75",
+    "amount": "216.75",
+    "real_amount": "216.75",
+    "appid": "wp-app-fixture",
+    "currency": "CNY"
+  }
+}

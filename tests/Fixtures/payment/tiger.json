@@ -1,0 +1,36 @@
+{
+  "config": {
+    "gateway_code": "tigerpay",
+    "app_id": "tiger-app-fixture",
+    "gateway_url": "https://provider.example.test/tiger/pay",
+    "app_private_key_reference": "env:PAYMENT_TIGER_APP_PRIVATE_KEY",
+    "server_public_key_reference": "env:PAYMENT_TIGER_SERVER_PUBLIC_KEY",
+    "currency": "CNY",
+    "amount_unit": "decimal",
+    "notify_route": "front_api_payment_notify",
+    "return_route": "front_api_payment_return",
+    "charset": "utf-8",
+    "method": "payq.trade.wap",
+    "version": "1.0.0"
+  },
+  "order": {
+    "local_order_no": "DEP-TIGER-1001",
+    "gateway_code": "tigerpay",
+    "user_id": 410001,
+    "user_name": "tiger-fixture-user",
+    "amount": "45.00",
+    "actual_amount": "321.45",
+    "currency": "CNY"
+  },
+  "callback": {
+    "gateway": "tigerpay",
+    "appId": "tiger-app-fixture",
+    "tradeNo": "TIGER-PROVIDER-1001",
+    "outTradeNo": "DEP-TIGER-1001",
+    "outUserId": "410001",
+    "outUserName": "tiger-fixture-user",
+    "priceCny": "321.45",
+    "currency": "CNY",
+    "status": "2"
+  }
+}

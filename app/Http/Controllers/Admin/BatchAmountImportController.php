@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/16
- * Time: 03:34
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -83,8 +83,7 @@ class BatchAmountImportController extends AdminBaseController
     private $depositSettlementGateway;
 
     /**
-     * 入金退款网关：负责对已同步导入记录执行 MT4 侧资金回退。
-     * 与结算网关成对存在；缺失时退款入口只能拒绝，不得用结算网关替代以避免状态机错乱。
+     * 入金退款网关。
      *
      * @var DepositRefundGateway
      */

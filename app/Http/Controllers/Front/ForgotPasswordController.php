@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/02
- * Time: 13:00
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Front;
@@ -359,10 +359,12 @@ class ForgotPasswordController extends FrontBaseController
     /**
      * 解析并校验旧前台提交的业务用户 ID。
      *
-     * 依次兼容 userId/user_id/accountno 三个旧字段，任一非空且为不小于 1 的整数才返回；
-     * 其余情况返回 null，调用方按 IDerror 处理，避免把非法输入当作合法用户继续查询。
+     * 参数逻辑说明：
+     * - userId / user_id / accountno 是旧前台三个兼容字段，优先级按此顺序依次兼容读取。
+     * - 只有传入值为不小于 1 的整数时才返回；缺失、空字符串、0、负数或非数字一律返回 null。
+     * - 返回 null 时调用方按 IDerror 错误码处理，避免把非法输入当作合法用户继续查询 user_logins 表。
      *
-     * @param Request $request 当前 HTTP 请求对象。
+     * @param Request $request 当前 HTTP 请求对象，承载旧前台提交的用户 ID 字段。
      * @return int|null 合法业务用户 ID；缺失或非法时为 null。
      */
     private function validatedLegacyUserId(Request $request): ?int

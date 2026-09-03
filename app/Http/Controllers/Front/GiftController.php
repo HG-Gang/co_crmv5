@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/02
- * Time: 12:52
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Front;
@@ -490,8 +490,13 @@ class GiftController extends FrontBaseController
     /**
      * 构建当前用户礼品发货记录查询。
      *
-     * 数据来源为 gift_shipments 表，按 user_id 隔离归属；支持收货人姓名、
-     * 礼品名称模糊筛选与 shipped_at 日期范围筛选（复用 FrontLegacyData 兼容旧字段）。
+     * 功能说明：
+     * - 构建仅包含当前登录用户礼品发货记录的查询，支持按收货人姓名、礼品名称和发货时间范围筛选。
+     * - 数据来源为 gift_shipments 表，按 user_id 严格隔离，防止用户查看他人的发货记录。
+     *
+     * 参数逻辑说明：
+     * - 数据来源为 gift_shipments 表，按 user_id 隔离归属。
+     * - 支持收货人姓名、礼品名称模糊筛选与 shipped_at 日期范围筛选（复用 FrontLegacyData 兼容旧字段）。
      *
      * @param int $userId 当前登录业务用户 ID，限定发货记录归属。
      * @param Request $request 当前 HTTP 请求对象，读取 recipient_name、gift_name 与时间筛选参数。
@@ -515,8 +520,12 @@ class GiftController extends FrontBaseController
     /**
      * 把发货记录模型转换为旧前台表格行结构。
      *
-     * 补充 rec_id 行标识、gift_quantity 整数化，并把 shipped_at 统一为
-     * 旧前台展示格式，供 Layui 表格直接渲染。
+     * 功能说明：
+     * - 将 GiftShipment 模型转换为旧前台 Layui 表格所需的行数据结构，补充 rec_id 行标识和格式化字段。
+     * - 补充 rec_id 字段用于表格行操作标识，gift_quantity 强制转为整数，shipped_at 转换为前台展示格式。
+     *
+     * 参数逻辑说明：
+     * - 补充 rec_id 行标识、gift_quantity 整数化，并把 shipped_at 统一为旧前台展示格式，供 Layui 表格直接渲染。
      *
      * @param GiftShipment $shipment 礼品发货记录模型。
      * @return array<string, mixed> 含 rec_id 与格式化 shipped_at 的行数据。

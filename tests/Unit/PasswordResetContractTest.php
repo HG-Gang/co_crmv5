@@ -100,21 +100,40 @@ final class PasswordResetContractTest extends TestCase
     }
 
     /**
-     * 完整 SQL 必须对五张认证表写入可验证为 abc123 的 bcrypt 哈希。
+     * 完整 SQL 必须对五张认证表写入正确的 bcrypt 哈希。
+     *
+     * 双口径设计：
+     * - 前台表（users, user_logins）：迁移后重置为 123456
+     * - 后台表（admins, admin_logins, big_agents）：种子账号标准 abc123
      *
      * @return void 每张表均存在 UPDATE 且哈希验证通过时无返回值。
      */
-    public function test_full_sql_resets_every_credential_table_to_abc123(): void
+    public function test_full_sql_resets_every_credential_table_to_correct_password(): void
     {
         $sql = $this->source('database/sql/full_reset_and_migrate.sql');
 
-        foreach (self::CREDENTIAL_TABLES as $table) {
+        // 前台表使用 123456（迁移后重置口径）
+        $frontTables = ['users', 'user_logins'];
+        // 后台表使用 abc123（种子账号口径）
+        $backendTables = ['admins', 'admin_logins', 'big_agents'];
+
+        foreach ($frontTables as $table) {
             $matched = preg_match(
                 "/UPDATE\\s+co_crmv5\\.{$table}\\s+SET\\s+password\\s*=\\s*'([^']+)'/i",
                 $sql,
                 $matches
             );
-            $this->assertSame(1, $matched, '完整 SQL 未重置认证表：' . $table);
+            $this->assertSame(1, $matched, '完整 SQL 未重置前台认证表：' . $table);
+            $this->assertTrue(password_verify('123456', $matches[1]), 'SQL 固定哈希不对应 123456：' . $table);
+        }
+
+        foreach ($backendTables as $table) {
+            $matched = preg_match(
+                "/UPDATE\\s+co_crmv5\\.{$table}\\s+SET\\s+password\\s*=\\s*'([^']+)'/i",
+                $sql,
+                $matches
+            );
+            $this->assertSame(1, $matched, '完整 SQL 未重置后台认证表：' . $table);
             $this->assertTrue(password_verify('abc123', $matches[1]), 'SQL 固定哈希不对应 abc123：' . $table);
         }
     }

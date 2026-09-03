@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/17
- * Time: 01:32
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -62,7 +62,7 @@ class AdminUserController extends AdminBaseController
     protected $adminDataScopeService;
 
     /**
-     * 用户交易统计服务，用于给后台用户列表补齐旧项目里的统计列和汇总行。
+     * 用户交易统计服务。
      *
      * @var UserStatisticsService
      */

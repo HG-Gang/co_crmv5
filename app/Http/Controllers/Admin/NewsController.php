@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/19
- * Time: 13:54
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -331,6 +331,20 @@ class NewsController extends AdminBaseController
         }
     }
 
+    /**
+     * 写入新闻公告操作失败日志并返回统一服务端错误响应。
+     *
+     * 参数逻辑说明：
+     * - operation：当前操作名称（store/update/destroy/togglePublish），用于定位失败来源。
+     * - exception：捕获的异常对象，提取异常类与异常码写入日志上下文。
+     * - newsId：可选的新闻公告 ID，更新/删除/切换操作会传入，用于关联失败记录。
+     * - 异常码只记录整数或符合安全字符集的字符串，避免把 SQL 片段或敏感信息写入日志。
+     *
+     * @param \Throwable $exception 捕获的异常对象。
+     * @param string $operation 操作名称，标识失败的具体入口。
+     * @param int|string|null $newsId 可选的新闻公告 ID，用于关联失败记录。
+     * @return \Illuminate\Http\JsonResponse 统一服务端错误响应，不泄露异常细节。
+     */
     private function newsServerErrorResponse(\Throwable $exception, string $operation, $newsId = null)
     {
         $context = [

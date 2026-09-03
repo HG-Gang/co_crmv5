@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/21
- * Time: 22:24
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 /**
@@ -4527,6 +4527,16 @@ class LegacyAdminController extends AdminBaseController
             return $this->legacyAgentEditSaveMt4UnsupportedResponse('userparentId');
         }
 
+        // 结算方式（旧 settlement_model / 新 user_infos.settle_method）不允许在此变更。
+        // 旧项目改这个字段时带一道硬校验：顶层代理（parent_id=0）改结算方式前，
+        // 必须确认直属客户没有未平仓订单，有则拒绝。那道校验尚未移植，
+        // 直接落库等于绕开风控；而静默丢弃又会让操作人以为改成功了。
+        // 因此显式拒绝，并如实说明原因。提交与当前值相同时不算变更，放行。
+        $targetSettleMethod = $this->legacyAgentEditTargetSettleMethod($payload);
+        if ($targetSettleMethod !== null && $targetSettleMethod !== (int) $agent->settle_method) {
+            return $this->legacyAgentEditSaveSettleMethodUnsupportedResponse();
+        }
+
         if (array_key_exists('enable', $payload) && (int) $payload['enable'] !== (int) $agent->is_mt4_enabled) {
             return $this->legacyAgentEditSaveMt4UnsupportedResponse('enable');
         }
@@ -4543,6 +4553,54 @@ class LegacyAdminController extends AdminBaseController
         }
 
         return null;
+    }
+
+    /**
+     * 计算旧代理编辑请求目标结算方式。
+     *
+     * 旧页面把该字段读作 settlementmodel（agents.settlement_model 的查询别名），
+     * 提交侧历史上出现过 settlement_model 写法，两者都接。
+     * 取值域与旧项目一致：1=线上、2=线下；其余值视为未提交，交由后续校验拒绝。
+     *
+     * @param array<string, mixed> $payload 旧字段请求体。
+     * @return int|null null 表示未提交结算方式字段。
+     */
+    private function legacyAgentEditTargetSettleMethod(array $payload): ?int
+    {
+        foreach (['settlementmodel', 'settlement_model'] as $key) {
+            if (!array_key_exists($key, $payload)) {
+                continue;
+            }
+            $raw = trim((string) $payload[$key]);
+            if ($raw === '') {
+                continue;
+            }
+
+            return (int) $raw;
+        }
+
+        return null;
+    }
+
+    /**
+     * 返回旧代理编辑「结算方式不支持变更」失败关闭响应。
+     *
+     * 为什么单独一个响应而不复用 MT4 那个：
+     * - 拒绝原因不是 MT4 同步，写成 MT4SYNCUNSUPPORTED 属于谎报原因，会把排查带偏。
+     * - 也不能照抄旧项目的 directExistOrder：那个含义是「直属客户尚有持仓」，
+     *   而本方法并未做持仓检查，用它同样是谎报。
+     *
+     * @return Response 旧格式失败 JSON。
+     */
+    private function legacyAgentEditSaveSettleMethodUnsupportedResponse(): Response
+    {
+        return $this->legacyAgentEditSaveResponse(
+            ResponseCode::OPERATION_NOT_ALLOWED,
+            'FAIL',
+            'SETTLEMETHODUNSUPPORTED',
+            'settlement_model',
+            ['reason' => 'Changing settle method requires the legacy direct-customer open-order guard, which is not ported yet.']
+        );
     }
 
     /**

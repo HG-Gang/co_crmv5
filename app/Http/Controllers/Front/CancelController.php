@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/02
- * Time: 09:08
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Front;
@@ -46,10 +46,18 @@ use Throwable;
  */
 class CancelController extends FrontBaseController
 {
-    /** @var UserPasswordService 敏感操作密码三态校验服务。 */
+    /**
+     * 用户密码服务。
+     *
+     * @var UserPasswordService
+     */
     private $passwordService;
 
-    /** @var Mt4ManagerService MT4 账号锁定与失败补偿服务。 */
+    /**
+     * MT4 管理服务。
+     *
+     * @var Mt4ManagerService
+     */
     private $mt4Manager;
 
     /**
@@ -65,7 +73,11 @@ class CancelController extends FrontBaseController
     }
 
     /**
-     * apply 用于提交当前前台用户的销户申请。
+     * 提交当前前台用户的销户申请。
+     *
+     * 功能说明：
+     * - 处理前台用户销户申请，按顺序校验身份、业务条件、敏感信息、远端锁号和本地收口，任一环节失败都拒绝申请。
+     * - 销户成功后创建 cancel_applies 记录（status=0 表示待审核），并将账号置为只读状态（is_mt4_readonly=1）。
      *
      * 参数含义：
      * - reason 表示新版前台提交的销户原因，最大 500 个字符。
@@ -576,6 +588,11 @@ class CancelController extends FrontBaseController
     /**
      * 判断 MT4 命令是否给出明确成功结果。
      *
+     * 功能说明：
+     * - 校验 MT4 管理服务返回的结果是否表示操作成功。
+     * - 只有返回结构为数组、status 为 'ok' 且 err 字段为空或为 '0' 时才视为成功。
+     * - 其他任何情况（包括传输异常、status 非 ok、err 存在且非零）都视为失败。
+     *
      * @param mixed $result MT4 管理服务返回值。
      * @return bool 仅数组且 status=ok、err 为空或 0 时返回 true。
      */
@@ -589,7 +606,15 @@ class CancelController extends FrontBaseController
     }
 
     /**
-     * 本地事务失败后解锁已锁定的远端账号，补偿失败只记录日志且绝不改写为成功。
+     * 本地事务失败后解锁已锁定的远端账号。
+     *
+     * 功能说明：
+     * - 当销户流程的 MT4 锁号成功但本地事务失败时，调用此方法补偿解锁远端账号，避免账号处于不一致状态（远端锁定但本地未创建销户申请）。
+     * - 补偿解锁失败时记录 critical 级别日志供运维追踪，但绝不将失败改写为成功响应。
+     *
+     * 安全边界：
+     * - 补偿失败不抛出异常，不影响主流程的失败响应返回给用户。
+     * - 记录日志包含用户 ID 和第三方错误码，便于运维手动干预修复数据不一致。
      *
      * @param int $userId 当前业务用户 ID。
      * @return void 补偿成功无返回值；失败记录错误供运维追踪。

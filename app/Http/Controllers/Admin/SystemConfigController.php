@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/02
- * Time: 09:07
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -31,15 +31,15 @@ use Illuminate\Support\Facades\Validator;
 class SystemConfigController extends AdminBaseController
 {
     /**
-     * 获取系统配置列表。
+     * 获取系统配置列表，支持分页平铺或按分组返回。
      *
-     * 参数说明：
+     * 参数逻辑说明：
      * - page：Layui 表格分页页码；存在时返回平铺分页数据，便于后台 Blade 表格直接渲染。
      * - per_page/limit：每页条数；兼容 Layui 的 limit 参数。
      * - 不传分页参数：保留旧调用方式，仍按 group 字段分组返回配置集合。
      *
      * @param Request $request 请求对象，承载分页参数和后续筛选参数。
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse 分页模式返回平铺列表；非分页模式返回按 group 分组的配置集合。
      */
     public function index(Request $request)
     {

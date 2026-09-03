@@ -412,10 +412,11 @@ form[id$="SearchForm"] .layui-form-select .layui-input {
    未定义时统计条会紧贴表格顶边，与其它页面留白不一致。 */
 .crm-table-summary-bar { display: block; margin: 0 0 10px; min-width: 0; }
 .crm-date-shortcuts .layui-btn { margin-left: 0; }
+/* 代理链路：默认隐藏，点击用户ID时展开。链路节点以箭头连接，层级清晰。 */
 .front-module-page .module-chain { display: none; margin: 0 0 12px; padding: 10px 12px; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 6px; }
-.front-module-page .module-chain-title { margin-right: 8px; color: #6b7280; }
-.front-module-page .module-chain-node { display: inline-flex; align-items: center; gap: 4px; margin: 3px 0; padding: 3px 8px; border-radius: 999px; font-size: 12px; border: 1px solid transparent; }
-.front-module-page .module-chain-arrow { margin: 0 6px; color: #9ca3af; }
+.front-module-page .module-chain-title { margin-right: 8px; color: #6b7280; font-weight: 600; }
+.front-module-page .module-chain-node { display: inline-flex; align-items: center; gap: 4px; margin: 3px 0; padding: 4px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; border: 1px solid #d1d5db; background: #ffffff; color: #374151; }
+.front-module-page .module-chain-arrow { margin: 0 8px; color: #3b82f6; font-weight: 700; font-size: 14px; }
 .front-module-page .module-agent-level,
 .crm-detail-table .module-agent-level,
 .crm-detail-field .module-agent-level { display: inline-flex; align-items: center; padding: 2px 7px; border-radius: 999px; font-weight: 600; line-height: 18px; border: 1px solid transparent; }

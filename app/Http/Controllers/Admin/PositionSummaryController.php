@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/16
- * Time: 03:27
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -54,20 +54,24 @@ class PositionSummaryController extends AdminBaseController
     }
 
     /**
-     * 查询后台持仓汇总列表。
+     * 查询后台持仓汇总分页列表。
      *
-     * 请求参数含义：
+     * 参数逻辑说明：
      * - user_id：业务用户 ID，对应 user_infos.user_id 与 mt4_trades.login。
      * - user_name：业务用户名称，对应 user_infos.user_name，支持模糊查询。
      * - parent_id：直属上级代理 ID，对应 user_infos.parent_id。
      * - userPId/user_pid：旧后台下级代理持仓汇总的父级代理 ID，仅在 searchtype=subAgentsSearch 时生效。
      * - searchtype=subAgentsSearch：旧后台直属代理汇总模式，返回 userPId 自身与直属下级代理行。
      * - account_type：账户类型，1=代理，2=普通客户，对应 user_infos.account_type。
-     * - start_date/end_date：交易时间范围，第一阶段按 mt4_trades.close_time 过滤已平仓记录，同时保留未平仓 close_time=0 的记录。
+     * - start_date/end_date：交易时间范围，按 mt4_trades.close_time 过滤已平仓记录，同时保留未平仓 close_time=0 的记录。
      * - page/per_page/limit：分页参数，兼容 Layui table 默认传入的 page 与 limit。
      *
-     * @param Request $request 当前请求对象，负责读取筛选和分页参数。
-     * @return \Illuminate\Http\JsonResponse
+     * 返回结构说明：
+     * - records：分页后的持仓汇总记录，每行包含用户基础信息、MT4 账户快照与交易聚合统计。
+     * - summary：当前筛选条件下的总汇总，包含总账户数、总余额、总盈亏、总手数等。
+     *
+     * @param Request $request 当前请求对象，承载筛选条件和分页参数。
+     * @return \Illuminate\Http\JsonResponse 持仓汇总列表与总汇总响应。
      */
     public function positionSummaryList(Request $request)
     {

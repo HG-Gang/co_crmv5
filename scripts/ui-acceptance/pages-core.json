@@ -1,0 +1,18 @@
+[
+  "/admin/dashboard",
+  "/admin/withdrawals",
+  "/admin/users",
+  "/admin/channels",
+  "/admin/realtime-commissions",
+  "/front/dashboard",
+  "/front/deposit",
+  "/front/withdraw",
+  "/front/order/open",
+  "/front/commission/realtime",
+  "/admin-crmui/dashboard",
+  "/admin-crmui/withdrawals",
+  "/admin-crmui/users",
+  "/front-crmui/dashboard",
+  "/front-crmui/deposit",
+  "/front-crmui/withdraw"
+]

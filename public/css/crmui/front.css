@@ -939,8 +939,8 @@
     }
 
     .crmui-tool-button {
-        min-height: 34px;
-        padding: 0 var(--crmui-space-2);
+        min-height: 44px;
+        padding: 10px var(--crmui-space-2);
     }
 
     .crmui-main,
@@ -1016,6 +1016,40 @@
     .crmui-auth-copy h1 {
         max-width: 12ch;
         font-size: 30px;
+    }
+
+    /* 表格100%宽度 */
+    .crmui-table-wrap {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* 按钮最小触控区域44px */
+    .crmui-button,
+    .crmui-icon-button,
+    button {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 10px 16px;
+    }
+
+    /* 输入框最小高度44px */
+    .crmui-input,
+    .crmui-select,
+    .crmui-textarea,
+    input,
+    select,
+    textarea {
+        min-height: 44px;
+        padding: 10px 12px;
+        font-size: 16px;
+    }
+
+    /* 弹窗自适应 */
+    .crmui-modal-panel {
+        width: 95vw !important;
+        max-width: 95vw !important;
+        max-height: 90vh !important;
     }
 }
 

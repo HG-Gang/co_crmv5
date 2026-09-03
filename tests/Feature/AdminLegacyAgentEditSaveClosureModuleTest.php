@@ -244,6 +244,134 @@ class AdminLegacyAgentEditSaveClosureModuleTest extends TestCase
      * @param array<string, mixed> $authOverrides user_auths 覆盖字段。
      * @return void
      */
+    /**
+     * 变更结算方式必须失败关闭，且不留下半更新数据。
+     *
+     * 背景（真实缺陷）：settlementmodel 此前既不落库也不拦截，属于静默丢弃——
+     * 操作人以为改成功了，实际什么都没发生。旧项目改这个字段时带一道硬校验：
+     * 顶层代理改结算方式前必须确认直属客户无未平仓订单。那道校验尚未移植，
+     * 因此这里必须显式拒绝，而不是落库（会绕开风控）或静默忽略（会误导操作人）。
+     *
+     * @return void
+     */
+    public function test_legacy_agent_edit_save_rejects_settle_method_change(): void
+    {
+        $admin = $this->ensureSuperAdmin();
+        $agentId = 98727906;
+        $levelId = $this->ensureAgentLevel(96, '旧代理编辑结算方式等级');
+        $this->seedAgent($agentId, [
+            'user_name' => '结算方式变更前代理',
+            'level_id' => $levelId,
+            'settle_method' => 1,
+        ]);
+
+        $response = $this->withoutAdminMiddleware()
+            ->actingAs($admin, 'admin')
+            ->postJson('/index/admin/agents/agents_edit_save', $this->legacyPayload($agentId, [
+                'username' => '不应写入结算方式代理名',
+            ], [
+                'settlementmodel' => 2,
+            ]));
+
+        $response->assertOk()
+            ->assertJsonPath('code', ResponseCode::OPERATION_NOT_ALLOWED)
+            ->assertJsonPath('msg', 'FAIL')
+            ->assertJsonPath('err', 'SETTLEMETHODUNSUPPORTED')
+            ->assertJsonPath('col', 'settlement_model');
+
+        $this->assertDatabaseHas('user_infos', [
+            'user_id' => $agentId,
+            'user_name' => '结算方式变更前代理',
+            'settle_method' => 1,
+        ]);
+        $this->assertSame(
+            0,
+            DB::table('operation_logs')->where('order_no', 'legacy_agent_edit_save:' . $agentId)->count()
+        );
+    }
+
+    /**
+     * 提交与当前相同的结算方式不算变更，必须放行。
+     *
+     * 为什么必须有这条：只测「改值被拒」无法区分「精准拦截变更」与
+     * 「把整个字段拦死」。旧表单每次提交都会带上 settlementmodel 当前值，
+     * 若同值也拒，代理编辑功能就整体不可用了。
+     *
+     * @return void
+     */
+    public function test_legacy_agent_edit_save_allows_unchanged_settle_method(): void
+    {
+        $admin = $this->ensureSuperAdmin();
+        $agentId = 98727907;
+        $levelId = $this->ensureAgentLevel(97, '旧代理编辑结算方式同值等级');
+        $this->seedAgent($agentId, [
+            'user_name' => '结算方式同值前代理',
+            'level_id' => $levelId,
+            'settle_method' => 2,
+        ]);
+
+        $response = $this->withoutAdminMiddleware()
+            ->actingAs($admin, 'admin')
+            ->postJson('/index/admin/agents/agents_edit_save', $this->legacyPayload($agentId, [
+                'username' => '结算方式同值后代理',
+                'useragtId' => $levelId,
+            ], [
+                'settlementmodel' => 2,
+            ]));
+
+        $response->assertOk()
+            ->assertJsonPath('code', ResponseCode::UPDATED)
+            ->assertJsonPath('msg', 'SUC')
+            ->assertJsonPath('err', 'NOERR');
+
+        $this->assertDatabaseHas('user_infos', [
+            'user_id' => $agentId,
+            'user_name' => '结算方式同值后代理',
+            'settle_method' => 2,
+        ]);
+    }
+
+    /**
+     * settlement_model 这个别名写法同样必须被拦住。
+     *
+     * 旧页面读该字段用 settlementmodel（查询别名），提交侧历史上出现过
+     * settlement_model 写法。只认一个键会留下绕过口子。
+     *
+     * @return void
+     */
+    public function test_legacy_agent_edit_save_rejects_settle_method_change_via_alias_key(): void
+    {
+        $admin = $this->ensureSuperAdmin();
+        $agentId = 98727908;
+        $levelId = $this->ensureAgentLevel(98, '旧代理编辑结算方式别名等级');
+        $this->seedAgent($agentId, [
+            'user_name' => '结算方式别名前代理',
+            'level_id' => $levelId,
+            'settle_method' => 1,
+        ]);
+
+        $payload = $this->legacyPayload($agentId, [
+            'username' => '不应写入别名代理名',
+        ]);
+        // 先移除标准键，确保命中的确实是别名分支而不是标准键。
+        unset($payload['settlementmodel']);
+        $payload['settlement_model'] = 2;
+
+        $response = $this->withoutAdminMiddleware()
+            ->actingAs($admin, 'admin')
+            ->postJson('/index/admin/agents/agents_edit_save', $payload);
+
+        $response->assertOk()
+            ->assertJsonPath('err', 'SETTLEMETHODUNSUPPORTED')
+            ->assertJsonPath('col', 'settlement_model');
+
+        $this->assertDatabaseHas('user_infos', [
+            'user_id' => $agentId,
+            'user_name' => '结算方式别名前代理',
+            'settle_method' => 1,
+        ]);
+    }
+
     private function seedAgent(
         int $userId,
         array $infoOverrides = [],

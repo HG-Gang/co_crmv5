@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/02
- * Time: 09:14
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -225,27 +225,27 @@ class ProductionController extends AdminBaseController
     }
 
     /**
-     * 构建产品/交易品种基础查询。
+     * 构建产品/交易品种基础查询，包含未平仓持仓汇总与买卖方向均价。
      *
      * 字段逻辑说明：
-     * - total_buy_volume：当前未平仓买入方向总手数，来源 `mt4_trades.volume`。
-     * - total_sell_volume：当前未平仓卖出方向总手数，来源 `mt4_trades.volume`。
+     * - total_buy_volume：当前未平仓买入方向总手数，来源 mt4_trades.volume。
+     * - total_sell_volume：当前未平仓卖出方向总手数，来源 mt4_trades.volume。
      * - net_volume：买入总手数减卖出总手数，用于延续旧项目产品净持仓展示口径。
-     * - float_profit_loss：当前未平仓订单浮动盈亏合计，来源 `mt4_trades.profit`。
+     * - float_profit_loss：当前未平仓订单浮动盈亏合计，来源 mt4_trades.profit。
      * - avg_buy_price：买入方向均价，等价旧 AdminProductionController::get_mt4_trades_production_summary()
-     *   的 `round(totalBuyOpenPrice / buyRecord, 2)`，即买单开仓价合计除以买单笔数。
-     * - avg_sell_price：卖出方向均价，等价旧同一方法的 `round(totalSellClosePrice / sellRecord, 2)`，
-     *   即卖单**平仓价**合计除以卖单笔数。
+     *   的 round(totalBuyOpenPrice / buyRecord, 2)，即买单开仓价合计除以买单笔数。
+     * - avg_sell_price：卖出方向均价，等价旧同一方法的 round(totalSellClosePrice / sellRecord, 2)，
+     *   即卖单平仓价合计除以卖单笔数。
      *
      * 关于两个均价的口径不对称（买单取 open_price、卖单取 close_price）：
-     * 这不是笔误，而是旧项目 AdminProductionController.php:229 与 :237 的既有行为，
-     * 为保持列值与旧后台逐位一致而原样复刻；若改为同源字段会与旧报表产生数值差异。
+     * - 这不是笔误，而是旧项目 AdminProductionController.php:229 与 :237 的既有行为，
+     *   为保持列值与旧后台逐位一致而原样复刻；若改为同源字段会与旧报表产生数值差异。
      *
-     * 关于旧查询中的 `MARGIN_RATE <> 0` 过滤：新库 `mt4_trades` 表结构没有 margin_rate 列
-     * （见 2026_04_01_000014_create_mt4_trades_table.php），因此该条件在新项目无对应字段，
-     * 两个均价与同行的 volume/profit 聚合共用同一份 join 结果，保证同一行内各列口径自洽。
+     * 关于旧查询中的 MARGIN_RATE <> 0 过滤：
+     * - 新库 mt4_trades 表结构没有 margin_rate 列（见 2026_04_01_000014_create_mt4_trades_table.php），
+     *   因此该条件在新项目无对应字段，两个均价与同行的 volume/profit 聚合共用同一份 join 结果，保证同一行内各列口径自洽。
      *
-     * @return Builder
+     * @return Builder 返回左联 mt4_trades 并按 symbol_prices.symbol 分组的查询对象。
      */
     private function baseProductionQuery(): Builder
     {

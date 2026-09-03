@@ -1203,6 +1203,58 @@ body[data-ui-family="layui"][data-visual-direction="c"] .withdraw-detail-wide {
         margin: 0 0 8px;
     }
 
+    /* 表格100%宽度，避免居中 */
+    body[data-ui-family="layui"][data-visual-direction="c"] .layui-table-view,
+    body[data-ui-family="layui"][data-visual-direction="c"] .layui-table-box {
+        width: 100% !important;
+        max-width: 100%;
+    }
+
+    /* 按钮最小触控区域44px */
+    body[data-ui-family="layui"][data-visual-direction="c"] .layui-btn,
+    body[data-ui-family="layui"][data-visual-direction="c"] button:not(.layui-laypage-curr) {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 10px 16px;
+    }
+
+    /* 输入框最小高度44px，避免缩放 */
+    body[data-ui-family="layui"][data-visual-direction="c"] .layui-input,
+    body[data-ui-family="layui"][data-visual-direction="c"] .layui-select,
+    body[data-ui-family="layui"][data-visual-direction="c"] .layui-textarea {
+        min-height: 44px;
+        padding: 10px 12px;
+        font-size: 16px;
+    }
+
+    /*
+     * 窄屏分页条：放开内层高度并允许在子项之间换行。
+     * 缺陷：390 宽下分页内容需 427px 却只有 342px，layui 用
+     * `.layui-table-page > div { height: 26px }` 钉死内层高度、外层又是
+     * overflow:hidden，「共 12 条」与每页条数选择器被裁在可视区外，
+     * 实测分别越界 18px 与 97px，后者整块不可点。
+     * 两条声明缺一不可，实测缺任一条都等于没修：
+     * - flex-wrap 提供子项之间的断行点。laypage 子项之间没有空白文本节点，
+     *   单靠 white-space 没有断行机会；flex 换行不依赖空白，且继承的 nowrap
+     *   仍生效，中文标签不会被拆成两行。
+     * - height:auto 解除内层 26px，否则换出的第二行照样被纵向裁掉
+     *   （只加 flex-wrap 时内层 clipY 从 12 涨到 26）。
+     * 目标定在内层而非外层：外层没有授权 height，其 51px 正是被这 26px 撑出来的，
+     * 所以给外层写 height 是空操作（加 !important 也无变化）。
+     * 不选 overflow-x:auto：342px 的条内滚动条缺乏可发现性，
+     * 而换行与 crmui 家族的窄屏范式一致。
+     * 实测（/admin/admins @390x844）：横向裁切 97→0，越界子项 2→0，条高 51→77px。
+     */
+    body[data-ui-family="layui"][data-visual-direction="c"] .layui-table-pageview {
+        height: auto;
+    }
+
+    body[data-ui-family="layui"][data-visual-direction="c"] .layui-laypage {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
     body[data-ui-family="layui"][data-visual-direction="c"] .auth-detail-toolbar,
     body[data-ui-family="layui"][data-visual-direction="c"] .auth-detail-section-head {
         align-items: flex-start;
@@ -1239,6 +1291,7 @@ body[data-ui-family="layui"][data-visual-direction="c"] .withdraw-detail-wide {
     body[data-ui-family="layui"][data-visual-direction="c"] .withdraw-detail-facts {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+}
 }
 
 @media (max-width: 480px) {
@@ -1327,4 +1380,23 @@ body[data-ui-family="layui"][data-visual-direction="c"] .withdraw-detail-wide {
         animation-iteration-count: 1 !important;
         transition-duration: .01ms !important;
     }
+}
+
+/* 空态与分页文字接入主题色板。
+ *
+ * 取证（2026-09-01 v4 全量矩阵，9300 组合）：
+ * `.layui-none «暂无数据»` 命中 1904 条 high，跨 29 个页面，占全部高危的 42%，
+ * 实测 rgb(153,153,153) 对白底 = 2.85:1，门槛 4.5:1。
+ *
+ * 根因：#999 来自 vendor 的 layui.css（v2.13.5），项目 CSS 从未覆盖 `.layui-none`，
+ * 所以它在 15 个主题下都保持同一个不达标的灰。不能直接改 vendor 文件 —— 升级会被覆盖。
+ *
+ * 用 --layui-vc-muted 而非写死颜色：该变量由 theme-assets.blade.php 从
+ * config/crm_themes.php 的 $colors['muted'] 展开，而 muted 对 surface >= 4.5:1
+ * 已由 GlobalCrmThemeCoverageTest 的 19 组配对门禁锁定，15 个主题同时达标。
+ * !important 是覆盖 vendor 同名规则所必需。
+ */
+body[data-ui-family="layui"][data-visual-direction="c"] .layui-none,
+body[data-ui-family="layui"][data-visual-direction="c"] .layui-table-view .layui-none {
+    color: var(--layui-vc-muted) !important;
 }

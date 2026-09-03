@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/16
- * Time: 02:23
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -34,8 +34,7 @@ use Illuminate\Support\Facades\Validator;
 class VoucherController extends AdminBaseController
 {
     /**
-     * 后台数据范围服务：凭证列表与审核动作按凭证归属用户 user_id 套用可见范围；
-     * 缺失时管理员可审核数据范围外用户提交的凭证，越权后果是直接改变他人客户的审核状态。
+     * 后台数据范围服务。
      *
      * @var AdminDataScopeService
      */
@@ -52,12 +51,17 @@ class VoucherController extends AdminBaseController
     }
 
     /**
-     * 获取凭证提交列表。
+     * 获取凭证提交分页列表。
      *
-     * index() 参数说明：
-     * - page 表示当前页码，默认第 1 页。
-     * - per_page 表示每页数量，默认 15 条。
-     * - review_status 表示凭证审核状态，0=待审核，1=审核通过，2=审核拒绝。
+     * 参数逻辑说明：
+     * - page：当前页码，默认第 1 页。
+     * - per_page：每页数量，默认 15 条。
+     * - review_status：凭证审核状态，0=待审核，1=审核通过，2=审核拒绝，可选筛选条件。
+     * - user_id：业务用户 ID，对应 voucher_infos.user_id，可选筛选条件。
+     * - start_date/end_date：提交时间范围，对应 voucher_infos.created_at，可选筛选条件。
+     *
+     * 数据范围边界：
+     * - 列表记录按凭证归属用户 user_id 套用 AdminDataScopeService 数据范围，普通管理员只能看到授权范围内的凭证。
      *
      * @param Request $request 当前 HTTP 请求对象，承载分页参数和审核状态筛选条件。
      * @return \Illuminate\Http\JsonResponse 返回分页凭证提交列表，包含关联用户信息。

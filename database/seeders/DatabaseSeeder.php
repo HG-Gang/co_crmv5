@@ -152,6 +152,13 @@ class DatabaseSeeder extends Seeder
         if ($this->shouldSeedAdminDemoStatistics()) {
             $this->call(AdminDemoStatisticsSeeder::class);
         }
+
+        // 后台页面演示数据（大代理、黑名单、销户申请、在线用户、数据范围绑定、佣金转账 Saga）
+        // 同样是双重闸门 + 独立开关：这几张表默认为空会让对应后台页只有空态，
+        // UI 验收测不出长文本溢出这类缺陷；正式环境必须保持关闭。
+        if ($this->shouldSeedAdminPageDemoData()) {
+            $this->call(AdminPageDemoDataSeeder::class);
+        }
     }
 
     /**
@@ -175,5 +182,19 @@ class DatabaseSeeder extends Seeder
     {
         return app()->environment('local', 'testing')
             && config('seeding.admin_demo_statistics_enabled', false) === true;
+    }
+
+    /**
+     * 判断当前进程是否允许写入后台页面演示数据。
+     *
+     * 双重闸门：
+     * - 环境必须是 local 或 testing。
+     * - config('seeding.admin_page_demo_enabled') 必须显式为 true
+     *   （由 ADMIN_PAGE_DEMO_SEEDER_ENABLED 环境变量提供）。
+     */
+    protected function shouldSeedAdminPageDemoData(): bool
+    {
+        return app()->environment('local', 'testing')
+            && config('seeding.admin_page_demo_enabled', false) === true;
     }
 }

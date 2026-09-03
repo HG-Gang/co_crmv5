@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/18
- * Time: 16:48
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\CrmUi\Front;
@@ -117,7 +117,18 @@ class BigAgentPageController extends Controller
         ][$path] ?? $path;
     }
 
-    /** @return array<string, array<string, mixed>> */
+    /**
+     * 大代理页面定义配置集合。
+     *
+     * 功能逻辑说明：
+     * - 返回所有大代理可访问页面的统一配置：路由 key、视图模板、数据接口、筛选器、表格列和行内操作。
+     * - proxy/list 与 proxy/descendants 读取代理列表和下级代理，endpoint 指向 legacy_user_agents_proxy_search 等旧接口。
+     * - position/summary 与 position/descendants 读取持仓汇总和下级持仓，endpoint 指向 legacy_user_agents_position_search 等旧接口。
+     * - orders/open 与 orders/closed 读取持仓和平仓列表，endpoint 指向 legacy_user_agents_open_order_search 等旧接口。
+     * - profile/password 修改大代理密码，formEndpoint 指向 legacy_user_agents_change_password 旧接口，字段契约与旧大代理页保持一致。
+     *
+     * @return array<string, array<string, mixed>> 页面配置映射表，key 为页面路径，value 为页面配置数组。
+     */
     private function definitions(): array
     {
         $agentColumns = ['user_id', 'user_name', 'agentsTotal', 'accountTotal', 'user_money', 'cust_eqy', 'fy_money', 'rj_money', 'qk_money', 'group_comm_prop', 'rec_crt_date'];
@@ -137,7 +148,20 @@ class BigAgentPageController extends Controller
         ];
     }
 
-    /** @param array<string, mixed> $definition */
+    /**
+     * 从页面定义配置构造页面壳数据结构。
+     *
+     * 功能逻辑说明：
+     * - 把 definitions() 返回的配置翻译为前端 CrmUI 组件可直接消费的完整数据结构。
+     * - 根据 definition 中的 filters、columns、formFields 等字段生成标准的字段、筛选器、表格列和表单字段配置。
+     * - 如果页面定义了 descendantPath（下级路径），自动添加行内"查看下级"操作按钮。
+     * - mode 由 formEndpoint 决定：有表单端点为 form 模式（修改密码页），否则为 table 模式（列表页）。
+     *
+     * @param string $path 当前页面路径，例如 proxy/list。
+     * @param array<string, mixed> $definition 当前页面的定义配置，来源于 definitions()。
+     * @param string $family 渲染家族标识，crmui 或 naive。
+     * @return array<string, mixed> 完整的页面壳数据结构，包含标题、API 地址、筛选器、列、操作按钮等。
+     */
     private function page(string $path, array $definition, string $family): array
     {
         $key = (string) $definition['key'];
@@ -196,6 +220,16 @@ class BigAgentPageController extends Controller
         ];
     }
 
+    /**
+     * 根据请求判断当前渲染家族（crmui 或 naive）。
+     *
+     * 功能逻辑说明：
+     * - 根据请求 URL 路径判断当前渲染的 UI 家族：/front-naive/big-agent 为 naive 家族，其他为 crmui 家族。
+     * - 不同家族对应不同的路由名前缀和视图模板，方便在同一套控制器逻辑下支持多套 UI 风格。
+     *
+     * @param Request $request 当前 HTTP 请求对象。
+     * @return string 渲染家族标识，crmui 或 naive。
+     */
     private function renderFamily(Request $request): string
     {
         return $request->is('front-naive/big-agent') || $request->is('front-naive/big-agent/*')
@@ -203,6 +237,17 @@ class BigAgentPageController extends Controller
             : 'crmui';
     }
 
+    /**
+     * 根据渲染家族和页面类型构造完整的路由名称。
+     *
+     * 功能逻辑说明：
+     * - 把渲染家族（crmui / naive）和页面类型（login / dashboard / app）拼接为完整的命名路由。
+     * - 例如 crmui + login = front_crmui_big_agent_login，naive + dashboard = front_naive_big_agent_dashboard。
+     *
+     * @param string $family 渲染家族标识，crmui 或 naive。
+     * @param string $page 页面类型，login / logout / dashboard / app。
+     * @return string 完整的命名路由名称。
+     */
     private function routeName(string $family, string $page): string
     {
         return 'front_' . ($family === 'naive' ? 'naive' : 'crmui') . '_big_agent_' . $page;
@@ -222,7 +267,15 @@ class BigAgentPageController extends Controller
         return $label === $translationKey ? $key : $label;
     }
 
-    /** @return array<string, string> */
+    /**
+     * 构造品种筛选器配置（动态选项）。
+     *
+     * 功能逻辑说明：
+     * - 返回品种（symbol）筛选器的配置数组，类型为 select 下拉框，选项由前端动态从 bigAgentSymbols 数据源加载。
+     * - 持仓汇总和订单列表页面需要按品种筛选，前端根据 dynamicOptions 键向后端请求可选品种列表。
+     *
+     * @return array<string, string> 品种筛选器配置数组，包含 name、type 和 dynamicOptions 字段。
+     */
     private function symbolFilter(): array
     {
         return [
@@ -232,7 +285,15 @@ class BigAgentPageController extends Controller
         ];
     }
 
-    /** @return array<int, array<string, mixed>> */
+    /**
+     * 构造大代理导航菜单组配置。
+     *
+     * 功能逻辑说明：
+     * - 返回大代理工作台左侧导航菜单的完整结构：一个菜单组包含工作台、代理列表、持仓汇总、持仓列表、平仓列表和修改密码六个菜单项。
+     * - 每个菜单项包含多语言标签、页面路径和图标标识，前端根据该配置渲染导航栏并处理路由跳转。
+     *
+     * @return array<int, array<string, mixed>> 导航菜单组数组，每组包含 title 和 items 字段。
+     */
     private function navGroups(): array
     {
         return [[

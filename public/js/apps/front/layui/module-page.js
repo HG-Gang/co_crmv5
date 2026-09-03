@@ -913,7 +913,7 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate', 'upload'], function 
         html += '<span class="module-chain-title">' + escapeHtml(t('front.current_chain')) + '</span>';
         for (i = 0; i < clickedChain.length; i++) {
             if (i > 0) {
-                html += '<span class="module-chain-arrow">&gt;</span>';
+                html += '<span class="module-chain-arrow">→</span>';
             }
             html += '<span class="module-chain-node">' + escapeHtml(clickedChain[i]) + '</span>';
         }
@@ -954,8 +954,20 @@ layui.use(['jquery', 'layer', 'form', 'laypage', 'laydate', 'upload'], function 
     }
 
     // 用户 ID 列点击时才更新链路；展示内容只保留 ID，不带用户名或代理等级。
+    // 支持点击展开/收起：首次点击展开到当前用户，再次点击收起。
     function updateClickedChain(row, clickedId) {
-        clickedChain = chainIdsFromRow(row, clickedId);
+        var newChain = chainIdsFromRow(row, clickedId);
+        var normalizedId = String(clickedId || '').trim();
+
+        // 如果当前链路已经显示且最后一个节点是当前点击的ID，则收起链路
+        if (clickedChain.length > 0 && clickedChain[clickedChain.length - 1] === normalizedId) {
+            clickedChain = [];
+            renderChain([]);
+            return;
+        }
+
+        // 否则展开/更新链路
+        clickedChain = newChain;
         renderChain([]);
     }
 

@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/28
- * Time: 00:25
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Front;
@@ -73,10 +73,7 @@ class AuthController extends FrontBaseController
     private const PHONE_NUMBER_MAX_LENGTH = 20;
 
     /**
-     * 注册服务实例。
-     *
-     * 参数逻辑说明：
-     * - registrationService 表示注册服务，负责用户注册时的家族树、父级代理、佣金规则、组别和用户编号生成。
+     * 用户注册服务。
      *
      * @var UserRegistrationService
      */
@@ -85,17 +82,12 @@ class AuthController extends FrontBaseController
     /**
      * JWT 服务实例。
      *
-     * 参数逻辑说明：
-     * - jwtService 表示 JWT 服务，负责前台 user guard 的令牌签发、刷新、失效和单点登录缓存同步。
-     *
      * @var JwtService
      */
     protected $jwtService;
 
     /**
-     * 密码服务：负责前台注册时的密码哈希落库与 MT4 登录端密码同步。
-     * 登录/注册链路中本地与 MT4 双侧密码必须一致；缺失时注册只能落本地库，
-     * 用户随后将无法登录 MT4 交易端，属静默数据不一致。
+     * 用户密码服务。
      *
      * @var UserPasswordService
      */
@@ -751,6 +743,11 @@ class AuthController extends FrontBaseController
     /**
      * 注册前置资料校验。
      *
+     * 功能说明：
+     * - 在用户提交完整注册表单前，先校验邮箱、手机号、证件号是否已被占用，避免填写完整表单后才发现账号冲突。
+     * - 如果提供了邀请人 ID，调用 FrontRegisterRuleService 校验邀请人和返佣规则的合法性。
+     * - 返回每个字段的具体错误信息，供前端实时提示用户修正。
+     *
      * 参数逻辑说明：
      * - email、phone、id_card_no 分别检查邮箱、手机号、证件号是否已存在。
      * - inviter_id 存在时调用 FrontRegisterRuleService 继续校验邀请人和返佣规则。
@@ -967,6 +964,10 @@ class AuthController extends FrontBaseController
 
     /**
      * 生成注册邮箱验证码缓存键。
+     *
+     * 功能说明：
+     * - 根据注册邮箱生成用于存储验证码的缓存键，统一使用 sha1 哈希确保键名安全且不泄露原始邮箱。
+     * - 邮箱统一转小写后哈希，避免大小写差异导致缓存键不一致。
      *
      * @param string $email 注册邮箱，统一小写后参与 sha1 生成缓存键。
      * @return string 邮箱验证码缓存键。

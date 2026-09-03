@@ -1102,6 +1102,10 @@
     .crmui-admin-body .crmui-main {
         padding: 1.5rem;
     }
+
+    .crmui-admin-body .crmui-metrics {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
 }
 
 /* 767px：移动端全宽布局，侧栏变为抽屉式 */
@@ -1150,6 +1154,34 @@
 
     .crmui-admin-body .crmui-table-wrap {
         border-radius: 8px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .crmui-admin-body .crmui-table {
+        width: 100%;
+    }
+
+    /* 按钮最小触控区域44px */
+    .crmui-admin-body .crmui-button,
+    .crmui-admin-body .crmui-tool-button,
+    .crmui-admin-body .crmui-icon-button,
+    .crmui-admin-body button {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 10px 16px;
+    }
+
+    /* 输入框最小高度44px */
+    .crmui-admin-body .crmui-input,
+    .crmui-admin-body .crmui-select,
+    .crmui-admin-body .crmui-textarea,
+    .crmui-admin-body input,
+    .crmui-admin-body select,
+    .crmui-admin-body textarea {
+        min-height: 44px;
+        padding: 10px 12px;
+        font-size: 16px;
     }
 
     .crmui-admin-body .crmui-modal-panel {
@@ -1163,6 +1195,105 @@
     .crmui-admin-body .crmui-auth-image-grid,
     .crmui-admin-body .crmui-auth-review fieldset {
         grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/*
+ * 窄屏表格堆叠为卡片。
+ *
+ * 为什么必须有这一级断点：后台表格此前在 390 宽度下只靠
+ * .crmui-table-wrap{overflow-x:auto} 兜着，操作列单元格内容比单元格宽
+ * 12~14px，28 个 /admin-crmui/* 页面共 3660 处横向溢出，用户要横向拖动
+ * 才能点到后半截操作按钮。前台早已在 crmui/front.css 的 640px 断点里
+ * 实现了同一套堆叠方案，后台缺的只是样式这一半——标记那一半已经就位，
+ * admin.js 给每个业务列（:645）和操作列（:654）都输出了 data-label。
+ *
+ * 断点取 640px 与前台保持一致，避免两套家族在同一宽度下表现分叉。
+ */
+@media (max-width: 640px) {
+    .crmui-admin-body .crmui-table-wrap {
+        overflow-x: visible;
+    }
+
+    .crmui-admin-body .crmui-table {
+        min-width: 0;
+    }
+
+    .crmui-admin-body .crmui-table thead {
+        display: none;
+    }
+
+    .crmui-admin-body .crmui-table,
+    .crmui-admin-body .crmui-table tbody,
+    .crmui-admin-body .crmui-table tfoot,
+    .crmui-admin-body .crmui-table tr,
+    .crmui-admin-body .crmui-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .crmui-admin-body .crmui-table tr {
+        border-bottom: 1px solid var(--crmui-border);
+        padding: 0.75rem 1rem;
+    }
+
+    .crmui-admin-body .crmui-table td {
+        display: grid;
+        grid-template-columns: minmax(96px, 34%) minmax(0, 1fr);
+        gap: 0.75rem;
+        align-items: start;
+        border-bottom: 0;
+        padding: 0.5rem 0;
+        word-break: break-word;
+    }
+
+    .crmui-admin-body .crmui-table td::before {
+        content: attr(data-label);
+        color: var(--crmui-muted);
+        font-weight: 700;
+    }
+
+    .crmui-admin-body .crmui-table td:not([data-label]) {
+        display: block;
+    }
+
+    .crmui-admin-body .crmui-table td:not([data-label])::before {
+        content: none;
+    }
+
+    /*
+     * 批量勾选列是后台独有的（前台没有批量操作），且 admin.js:704 输出的是
+     * data-label=""。属性存在、值为空，因此上面 :not([data-label]) 那条兜不住它：
+     * 伪元素会渲染成空字符串，却照样占满 grid 第一列，把复选框顶到右半边。
+     * 这里单独按类名收敛回块级布局。
+     */
+    .crmui-admin-body .crmui-table td.crmui-table-select {
+        display: block;
+    }
+
+    .crmui-admin-body .crmui-table td.crmui-table-select::before {
+        content: none;
+    }
+
+    /*
+     * 解除操作按钮组的自动最小尺寸——这一条才是消除横向溢出的关键。
+     *
+     * 成因：td 变成 grid 容器后，.crmui-row-actions 成为 grid 项目，其
+     * min-width:auto 会被解析为 min-content。三个按钮 nowrap，min-content
+     * 达 180px，而第二条轨道只有 158px，于是硬把单元格撑破 12px
+     * （10 padding + 96 轨道一 + 12 gap + 180 = 298 > 286），
+     * 用户必须横向拖动才能点到后半截按钮。
+     *
+     * 注意这个 180px 不是任何规则写死的：CSSOM 反查全部 9 张样式表，
+     * 命中该元素且设 min-width 的规则为 0 条。它是浏览器算出来的，
+     * 所以只能用 min-width:0 解除，删规则无从下手。
+     *
+     * 实测（/admin-crmui/admins @390x844）：该单元格溢出 12px→0，
+     * 全页溢出单元格 12→0；代价是按钮换到 2 行、单元格高 44px→93.6px。
+     */
+    .crmui-admin-body .crmui-table td .crmui-row-actions {
+        min-width: 0;
+        flex-wrap: wrap;
     }
 }
 

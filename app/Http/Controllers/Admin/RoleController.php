@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/10
- * Time: 21:07
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -37,6 +37,10 @@ class RoleController extends AdminBaseController
 {
     /**
      * 获取后台角色列表。
+     *
+     * 功能说明：
+     * - 返回分页后的角色列表，每条角色记录包含基础信息和已授权的权限 ID 数组，供 Layui 表格渲染。
+     * - 预加载 permissionsRelation 关联，读取当前角色已拥有的 permissions.id 并映射为 permission_ids 字段，供权限树勾选回显。
      *
      * 参数含义：
      * - $request：当前 HTTP 请求对象，包含 Layui 表格分页参数。
@@ -257,6 +261,10 @@ class RoleController extends AdminBaseController
     /**
      * 校验角色主键，必须为整数。
      *
+     * 功能说明：
+     * - 验证传入的角色 ID 必须为正整数，防止非法输入进入数据库查询。
+     * - 校验失败时返回统一的参数错误响应，成功时返回 null 表示通过。
+     *
      * @param mixed $id roles.id。
      * @return \Illuminate\Http\JsonResponse|null 非法时返回参数错误响应，合法时返回 null。
      */
@@ -275,6 +283,11 @@ class RoleController extends AdminBaseController
 
     /**
      * 校验权限 ID 数组，逐项必须是正整数，拒绝嵌套数组或对象。
+     *
+     * 功能说明：
+     * - 验证前端提交的 permissions 参数必须是数组，且每个元素必须是正整数（大于等于 1）。
+     * - 拒绝嵌套数组、对象或非数值字符串，防止非法数据进入权限分配流程。
+     * - 校验失败时返回具体错误提示，成功时返回 null。
      *
      * @param mixed $permissions 前端提交的 permissions.id 数组。
      * @return \Illuminate\Http\JsonResponse|null 非法时返回参数错误响应，合法时返回 null。

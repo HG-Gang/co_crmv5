@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/02
- * Time: 09:10
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -35,9 +35,6 @@ class MenuController extends AdminBaseController
 {
     /**
      * 菜单服务实例。
-     *
-     * 参数含义：
-     * - $menuService：负责菜单查询、权限过滤、多语言标题和树形结构转换。
      *
      * @var MenuService
      */

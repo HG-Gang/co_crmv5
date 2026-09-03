@@ -16,6 +16,7 @@ Time: 17:09
     'descriptionKey' => 'front.customers_desc',
     'api' => '/api/front/agents/direct-customers',
     'method' => 'GET',
+    'showChain' => true,
     'filters' => [
         ['name' => 'userId', 'label' => 'front.user_id', 'type' => 'text'],
         ['name' => 'username', 'label' => 'front.user_name', 'type' => 'text'],
@@ -27,7 +28,7 @@ Time: 17:09
         ['name' => 'enddate', 'label' => 'front.date_to', 'type' => 'date'],
     ],
     'columns' => [
-        ['key' => 'mt4_login', 'label' => 'front.user_id', 'action' => 'showUserInfo', 'api' => '/api/front/users/{user}', 'method' => 'GET', 'routeParams' => ['user' => '{user_id}'], 'idField' => 'user_id', 'linkClass' => 'module-link-user'],
+        ['key' => 'mt4_login', 'label' => 'front.user_id', 'action' => 'updateUserChain', 'idField' => 'user_id', 'linkClass' => 'module-link-user'],
         ['key' => 'user_name', 'label' => 'front.user_name'],
         ['key' => 'mt4_balance', 'label' => 'front.balance', 'format' => 'money'],
         ['key' => 'cust_eqy', 'label' => 'front.equity', 'format' => 'money'],

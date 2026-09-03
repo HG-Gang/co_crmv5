@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/28
- * Time: 01:07
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Front;
@@ -50,7 +50,11 @@ class AccountController extends FrontBaseController
     /** @var float ECN_MINIMUM_EQUITY 切换 ECN 时允许的最低账户净值，边界值 3000 可通过。 */
     private const ECN_MINIMUM_EQUITY = 3000.0;
 
-    /** @var Mt4ManagerService $mt4Manager MT4 Manager 旧协议客户端。 */
+    /**
+     * MT4 管理服务。
+     *
+     * @var Mt4ManagerService
+     */
     private $mt4Manager;
 
     /**

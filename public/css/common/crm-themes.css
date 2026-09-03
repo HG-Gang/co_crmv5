@@ -420,6 +420,7 @@ html[data-crm-theme] .deposit-history-table-wrap,
 html[data-crm-theme] .flow-table-wrap,
 html[data-crm-theme] .layui-table-view {
     box-sizing: border-box;
+    width: 100%;
     max-width: 100%;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
@@ -429,8 +430,10 @@ html[data-crm-theme] .crmui-table-wrap > table,
 html[data-crm-theme] .module-table-wrap table,
 html[data-crm-theme] .front-v2-table-wrap table,
 html[data-crm-theme] .deposit-history-table-wrap table,
-html[data-crm-theme] .flow-table-wrap table {
+html[data-crm-theme] .flow-table-wrap table,
+html[data-crm-theme] .layui-table {
     width: 100%;
+    min-width: 100%;
 }
 
 @media (min-width: 768px) {
@@ -590,8 +593,7 @@ html[data-crm-theme] a:focus-visible {
     box-shadow: none !important;
 }
 
-html[data-crm-theme] .layui-btn:not(.layui-btn-danger):not(.layui-btn-warm),
-html[data-crm-theme] .layui-laypage .layui-laypage-curr .layui-laypage-em {
+html[data-crm-theme] .layui-btn:not(.layui-btn-danger):not(.layui-btn-warm) {
     border-color: var(--crm-primary) !important;
     background: var(--crm-primary) !important;
     color: var(--crmui-primary-ink) !important;
@@ -617,6 +619,26 @@ html[data-crm-theme] .pagination .active > span,
 html[data-crm-theme] .layui-laypage .layui-laypage-curr .layui-laypage-em {
     border-color: var(--crm-primary) !important;
     background: var(--crm-primary) !important;
+    color: var(--crm-on-accent) !important;
+}
+
+/*
+ * layui 分页当前页码的文字颜色。
+ *
+ * 为什么需要单独一条规则：layui 把当前页渲染成
+ * <span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span>
+ * 其中 .layui-laypage-em 是 position:absolute 的**空装饰块**（只负责画底色），
+ * 页码文字在它的**兄弟裸 em** 里，而 layui 自带样式把裸 em 写死为
+ * `.layui-laypage .layui-laypage-curr em{position:relative;color:#fff}`。
+ * 上面那条规则作用在装饰块上，color 落在空元素上不产生任何视觉效果，
+ * 于是页码文字始终是 #fff，拿不到主题为该底色配好的前景色。
+ * 实测 dark 主题下 #fff 压 accent 底只有 2.14:1（WCAG AA 正文要求 4.5:1），
+ * 换成配对的 on_accent(#06182B) 可达 8.36:1。
+ *
+ * 只设 color、不设 background：裸 em 叠在装饰块之上，
+ * 给它加背景会把底色整块盖掉。
+ */
+html[data-crm-theme] .layui-laypage .layui-laypage-curr em {
     color: var(--crm-on-accent) !important;
 }
 
@@ -973,6 +995,25 @@ html[data-crm-theme="ink-sidebar"] .crm-ui-admin-shell .admin-sidebar {
     .crm-theme-picker select {
         min-height: 44px;
     }
+
+    /* 触控设备：确保所有按钮和输入框都有足够的触控区域 */
+    html[data-crm-theme] .layui-btn,
+    html[data-crm-theme] .crmui-button,
+    html[data-crm-theme] .crmui-tool-button,
+    html[data-crm-theme] .crmui-icon-button,
+    html[data-crm-theme] button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    html[data-crm-theme] .layui-input,
+    html[data-crm-theme] .layui-select,
+    html[data-crm-theme] .layui-textarea,
+    html[data-crm-theme] .crmui-input,
+    html[data-crm-theme] .crmui-select,
+    html[data-crm-theme] .crmui-textarea {
+        min-height: 44px;
+    }
 }
 
 @media (max-width: 900px) {
@@ -1014,6 +1055,51 @@ html[data-crm-theme="ink-sidebar"] .crm-ui-admin-shell .admin-sidebar {
     .crmui-topbar-actions .crm-theme-picker select {
         width: 112px;
         height: 44px;
+    }
+
+    /* 移动端：弹窗自适应 */
+    html[data-crm-theme] .layui-layer,
+    html[data-crm-theme] .crmui-modal-panel {
+        width: 95vw !important;
+        max-width: 95vw !important;
+        max-height: 90vh !important;
+        border-radius: 12px !important;
+    }
+
+    html[data-crm-theme] .layui-layer-content,
+    html[data-crm-theme] .crmui-modal-body {
+        max-height: calc(90vh - 120px) !important;
+        overflow-y: auto !important;
+    }
+
+    /* 移动端：表格容器确保不超出屏幕 */
+    html[data-crm-theme] .layui-table-view,
+    html[data-crm-theme] .crmui-table-wrap {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* 移动端：所有按钮和输入框44px最小高度 */
+    html[data-crm-theme] .layui-btn,
+    html[data-crm-theme] .crmui-button,
+    html[data-crm-theme] .crmui-tool-button,
+    html[data-crm-theme] button {
+        min-height: 44px !important;
+        padding: 10px 16px !important;
+    }
+
+    html[data-crm-theme] .layui-input,
+    html[data-crm-theme] .layui-select,
+    html[data-crm-theme] .layui-textarea,
+    html[data-crm-theme] .crmui-input,
+    html[data-crm-theme] .crmui-select,
+    html[data-crm-theme] .crmui-textarea,
+    html[data-crm-theme] input,
+    html[data-crm-theme] select,
+    html[data-crm-theme] textarea {
+        min-height: 44px !important;
+        padding: 10px 12px !important;
+        font-size: 16px !important;
     }
 }
 

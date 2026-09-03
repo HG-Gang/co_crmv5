@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/18
- * Time: 16:48
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Front;
@@ -49,9 +49,6 @@ class BigNumberController extends FrontBaseController
 {
     /**
      * JWT 服务实例。
-     *
-     * 参数含义：
-     * - JwtService：用于签发大代理旧入口和新 big-number API 的访问令牌。
      *
      * @var JwtService
      */

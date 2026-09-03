@@ -81,6 +81,15 @@ class WithdrawRecordQueryService
     /**
      * 计算与列表完全相同条件下的金额汇总，不改变原查询对象。
      *
+     * 同源同口径契约：本方法产出的每一项都必须等于「对应逐行显示值之和」。
+     * - apply_amount / actual_amount / fee / rmb_fee 直接汇总 DECIMAL(18,2) 列，
+     *   逐行不再二次换算，故直接 SUM 即已同源；
+     * - actual_draw 是唯一带换算的项（金额 × 汇率），逐行会先舍入到分，
+     *   因此合计必须 SUM(ROUND(..., 2)) 而非 ROUND(SUM(...))，否则行与合计对不上账。
+     * 该契约由 AdminLegacyWithdrawSearchParityClosureModuleTest
+     * ::test_legacy_footer_actual_draw_equals_the_sum_of_displayed_rows 锁定。
+     *
+     * @param Builder $query 与列表完全同条件的查询；本方法克隆后使用，不污染调用方。
      * @return array{apply_amount: string, actual_amount: string, actual_draw: string, fee: string, rmb_fee: string}
      */
     public function summarize(Builder $query): array
@@ -90,7 +99,16 @@ class WithdrawRecordQueryService
         $summary = $summaryQuery
             ->selectRaw('COALESCE(SUM(apply_amount), 0) AS total_apply_amount')
             ->selectRaw('COALESCE(SUM(actual_amount), 0) AS total_actual_amount')
-            ->selectRaw('COALESCE(SUM(actual_amount * exchange_rate), 0) AS total_actual_draw')
+            // 必须逐行 ROUND 后再累加，不能先累加乘积再舍入一次。
+            // 原因：逐行 actdraw 由 multiplyMoneyByRate() 乘完立刻舍入到分，
+            // 合计行若先累加再舍入，只要各行分位以下还有尾数，两者就会分叉——
+            // 4 行「1.00 × 1.005」会让页面显示 4 个 1.01 而合计打印 4.02。
+            // 项目1 的基准是 sum(act_draw)，act_draw 是已按分存储的列，
+            // 即旧口径本身就是「逐行先舍、再求和」，这里复刻同一顺序。
+            // 舍入方向一致性：MySQL 对 DECIMAL 的 ROUND 是四舍五入（远离零），
+            // formatMoney() 对绝对值 bcadd('0.005') 同样是按量值四舍五入，
+            // 因此正负金额两侧口径都对齐，不存在符号方向上的偏差。
+            ->selectRaw('COALESCE(SUM(ROUND(actual_amount * exchange_rate, 2)), 0) AS total_actual_draw')
             ->selectRaw('COALESCE(SUM(fee), 0) AS total_fee')
             ->selectRaw('COALESCE(SUM(rmb_fee), 0) AS total_rmb_fee')
             ->first();

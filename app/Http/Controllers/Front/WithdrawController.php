@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/02
- * Time: 09:11
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Front;
@@ -326,9 +326,14 @@ class WithdrawController extends FrontBaseController
     /**
      * 把旧表单防重放 nonce 桥接为 Idempotency-Key。
      *
-     * 旧页面不带 Idempotency-Key 头时，取表单 idempotency_key 字段交给 LegacyFormIntentService 校验
-     * （用途必须匹配 withdraw）；通过后才写入请求头，供 submitWithdraw 的幂等逻辑统一使用。
-     * 校验失败或缺少用户态时返回 false，不修改请求。
+     * 功能说明：
+     * - 将旧前台表单的 idempotency_key 字段桥接为标准的 Idempotency-Key HTTP 头，统一幂等键处理流程。
+     * - 只有请求头未提供 Idempotency-Key 时才桥接表单字段；已有请求头时不修改，避免覆盖新版接口的幂等键。
+     * - 通过 LegacyFormIntentService 验证表单 nonce 的合法性和用途匹配性，防止跨表单重放攻击。
+     *
+     * 逻辑说明：
+     * - 旧页面不带 Idempotency-Key 头时，取表单 idempotency_key 字段交给 LegacyFormIntentService 校验（用途必须匹配 withdraw）。
+     * - 校验通过后写入请求头，供 submitWithdraw 的幂等逻辑统一使用；校验失败或缺少用户态时返回 false，不修改请求。
      *
      * @param Request $request 当前 HTTP 请求对象，读取表单 nonce 与登录用户。
      * @param string $purpose 旧表单用途标识，本控制器固定为 withdraw。
@@ -357,13 +362,12 @@ class WithdrawController extends FrontBaseController
             return false;
         }
 
-        if (!$valid) {
-            return false;
+        if ($valid) {
+            $request->headers->set('Idempotency-Key', $nonce);
+            return true;
         }
 
-        $request->headers->set('Idempotency-Key', $nonce);
-
-        return true;
+        return false;
     }
 
     /**

@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/06/09
- * Time: 01:59
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Common;
@@ -75,15 +75,15 @@ class UploadController extends Controller
     }
 
     /**
-     * 根据上传业务类型获取允许的扩展名白名单。
+     * 根据上传业务类型返回允许的 MIME 扩展名白名单。
      *
      * 参数逻辑说明：
-     * - $type 表示上传业务类型，来源于 upload 方法校验后的 type 参数。
-     * - avatar、id_card、bank_card、voucher 都属于图片类资料，只允许常见图片扩展名。
-     * - general 属于通用附件，可额外允许 pdf、doc、docx、xls、xlsx。
+     * - avatar、id_card、bank_card、voucher 属于证件与凭证类，只允许图片扩展名 jpeg/png/jpg/gif。
+     * - general 属于通用附件，除图片外还允许 pdf、doc、docx、xls、xlsx。
+     * - 白名单返回值直接用于 Laravel mimes 校验规则，不包含 MIME type 本身，只包含扩展名。
      *
-     * @param string $type 上传业务类型。
-     * @return array<int, string> Laravel mimes 校验规则可使用的扩展名列表。
+     * @param string $type 上传业务类型，来源于 upload() 方法校验后的 type 参数。
+     * @return array<int, string> 该类型允许的文件扩展名列表。
      */
     protected function getAllowedMimes(string $type): array
     {

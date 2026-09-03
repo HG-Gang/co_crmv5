@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/02
- * Time: 09:12
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Front;
@@ -26,9 +26,6 @@ class MenuController extends FrontBaseController
 {
     /**
      * 菜单服务实例。
-     *
-     * 参数含义：
-     * - $menuService：统一处理菜单查询、权限过滤和树形结构转换的服务。
      *
      * @var MenuService
      */

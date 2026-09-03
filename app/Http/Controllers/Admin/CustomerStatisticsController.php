@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/28
- * Time: 01:34
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 /**
@@ -200,12 +200,13 @@ class CustomerStatisticsController extends AdminBaseController
      * 计算各天数窗口的盈亏合计与按天序列。
      *
      * 逻辑说明：
-     * - 只跑一趟 GROUP BY 查询取最长窗口（30 天）的按天盈亏，再在 PHP 内用 BCMath 累加出 7/15/30 天合计，
-     *   避免为每个窗口各跑一次 SUM 造成重复扫描。
-     * - 缺失交易的日期补 0.00，保证 labels 与 values 长度一致、图表 X 轴连续。
+     * - 只执行一次 GROUP BY 查询取最长窗口（30 天）的按天盈亏，再在 PHP 内用 BCMath 累加出 7/15/30 天合计，
+     *   避免为每个窗口各执行一次 SUM 查询造成重复扫描。
+     * - 缺失交易的日期补 0.00，保证 labels 与 values 长度一致、图表 X 轴连续无断点。
+     * - 全程使用 DECIMAL(18,2) 聚合与 BCMath 字符串运算，不经过浮点数，避免累加误差。
      *
-     * @param int $targetUserId 目标业务用户 ID。
-     * @return array<string, mixed> profit_7d/profit_15d/profit_30d 与 profit_series。
+     * @param int $targetUserId 目标业务用户 ID，对应 user_trades.user_id。
+     * @return array<string, mixed> profit_7d/profit_15d/profit_30d 三个窗口合计与 profit_series 按天序列。
      */
     private function profitWindows(int $targetUserId): array
     {

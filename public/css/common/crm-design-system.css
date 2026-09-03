@@ -1043,6 +1043,35 @@ html[data-front-theme="contrast"] {
     .crm-ui-admin-shell .layui-form-pane .layui-input-block {
         margin-left: 0;
     }
+
+    /* 确保表格在移动端100%宽度 */
+    .crm-ui-front-shell .layui-table-view,
+    .crm-ui-admin-shell .layui-table-view {
+        width: 100% !important;
+        max-width: 100%;
+    }
+
+    /* 移动端按钮最小触控区域 */
+    .crm-ui-front-shell .layui-btn,
+    .crm-ui-admin-shell .layui-btn,
+    .crm-ui-front-shell button,
+    .crm-ui-admin-shell button {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 10px 16px;
+    }
+
+    /* 移动端输入框 */
+    .crm-ui-front-shell .layui-input,
+    .crm-ui-front-shell .layui-select,
+    .crm-ui-front-shell .layui-textarea,
+    .crm-ui-admin-shell .layui-input,
+    .crm-ui-admin-shell .layui-select,
+    .crm-ui-admin-shell .layui-textarea {
+        min-height: 44px;
+        padding: 10px 12px;
+        font-size: 16px;
+    }
 }
 
 @media screen and (max-width: 520px) {
@@ -1501,6 +1530,23 @@ html[data-front-theme="contrast"] {
     align-items: center;
     gap: 6px;
     margin-bottom: 12px;
+}
+
+/*
+ * 解除内容区作为 flex 项目的自动最小尺寸。
+ * 缺陷：#channelTabs 横向溢出，1440 宽下 64px，390 宽下达 866px。
+ * 成因：上面这条把外层 .layui-tab 做成了 flex 容器（意图是让页签栏
+ * shrink-to-fit 成分段控件），于是兄弟节点 .layui-tab-content 也成了
+ * flex 项目，其 min-width:auto 解析为内部表格的 min-content 1208px，
+ * 拒绝收缩到容器的 1146px。溢出再沿 .layui-card-body 向上传递。
+ * 表格列不会因此不可达：layui 给 .layui-table-body 备了 overflow:auto，
+ * 收缩后由它内部横向滚动接管（实测内部滚动量 64px）。
+ * 不改外层为 block：实测页签栏会由 497px 拉满到 1146px、6px 间距塌成 0，
+ * 那是改观感而非修缺陷。
+ * 只作用于本页签容器，其余 .layui-tab-content 不受影响。
+ */
+.crm-ui-admin-shell .crm-channel-tab > .layui-tab-content {
+    min-width: 0;
 }
 
 /* 统计条目默认靠左排列；父级 .crm-table-summary 已提供 flex 布局。 */

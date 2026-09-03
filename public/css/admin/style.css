@@ -622,6 +622,39 @@ select {
     background: var(--admin-hover);
 }
 
+/* 图标化语言/主题切换器样式 */
+.layui-nav .layui-nav-child a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.layui-nav .layui-nav-child .lang-icon {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.layui-nav .layui-nav-child .lang-selected,
+.layui-nav .layui-nav-child .style-selected {
+    margin-left: auto;
+    color: var(--admin-primary);
+}
+
+.layui-nav .layui-nav-child svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2;
+}
+
+/* Admin header 图标间距 */
+.layui-nav .layui-nav-item > a > i[data-lucide] {
+    margin-right: 4px;
+}
+
+.layui-nav .layui-nav-item > a > i[data-lucide]:only-child {
+    margin-right: 0;
+}
+
 .admin-voucher-image-links {
     max-width: 220px;
     display: flex;
@@ -670,8 +703,14 @@ select {
 
 .card-stats {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 16px;
+}
+
+@supports (width: clamp(280px, 25vw, 1fr)) {
+    .card-stats {
+        grid-template-columns: repeat(auto-fit, minmax(clamp(240px, 22vw, 320px), 1fr));
+    }
 }
 
 .stat-item {
@@ -772,7 +811,11 @@ body:has(.login-container) {
 
 @media screen and (max-width: 1100px) {
     .card-stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .layui-table-view {
+        width: 100% !important;
     }
 }
 
@@ -855,6 +898,38 @@ body:has(.login-container) {
 @media screen and (max-width: 560px) {
     .card-stats {
         grid-template-columns: 1fr;
+    }
+
+    .stat-item {
+        min-height: 100px;
+        padding: 14px;
+    }
+
+    .stat-item .stat-number {
+        font-size: 22px;
+        margin-top: 12px;
+    }
+
+    .stat-item .stat-icon {
+        font-size: 24px;
+    }
+
+    .layui-btn,
+    .layui-input,
+    .layui-select,
+    .layui-textarea {
+        min-height: 44px !important;
+        padding: 12px !important;
+        font-size: 14px;
+    }
+
+    .layui-table-view {
+        font-size: 13px;
+    }
+
+    .layui-table td,
+    .layui-table th {
+        padding: 10px 8px !important;
     }
 
     .layui-layout-right .layui-nav-item > a {

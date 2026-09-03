@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/02
- * Time: 09:12
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -150,27 +150,29 @@ class ExchangeRateController extends AdminBaseController
     }
 
     /**
-     * 保存当前汇率配置。
+     * 保存汇率与手续费配置。
      *
      * 参数逻辑说明：
-     * - sys_deposit_rate：入金汇率，要求为大于 0 的数字字符串，写入 system_configs.key=sys_deposit_rate。
-     * - sys_draw_rate：出金/取款汇率，要求为大于 0 的数字字符串，写入 system_configs.key=sys_draw_rate。
-     * - 两个字段最小值为 0.000001，入库前统一规范化为最多 8 位小数（normalizeRate）。
-     * - 两个配置统一写入 group=exchange_rate，便于系统配置列表按分组查看和审计。
+     * - sys_deposit_rate：入金汇率，要求为大于 0.000001 的数字，写入 system_configs.key=sys_deposit_rate。
+     * - sys_draw_rate：出金汇率，要求为大于 0.000001 的数字，写入 system_configs.key=sys_draw_rate。
+     * - withdrawal_fee_enabled：出金手续费开关，可选，接受 0/1 或 true/false。
+     * - withdrawal_fixed_fee_usd：出金固定手续费（USD），可选，范围 0~100000。
+     * - withdrawal_fee_rate：出金比例手续费（百分数 0~100），可选，服务层计算时会除以 100。
+     * - 两个汇率字段入库前统一规范化为最多 8 位小数并去除无意义尾零。
      *
-     * 为什么一次保存要写四个键并批量更新通道：
-     * - sys_deposit_rate / sys_draw_rate 只是旧字段名兼容层，业务代码从不读它们做换算；
+     * 为什么一次保存要写四个 system_configs 键并批量更新 payment_channels：
+     * - sys_deposit_rate / sys_draw_rate 只是旧字段名兼容层，业务代码从不读它们做换算。
      * - 出金换算读 withdraw_exchange_rate_cny（WithdrawalOrderService），
      *   入金换算读 payment_channels.exchange_rate（PaymentOrderService），
-     *   入金页展示读 deposit_exchange_rate_cny（Front\DepositController）；
-     * - 只写旧键会让「后台改了汇率但资金仍按旧汇率结算」，且页面看不出异常，
-     *   属于最难察觉的一类资金口径缺陷，因此必须在同一事务内全部同步。
+     *   入金页展示读 deposit_exchange_rate_cny（Front\DepositController）。
+     * - 只写旧键会让后台改了汇率但资金仍按旧汇率结算，且页面看不出异常，
+     *   属于最难察觉的资金口径缺陷，因此必须在同一事务内全部同步。
      *
-     * 入金通道联动范围复刻项目1 whpj_rate_save()：法币通道全部跟随同一汇率，
-     * 加密货币/数字货币通道（编号 4、5）不参与联动，保持其 exchange_rate 原值。
+     * 入金通道联动范围复刻项目1 whpj_rate_save()：法币通道（1/2/3/6/7/8/9/10/11）全部跟随同一汇率，
+     * 加密货币/数字货币通道（4/5）不参与联动，保持其 exchange_rate 原值。
      *
-     * @param Request $request 请求对象，承载页面提交的两个汇率字段。
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request 请求对象，承载页面提交的汇率与手续费字段。
+     * @return \Illuminate\Http\JsonResponse 保存成功返回最新生效值；校验失败返回错误响应。
      */
     public function update(Request $request)
     {
@@ -199,7 +201,12 @@ class ExchangeRateController extends AdminBaseController
         $beforeDrawRate = $this->getRateValue(self::DRAW_RATE_KEY);
 
         // 手续费三项：只处理本次实际提交的字段，未提交者保留原值。
-        // 用 has() 而非 filled()：开关关闭时提交的是 '0'，filled() 会把 '0' 判为空而漏掉关闭动作。
+        // 用 has()（判断「键是否提交」）而非 filled()（判断「值是否非空」）：
+        // 二者语义不同，这里要表达的是前者 —— 未提交的字段必须保留库内原值，
+        // 而不是被当成 0 覆盖，这是「关闭开关不丢失原费率」所依赖的行为。
+        // 注：Laravel 的 blank('0') 为 false，故 filled('0') 为 true，
+        // 关闭动作本身两种写法都能收到；此处选 has() 是因为语义精确，
+        // 不要误以为 filled() 会把 '0' 当空值漏掉（那是 PHP empty('0') 的语义）。
         $feeUpdates = [];
         if ($request->has(self::FEE_ENABLED_KEY)) {
             $feeUpdates[self::FEE_ENABLED_KEY] = $this->normalizeSwitch($request->input(self::FEE_ENABLED_KEY));

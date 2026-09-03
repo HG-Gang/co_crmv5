@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/10
- * Time: 17:34
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -54,9 +54,6 @@ class AuthController extends AdminBaseController
 {
     /**
      * JWT 服务实例。
-     *
-     * 参数逻辑说明：
-     * - JwtService 负责生成、刷新、失效后台 JWT，JWT 中的 sub 表示 admins.id，guard 固定为 admin。
      *
      * @var JwtService
      */

@@ -1,0 +1,389 @@
+﻿====================================
+中文注释标准验证 v0.0.3
+====================================
+检查目录: D:\Software\PhpProject\Demo\co_crmv5\app/Http/Controllers
+
+找到 80 个PHP文件
+
+
+====================================
+检查结果统计
+====================================
+总文件数: 80
+✅ 通过: 11
+❌ 失败: 69
+
+问题分类:
+  - 缺少头部标识块: 0
+  - 缺少文件级注释: 0
+  - 缺少属性注释: 21
+  - 缺少方法注释: 201
+
+====================================
+问题详情
+====================================
+
+📄 app/Http/Controllers\Admin\AdminAuthController.php
+   ❌ 方法 showLogin() 缺少文档注释
+   ❌ 方法 doLogin() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\AdminBaseController.php
+   ❌ 方法 serverErrorResponse() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\AdminController.php
+   ❌ 方法 update() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\AdminDashboardController.php
+   ❌ 方法 dashboardData() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\AdminUserController.php
+   ❌ 属性 $adminDataScopeService 缺少中文注释
+   ❌ 属性 $userStatisticsService 缺少中文注释
+   ❌ 方法 updateUser() 缺少文档注释
+   ❌ 方法 normalizeLegacyGenderValue() 缺少文档注释
+   ❌ 方法 isMt4Success() 缺少文档注释
+   ❌ 方法 validateUserDateFilter() 缺少文档注释
+   ❌ 方法 validateUserIdFilter() 缺少文档注释
+   ❌ 方法 validateAccountTypeFilter() 缺少文档注释
+   ❌ 方法 csvDownload() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\AdminWhsExpZeroController.php
+   ❌ 属性 $adminDataScopeService 缺少中文注释
+   ❌ 方法 validateUserId() 缺少文档注释
+   ❌ 方法 getStatusName() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\AgentController.php
+   ❌ 方法 parentPath() 缺少文档注释
+   ❌ 方法 legacyParentPathGroupColor() 缺少文档注释
+   ❌ 方法 updateCommission() 缺少文档注释
+   ❌ 方法 validateAgentIdFilter() 缺少文档注释
+   ❌ 方法 listWithStats() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\AgentLevelController.php
+   ❌ 方法 index() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\AuthController.php
+   ❌ 属性 $jwtService 缺少中文注释
+   ❌ 方法 logout() 缺少文档注释
+   ❌ 方法 updateProfile() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\BatchAmountImportController.php
+   ❌ 属性 $depositRefundGateway 缺少中文注释
+   ❌ 方法 depositImportList() 缺少文档注释
+   ❌ 方法 syncDepositImport() 缺少文档注释
+   ❌ 方法 createWithdrawImport() 缺少文档注释
+   ❌ 方法 finishImportSync() 缺少文档注释
+   ❌ 方法 buildImportPayloadFromArray() 缺少文档注释
+   ❌ 方法 isLegacyAmountImportUpload() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\BatchCreditImportController.php
+   ❌ 方法 creditImportList() 缺少文档注释
+   ❌ 方法 validateNumericFilters() 缺少文档注释
+   ❌ 方法 finishCreditImportSync() 缺少文档注释
+   ❌ 方法 makeImportDataValidator() 缺少文档注释
+   ❌ 方法 buildImportPayloadFromArray() 缺少文档注释
+   ❌ 方法 importCsvRecords() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\BigAgentController.php
+   ❌ 方法 index() 缺少文档注释
+   ❌ 方法 validateBigAgentRouteId() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\CancelApplyController.php
+   ❌ 属性 $cancelApplyQueryService 缺少中文注释
+   ❌ 方法 isLocallyLockedForCancellation() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\CommissionController.php
+   ❌ 方法 index() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\CustomerStatisticsController.php
+   ❌ 方法 profitWindows() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\DashboardController.php
+   ❌ 方法 index() 缺少文档注释
+   ❌ 方法 stats() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\DataScopeController.php
+   ❌ 方法 roleDataScopeList() 缺少文档注释
+   ❌ 方法 validateAdminIdFilter() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\DepositController.php
+   ❌ 方法 index() 缺少文档注释
+   ❌ 方法 depositFlow() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\ExchangeRateController.php
+   ❌ 方法 update() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\FundFlowController.php
+   ❌ 属性 $adminDataScopeService 缺少中文注释
+   ❌ 方法 depositFlowSummary() 缺少文档注释
+   ❌ 方法 classifyDepositFlowComment() 缺少文档注释
+   ❌ 方法 withdrawFlowTotalRow() 缺少文档注释
+   ❌ 方法 withdrawFlowKeywordRegex() 缺少文档注释
+   ❌ 方法 classifyUndepositPendingDays() 缺少文档注释
+   ❌ 方法 moneyNumber() 缺少文档注释
+   ❌ 方法 paginateQuery() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\GiftController.php
+   ❌ 方法 exportGiftShipments() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\GroupConfigController.php
+   ❌ 方法 store() 缺少文档注释
+   ❌ 方法 payloadValidator() 缺少文档注释
+   ❌ 方法 assertDefaultGroupIsUnique() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\LegacyAdminActionController.php
+   ❌ 方法 changeAdminStatus() 缺少文档注释
+   ❌ 方法 validateLegacyCustomerGroupSelection() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\LegacyAdminController.php
+   ❌ 方法 permissionRouteForLegacyUri() 缺少文档注释
+   ❌ 方法 legacyNewsFailure() 缺少文档注释
+   ❌ 方法 assertLegacyUserGroupPageAccess() 缺少文档注释
+   ❌ 方法 formatLegacyWithdrawRow() 缺少文档注释
+   ❌ 方法 isLegacyUserGroupAction() 缺少文档注释
+   ❌ 方法 legacyUserGroupResponse() 缺少文档注释
+   ❌ 方法 legacyBatchAmountResponse() 缺少文档注释
+   ❌ 方法 forwardLegacyBatchRetry() 缺少文档注释
+   ❌ 方法 forwardLegacyRightsSummarySearch() 缺少文档注释
+   ❌ 方法 forwardLegacyRightsSummaryDetail() 缺少文档注释
+   ❌ 方法 forwardLegacyRightsSumExport() 缺少文档注释
+   ❌ 方法 legacyPositiveInt() 缺少文档注释
+   ❌ 方法 legacyGenerateOtcOrderResponse() 缺少文档注释
+   ❌ 方法 legacyOrderStatusResponse() 缺少文档注释
+   ❌ 方法 forwardLegacyUserIdCardBank() 缺少文档注释
+   ❌ 方法 legacyRiskAmount() 缺少文档注释
+   ❌ 方法 validateNormalizedLegacyAgentEditSavePayload() 缺少文档注释
+   ❌ 方法 isMutationTargetRoute() 缺少文档注释
+   ❌ 方法 renderLegacyPage() 缺少文档注释
+   ❌ 方法 routeMethodFor() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\LegacyAdminExportController.php
+   ❌ 方法 legacyWithdrawStatus() 缺少文档注释
+   ❌ 方法 sanitizeCsvCell() 缺少文档注释
+   ❌ 方法 formatCreatedAt() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\MenuController.php
+   ❌ 属性 $menuService 缺少中文注释
+
+📄 app/Http/Controllers\Admin\NewsController.php
+   ❌ 方法 newsServerErrorResponse() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\OnlineUserController.php
+   ❌ 属性 $adminDataScopeService 缺少中文注释
+   ❌ 方法 onlineUserList() 缺少文档注释
+   ❌ 方法 writeForceOfflineOperationLog() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\PaymentChannelController.php
+   ❌ 方法 store() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\PermissionController.php
+   ❌ 方法 permissionTree() 缺少文档注释
+   ❌ 方法 validatePermissionId() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\PositionSummaryController.php
+   ❌ 方法 positionSummaryList() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\ProductionController.php
+   ❌ 方法 baseProductionQuery() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\RealtimeCommissionController.php
+   ❌ 方法 resetIndexedRebateColumnCache() 缺少文档注释
+   ❌ 方法 applyTimestampRange() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\RightsSummaryController.php
+   ❌ 属性 $adminDataScopeService 缺少中文注释
+   ❌ 方法 manualConfirmRightsSettlement() 缺少文档注释
+   ❌ 方法 sumScopedOnlineDepositAmount() 缺少文档注释
+   ❌ 方法 csvDownload() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\RoleController.php
+   ❌ 方法 roleList() 缺少文档注释
+   ❌ 方法 validateRoleId() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\SystemConfigController.php
+   ❌ 方法 index() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\TradeController.php
+   ❌ 方法 index() 缺少文档注释
+   ❌ 方法 openPositions() 缺少文档注释
+   ❌ 方法 closedPositions() 缺少文档注释
+   ❌ 方法 closedPositionsQuery() 缺少文档注释
+   ❌ 方法 paginatedTradeRecords() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\UnDepositAmountController.php
+   ❌ 属性 $adminDataScopeService 缺少中文注释
+
+📄 app/Http/Controllers\Admin\UserController.php
+   ❌ 方法 listWithStats() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\UserGroupController.php
+   ❌ 方法 index() 缺少文档注释
+   ❌ 方法 pairIdFor() 缺少文档注释
+   ❌ 方法 groupHasMembersLocked() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\VoucherController.php
+   ❌ 属性 $adminDataScopeService 缺少中文注释
+   ❌ 方法 index() 缺少文档注释
+
+📄 app/Http/Controllers\Admin\WithdrawController.php
+   ❌ 方法 index() 缺少文档注释
+   ❌ 方法 validateIndexFilters() 缺少文档注释
+   ❌ 方法 withdrawFlow() 缺少文档注释
+
+📄 app/Http/Controllers\Common\UploadController.php
+   ❌ 方法 getAllowedMimes() 缺少文档注释
+
+📄 app/Http/Controllers\Controller.php
+   ❌ 方法 index() 缺少文档注释
+   ❌ 方法 svgToImage() 缺少文档注释
+
+📄 app/Http/Controllers\CrmUi\Admin\PageController.php
+   ❌ 方法 index() 缺少文档注释
+   ❌ 方法 show() 缺少文档注释
+   ❌ 方法 withdrawBatchDefinition() 缺少文档注释
+   ❌ 方法 roleFields() 缺少文档注释
+   ❌ 方法 giftAddressSendFields() 缺少文档注释
+   ❌ 方法 options() 缺少文档注释
+   ❌ 方法 controlledRiskMode() 缺少文档注释
+
+📄 app/Http/Controllers\CrmUi\Front\BigAgentPageController.php
+   ❌ 方法 login() 缺少文档注释
+   ❌ 方法 dashboard() 缺少文档注释
+   ❌ 方法 routeName() 缺少文档注释
+   ❌ 方法 navGroups() 缺少文档注释
+
+📄 app/Http/Controllers\CrmUi\Front\PageController.php
+   ❌ 方法 index() 缺少文档注释
+   ❌ 方法 login() 缺少文档注释
+   ❌ 方法 register() 缺少文档注释
+   ❌ 方法 canonicalPath() 缺少文档注释
+   ❌ 方法 renderFamily() 缺少文档注释
+   ❌ 方法 rowActions() 缺少文档注释
+
+📄 app/Http/Controllers\Front\AccountController.php
+   ❌ 属性 $mt4Manager 缺少中文注释
+   ❌ 方法 accountBalance() 缺少文档注释
+   ❌ 方法 changeAccountSave() 缺少文档注释
+   ❌ 方法 resolveTradingGroup() 缺少文档注释
+
+📄 app/Http/Controllers\Front\AgentController.php
+   ❌ 属性 $familyTreeService 缺少中文注释
+   ❌ 方法 directUserCommTrans() 缺少文档注释
+   ❌ 方法 legacyLoginHistorySearch() 缺少文档注释
+   ❌ 方法 canViewUser() 缺少文档注释
+   ❌ 方法 confirmLevelChange() 缺少文档注释
+
+📄 app/Http/Controllers\Front\AuthController.php
+   ❌ 属性 $registrationService 缺少中文注释
+   ❌ 属性 $jwtService 缺少中文注释
+   ❌ 方法 registerVerifyInfo() 缺少文档注释
+   ❌ 方法 registerEmailCodeCacheKey() 缺少文档注释
+
+📄 app/Http/Controllers\Front\BigNumberController.php
+   ❌ 属性 $jwtService 缺少中文注释
+   ❌ 方法 agentsIndex() 缺少文档注释
+   ❌ 方法 login() 缺少文档注释
+   ❌ 方法 legacyListModule() 缺少文档注释
+   ❌ 方法 isBigAgentLoginRateLimited() 缺少文档注释
+   ❌ 方法 recordBigAgentLoginFailure() 缺少文档注释
+   ❌ 方法 consumeBigAgentCaptcha() 缺少文档注释
+   ❌ 方法 legacyBigAgentPasswordResponse() 缺少文档注释
+
+📄 app/Http/Controllers\Front\CancelController.php
+   ❌ 属性 $passwordService 缺少中文注释
+   ❌ 属性 $mt4Manager 缺少中文注释
+   ❌ 方法 apply() 缺少文档注释
+   ❌ 方法 isMt4Success() 缺少文档注释
+
+📄 app/Http/Controllers\Front\CommissionController.php
+   ❌ 属性 $commissionService 缺少中文注释
+   ❌ 方法 history() 缺少文档注释
+
+📄 app/Http/Controllers\Front\CustomerController.php
+   ❌ 方法 myCustomers() 缺少文档注释
+
+📄 app/Http/Controllers\Front\DashboardController.php
+   ❌ 方法 dashboardData() 缺少文档注释
+   ❌ 方法 registerShareUrls() 缺少文档注释
+   ❌ 方法 dailySeries() 缺少文档注释
+
+📄 app/Http/Controllers\Front\DepositController.php
+   ❌ 方法 depositPage() 缺少文档注释
+   ❌ 方法 deposit_request_otc() 缺少文档注释
+   ❌ 方法 channelRemarkItems() 缺少文档注释
+   ❌ 方法 normalizeChannelRemarkItems() 缺少文档注释
+   ❌ 方法 channelDescription() 缺少文档注释
+
+📄 app/Http/Controllers\Front\FlowController.php
+   ❌ 方法 accountFlow() 缺少文档注释
+   ❌ 方法 withdrawApplyFlowSearch() 缺少文档注释
+   ❌ 方法 directWithdrawalFlowSearch() 缺少文档注释
+   ❌ 方法 legacyTypedFlow() 缺少文档注释
+   ❌ 方法 flowScopeUserIds() 缺少文档注释
+
+📄 app/Http/Controllers\Front\ForgotPasswordController.php
+   ❌ 方法 showForgotPassword() 缺少文档注释
+
+📄 app/Http/Controllers\Front\GiftController.php
+   ❌ 方法 addressList() 缺少文档注释
+   ❌ 方法 giftShipmentRow() 缺少文档注释
+
+📄 app/Http/Controllers\Front\LegacyMaintenanceController.php
+   ❌ 方法 importAgents() 缺少文档注释
+   ❌ 方法 syncToT4ByLocalUser() 缺少文档注释
+   ❌ 方法 localRegisterNotifyByAgents() 缺少文档注释
+   ❌ 方法 testOrder() 缺少文档注释
+   ❌ 方法 disabledMaintenanceResponse() 缺少文档注释
+
+📄 app/Http/Controllers\Front\LegacyPageController.php
+   ❌ 方法 dashboard() 缺少文档注释
+   ❌ 方法 profile() 缺少文档注释
+   ❌ 方法 profileBankChange() 缺少文档注释
+   ❌ 方法 profileContact() 缺少文档注释
+   ❌ 方法 positionSummary2() 缺少文档注释
+   ❌ 方法 realtimeRebate() 缺少文档注释
+   ❌ 方法 gift() 缺少文档注释
+
+📄 app/Http/Controllers\Front\MenuController.php
+   ❌ 属性 $menuService 缺少中文注释
+   ❌ 方法 userMenus() 缺少文档注释
+
+📄 app/Http/Controllers\Front\NewsController.php
+   ❌ 方法 newsPage() 缺少文档注释
+   ❌ 方法 newsList() 缺少文档注释
+   ❌ 方法 newsRow() 缺少文档注释
+
+📄 app/Http/Controllers\Front\PaymentNotifyController.php
+   ❌ 方法 notify() 缺少文档注释
+   ❌ 方法 legacyGatewayName() 缺少文档注释
+
+📄 app/Http/Controllers\Front\PositionController.php
+   ❌ 方法 positionSummary() 缺少文档注释
+   ❌ 方法 legacyAgentSummaryResponse() 缺少文档注释
+   ❌ 方法 search() 缺少文档注释
+
+📄 app/Http/Controllers\Front\ProfileController.php
+   ❌ 方法 cancelVerifyPassSendCode() 缺少文档注释
+   ❌ 方法 relationShipHtmlV2() 缺少文档注释
+   ❌ 方法 storeProfileFile() 缺少文档注释
+   ❌ 方法 relationshipNodes() 缺少文档注释
+   ❌ 方法 relationshipIds() 缺少文档注释
+   ❌ 方法 bankStatusText() 缺少文档注释
+   ❌ 方法 mirrorPublicDiskFile() 缺少文档注释
+   ❌ 方法 maskPhone() 缺少文档注释
+
+📄 app/Http/Controllers\Front\UploadController.php
+   ❌ 方法 upload() 缺少文档注释
+
+📄 app/Http/Controllers\Front\VoucherController.php
+   ❌ 方法 store() 缺少文档注释
+   ❌ 方法 records() 缺少文档注释
+
+📄 app/Http/Controllers\Front\WithdrawController.php
+   ❌ 方法 submitWithdraw() 缺少文档注释
+   ❌ 方法 withdrawSourceText() 缺少文档注释
+
+====================================
+❌ 发现 69 个文件不符合标准
+请根据上述问题详情进行修复
+====================================

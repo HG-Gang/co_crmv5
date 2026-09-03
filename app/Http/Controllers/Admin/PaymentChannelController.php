@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/28
- * Time: 01:01
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -94,17 +94,19 @@ class PaymentChannelController extends AdminBaseController
      * 创建支付通道。
      *
      * 参数逻辑说明：
-     * - name 表示支付通道名称，对应 payment_channels.name。
-     * - channel_name 表示旧页面提交的通道名称，后端会在 name 为空时映射到 name，兼容旧 JS 调用。
-     * - channel_name 映射到 payment_channels.name，避免旧页面字段名和真实入库字段不一致。
-     * - channel_code 表示支付通道编码，对应 payment_channels.channel_code，新增时必须唯一。
-     * - exchange_rate 表示支付通道汇率，必须是大于等于 0 的数字。
-     * - is_enabled 表示通道是否启用，控制该通道是否可在业务流程中使用。
-     * - sort 表示后台排序值，数值越小越靠前。
-     * - config 表示支付通道扩展配置，通常保存第三方参数、限额或展示配置。
+     * - name：支付通道名称，对应 payment_channels.name，新增时必填且最长 100 个字符。
+     * - channel_name：旧页面提交的通道名称字段，后端在 name 为空时映射到 name，兼容旧 JS 调用。
+     * - channel_code：支付通道编码，对应 payment_channels.channel_code，新增时必须唯一。
+     * - exchange_rate：支付通道汇率，必须是大于等于 0 的数字，用于入金金额换算。
+     * - is_enabled：通道是否启用，控制该通道是否在前台入金页展示和接受入金请求。
+     * - sort：后台排序值，数值越小越靠前，控制通道在列表和前台的展示顺序。
+     * - config：支付通道扩展配置 JSON，通常保存第三方参数、限额或展示配置；其中密钥类字段只允许 SecretReference 引用。
+     *
+     * 安全边界：
+     * - config 中的密钥类字段必须以 SecretReference 形式（env:/vault: 前缀）存储，containsPlainSecret 会拒绝任何明文字符串。
      *
      * @param Request $request HTTP 请求对象，承载支付通道新增字段。
-     * @return \Illuminate\Http\JsonResponse 创建成功返回新支付通道记录。
+     * @return \Illuminate\Http\JsonResponse 创建成功返回新支付通道记录；校验失败返回错误响应。
      */
     public function store(Request $request)
     {

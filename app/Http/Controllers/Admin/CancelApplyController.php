@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/19
- * Time: 22:30
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -62,8 +62,7 @@ class CancelApplyController extends AdminBaseController
     private $adminDataScopeService;
 
     /**
-     * 注销申请查询服务：承载申请列表的分页、状态筛选与数据范围套用，控制器只做编排。
-     * 列表口径（软删除资料、已注销用户展示规则）集中在此服务内，缺失时控制器无法按统一口径出列表。
+     * 注销申请查询服务。
      *
      * @var AdminCancelApplyQueryService
      */

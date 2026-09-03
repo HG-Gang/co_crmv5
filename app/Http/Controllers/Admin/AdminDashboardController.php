@@ -1,7 +1,7 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
  * Date: 2026/08/02
@@ -68,12 +68,12 @@ class AdminDashboardController extends AdminBaseController
         $todayNewUsers = UserInfo::where('created_at', '>=', $todayStart)->count();
 
         $stats = [
-            'total_users'         => $totalUsers,
-            'total_agents'        => $totalAgents,
-            'total_customers'     => $totalCustomers,
-            'pending_deposits'    => $pendingDeposits,
-            'pending_withdrawals' => $pendingWithdrawals,
-            'today_new_users'     => $todayNewUsers,
+            'totalUsers'         => $totalUsers,
+            'totalAgents'        => $totalAgents,
+            'totalCustomers'     => $totalCustomers,
+            'pendingDeposits'    => $pendingDeposits,
+            'pendingWithdraws'   => $pendingWithdrawals,
+            'todayNew'           => $todayNewUsers,
         ];
 
         return $this->success($stats, __('admin.system_statistics_fetched'));

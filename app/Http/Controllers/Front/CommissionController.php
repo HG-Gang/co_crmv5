@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/17
- * Time: 02:30
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Front;
@@ -42,15 +42,14 @@ use Throwable;
 class CommissionController extends FrontBaseController
 {
     /**
-     * commissionService 表示返佣计算服务。
+     * 佣金服务。
      *
      * @var CommissionService
      */
     protected $commissionService;
 
     /**
-     * 佣金转账服务：代理间佣金转账的 Saga 业务封装（直属关系校验、幂等键、事务流水、状态机都在其内部）。
-     * 本控制器只负责把 DomainException 映射为业务错误码；绕过它直接改转账表会失去幂等与对账能力。
+     * 佣金互转服务。
      *
      * @var CommissionTransferService
      */
@@ -748,8 +747,12 @@ class CommissionController extends FrontBaseController
     /**
      * 把佣金转账业务异常映射为统一业务错误响应。
      *
-     * 错误码语义：transfer_target_not_allowed 表示目标不在直属下级范围，transfer_user_not_found 表示用户缺失，
-     * transfer_not_allowed 表示转账被业务规则拒绝；其余未知错误码按参数校验失败处理。
+     * 参数逻辑说明：
+     * - exception 表示 CommissionTransferService 抛出的业务异常，getMessage() 返回标准错误码。
+     * - transfer_target_not_allowed 表示接收方不在直属下级代理范围，映射为 PERMISSION_DENIED。
+     * - transfer_user_not_found 表示转账目标用户资料缺失，映射为 USER_NOT_FOUND。
+     * - transfer_not_allowed 表示转账被业务规则拒绝，例如账号状态异常，映射为 OPERATION_NOT_ALLOWED。
+     * - 其余未知错误码统一按参数校验失败处理，避免暴露内部业务异常细节。
      *
      * @param DomainException $exception 转账服务抛出的业务异常。
      * @return JsonResponse 映射后的统一错误响应。

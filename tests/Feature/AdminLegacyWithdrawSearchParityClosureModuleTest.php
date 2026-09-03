@@ -211,6 +211,91 @@ class AdminLegacyWithdrawSearchParityClosureModuleTest extends TestCase
             ->assertJsonPath('totalRow.actdraw', '999999998999999.90');
     }
 
+    /**
+     * 锁定「出金合计行 actdraw 必须等于逐行显示值之和」这一同源同口径契约。
+     *
+     * 为什么必须有这条测试：
+     * - 逐行 actdraw 走 WithdrawRecordQueryService::multiplyMoneyByRate()，乘完立刻舍入到分；
+     *   合计行走 summarize()，若在 SQL 侧先累加乘积、最后只舍入一次，
+     *   两者在「分位以下仍有尾数」时必然分叉。本用例每行尾数恰好是半分，放大该分叉。
+     * - 项目1 的基准是 sum(act_draw)，而 act_draw 是**已按分存储**的列，
+     *   即旧口径等价于「逐行先舍、再求和」；新项目合计行必须复刻这个顺序。
+     * - LegacyAdminController::formatLegacyWithdrawTotalRow() 的注释已声明
+     *   「合计行与逐行必须同源同口径」，本用例把该声明变成可执行断言。
+     *
+     * 边界与失败语义：
+     * - 断言同时写成「不变式（合计 == 逐行求和）」与「精确期望值」两条：
+     *   只写不变式，会在两侧同时算错成同一个值时被静默满足；
+     *   只写硬编码值，则夹具一改契约就失锁。
+     * - 4 行 × 半分 = 2 分偏差，属用户可见的对不上账，不允许放过。
+     *
+     * @dataProvider legacySearchProvider
+     * @param string $action 旧搜索动作名，覆盖 v1 与 v2 两套 envelope。
+     * @param string $rowsPath 行集合在响应中的路径。
+     * @param string $totalPath 总数在响应中的路径。
+     * @param string $footerPath 合计行在响应中的路径。
+     */
+    public function test_legacy_footer_actual_draw_equals_the_sum_of_displayed_rows(
+        string $action,
+        string $rowsPath,
+        string $totalPath,
+        string $footerPath
+    ): void {
+        $admin = Admin::query()->findOrFail(1);
+        $userId = 993108;
+
+        // 每行 1.00 × 1.00500000 = 1.0050000000，逐行舍入后为 1.01，4 行正确合计为 4.04。
+        // 若合计行先累加再舍入，SUM 得 4.02000000，只会输出 4.02，与页面上四个 1.01 对不上。
+        for ($index = 1; $index <= 4; $index++) {
+            $recordId = $this->seedWithdraw(
+                $userId,
+                'LEGACY-WITHDRAW-ROUNDING-TAIL-' . $index,
+                'MT4-ROUNDING-TAIL',
+                0,
+                '2026-08-14 12:00:00'
+            );
+            DB::table('withdraw_records')->where('id', $recordId)->update([
+                'actual_amount' => '1.00',
+                'exchange_rate' => '1.00500000',
+            ]);
+        }
+
+        $response = $this->actingAs($admin, 'admin')
+            ->postJson('/index/admin/amount/' . $action, [
+                'userId' => $userId,
+                'withdraw_id' => 'MT4-ROUNDING-TAIL',
+                'withdraw_startdate' => '2026-08-01',
+                'withdraw_enddate' => '2026-08-31',
+                'page' => 1,
+                'rows' => 20,
+            ])
+            ->assertOk()
+            ->assertJsonPath($totalPath, 4);
+
+        $rows = data_get($response->json(), $rowsPath);
+        $this->assertIsArray($rows);
+        $this->assertSame(
+            ['1.01', '1.01', '1.01', '1.01'],
+            array_column($rows, 'actdraw'),
+            '逐行 actdraw 必须按分逐行舍入，1.00 × 1.005 应显示 1.01'
+        );
+
+        // 逐行求和全程走 BCMath 字符串加法：这里若用 array_sum 会引入 float，
+        // 断言自身就带上了本测试要防的那类精度噪声。
+        $rowSum = '0.00';
+        foreach (array_column($rows, 'actdraw') as $rowActualDraw) {
+            $rowSum = bcadd($rowSum, (string) $rowActualDraw, 2);
+        }
+
+        $footerActualDraw = (string) data_get($response->json(), $footerPath . '.actdraw');
+        $this->assertSame(
+            $rowSum,
+            $footerActualDraw,
+            '合计行 actdraw 必须等于逐行显示值之和，否则页面上行与合计自相矛盾'
+        );
+        $this->assertSame('4.04', $footerActualDraw, '4 行 1.01 的正确合计为 4.04，先累加再舍入会得到 4.02');
+    }
+
     public function test_modern_search_filters_by_mt4_ticket_and_date_range(): void
     {
         $admin = Admin::query()->findOrFail(1);

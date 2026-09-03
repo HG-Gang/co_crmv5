@@ -3389,7 +3389,7 @@ layui.define(function (exports) {
                     {fixed: 'right', title: CrmLang.t('common.action'), toolbar: '#giftItemActions', width: 150}
                 ]],
                 parseData: function (response) {
-                    return CrmTable.layuiParseData(response);
+                    return CrmTable.layuiParseData()(response);
                 },
                 done: function () {
                     CrmLang.switchUI();
@@ -3420,7 +3420,7 @@ layui.define(function (exports) {
                     {fixed: 'right', title: CrmLang.t('common.action'), toolbar: '#giftShipmentActions', width: 130}
                 ]],
                 parseData: function (response) {
-                    return CrmTable.layuiParseData(response);
+                    return CrmTable.layuiParseData()(response);
                 },
                 done: function () {
                     CrmLang.switchUI();
@@ -3454,7 +3454,7 @@ layui.define(function (exports) {
                     }
                 ]],
                 parseData: function (response) {
-                    return CrmTable.layuiParseData(response);
+                    return CrmTable.layuiParseData()(response);
                 },
                 done: function () {
                     CrmLang.switchUI();
@@ -4312,7 +4312,7 @@ layui.define(function (exports) {
                     {fixed: 'right', title: CrmLang.t('common.action'), toolbar: '#onlineUserActions', width: 140}
                 ]],
                 parseData: function (response) {
-                    return CrmTable.layuiParseData(response);
+                    return CrmTable.layuiParseData()(response);
                 },
                 done: function () {
                     CrmLang.switchUI();
@@ -7343,11 +7343,13 @@ layui.define(function (exports) {
                 return false;
             });
 
-            function reviewVoucher(apiUrl, id) {
+            // payload 必须由调用方给：voucherReject 后端强制校验 reason（required|max:2000），
+            // 固定发 {} 会让列表页的「拒绝」永远卡在参数校验上，一条都拒不掉。
+            function reviewVoucher(apiUrl, id, payload) {
                 CrmAjax.request({
                     guard: 'admin',
                     url: apiUrl + '/' + encodeURIComponent(id),
-                    data: {},
+                    data: payload || {},
                     success: function(res) {
                         if (res.code === 1000 || res.code === 1002) {
                             table.reload('voucherTable');
@@ -7360,8 +7362,35 @@ layui.define(function (exports) {
             }
 
             table.on('tool(voucherTable)', function(obj) {
-                if (obj.event === 'approve') reviewVoucher('/api/admin/voucherApprove', obj.data.id);
-                if (obj.event === 'reject') reviewVoucher('/api/admin/voucherReject', obj.data.id);
+                if (obj.event === 'approve') {
+                    reviewVoucher('/api/admin/voucherApprove', obj.data.id);
+                    return;
+                }
+                if (obj.event !== 'reject') {
+                    return;
+                }
+
+                // 拒绝原因会写进 voucher_infos.review_message，供用户和后台复查，
+                // 因此必须由操作人当场填写，不能用默认文案兜底。
+                // maxlength 与后端 max:2000 对齐，避免填完才被后端打回。
+                layer.prompt({
+                    formType: 2,
+                    title: CrmLang.t('admin.reject_reason'),
+                    success: function(layerNode) {
+                        layerNode.find('textarea')
+                            .attr('maxlength', 2000)
+                            .attr('aria-label', CrmLang.t('admin.reject_reason'))
+                            .trigger('focus');
+                    }
+                }, function(value, index) {
+                    var reason = String(value || '').trim();
+                    if (!reason) {
+                        layer.msg(CrmLang.t('admin.reject_reason_required'), {icon: 2});
+                        return;
+                    }
+                    layer.close(index);
+                    reviewVoucher('/api/admin/voucherReject', obj.data.id, {reason: reason});
+                });
             });
         });
     });

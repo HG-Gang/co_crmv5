@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/02
- * Time: 09:10
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Front;
@@ -89,13 +89,13 @@ class CustomerController extends FrontBaseController
     /**
      * 返回当前代理客户统计摘要。
      *
-     * 业务逻辑说明：
-     * - stats 用于返回当前代理客户统计摘要，统计范围同样来自共享代理树作用域中的客户节点。
-     * - descendantIds 表示当前代理名下全部客户 ID 集合，只包含 descendant_type=2 的客户。
-     * - totalCustomers 表示客户总数。
-     * - activeCount 表示最近一个月有交易的活跃客户数，以 UserTrade.close_time 大于当前时间前一个月作为判断条件。
-     * - inactive_customers 表示未活跃客户数，由 totalCustomers - activeCount 计算得到。
-     * - total_volume 表示当前代理名下全部客户交易手数合计。
+     * 参数逻辑说明：
+     * - agentId 表示当前代理业务用户 ID，来源于 user guard 登录记录的 user_id。
+     * - descendantIds 表示当前代理可见的客户范围，通过 FrontLegacyData::userScopeIds() 按 descendant_type=2 筛选。
+     * - total_customers 表示当前代理可见的客户总数，等于 descendantIds 数组长度。
+     * - active_customers 表示最近一个月有交易平仓记录的客户数量，通过 user_trades.close_time 判定。
+     * - inactive_customers 表示当前代理可见客户中未活跃客户数量，等于总客户数减活跃客户数。
+     * - total_volume 表示当前代理可见客户的交易总手数，来源于 user_trades.volume 字段汇总。
      *
      * @param Request $request HTTP 请求对象，只使用当前登录用户识别代理范围。
      * @return JsonResponse 当前代理客户统计摘要，包含总客户数、活跃客户数、未活跃客户数和总手数。

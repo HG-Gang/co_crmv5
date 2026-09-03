@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/28
- * Time: 01:38
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -459,8 +459,12 @@ class RealtimeCommissionController extends AdminBaseController
     /**
      * 重置生成列探测缓存。
      *
+     * 功能说明：
+     * - 将静态属性 $indexedRebateColumnsAvailable 重置为 null，强制下次查询时重新探测 mt4_trades 表是否有 is_rebate 和 rebate_time 生成列。
+     *
      * 适用场景：
      * - 功能测试在同一进程内先后验证「有生成列」和「无生成列」两条分支时调用。
+     * - 单元测试需要模拟不同数据库 schema 状态时使用。
      *
      * @return void
      */
@@ -468,6 +472,23 @@ class RealtimeCommissionController extends AdminBaseController
     {
         self::$indexedRebateColumnsAvailable = null;
     }
+
+    /**
+     * 按日期字符串追加 10 位时间戳范围过滤。
+     *
+     * 功能说明：
+     * - 读取请求参数 start_date 与 end_date（Y-m-d 格式字符串），转换为 10 位时间戳后拼接 WHERE 条件。
+     * - 使用 rebateTimeExpression() 生成的时间表达式（优先 modify_time，回退 close_time）作为过滤字段。
+     * - start_date 设置为当天 00:00:00，end_date 设置为当天 23:59:59，覆盖全天范围。
+     *
+     * 参数说明：
+     * - $query：业务查询对象，用于追加时间范围 WHERE 条件。
+     * - $request：当前请求对象，读取 start_date 与 end_date 参数。
+     *
+     * @param Builder $query 业务查询对象。
+     * @param Request $request 当前请求对象，读取 start_date 与 end_date。
+     * @return void
+     */
 
     /**
      * 追加实时返佣查询筛选条件。

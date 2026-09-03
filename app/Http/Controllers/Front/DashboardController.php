@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/28
- * Time: 00:50
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Front;
@@ -206,6 +206,7 @@ class DashboardController extends FrontBaseController
                 'total_funds'     => (float) $userInfo->total_funds,
                 'equity'          => (float) $userInfo->equity,
                 'effective_credit'=> (float) $userInfo->effective_credit,
+                'auth_status'     => (int) $userInfo->auth_status,
             ],
             'downloads' => [
                 'pc' => [

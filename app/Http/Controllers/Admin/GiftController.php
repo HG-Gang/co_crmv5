@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/19
- * Time: 21:31
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -84,14 +84,16 @@ class GiftController extends AdminBaseController
     }
 
     /**
-     * 导出当前筛选条件下的礼品发货记录 CSV。
+     * 导出当前筛选条件下的礼品发货记录为 CSV 文件。
      *
      * 参数逻辑说明：
-     * - user_id、gift_name、recipient_name、start_date、end_date 与发货列表筛选保持一致。
-     * - 当前导出只输出真实 gift_shipments 和 admins 可支撑字段，不伪造旧项目库存/兑换规则。
+     * - user_id、gift_name、recipient_name、start_date、end_date 筛选条件与发货列表接口保持一致。
+     * - 导出记录经过与列表相同的数据范围过滤，保证导出内容不超出当前管理员可见范围。
+     * - 输出字段仅包含 gift_shipments 与 admins 真实可支撑字段，不伪造库存或兑换规则字段。
+     * - 返回 StreamedResponse 以支持大数据集流式下载，避免一次性加载全部记录到内存。
      *
-     * @param Request $request 当前请求对象，承载筛选条件。
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     * @param Request $request 当前请求对象，承载筛选条件与登录管理员。
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse|JsonResponse 筛选参数非法时返回错误响应，通过时返回 CSV 下载流。
      */
     public function exportGiftShipments(Request $request)
     {

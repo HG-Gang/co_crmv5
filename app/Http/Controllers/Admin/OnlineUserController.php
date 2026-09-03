@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/02
- * Time: 13:00
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -39,8 +39,7 @@ use Illuminate\Http\Request;
 class OnlineUserController extends AdminBaseController
 {
     /**
-     * 后台数据范围服务：在线用户列表与强制下线统一按 user_onlines.user_id 套用；
-     * 缺失时任何管理员可查看并踢下线数据范围外的用户（强制下线会使该用户全部前台 JWT 失效），越权影响直接作用于登录态。
+     * 后台数据范围服务。
      *
      * @var AdminDataScopeService
      */

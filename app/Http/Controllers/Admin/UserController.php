@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/06/13
- * Time: 02:52
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -264,26 +264,25 @@ class UserController extends AdminBaseController
     }
 
     /**
-     * 获取带交易统计的用户列表（从旧项目CustomerController迁移）。
+     * 获取带交易统计的用户列表。
      *
-     * listWithStats() 参数说明：
-     * - page：当前页码，默认第1页。
-     * - per_page/limit：每页数量，兼容Layui表格的limit参数，默认15条。
-     * - user_id：业务用户ID，用于精确筛选。
-     * - user_name：用户姓名，模糊匹配。
-     * - user_status：用户状态，筛选启用/禁用/待审核等状态。
-     * - start_date：统计开始日期，格式Y-m-d，默认2024-01-01。
-     * - end_date：统计结束日期，格式Y-m-d，默认当前日期。
+     * 参数逻辑说明：
+     * - page：当前页码，默认第 1 页。
+     * - per_page/limit：每页数量，兼容 Layui 表格的 limit 参数，默认 15 条。
+     * - user_id：业务用户 ID，用于精确筛选单个用户。
+     * - user_name：用户姓名，对应 user_infos.name，使用 LIKE 模糊匹配。
+     * - user_status：用户状态，对应 user_infos.status，筛选启用/禁用/待审核等状态。
+     * - start_date：统计开始日期，格式 Y-m-d，默认 2024-01-01，用于限定交易数据统计区间。
+     * - end_date：统计结束日期，格式 Y-m-d，默认当前日期，用于限定交易数据统计区间。
      *
      * 功能逻辑说明：
-     * - 查询用户基础信息（user_infos表）。
-     * - 关联用户登录信息（user_logins表）。
-     * - 调用UserStatisticsService统计每个用户的交易数据。
-     * - 返回当前页数据 + 当前页汇总 + 全部数据汇总（footer）。
-     * - 应用数据权限过滤（根据当前登录管理员权限）。
+     * - 从 user_infos 表查询用户基础信息，关联 user_logins 获取登录账号。
+     * - 调用 UserStatisticsService 统计每个用户在指定日期区间内的交易数据（入金、出金、手数、盈亏等）。
+     * - 返回三层数据：当前页用户明细（records）、当前页汇总（summary）、全部数据汇总（footer）。
+     * - 列表记录按当前管理员数据权限套用 AdminDataScopeService 范围过滤，普通管理员只能看到授权范围内的用户。
      *
-     * @param Request $request 当前HTTP请求对象，承载分页参数和筛选条件。
-     * @return \Illuminate\Http\JsonResponse 返回用户列表及统计数据。
+     * @param Request $request 当前 HTTP 请求对象，承载分页参数和筛选条件。
+     * @return \Illuminate\Http\JsonResponse 返回用户列表及三层统计数据。
      */
     public function listWithStats(Request $request)
     {

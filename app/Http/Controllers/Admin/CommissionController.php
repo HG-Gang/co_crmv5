@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/02
- * Time: 09:09
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Admin;
@@ -225,14 +225,14 @@ class CommissionController extends AdminBaseController
     }
 
     /**
-     * 获取返佣结算记录列表。
+     * 获取返佣结算记录分页列表。
      *
-     * index() 参数说明：
-     * - page 表示当前页码，默认第 1 页。
-     * - per_page 表示每页数量，默认 15 条。
-     * - agent_id 表示返佣所属代理用户 ID，对应 commission_records.agent_id。
-     * - settle_status 表示结算状态，1=待结算，2=已结算。
-     * - 当前管理员登录后会先通过 AdminDataScopeService 追加代理数据范围，避免列表展示越权返佣记录。
+     * 参数逻辑说明：
+     * - page：当前页码，默认第 1 页。
+     * - per_page：每页数量，默认 15 条。
+     * - agent_id：返佣所属代理用户 ID，对应 commission_records.agent_id，可选筛选条件。
+     * - settle_status：结算状态，1=待结算、2=已结算，可选筛选条件。
+     * - 当前管理员登录后先通过 AdminDataScopeService 追加代理数据范围，避免列表展示越权返佣记录。
      *
      * @param Request $request 当前 HTTP 请求对象，承载分页参数、筛选条件和 admin guard 登录管理员。
      * @return \Illuminate\Http\JsonResponse 返回返佣分页列表，包含 agent 与 parent 关联信息。

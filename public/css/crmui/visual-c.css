@@ -617,7 +617,20 @@ body[data-ui-family="crmui"][data-visual-direction="c"] .crmui-sidebar-scrim {
         min-width: 0;
     }
 
+    /*
+     * height: auto 必须在此解除本文件 :369 的 height: 40px。
+     * 成因：表格布局把 td 的 height 当最小高度用，40px 只抬高矮行、不裁高行；
+     * 但窄屏下 td 被改成 display:grid 后不再是表格单元格，40px 立刻变成硬高度，
+     * 而 overflow 仍是 visible——内容不裁切，直接画到表格后面的兄弟节点上。
+     * 实测（/admin-crmui/admins @390x844）：末行操作格内容需 102px 却被锁在 40px，
+     * 溢出沿 tr→tbody→table→.crmui-table-wrap 逐级传递 50px，
+     * 末行「删除」按钮压住分页条的「下一页」按钮 41×36px，属高危误点。
+     * 写在这里而不是 admin.css：硬高度出自本文件且两套 crmui 家族同吃，
+     * 就近同特异性覆盖才不需要 !important，也不会漏掉前台。
+     * 只在断点内改，宽屏的 40px 行高节奏保持不变。
+     */
     body[data-ui-family="crmui"][data-visual-direction="c"] .crmui-table td {
+        height: auto;
         white-space: normal;
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
 /**
- Created by PhpStorm.
+ * Created by PhpStorm.
  * Project name co_crmv5.
  * User: Huang Gang
- * Date: 2026/08/17
- * Time: 02:07
+ * Date: 2026/09/03
+ * Time: 14:30
  */
 
 namespace App\Http\Controllers\Front;
@@ -51,7 +51,7 @@ use Throwable;
 class AgentController extends FrontBaseController
 {
     /**
-     * familyTreeService 表示代理树统计服务。
+     * 代理树服务。
      *
      * @var FamilyTreeService
      */

@@ -198,6 +198,345 @@ Route::get('/', function () {
 // SVG 转图片外部调用接口：?svg=<源svg路径>&format=png|jpg|jpeg
 Route::get('svg-convert', 'Controller@svgToImage')->name('svg_convert');
 
+// ========== UI 模板演示路由 | UI Template Demo Routes ==========
+Route::prefix('ui-demos')->name('ui_demos_')->group(function () {
+    Route::get('/', function () {
+        return view('ui-demos.index');
+    })->name('index');
+
+    Route::get('/argon/dashboard', function () {
+        return view('ui-demos.argon.dashboard');
+    })->name('argon_dashboard');
+
+    Route::get('/coreui/dashboard', function () {
+        return view('ui-demos.coreui.dashboard');
+    })->name('coreui_dashboard');
+
+    Route::get('/volt/dashboard', function () {
+        return view('ui-demos.volt.dashboard');
+    })->name('volt_dashboard');
+
+    Route::get('/notus/dashboard', function () {
+        return view('ui-demos.notus.dashboard');
+    })->name('notus_dashboard');
+
+    Route::get('/vuexy/dashboard', function () {
+        return view('ui-demos.vuexy.dashboard');
+    })->name('vuexy_dashboard');
+
+    Route::get('/ample/dashboard', function () {
+        return view('ui-demos.ample.dashboard');
+    })->name('ample_dashboard');
+});
+
+// ========== 新版 UI 路由 | New UI Routes ==========
+// 后台 Tailwind UI - 完整路由配置
+Route::prefix('admin-tailwind')->name('admin_tailwind_page_')->group(function () {
+    // 认证页面
+    Route::get('/login', function () {
+        return view('admin-tailwind.auth.login');
+    })->name('login');
+
+    // 仪表盘
+    Route::get('/dashboard', function () {
+        return view('admin-tailwind.dashboard.index');
+    })->name('dashboard');
+
+    // 用户管理模块
+    Route::get('/users', function () {
+        return view('admin-tailwind.users.index');
+    })->name('users');
+    Route::get('/users/{id}', function ($id) {
+        return view('admin-tailwind.users.detail', ['id' => $id]);
+    })->name('users_detail');
+
+    // 权限管理模块
+    Route::get('/roles', function () {
+        return view('admin-tailwind.roles.index');
+    })->name('roles');
+    Route::get('/permissions', function () {
+        return view('admin-tailwind.permissions.index');
+    })->name('permissions');
+    Route::get('/menus', function () {
+        return view('admin-tailwind.menus.index');
+    })->name('menus');
+    Route::get('/data-scopes', function () {
+        return view('admin-tailwind.data-scopes.index');
+    })->name('data_scopes');
+    Route::get('/admins', function () {
+        return view('admin-tailwind.admins.index');
+    })->name('admins');
+
+    // 代理管理模块
+    Route::get('/agents', function () {
+        return view('admin-tailwind.agents.index');
+    })->name('agents');
+    Route::get('/big-agents', function () {
+        return view('admin-tailwind.big-agents.index');
+    })->name('big_agents');
+    Route::get('/agent-levels', function () {
+        return view('admin-tailwind.agent-levels.index');
+    })->name('agent_levels');
+
+    // 资金管理模块
+    Route::get('/deposits', function () {
+        return view('admin-tailwind.deposits.index');
+    })->name('deposits');
+    Route::get('/deposit-imports', function () {
+        return view('admin-tailwind.deposit-imports.index');
+    })->name('deposit_imports');
+    Route::get('/withdrawals', function () {
+        return view('admin-tailwind.withdrawals.index');
+    })->name('withdrawals');
+    Route::get('/withdrawals/pending', function () {
+        return view('admin-tailwind.withdrawals.pending');
+    })->name('withdrawals_pending');
+    Route::get('/withdrawals/processing', function () {
+        return view('admin-tailwind.withdrawals.processing');
+    })->name('withdrawals_processing');
+    Route::get('/withdrawals/completed', function () {
+        return view('admin-tailwind.withdrawals.completed');
+    })->name('withdrawals_completed');
+    Route::get('/withdrawals/failed', function () {
+        return view('admin-tailwind.withdrawals.failed');
+    })->name('withdrawals_failed');
+    Route::get('/withdraw-imports', function () {
+        return view('admin-tailwind.withdraw-imports.index');
+    })->name('withdraw_imports');
+    Route::get('/withdraw-flows', function () {
+        return view('admin-tailwind.withdraw-flows.index');
+    })->name('withdraw_flows');
+    Route::get('/undeposit-flows', function () {
+        return view('admin-tailwind.undeposit-flows.index');
+    })->name('undeposit_flows');
+    Route::get('/vouchers', function () {
+        return view('admin-tailwind.vouchers.index');
+    })->name('vouchers');
+
+    // 报表统计模块
+    Route::get('/reports/rights-summary', function () {
+        return view('admin-tailwind.reports.rights-summary');
+    })->name('rights_summary');
+    Route::get('/reports/position-summary', function () {
+        return view('admin-tailwind.reports.position-summary');
+    })->name('position_summary');
+    Route::get('/reports/commissions', function () {
+        return view('admin-tailwind.reports.commissions');
+    })->name('commissions');
+    Route::get('/reports/realtime-commissions', function () {
+        return view('admin-tailwind.reports.realtime-commissions');
+    })->name('realtime_commissions');
+    Route::get('/reports/trades', function () {
+        return view('admin-tailwind.reports.trades');
+    })->name('trades');
+
+    // 系统管理模块
+    Route::get('/system/configs', function () {
+        return view('admin-tailwind.system.configs');
+    })->name('system_configs');
+    Route::get('/system/group-configs', function () {
+        return view('admin-tailwind.system.group-configs');
+    })->name('group_configs');
+    Route::get('/system/exchange-rates', function () {
+        return view('admin-tailwind.system.exchange-rates');
+    })->name('exchange_rates');
+    Route::get('/system/channels', function () {
+        return view('admin-tailwind.system.channels');
+    })->name('channels');
+    Route::get('/system/productions', function () {
+        return view('admin-tailwind.system.productions');
+    })->name('productions');
+    Route::get('/system/gifts', function () {
+        return view('admin-tailwind.system.gifts');
+    })->name('gifts');
+    Route::get('/system/news', function () {
+        return view('admin-tailwind.system.news');
+    })->name('news');
+    Route::get('/system/credit-imports', function () {
+        return view('admin-tailwind.system.credit-imports');
+    })->name('credit_imports');
+    Route::get('/system/online-users', function () {
+        return view('admin-tailwind.system.online-users');
+    })->name('online_users');
+
+    // 风控管理模块
+    Route::get('/risk', function () {
+        return view('admin-tailwind.risk.index');
+    })->name('risk');
+    Route::get('/risk/blacklist', function () {
+        return view('admin-tailwind.risk.blacklist');
+    })->name('blacklist');
+    Route::get('/risk/authentications', function () {
+        return view('admin-tailwind.risk.authentications');
+    })->name('authentications');
+    Route::get('/risk/cancel-applies', function () {
+        return view('admin-tailwind.risk.cancel-applies');
+    })->name('cancel_applies');
+    Route::get('/risk/whs-exp-zero', function () {
+        return view('admin-tailwind.risk.whs-exp-zero');
+    })->name('whs_exp_zero');
+
+    // 个人设置模块
+    Route::get('/profile/edit', function () {
+        return view('admin-tailwind.profile.edit');
+    })->name('profile_edit');
+    Route::get('/profile/change-password', function () {
+        return view('admin-tailwind.profile.change-password');
+    })->name('profile_change_password');
+});
+
+// 前台 CoreUI v2 - 完整路由配置
+Route::prefix('front-coreui-v2')->name('front_coreui_v2_page_')->group(function () {
+    // 认证页面
+    Route::get('/login', function () {
+        return view('front-coreui-v2.auth.login');
+    })->name('login');
+
+    Route::get('/register/{inviter_id?}', function ($inviterId = null) {
+        return view('front-coreui-v2.auth.register', ['inviterId' => $inviterId]);
+    })->name('register');
+
+    Route::get('/forgot-password', function () {
+        return view('front-coreui-v2.auth.forgot-password');
+    })->name('forgot_password');
+
+    Route::get('/big-number-login', function () {
+        return view('front-coreui-v2.auth.big-number-login');
+    })->name('big_number_login');
+
+    // 仪表盘
+    Route::get('/dashboard', function () {
+        return view('front-coreui-v2.dashboard.index');
+    })->name('dashboard');
+
+    // 个人信息模块
+    Route::get('/profile', function () {
+        return view('front-coreui-v2.profile.index');
+    })->name('profile');
+    Route::get('/profile/edit', function () {
+        return view('front-coreui-v2.profile.edit');
+    })->name('profile_edit');
+    Route::get('/profile/change-password', function () {
+        return view('front-coreui-v2.profile.change-password');
+    })->name('profile_change_password');
+    Route::get('/profile/change-email', function () {
+        return view('front-coreui-v2.profile.change-email');
+    })->name('profile_change_email');
+
+    // 账户管理模块
+    Route::get('/account/info', function () {
+        return view('front-coreui-v2.account.info');
+    })->name('account_info');
+    Route::get('/account/balance', function () {
+        return view('front-coreui-v2.account.balance');
+    })->name('account_balance');
+    Route::get('/account/voucher', function () {
+        return view('front-coreui-v2.account.voucher');
+    })->name('account_voucher');
+    Route::get('/account/voucher-browse', function () {
+        return view('front-coreui-v2.account.voucher-browse');
+    })->name('account_voucher_browse');
+    Route::get('/account/cancel', function () {
+        return view('front-coreui-v2.account.cancel');
+    })->name('account_cancel');
+
+    // 资金操作模块
+    Route::get('/deposit', function () {
+        return view('front-coreui-v2.deposit.index');
+    })->name('deposit');
+    Route::get('/withdraw', function () {
+        return view('front-coreui-v2.withdraw.index');
+    })->name('withdraw');
+    Route::get('/flow', function () {
+        return view('front-coreui-v2.flow.index');
+    })->name('flow');
+
+    // 持仓订单模块
+    Route::get('/position/summary', function () {
+        return view('front-coreui-v2.position.summary');
+    })->name('position_summary');
+    Route::get('/position/summary-detail/{id}', function ($id) {
+        return view('front-coreui-v2.position.summary-detail', ['id' => $id]);
+    })->name('position_summary_detail');
+    Route::get('/position/comm-summary', function () {
+        return view('front-coreui-v2.position.comm-summary');
+    })->name('position_comm_summary');
+    Route::get('/order/open', function () {
+        return view('front-coreui-v2.order.open');
+    })->name('order_open');
+    Route::get('/order/open-detail/{orderId}', function ($orderId) {
+        return view('front-coreui-v2.order.open-detail', ['orderId' => $orderId]);
+    })->name('order_open_detail');
+    Route::get('/order/closed', function () {
+        return view('front-coreui-v2.order.closed');
+    })->name('order_closed');
+    Route::get('/order/closed-detail/{orderId}', function ($orderId) {
+        return view('front-coreui-v2.order.closed-detail', ['orderId' => $orderId]);
+    })->name('order_closed_detail');
+
+    // 代理管理模块
+    Route::get('/agent/sub', function () {
+        return view('front-coreui-v2.agent.sub');
+    })->name('agent_sub');
+    Route::get('/agent/customers', function () {
+        return view('front-coreui-v2.agent.customers');
+    })->name('agent_customers');
+    Route::get('/agent/customers-detail/{puid}', function ($puid) {
+        return view('front-coreui-v2.agent.customers-detail', ['puid' => $puid]);
+    })->name('agent_customers_detail');
+    Route::get('/agent/customer-detail/{role}/{uid}', function ($role, $uid) {
+        return view('front-coreui-v2.agent.customer-detail', ['role' => $role, 'uid' => $uid]);
+    })->name('agent_customer_detail');
+    Route::get('/agent/confirm-level', function () {
+        return view('front-coreui-v2.agent.confirm-level');
+    })->name('agent_confirm_level');
+    Route::get('/agent/group-change', function () {
+        return view('front-coreui-v2.agent.group-change');
+    })->name('agent_group_change');
+    Route::get('/agent/group-change-detail/{uid}', function ($uid) {
+        return view('front-coreui-v2.agent.group-change-detail', ['uid' => $uid]);
+    })->name('agent_group_change_detail');
+
+    // 佣金管理模块
+    Route::get('/commission/realtime', function () {
+        return view('front-coreui-v2.commission.realtime');
+    })->name('commission_realtime');
+    Route::get('/commission/realtime-detail/{orderNo}', function ($orderNo) {
+        return view('front-coreui-v2.commission.realtime-detail', ['orderNo' => $orderNo]);
+    })->name('commission_realtime_detail');
+    Route::get('/commission/history', function () {
+        return view('front-coreui-v2.commission.history');
+    })->name('commission_history');
+    Route::get('/commission/transfer', function () {
+        return view('front-coreui-v2.commission.transfer');
+    })->name('commission_transfer');
+    Route::get('/commission/transfer-target', function () {
+        return view('front-coreui-v2.commission.transfer-target');
+    })->name('commission_transfer_target');
+
+    // 礼品管理模块
+    Route::get('/gift/address', function () {
+        return view('front-coreui-v2.gift.address');
+    })->name('gift_address');
+    Route::get('/gift/address-add', function () {
+        return view('front-coreui-v2.gift.address-add');
+    })->name('gift_address_add');
+    Route::get('/gift/address-edit', function () {
+        return view('front-coreui-v2.gift.address-edit');
+    })->name('gift_address_edit');
+    Route::get('/gift/list', function () {
+        return view('front-coreui-v2.gift.list');
+    })->name('gift_list');
+
+    // 新闻模块
+    Route::get('/news', function () {
+        return view('front-coreui-v2.news.index');
+    })->name('news');
+    Route::get('/news/detail', function () {
+        return view('front-coreui-v2.news.detail');
+    })->name('news_detail');
+});
+
 // ========== 旧前台 User 路由兼容 | Legacy Front User Routes ==========
 // ========== Independent CrmUI Pages ==========
 Route::prefix('front-crmui/big-agent')->name('front_crmui_big_agent_')->group(function () {

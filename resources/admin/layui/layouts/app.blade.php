@@ -97,6 +97,7 @@ Time: 00:47
     </div>
 </div>
 
+{{-- 关键资源：同步加载保证框架初始化 --}}
 <script src="{{ asset('/js/vendor/jquery/jquery-3.6.0.min.js') }}"></script>
 <script src="{{ asset('/js/vendor/layui-v2.13.5/layui/layui.js') }}"></script>
 @include('partials.frontend-routes')
@@ -109,7 +110,8 @@ Time: 00:47
 <script src="{{ asset('/js/shared/layui-upload.js') }}?v=2026082801"></script>
 <script src="{{ asset('/js/apps/admin/layui/layout.js') }}?v=2026080801"></script>
 <script src="{{ asset('/js/apps/admin/layui/pages.js') }}?v=2026082801"></script>
-<script src="{{ asset('/js/apps/front/layui/stat-animate.js') }}?v=2026080101"></script>
+{{-- 非关键资源：延迟加载提升首屏速度 --}}
+<script src="{{ asset('/js/apps/front/layui/stat-animate.js') }}?v=2026080101" defer></script>
 @yield('scripts')
 </body>
 </html>
